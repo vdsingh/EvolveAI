@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-class FormView: UIView {
+class EAFormView: UIView {
     
     var questions: [UIView]
     private let padding: CGFloat = 20
@@ -16,7 +16,7 @@ class FormView: UIView {
 //    private var textfieldWasEdited: ((_ text: String) -> Void)?
     private var textfieldCallbackGraph: [UITextField: ((_ text: String) -> Void)] = [:]
     
-    init(questions: [FormQuestionViewModel]) {
+    init(questions: [EAFormQuestionViewModel]) {
         self.questions = []
         
         super.init(frame: .zero)
@@ -28,7 +28,7 @@ class FormView: UIView {
 
     }
     
-    private func setupUI(questions: [FormQuestionViewModel]) {
+    private func setupUI(questions: [EAFormQuestionViewModel]) {
         let stack = constructQuestionsStackView(questions: questions)
         stack.spacing = spacing
         addSubview(stack)
@@ -42,14 +42,14 @@ class FormView: UIView {
         ])
     }
     
-    private func constructQuestionsStackView(questions: [FormQuestionViewModel]) -> UIStackView {
+    private func constructQuestionsStackView(questions: [EAFormQuestionViewModel]) -> UIStackView {
         let questionStack = UIStackView()
         questionStack.translatesAutoresizingMaskIntoConstraints = false
         questionStack.axis = .vertical
         
         
         for questionViewModel in questions {
-            let view = FormQuestionView(viewModel: questionViewModel)
+            let view = EAFormQuestionView(viewModel: questionViewModel)
             view.translatesAutoresizingMaskIntoConstraints = false
             self.questions.append(view)
             questionStack.addArrangedSubview(view)
@@ -73,7 +73,7 @@ class FormView: UIView {
     }
 }
 
-extension FormView: UITextFieldDelegate {
+extension EAFormView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let callback = textfieldCallbackGraph[textField] else {
             return

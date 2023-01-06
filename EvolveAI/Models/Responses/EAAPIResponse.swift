@@ -6,6 +6,6 @@
 //
 
 import Foundation
-protocol EAResponse: Decodable {
+protocol EAAPIResponse: Decodable {
 
 }

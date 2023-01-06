@@ -15,7 +15,7 @@
 		B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */; };
 		B9C056892962C1DD007B6DBD /* EAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EAService.swift */; };
 		B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */; };
-		B9C0568D2962C2DB007B6DBD /* EAResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568C2962C2DB007B6DBD /* EAResponse.swift */; };
+		B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */; };
 		B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */; };
 		B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056902962C3BE007B6DBD /* EARequestBody.swift */; };
 		B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */; };
@@ -24,8 +24,10 @@
 		B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056992962D4FD007B6DBD /* HTTPMethod.swift */; };
 		B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */; };
 		B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569E2962E045007B6DBD /* EAGoal.swift */; };
-		B9C056A22967CEE5007B6DBD /* FormQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */; };
-		B9C056A42967D139007B6DBD /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* FormView.swift */; };
+		B9C056A22967CEE5007B6DBD /* EAFormQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */; };
+		B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* EAFormView.swift */; };
+		B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */; };
+		B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +41,7 @@
 		B9C0567B2962C16F007B6DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9C056882962C1DD007B6DBD /* EAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAService.swift; sourceTree = "<group>"; };
 		B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIRequest.swift; sourceTree = "<group>"; };
-		B9C0568C2962C2DB007B6DBD /* EAResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAResponse.swift; sourceTree = "<group>"; };
+		B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAAPIResponse.swift; sourceTree = "<group>"; };
 		B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEndpoint.swift; sourceTree = "<group>"; };
 		B9C056902962C3BE007B6DBD /* EARequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EARequestBody.swift; sourceTree = "<group>"; };
 		B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAICompletionsRequestBody.swift; sourceTree = "<group>"; };
@@ -49,8 +51,10 @@
 		B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAICompletionsResponse.swift; sourceTree = "<group>"; };
 		B9C0569E2962E045007B6DBD /* EAGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoal.swift; sourceTree = "<group>"; };
 		B9C056A02962EDCD007B6DBD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormQuestionView.swift; sourceTree = "<group>"; };
-		B9C056A32967D139007B6DBD /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionView.swift; sourceTree = "<group>"; };
+		B9C056A32967D139007B6DBD /* EAFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormView.swift; sourceTree = "<group>"; };
+		B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionResponse.swift; sourceTree = "<group>"; };
+		B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +127,10 @@
 		B9C056842962C186007B6DBD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056A529682058007B6DBD /* ViewUtility */,
 				B9C056862962C19C007B6DBD /* Storyboards */,
-				B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */,
-				B9C056A32967D139007B6DBD /* FormView.swift */,
+				B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */,
+				B9C056A32967D139007B6DBD /* EAFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				B9C0569B2962DD96007B6DBD /* Responses */,
 				B9C056942962CE81007B6DBD /* Requests */,
 				B9C0569E2962E045007B6DBD /* EAGoal.swift */,
+				B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,10 +180,18 @@
 		B9C0569B2962DD96007B6DBD /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				B9C0568C2962C2DB007B6DBD /* EAResponse.swift */,
+				B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */,
 				B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		B9C056A529682058007B6DBD /* ViewUtility */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */,
+			);
+			path = ViewUtility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,13 +273,15 @@
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
-				B9C056A42967D139007B6DBD /* FormView.swift in Sources */,
+				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
-				B9C0568D2962C2DB007B6DBD /* EAResponse.swift in Sources */,
+				B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */,
+				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
+				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
-				B9C056A22967CEE5007B6DBD /* FormQuestionView.swift in Sources */,
+				B9C056A22967CEE5007B6DBD /* EAFormQuestionView.swift in Sources */,
 				B9C056962962CEAF007B6DBD /* EARequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

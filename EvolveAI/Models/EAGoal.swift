@@ -7,12 +7,22 @@
 
 import Foundation
 
+/// Represents user goals
 struct EAGoal {
+    /// The goal itself (ex: "learn the violin")
     let goal: String
+    /// The number of days to accomplish the goal (ex: 30)
     let numDays: Int
+    /// The AI's response in normal String form
     let aiResponse: String
+    /// The tasks associated with completing the goal (derived from parsing aiResponse)
     let tasks: [EAGoalDayGuide]
     
+    /// Initializer for EAGoal
+    /// - Parameters:
+    ///   - goal: The goal itself (ex: "learn the violin")
+    ///   - numDays: The number of days to accomplish the goal (ex: 30)
+    ///   - apiResponse: The OpenAI Completions Response
     init(goal: String, numDays: Int, apiResponse: EAOpenAICompletionsResponse) {
         self.goal = goal
         self.numDays = numDays
@@ -21,7 +31,8 @@ struct EAGoal {
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
-    enum CreateTaskError: Error {
+    /// Possible errors that can arise from parsing AI response to create task
+    private enum CreateTaskError: Error {
         case invalidNumberOfComponents
         case failedToParseDays
         case failedToParseDay
@@ -92,14 +103,4 @@ struct EAGoal {
     public static func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String{
         return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide to achieve this goal."
     }
-}
-
-/// Represents the guide for a given day (or set of days)
-struct EAGoalDayGuide {
-    /// Whether the guide covers the span of multiple days (ex: 1st to 3rd) instead of single day (ex: 1st)
-    let isMultipleDays: Bool
-    /// The range of days the guide covers
-    let days: ClosedRange<Int>
-    /// The list of tasks associated with this guide
-    var tasks: [String]
 }

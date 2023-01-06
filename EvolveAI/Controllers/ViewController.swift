@@ -15,15 +15,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let questions: [FormQuestionViewModel] = [
-            FormQuestionViewModel(
+        let questions: [EAFormQuestionViewModel] = [
+            EAFormQuestionViewModel(
                 question: "I want to:",
                 questionResponse:
                         .textfield(placeholder: "learn the violin", textFieldWasEdited: { [weak self] text in
                             self?.prompt = text
                             print("Edited prompt: \(self?.prompt)")
                         })),
-            FormQuestionViewModel(
+            EAFormQuestionViewModel(
                 question: "within this many days:",
                 questionResponse:
                         .textfield(placeholder: "30", textFieldWasEdited: { [weak self] text in
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
                         }))
         ]
         
-        let subview = FormView(questions: questions)
+        let subview = EAFormView(questions: questions)
         subview.backgroundColor = .yellow
         subview.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subview)

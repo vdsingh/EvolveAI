@@ -27,7 +27,7 @@ final class EAService {
     ///   - request: The request that we are sending
     ///   - expecting: The type of object that we are expecting in response
     ///   - completion: The completion handler
-    public func execute <T: EAResponse>(
+    public func execute <T: EAAPIResponse>(
         _ request: EARequest,
         expecting type: T.Type,
         completion: @escaping (Result<T, Error>) -> Void)
