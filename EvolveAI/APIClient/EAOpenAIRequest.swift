@@ -127,7 +127,7 @@ extension EAOpenAIRequest {
     ///   - max_tokens: The maximum number of tokens to generate in the completion.
     /// - Returns: An EAOpenAIRequest object
     static func completionsRequest(
-        model: EAOpenAICompletionsModel,
+        model: EAOpenAICompletionsModel = .davinci003,
         prompt: String,
         temperature: Int = 1,
         max_tokens: Int = 100
