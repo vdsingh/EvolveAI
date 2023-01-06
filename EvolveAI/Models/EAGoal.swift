@@ -21,16 +21,67 @@ struct EAGoal {
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
+    enum CreateTaskError: Error {
+        case invalidNumberOfComponents
+        case failedToParseDays
+        case failedToParseDay
+    }
+    
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
     private static func createTasks(from aiResponse: String) -> [EAGoalDayGuide] {
-
-        
-//        "\n\n1. Day 1: Purchase a quality beginner violin, shoulder rest, and bow.\n\n2. Day 2: Watch YouTube tutorials on proper set-up and care of the violin.\n\n3. Day 3: Begin stringing and tuning your violin.\n\n4. Day 4: Read a basic book on violin playing and notation (e.g., Alfred’s Basic Violin Method).\n\n5. Day 5: Work on basic technique and fingering ("
-        
-        
-        return []
+        let lines = aiResponse.split(separator: "\n")
+        var dayGuides: [EAGoalDayGuide] = []
+        // One line represents one EAGoalDayGuide Object
+        for line in lines {
+            // Separate the line by ":" which separates the Day Number info from the other info
+            let components = line.split(separator: ":")
+            // There should always be two components: day number(s) and task info
+            if components.count == 2 {
+                // Separate the tasks into
+                let tasks = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                    .components(separatedBy: ".")
+                    .filter({$0 != ""})
+                    .map({return $0.trimmingCharacters(in: .whitespacesAndNewlines)})
+                
+                // Trim whitespaces and then "Day " to just get the number(s)
+                let dayRangeString = components[0]
+                    .trimmingCharacters(in: .whitespaces)
+                    .trimmingCharacters(in: CharacterSet(charactersIn: "Day "))
+                // If the string contains a dash, it is a range (Ex: 1-3 vs 1)
+                if dayRangeString.contains("-") {
+                    // Split on the "-" to get the days
+                    let days = dayRangeString.split(separator: "-")
+                    // Parse the day numbers to integers
+                    if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
+                        let dayRange = firstDay...lastDay
+                        let dayGuide = EAGoalDayGuide(
+                            isMultipleDays: true,
+                            days: dayRange,
+                            tasks: tasks)
+                        dayGuides.append(dayGuide)
+                    } else {
+                        print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
+                    }
+                } else {
+                    if let day = Int(dayRangeString) {
+                        let dayRange = day...day
+                        let dayGuide = EAGoalDayGuide(
+                            isMultipleDays: false,
+                            days: dayRange,
+                            tasks: tasks)
+                        dayGuides.append(dayGuide)
+                    } else {
+                        print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
+                    }
+                }
+            } else {
+                print("$Error: \(String(describing: CreateTaskError.invalidNumberOfComponents)): \(components)")
+            }
+        }
+        print("Day Guides: \(dayGuides)")
+        return dayGuides
     }
     
     /// Creates a string to send to the OpenAI Completions endpoint
@@ -50,5 +101,5 @@ struct EAGoalDayGuide {
     /// The range of days the guide covers
     let days: ClosedRange<Int>
     /// The list of tasks associated with this guide
-    let tasks: [String]
+    var tasks: [String]
 }
