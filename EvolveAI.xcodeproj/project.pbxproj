@@ -24,6 +24,8 @@
 		B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056992962D4FD007B6DBD /* HTTPMethod.swift */; };
 		B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */; };
 		B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569E2962E045007B6DBD /* EAGoal.swift */; };
+		B9C056A22967CEE5007B6DBD /* FormQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */; };
+		B9C056A42967D139007B6DBD /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* FormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAICompletionsResponse.swift; sourceTree = "<group>"; };
 		B9C0569E2962E045007B6DBD /* EAGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoal.swift; sourceTree = "<group>"; };
 		B9C056A02962EDCD007B6DBD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormQuestionView.swift; sourceTree = "<group>"; };
+		B9C056A32967D139007B6DBD /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				B9C056862962C19C007B6DBD /* Storyboards */,
+				B9C056A12967CEE5007B6DBD /* FormQuestionView.swift */,
+				B9C056A32967D139007B6DBD /* FormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,11 +259,13 @@
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
+				B9C056A42967D139007B6DBD /* FormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
+				B9C056A22967CEE5007B6DBD /* FormQuestionView.swift in Sources */,
 				B9C056962962CEAF007B6DBD /* EARequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -41,7 +41,6 @@ final class EAService {
             return
         }
         
-        print("URL: \(urlRequest.url?.absoluteString)")
         let task = URLSession.shared.dataTask(
             with: urlRequest,
             completionHandler: { data, response, error in
