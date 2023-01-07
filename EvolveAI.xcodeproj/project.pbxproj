@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C1805FEDA7C7AE9F7F18876 /* Pods_EvolveAI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
 		B9C056722962C16E007B6DBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* ViewController.swift */; };
@@ -28,9 +29,13 @@
 		B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* EAFormView.swift */; };
 		B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */; };
 		B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */; };
+		B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */; };
+		B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EvolveAI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.release.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.release.xcconfig"; sourceTree = "<group>"; };
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +60,9 @@
 		B9C056A32967D139007B6DBD /* EAFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormView.swift; sourceTree = "<group>"; };
 		B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionResponse.swift; sourceTree = "<group>"; };
 		B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuide.swift; sourceTree = "<group>"; };
+		B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionViewModel.swift; sourceTree = "<group>"; };
+		B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsService.swift; sourceTree = "<group>"; };
+		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C1805FEDA7C7AE9F7F18876 /* Pods_EvolveAI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +83,8 @@
 				B9C056A02962EDCD007B6DBD /* Config.xcconfig */,
 				B9C0566C2962C16E007B6DBD /* EvolveAI */,
 				B9C0566B2962C16E007B6DBD /* Products */,
+				E6F9B39AE50E2E56EDA71848 /* Pods */,
+				EC32B6049AF904AB1AFC9F42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +99,7 @@
 		B9C0566C2962C16E007B6DBD /* EvolveAI */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056AC2968F9B8007B6DBD /* Repository */,
 				B9C056872962C1B7007B6DBD /* APIClient */,
 				B9C056852962C18A007B6DBD /* Models */,
 				B9C056842962C186007B6DBD /* Views */,
@@ -110,6 +122,7 @@
 		B9C056822962C17A007B6DBD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -138,8 +151,7 @@
 		B9C056852962C18A007B6DBD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B9C0569B2962DD96007B6DBD /* Responses */,
-				B9C056942962CE81007B6DBD /* Requests */,
+				B9C056B229690E10007B6DBD /* APIModels */,
 				B9C0569E2962E045007B6DBD /* EAGoal.swift */,
 				B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */,
 			);
@@ -194,6 +206,41 @@
 			path = ViewUtility;
 			sourceTree = "<group>";
 		};
+		B9C056AC2968F9B8007B6DBD /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		B9C056B229690E10007B6DBD /* APIModels */ = {
+			isa = PBXGroup;
+			children = (
+				B9C0569B2962DD96007B6DBD /* Responses */,
+				B9C056942962CE81007B6DBD /* Requests */,
+			);
+			path = APIModels;
+			sourceTree = "<group>";
+		};
+		E6F9B39AE50E2E56EDA71848 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */,
+				AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EC32B6049AF904AB1AFC9F42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,9 +248,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0567E2962C16F007B6DBD /* Build configuration list for PBXNativeTarget "EvolveAI" */;
 			buildPhases = (
+				01CB8FCF0B0932F0DE9A5C05 /* [CP] Check Pods Manifest.lock */,
 				B9C056662962C16E007B6DBD /* Sources */,
 				B9C056672962C16E007B6DBD /* Frameworks */,
 				B9C056682962C16E007B6DBD /* Resources */,
+				F0C93328997EE93089EFAF7C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -230,7 +279,7 @@
 				};
 			};
 			buildConfigurationList = B9C056652962C16E007B6DBD /* Build configuration list for PBXProject "EvolveAI" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -260,18 +309,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		01CB8FCF0B0932F0DE9A5C05 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EvolveAI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0C93328997EE93089EFAF7C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B9C056662962C16E007B6DBD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
+				B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */,
 				B9C056722962C16E007B6DBD /* ViewController.swift in Sources */,
 				B9C056892962C1DD007B6DBD /* EAService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
 				B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */,
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,
+				B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
@@ -426,6 +519,7 @@
 		};
 		B9C0567F2962C16F007B6DBD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -454,6 +548,7 @@
 		};
 		B9C056802962C16F007B6DBD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
