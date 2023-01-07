@@ -6,28 +6,29 @@
 //
 
 import Foundation
+import RealmSwift
 
 /// Represents user goals
-struct EAGoal {
+class EAGoal: Object {
     /// The goal itself (ex: "learn the violin")
-    let goal: String
+    @Persisted var goal: String
     /// The number of days to accomplish the goal (ex: 30)
-    let numDays: Int
+    @Persisted var numDays: Int
     /// The AI's response in normal String form
-    let aiResponse: String
+    @Persisted var aiResponse: String
     /// The tasks associated with completing the goal (derived from parsing aiResponse)
-    let tasks: [EAGoalDayGuide]
+    @Persisted var tasks: List<EAGoalDayGuide>
     
     /// Initializer for EAGoal
     /// - Parameters:
     ///   - goal: The goal itself (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - apiResponse: The OpenAI Completions Response
-    init(goal: String, numDays: Int, apiResponse: EAOpenAICompletionsResponse) {
+    convenience init(goal: String, numDays: Int, apiResponse: EAOpenAICompletionsResponse) {
+        self.init()
         self.goal = goal
         self.numDays = numDays
         self.aiResponse = apiResponse.choices.first?.text ?? ""
-        
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
@@ -41,9 +42,9 @@ struct EAGoal {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func createTasks(from aiResponse: String) -> [EAGoalDayGuide] {
+    private static func createTasks(from aiResponse: String) -> List<EAGoalDayGuide> {
         let lines = aiResponse.split(separator: "\n")
-        var dayGuides: [EAGoalDayGuide] = []
+        let dayGuides = List<EAGoalDayGuide>()
         // One line represents one EAGoalDayGuide Object
         for line in lines {
             // Separate the line by ":" which separates the Day Number info from the other info
@@ -55,6 +56,8 @@ struct EAGoal {
                     .components(separatedBy: ".")
                     .filter({$0 != ""})
                     .map({return $0.trimmingCharacters(in: .whitespacesAndNewlines)})
+                let taskList = List<String>()
+                taskList.append(objectsIn: tasks)
                 
                 // Trim whitespaces and then "Day " to just get the number(s)
                 let dayRangeString = components[0]
@@ -66,22 +69,25 @@ struct EAGoal {
                     let days = dayRangeString.split(separator: "-")
                     // Parse the day numbers to integers
                     if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
-                        let dayRange = firstDay...lastDay
+//                        let dayRange = firstDay...lastDay
+                        let dayList = List<Int>()
+                        dayList.append(objectsIn: [firstDay, lastDay])
                         let dayGuide = EAGoalDayGuide(
                             isMultipleDays: true,
-                            days: dayRange,
-                            tasks: tasks)
+                            days: dayList,
+                            tasks: taskList)
                         dayGuides.append(dayGuide)
                     } else {
                         print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
                     }
                 } else {
                     if let day = Int(dayRangeString) {
-                        let dayRange = day...day
+                        let dayList = List<Int>()
+                        dayList.append(objectsIn: [day])
                         let dayGuide = EAGoalDayGuide(
                             isMultipleDays: false,
-                            days: dayRange,
-                            tasks: tasks)
+                            days: dayList,
+                            tasks: taskList)
                         dayGuides.append(dayGuide)
                     } else {
                         print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")

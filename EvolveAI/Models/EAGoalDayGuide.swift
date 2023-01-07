@@ -6,12 +6,20 @@
 //
 
 import Foundation
+import RealmSwift
 /// Represents the guide for a given day (or set of days)
-struct EAGoalDayGuide {
+class EAGoalDayGuide: Object {
     /// Whether the guide covers the span of multiple days (ex: 1st to 3rd) instead of single day (ex: 1st)
-    let isMultipleDays: Bool
+    @Persisted var isMultipleDays: Bool
     /// The range of days the guide covers
-    let days: ClosedRange<Int>
+    @Persisted var days: List<Int>
     /// The list of tasks associated with this guide
-    var tasks: [String]
+    @Persisted var tasks: List<String>
+    
+    convenience init(isMultipleDays: Bool, days: List<Int>, tasks: List<String>) {
+        self.init()
+        self.isMultipleDays = isMultipleDays
+        self.days = days
+        self.tasks = tasks
+    }
 }
