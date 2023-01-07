@@ -8,11 +8,6 @@
 import Foundation
 import UIKit
 
-struct EAFormQuestionViewModel {
-    let question: String
-    let questionResponse: EAFormQuestionResponse
-}
-
 /// A view to represent form questions, which contain both the question label and a response object
 class EAFormQuestionView: UIView {
     
