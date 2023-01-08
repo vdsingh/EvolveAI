@@ -32,6 +32,14 @@ class EAGoal: Object {
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
+    convenience init(goal: String, numDays: Int, aiResponse: String) {
+        self.init()
+        self.goal = goal
+        self.numDays = numDays
+        self.aiResponse = aiResponse
+        self.tasks = EAGoal.createTasks(from: aiResponse)
+    }
+    
     /// Possible errors that can arise from parsing AI response to create task
     private enum CreateTaskError: Error {
         case invalidNumberOfComponents
@@ -97,7 +105,7 @@ class EAGoal: Object {
                 print("$Error: \(String(describing: CreateTaskError.invalidNumberOfComponents)): \(components)")
             }
         }
-        print("Day Guides: \(dayGuides)")
+//        print("Day Guides: \(dayGuides)")
         return dayGuides
     }
 }
