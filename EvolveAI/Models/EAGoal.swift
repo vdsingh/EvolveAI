@@ -100,13 +100,4 @@ class EAGoal: Object {
         print("Day Guides: \(dayGuides)")
         return dayGuides
     }
-    
-    /// Creates a string to send to the OpenAI Completions endpoint
-    /// - Parameters:
-    ///   - goal: A description of the goal to accomplish (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal in (ex: 30)
-    /// - Returns: A string to send to the OpenAI Completions endpoint
-    public static func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String{
-        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide to achieve this goal."
-    }
 }
