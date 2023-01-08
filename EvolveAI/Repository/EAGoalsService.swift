@@ -53,4 +53,15 @@ class EAGoalsService {
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int, characterLimit: Int) -> String {
         return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide to achieve this goal with a strict limit of \(characterLimit) characters."
     }
+    /// Helper function to communicate with realm. Abstracts error handling.
+    /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
+    private func writeToRealm(_ action: () -> Void) {
+        do {
+            try realm.write {
+                action()
+            }
+        } catch let error {
+            print("$Error: \(String(describing: error))")
+        }
+    }
 }
