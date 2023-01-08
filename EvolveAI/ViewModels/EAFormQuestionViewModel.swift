@@ -6,7 +6,10 @@
 //
 
 import Foundation
+/// A ViewModel for EAFormQuestions
 struct EAFormQuestionViewModel {
+    /// The question as a String
     let question: String
+    /// The response to the question
     let questionResponse: EAFormQuestionResponse
 }

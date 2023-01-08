@@ -6,7 +6,10 @@
 //
 
 import Foundation
+/// A ViewModel for EAGoals
 struct EAGoalViewModel {
+    /// The title of the goal
     let title: String
+    /// The number of days of the goal
     let numDays: Int
 }
