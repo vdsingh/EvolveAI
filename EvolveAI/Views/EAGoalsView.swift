@@ -7,7 +7,9 @@
 
 import UIKit
 
+/// View to display EAGoal objects in a UITableView
 class EAGoalsView: UIView {
+    /// The UITableView in which the goals will be displayed
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -15,6 +17,7 @@ class EAGoalsView: UIView {
         return tableView
     }()
     
+    /// Normal initializer
     init() {        
         super.init(frame: .zero)
         self.backgroundColor = .green
@@ -23,9 +26,10 @@ class EAGoalsView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        return nil
     }
     
+    /// Adds the subviews and establishes constraints
     private func addViewsAndEstablishConstraints() {
         addSubview(tableView)
 
@@ -37,6 +41,7 @@ class EAGoalsView: UIView {
         ])
     }
     
+    /// Refreshes the view
     public func refreshView() {
         tableView.reloadData()
     }
