@@ -10,8 +10,7 @@
 		8C1805FEDA7C7AE9F7F18876 /* Pods_EvolveAI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
-		B9C056722962C16E007B6DBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* ViewController.swift */; };
-		B9C056752962C16E007B6DBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C056732962C16E007B6DBD /* Main.storyboard */; };
+		B9C056722962C16E007B6DBD /* EAGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */; };
 		B9C056772962C16F007B6DBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C056762962C16F007B6DBD /* Assets.xcassets */; };
 		B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */; };
 		B9C056892962C1DD007B6DBD /* EAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EAService.swift */; };
@@ -31,6 +30,10 @@
 		B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */; };
 		B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */; };
 		B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */; };
+		B9C056BC296A887E007B6DBD /* EAGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056BB296A887E007B6DBD /* EAGoalsView.swift */; };
+		B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */; };
+		B9C056C0296A8E5C007B6DBD /* EAGoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056BF296A8E5C007B6DBD /* EAGoalTableViewCell.swift */; };
+		B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056C2296A90AC007B6DBD /* Mocking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +42,7 @@
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B9C056712962C16E007B6DBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B9C056742962C16E007B6DBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsViewController.swift; sourceTree = "<group>"; };
 		B9C056762962C16F007B6DBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9C056792962C16F007B6DBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9C0567B2962C16F007B6DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +64,10 @@
 		B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuide.swift; sourceTree = "<group>"; };
 		B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsService.swift; sourceTree = "<group>"; };
+		B9C056BB296A887E007B6DBD /* EAGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsView.swift; sourceTree = "<group>"; };
+		B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalViewModel.swift; sourceTree = "<group>"; };
+		B9C056BF296A8E5C007B6DBD /* EAGoalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTableViewCell.swift; sourceTree = "<group>"; };
+		B9C056C2296A90AC007B6DBD /* Mocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
 		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +105,7 @@
 		B9C0566C2962C16E007B6DBD /* EvolveAI */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056C1296A90A3007B6DBD /* Utility */,
 				B9C056AC2968F9B8007B6DBD /* Repository */,
 				B9C056872962C1B7007B6DBD /* APIClient */,
 				B9C056852962C18A007B6DBD /* Models */,
@@ -114,7 +121,7 @@
 		B9C056812962C174007B6DBD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056712962C16E007B6DBD /* ViewController.swift */,
+				B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -123,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */,
+				B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -144,6 +152,8 @@
 				B9C056862962C19C007B6DBD /* Storyboards */,
 				B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */,
 				B9C056A32967D139007B6DBD /* EAFormView.swift */,
+				B9C056BB296A887E007B6DBD /* EAGoalsView.swift */,
+				B9C056BF296A8E5C007B6DBD /* EAGoalTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,7 +171,6 @@
 		B9C056862962C19C007B6DBD /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056732962C16E007B6DBD /* Main.storyboard */,
 				B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -223,13 +232,20 @@
 			path = APIModels;
 			sourceTree = "<group>";
 		};
+		B9C056C1296A90A3007B6DBD /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		E6F9B39AE50E2E56EDA71848 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */,
 				AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -303,7 +319,6 @@
 			files = (
 				B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */,
 				B9C056772962C16F007B6DBD /* Assets.xcassets in Resources */,
-				B9C056752962C16E007B6DBD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,17 +373,21 @@
 			files = (
 				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
 				B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */,
-				B9C056722962C16E007B6DBD /* ViewController.swift in Sources */,
+				B9C056722962C16E007B6DBD /* EAGoalsViewController.swift in Sources */,
+				B9C056C0296A8E5C007B6DBD /* EAGoalTableViewCell.swift in Sources */,
 				B9C056892962C1DD007B6DBD /* EAService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
 				B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */,
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
+				B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,
+				B9C056BC296A887E007B6DBD /* EAGoalsView.swift in Sources */,
 				B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
+				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
 				B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
@@ -382,14 +401,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B9C056732962C16E007B6DBD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B9C056742962C16E007B6DBD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -530,7 +541,6 @@
 				INFOPLIST_FILE = EvolveAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -559,7 +569,6 @@
 				INFOPLIST_FILE = EvolveAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

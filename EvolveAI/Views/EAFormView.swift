@@ -13,7 +13,6 @@ class EAFormView: UIView {
     private let padding: CGFloat = 20
     private let spacing: CGFloat = 20
     
-//    private var textfieldWasEdited: ((_ text: String) -> Void)?
     private var textfieldCallbackGraph: [UITextField: ((_ text: String) -> Void)] = [:]
     
     init(questions: [EAFormQuestionViewModel]) {
@@ -23,22 +22,17 @@ class EAFormView: UIView {
         self.backgroundColor = .yellow
 
         self.setupUI(questions: questions)
-        
-        print("Form instantiated with \(questions)")
-
     }
     
     private func setupUI(questions: [EAFormQuestionViewModel]) {
         let stack = constructQuestionsStackView(questions: questions)
         stack.spacing = spacing
         addSubview(stack)
-//        setQuestionStackConstraints(stackView: stack)
         
         NSLayoutConstraint.activate([
             stack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: padding),
             stack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -padding),
             stack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: padding),
-//            stack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
     }
     
@@ -61,7 +55,6 @@ class EAFormView: UIView {
                 }
                 textfield.delegate = self
                 self.textfieldCallbackGraph[textfield] = textFieldWasEdited
-//                self.textfieldWasEdited = textFieldWasEdited
             }
         }
         
