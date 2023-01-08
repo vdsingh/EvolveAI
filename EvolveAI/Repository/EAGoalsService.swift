@@ -6,7 +6,8 @@
 //
 
 import Foundation
-/// API for goals data
+import RealmSwift
+/// API for goals data (CRUD)
 class EAGoalsService {
     /// Shared instance of the goals service
     static let shared = EAGoalsService()
@@ -98,6 +99,32 @@ class EAGoalsService {
         
         return code
     }
+    
+    /// Gets all of the persisted EAGoal objects from the Realm database
+    /// - Returns: an array of EAGoal objects from the Realm database
+    public func getAllPersistedGoals() -> [EAGoal] {
+        var goals = [EAGoal]()
+        goals.append(contentsOf: realm.objects(EAGoal.self))
+        return goals
+    }
+    
+    /// Updates a provided goal
+    /// - Parameters:
+    ///   - updateBlock: A function in which all desired updates are made to the goal
+    public func updateGoal(updateBlock: () -> Void) {
+        writeToRealm {
+            updateBlock()
+        }
+    }
+    
+    /// Deletes a provided goal
+    /// - Parameter goal: The goal to be deleted
+    public func deletePersistedGoal(goal: EAGoal) {
+        writeToRealm {
+            realm.delete(goal)
+        }
+    }
+    
     /// Helper function to communicate with realm. Abstracts error handling.
     /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
     private func writeToRealm(_ action: () -> Void) {
