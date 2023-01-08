@@ -66,35 +66,11 @@ class ViewController: UIViewController {
     }
     
     @objc func executeRequest() {
-        let request = EAOpenAIRequest.completionsRequest(
-            prompt: EAGoal.createOpenAICompletionsRequestString(goal: self.prompt, numDays: self.numDays)
-        )
+//        let request = EAOpenAIRequest.completionsRequest(
+//            prompt: EAGoal.createOpenAICompletionsRequestString(goal: self.prompt, numDays: self.numDays)
+//        )
 
-        EAService.shared.execute(request, expecting: EAOpenAICompletionsResponse.self, completion: { [weak self] (result) in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            switch result {
-            case .success(let object):
-                print("$Log: \(object)")
-                let goal = EAGoal(goal: strongSelf.prompt,
-                                  numDays: 10,
-                                  apiResponse: object)
-                
-                DispatchQueue.main.async {
-                    do {
-                        try? strongSelf.realm.write {
-                            strongSelf.realm.add(goal)
-                        }
-                    }
-                    strongSelf.displayText(text: goal.aiResponse)
-                    print("Set the label text to \(goal.aiResponse)")
-                }
-            case .failure(let error):
-                print("$Error: \(String(describing: error))")
-            }
-        })
+       
     }
     
     func displayText(text: String) {
