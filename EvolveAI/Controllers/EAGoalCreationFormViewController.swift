@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import UIKit
+class EAGoalCreationFormViewController: UIViewController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
+    }
+}

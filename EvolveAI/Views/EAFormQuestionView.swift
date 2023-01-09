@@ -37,7 +37,6 @@ class EAFormQuestionView: UIView {
         self.setupUI()
     }
     
-    
     /// Adds the required subviews and calls a function to establish contraints
     private func setupUI() {
         self.addSubview(self.questionLabel)

@@ -56,7 +56,6 @@ class EAFormView: UIView {
         questionStack.translatesAutoresizingMaskIntoConstraints = false
         questionStack.axis = .vertical
         
-        
         for questionViewModel in questionViewModels {
             let view = EAFormQuestionView(viewModel: questionViewModel)
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -89,6 +88,7 @@ extension EAFormView: UITextFieldDelegate {
         guard let callback = textfieldCallbackGraph[textField] else {
             return
         }
+        
         // Call the callback with the textfield's text.
         callback(textField.text ?? "")
     }
