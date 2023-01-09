@@ -25,19 +25,19 @@ class EAFormView: UIView {
     
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
-    init(questionViewModels: [EAFormQuestionViewModel]) {
+    init(questions: [EAFormQuestionType]) {
         self.questionViews = []
         
         super.init(frame: .zero)
         self.backgroundColor = .yellow
 
-        self.addViewsAndEstablishConstraints(questionViewModels: questionViewModels)
+        self.addViewsAndEstablishConstraints(questions: questions)
     }
     
     /// Add the subviews to the view and establish constraints
     /// - Parameter questions: The ViewModels which specify the subviews to add
-    private func addViewsAndEstablishConstraints(questionViewModels: [EAFormQuestionViewModel]) {
-        let stack = constructQuestionsStackView(questionViewModels: questionViewModels)
+    private func addViewsAndEstablishConstraints(questions: [EAFormQuestionType]) {
+        let stack = constructQuestionsStackView(questions: questions)
         stack.spacing = Constants.spacing
         addSubview(stack)
         
@@ -51,24 +51,25 @@ class EAFormView: UIView {
     /// Constructs a UIStackView that contains all of the question views
     /// - Parameter questionViewModels: the viewModels that represent the forms questions
     /// - Returns: a UIStackView that contains all of the question views
-    private func constructQuestionsStackView(questionViewModels: [EAFormQuestionViewModel]) -> UIStackView {
+    private func constructQuestionsStackView(questions: [EAFormQuestionType]) -> UIStackView {
         let questionStack = UIStackView()
         questionStack.translatesAutoresizingMaskIntoConstraints = false
         questionStack.axis = .vertical
         
-        for questionViewModel in questionViewModels {
-            let view = EAFormQuestionView(viewModel: questionViewModel)
-            view.translatesAutoresizingMaskIntoConstraints = false
+        for question in questions {
+            let view = question.getView()
             self.questionViews.append(view)
             questionStack.addArrangedSubview(view)
             
-            switch questionViewModel.questionResponse {
-            case .textfield(_, let textFieldWasEdited):
-                guard let textfield = view.questionResponseView as? UITextField else {
+            view.heightAnchor.constraint(equalToConstant: view.requiredHeight).isActive = true
+            
+            switch question {
+            case .textfield(_, _, let textFieldWasEdited):
+                guard let questionView = view as? EATextfieldQuestionView else {
                     fatalError("$Error: expected UITextField but got a different type.")
                 }
-                textfield.delegate = self
-                self.textfieldCallbackGraph[textfield] = textFieldWasEdited
+                questionView.textfield.delegate = self
+                self.textfieldCallbackGraph[questionView.textfield] = textFieldWasEdited
             }
         }
         
