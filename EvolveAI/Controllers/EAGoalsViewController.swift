@@ -53,8 +53,6 @@ extension EAGoalsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
         navigator.navigate(to: .viewGoal(goal: goal))
-//        let newVC = EAGoalViewController(navigator: self, goal: goal)
-//        show(newVC, sender: self)
     }
 }
 
