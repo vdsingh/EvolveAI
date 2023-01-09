@@ -10,11 +10,20 @@ import RealmSwift
 
 class EAGoalsViewController: UIViewController {
 
-    var goals: [EAGoal] = []
+    var goals: [EAGoal]
+    
+    init(goals: [EAGoal]) {
+        self.goals = goals
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        goals = Mocking.shared.createMockGoals(numGoals: 10)
     }
     
     override func loadView() {
@@ -40,7 +49,9 @@ class EAGoalsViewController: UIViewController {
 
 extension EAGoalsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let goal = goals[indexPath.row]
+        let newVC = EAGoalViewController(goal: goal)
+        show(newVC, sender: self)
     }
 }
 
