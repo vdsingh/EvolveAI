@@ -52,7 +52,8 @@ class EAGoalsViewController: UIViewController {
 extension EAGoalsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
-        navigator.navigate(to: .viewGoal(goal: goal))
+//        navigator.navigate(to: .viewGoal(goal: goal))
+        navigator.navigate(to: .createGoal)
     }
 }
 

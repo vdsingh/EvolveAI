@@ -26,9 +26,9 @@
 		B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569E2962E045007B6DBD /* EAGoal.swift */; };
 		B9C056A22967CEE5007B6DBD /* EAFormQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */; };
 		B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* EAFormView.swift */; };
-		B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */; };
+		B9C056A729682069007B6DBD /* EAFormQuestionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAFormQuestionType.swift */; };
 		B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */; };
-		B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */; };
+		B9C056AB2968F942007B6DBD /* EATextfieldQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AA2968F942007B6DBD /* EATextfieldQuestionViewModel.swift */; };
 		B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */; };
 		B9C056BC296A887E007B6DBD /* EAGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056BB296A887E007B6DBD /* EAGoalsView.swift */; };
 		B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */; };
@@ -39,6 +39,8 @@
 		B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056CF296BCBE9007B6DBD /* Navigator.swift */; };
 		B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D1296BCC0A007B6DBD /* GoalsListNavigator.swift */; };
 		B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D3296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift */; };
+		B9C056D6296BE635007B6DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D5296BE635007B6DBD /* Constants.swift */; };
+		B9C056D9296BE7B6007B6DBD /* EATextfieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,9 +67,9 @@
 		B9C056A02962EDCD007B6DBD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionView.swift; sourceTree = "<group>"; };
 		B9C056A32967D139007B6DBD /* EAFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormView.swift; sourceTree = "<group>"; };
-		B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionResponse.swift; sourceTree = "<group>"; };
+		B9C056A629682069007B6DBD /* EAFormQuestionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionType.swift; sourceTree = "<group>"; };
 		B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuide.swift; sourceTree = "<group>"; };
-		B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormQuestionViewModel.swift; sourceTree = "<group>"; };
+		B9C056AA2968F942007B6DBD /* EATextfieldQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextfieldQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsService.swift; sourceTree = "<group>"; };
 		B9C056BB296A887E007B6DBD /* EAGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsView.swift; sourceTree = "<group>"; };
 		B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalViewModel.swift; sourceTree = "<group>"; };
@@ -78,6 +80,8 @@
 		B9C056CF296BCBE9007B6DBD /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		B9C056D1296BCC0A007B6DBD /* GoalsListNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsListNavigator.swift; sourceTree = "<group>"; };
 		B9C056D3296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCreationFormViewController.swift; sourceTree = "<group>"; };
+		B9C056D5296BE635007B6DBD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextfieldQuestionView.swift; sourceTree = "<group>"; };
 		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,7 +146,7 @@
 		B9C056822962C17A007B6DBD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056AA2968F942007B6DBD /* EAFormQuestionViewModel.swift */,
+				B9C056DA296BE93E007B6DBD /* FormQuestionViewModels */,
 				B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */,
 			);
 			path = ViewModels;
@@ -154,6 +158,7 @@
 				B9C056762962C16F007B6DBD /* Assets.xcassets */,
 				B9C0566D2962C16E007B6DBD /* AppDelegate.swift */,
 				B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */,
+				B9C056D5296BE635007B6DBD /* Constants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -161,9 +166,9 @@
 		B9C056842962C186007B6DBD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056D7296BE750007B6DBD /* FormQuestion */,
 				B9C056A529682058007B6DBD /* ViewUtility */,
 				B9C056862962C19C007B6DBD /* Storyboards */,
-				B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */,
 				B9C056A32967D139007B6DBD /* EAFormView.swift */,
 				B9C056BB296A887E007B6DBD /* EAGoalsView.swift */,
 				B9C056BF296A8E5C007B6DBD /* EAGoalTableViewCell.swift */,
@@ -224,7 +229,7 @@
 		B9C056A529682058007B6DBD /* ViewUtility */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056A629682069007B6DBD /* EAFormQuestionResponse.swift */,
+				B9C056A629682069007B6DBD /* EAFormQuestionType.swift */,
 			);
 			path = ViewUtility;
 			sourceTree = "<group>";
@@ -261,6 +266,23 @@
 				B9C056D1296BCC0A007B6DBD /* GoalsListNavigator.swift */,
 			);
 			path = Navigators;
+			sourceTree = "<group>";
+		};
+		B9C056D7296BE750007B6DBD /* FormQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */,
+				B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */,
+			);
+			path = FormQuestion;
+			sourceTree = "<group>";
+		};
+		B9C056DA296BE93E007B6DBD /* FormQuestionViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056AA2968F942007B6DBD /* EATextfieldQuestionViewModel.swift */,
+			);
+			path = FormQuestionViewModels;
 			sourceTree = "<group>";
 		};
 		E6F9B39AE50E2E56EDA71848 /* Pods */ = {
@@ -395,14 +417,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
-				B9C056AB2968F942007B6DBD /* EAFormQuestionViewModel.swift in Sources */,
+				B9C056AB2968F942007B6DBD /* EATextfieldQuestionViewModel.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
 				B9C056722962C16E007B6DBD /* EAGoalsViewController.swift in Sources */,
 				B9C056C0296A8E5C007B6DBD /* EAGoalTableViewCell.swift in Sources */,
+				B9C056D6296BE635007B6DBD /* Constants.swift in Sources */,
 				B9C056892962C1DD007B6DBD /* EAService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
 				B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */,
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
+				B9C056D9296BE7B6007B6DBD /* EATextfieldQuestionView.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
 				B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */,
 				B9C056CD296BB41B007B6DBD /* EAGoalView.swift in Sources */,
@@ -414,7 +438,7 @@
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
-				B9C056A729682069007B6DBD /* EAFormQuestionResponse.swift in Sources */,
+				B9C056A729682069007B6DBD /* EAFormQuestionType.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
