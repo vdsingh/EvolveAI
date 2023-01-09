@@ -7,11 +7,10 @@
 
 import Foundation
 class Mocking {
-    static let shared = Mocking()
-    
-    private init() { }
-    
-    public func createMockGoals(numGoals: Int) -> [EAGoal] {
+    /// This function creates an array of mock goals
+    /// - Parameter numGoals: The number of mock goals to generate
+    /// - Returns: An array of mock goals
+    public static func createMockGoals(numGoals: Int) -> [EAGoal] {
         let mockGoalsMap: [String: String] = [
             "learn the violin": "Day 1: Buy a violin.",
             "read 3 books": "Day 1: Buy a book.",
