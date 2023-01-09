@@ -77,7 +77,6 @@ class EAGoal: Object {
                     let days = dayRangeString.split(separator: "-")
                     // Parse the day numbers to integers
                     if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
-//                        let dayRange = firstDay...lastDay
                         let dayList = List<Int>()
                         dayList.append(objectsIn: [firstDay, lastDay])
                         let dayGuide = EAGoalDayGuide(
@@ -105,7 +104,6 @@ class EAGoal: Object {
                 print("$Error: \(String(describing: CreateTaskError.invalidNumberOfComponents)): \(components)")
             }
         }
-//        print("Day Guides: \(dayGuides)")
         return dayGuides
     }
 }

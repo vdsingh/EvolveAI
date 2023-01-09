@@ -16,6 +16,11 @@ class EAGoalDayGuide: Object {
     /// The list of tasks associated with this guide
     @Persisted var tasks: List<String>
     
+    /// Initializer to create an EAGoalDayGuide
+    /// - Parameters:
+    ///   - isMultipleDays: Whether the guide covers the span of multiple days (ex: 1st to 3rd) instead of single day (ex: 1st)
+    ///   - days: The range of days the guide covers
+    ///   - tasks: The list of tasks associated with this guide
     convenience init(isMultipleDays: Bool, days: List<Int>, tasks: List<String>) {
         self.init()
         self.isMultipleDays = isMultipleDays
