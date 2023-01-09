@@ -18,8 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let controller = EAGoalsViewController(goals: EAGoalsService.shared.getAllPersistedGoals())
-        window?.rootViewController = controller
+        let navigationController = UINavigationController()
+        let navigator = GoalsListNavigator(navigationController: navigationController)
+        let goalsListController = EAGoalsViewController(
+            navigator: navigator,
+            goals: EAGoalsService.shared.getAllPersistedGoals()
+        )
+        navigationController.show(goalsListController, sender: self)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

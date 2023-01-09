@@ -11,8 +11,10 @@ import RealmSwift
 class EAGoalsViewController: UIViewController {
 
     var goals: [EAGoal]
+    let navigator: GoalsListNavigator
     
-    init(goals: [EAGoal]) {
+    init(navigator: GoalsListNavigator, goals: [EAGoal]) {
+        self.navigator = navigator
         self.goals = goals
         
         super.init(nibName: nil, bundle: nil)
@@ -50,8 +52,9 @@ class EAGoalsViewController: UIViewController {
 extension EAGoalsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
-        let newVC = EAGoalViewController(goal: goal)
-        show(newVC, sender: self)
+        navigator.navigate(to: .viewGoal(goal: goal))
+//        let newVC = EAGoalViewController(navigator: self, goal: goal)
+//        show(newVC, sender: self)
     }
 }
 
