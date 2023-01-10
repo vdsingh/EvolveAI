@@ -15,10 +15,13 @@ enum EAFormQuestionType {
                    textfieldPlaceholder: String,
                    textFieldWasEdited: (_ text: String) -> Void)
     
-//    case goalCreation(goalPlaceholder: String,
-//                      goalTextWasEdited: (_ text: String) -> Void,
-//                      numDaysPlaceholder: String,
-//                      numDaysTextWasEdited: (_ text: String) -> Void)
+    case goalCreation(actionText: String,
+                      goalPlaceholder: String,
+                      connectorText: String,
+                      goalTextWasEdited: (_ text: String) -> Void,
+                      numDaysPlaceholder: String,
+                      numDaysTextWasEdited: (_ text: String) -> Void,
+                      numDaysLabel: String)
     
     /// Transforms the response object to a UIView and returns it
     /// - Returns: a UIView which is the response object
@@ -31,8 +34,16 @@ enum EAFormQuestionType {
             )
             let view = EATextfieldQuestionView(viewModel: viewModel)
             return view
-//        case .goalCreation(let goalPlaceholder, _, let numDaysPlaceholder, _):
-//            break
+        case .goalCreation(let actionText, let goalPlaceholder, let connectorText, _, let numDaysPlaceholder, _, let numDaysLabel):
+            let viewModel = EACreateGoalQuestionViewModel(
+                actionText: actionText,
+                goalPlaceholderText: goalPlaceholder,
+                connectorText: connectorText,
+                numDaysPlaceholderText: numDaysPlaceholder,
+                numDaysUnitLabel: numDaysLabel
+            )
+            let view = EACreateGoalQuestionView(viewModel: viewModel)
+            return view
         }
     }
 }
