@@ -7,7 +7,10 @@
 
 import Foundation
 import UIKit
-class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
+
+/// A Form Question to ask users to specify details of a goal they want to create.
+class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
+    
     /// The required height of the View
     var requiredHeight: CGFloat = 190
     
@@ -19,10 +22,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
     }()
     
     /// TextField where user must enter their goal (ex: "learn the violin")
-    let goalTextField: UITextField = {
-        let goalTextField = UITextField()
-        goalTextField.translatesAutoresizingMaskIntoConstraints = false
-        goalTextField.backgroundColor = .blue
+    let goalTextField: EATextField = {
+        let goalTextField = EATextField()
         return goalTextField
     }()
     
@@ -35,10 +36,9 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
     }()
     
     /// TextField where user must ender the number of days for the goal (ex: "30")
-    let numDaysTextField: UITextField = {
-        let numDaysTextField = UITextField()
-        numDaysTextField.translatesAutoresizingMaskIntoConstraints = false
-        numDaysTextField.backgroundColor = .blue
+    let numDaysTextField: EATextField = {
+        let numDaysTextField = EATextField()
+        
         return numDaysTextField
     }()
     
@@ -54,10 +54,16 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
     /// - Parameter viewModel: The ViewModel used to display the correct information
     init(viewModel: EACreateGoalQuestionViewModel) {
         super.init(frame: .zero)
-        
+        self.setUIProperties(viewModel: viewModel)
+        self.addSubviewsAndEstablishConstraints()
+    }
+    
+    /// Sets the UI properties for this View
+    /// - Parameter viewModel: The ViewModel contains the information to assign for the properties
+    private func setUIProperties(viewModel: EACreateGoalQuestionViewModel) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = .vertical
-        self.spacing = 5
+        self.spacing = EAIncrement.one.rawValue
         self.distribution = .fillEqually
         
         self.actionTextLabel.text = viewModel.actionText
@@ -65,8 +71,6 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         self.connectorTextLabel.text = viewModel.connectorText
         self.numDaysTextField.placeholder = viewModel.numDaysPlaceholderText
         self.numDaysUnitLabel.text = viewModel.numDaysUnitLabel
-        
-        self.addSubviewsAndEstablishConstraints()
     }
     
     /// Add the subviews to the view and establish constraints

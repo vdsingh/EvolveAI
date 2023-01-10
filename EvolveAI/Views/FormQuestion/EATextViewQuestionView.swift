@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-/// View for basic TextField Questions
-class EATextFieldQuestionView: UIStackView, EAFormElementView {
+/// View for basic long text response Questions
+class EATextViewQuestionView: UIStackView, EAFormElementView {
     
     /// The required height for this view
-    var requiredHeight: CGFloat = 90
+    var requiredHeight: CGFloat = 150
     
     /// Label that displays the question
     let questionLabel: UILabel = {
@@ -22,15 +22,15 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         return questionLabel
     }()
     
-    /// TextField where user enters response
-    let textField: EATextField = {
-        let textField = EATextField()
-        return textField
+    /// TextView where user enters response
+    let textView: EATextView = {
+        let textView = EATextView()
+        return textView
     }()
     
     /// ViewModel initializer
     /// - Parameter viewModel: The ViewModel used to set the data of the View
-    init(viewModel: EATextFieldQuestionViewModel) {
+    init(viewModel: EATextViewQuestionViewModel) {
         super.init(frame: .zero)
         self.setUIProperties(viewModel: viewModel)
         self.addSubviewsAndEstablishConstraints()
@@ -38,7 +38,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     
     /// Sets the UI properties for this View
     /// - Parameter viewModel: The ViewModel contains the information to assign for the properties
-    private func setUIProperties(viewModel: EATextFieldQuestionViewModel) {
+    private func setUIProperties(viewModel: EATextViewQuestionViewModel) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.distribution = .fill
         self.alignment = .fill
@@ -52,7 +52,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     /// Add the subviews to the view and establish constraints
     private func addSubviewsAndEstablishConstraints() {
         self.addArrangedSubview(questionLabel)
-        self.addArrangedSubview(textField)
+        self.addArrangedSubview(textView)
         
         NSLayoutConstraint.activate([
             questionLabel.heightAnchor.constraint(equalToConstant: EAFontSize.bodyFontSize.rawValue)
