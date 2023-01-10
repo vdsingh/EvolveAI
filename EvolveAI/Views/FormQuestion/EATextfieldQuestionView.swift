@@ -14,6 +14,8 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     /// The required height for this view
     var requiredHeight: CGFloat = 90
     
+    public var editedDelegate: EATextFieldDelegate?
+    
     /// Label that displays the question
     let questionLabel: UILabel = {
         let questionLabel = UILabel()
@@ -23,8 +25,8 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     }()
     
     /// TextField where user enters response
-    let textField: EATextField = {
-        let textField = EATextField()
+    lazy var textField: EATextField = {
+        let textField = EATextField(editedDelegate: self.editedDelegate)
         return textField
     }()
     
@@ -43,7 +45,6 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         self.distribution = .fill
         self.alignment = .fill
         self.axis = .vertical
-        self.backgroundColor = .green
         self.spacing = EAIncrement.one.rawValue
         
         self.questionLabel.text = viewModel.question
@@ -60,6 +61,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     }
     
     required init(coder: NSCoder) {
+        self.editedDelegate = nil
         super.init(coder: coder)
     }
 }

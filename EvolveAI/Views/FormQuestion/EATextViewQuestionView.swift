@@ -43,7 +43,6 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
         self.distribution = .fill
         self.alignment = .fill
         self.axis = .vertical
-        self.backgroundColor = .green
         self.spacing = EAIncrement.one.rawValue
         
         self.questionLabel.text = viewModel.question

@@ -23,9 +23,15 @@ class EAButton: UIButton, EAFormElementView {
     
     /// Normal Initializer
     /// - Parameter text: The text for the button
-    init(text: String) {
+    init(text: String, enabledOnStart: Bool) {
         super.init(frame: .zero)
         self.setUIProperties(text: text)
+        self.setEnabled(enabled: enabledOnStart)
+        self.addTarget(self, action: #selector(self.pressed), for: .touchUpInside)
+    }
+    
+    @objc private func pressed() {
+        delegate?.buttonWasPressed(self)
     }
     
     /// Sets the UI properties of the Button
@@ -34,7 +40,11 @@ class EAButton: UIButton, EAFormElementView {
         self.setTitle(text, for: .normal)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
-        self.backgroundColor = .orange
+    }
+    
+    public func setEnabled(enabled: Bool) {
+        self.isEnabled = enabled
+        self.backgroundColor = enabled ? .orange : .systemGray
     }
     
     required init?(coder: NSCoder) {

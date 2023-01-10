@@ -14,6 +14,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     /// The required height of the View
     var requiredHeight: CGFloat = 190
     
+    private var editedDelegate: EATextFieldDelegate?
+    
     /// Label describing the action text (ex: "I am going to")
     let actionTextLabel: UILabel = {
         let actionTextLabel = UILabel()
@@ -22,8 +24,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }()
     
     /// TextField where user must enter their goal (ex: "learn the violin")
-    let goalTextField: EATextField = {
-        let goalTextField = EATextField()
+    lazy var goalTextField: EATextField = {
+        let goalTextField = EATextField(editedDelegate: self.editedDelegate)
         return goalTextField
     }()
     
@@ -36,8 +38,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }()
     
     /// TextField where user must ender the number of days for the goal (ex: "30")
-    let numDaysTextField: EATextField = {
-        let numDaysTextField = EATextField()
+    lazy var numDaysTextField: EATextField = {
+        let numDaysTextField = EATextField(editedDelegate: self.editedDelegate)
         
         return numDaysTextField
     }()

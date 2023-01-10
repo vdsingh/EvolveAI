@@ -16,13 +16,13 @@ enum EAFormElement {
     case textFieldQuestion(
         question: String,
         textfieldPlaceholder: String,
-        textFieldWasEdited: (_ text: String) -> Void
+        textFieldWasEdited: (_ textField: EATextField) -> Void
     )
     
     /// Used to create a basic question and long repsonse question
     case textViewQuestion(
         question: String,
-        textViewWasEdited: (_ text: String) -> Void
+        textViewWasEdited: (_ textView: UITextView) -> Void
     )
     
     /// Used to create a Goal creation question.
@@ -30,23 +30,28 @@ enum EAFormElement {
         actionText: String,
         goalPlaceholder: String,
         connectorText: String,
-        goalTextWasEdited: (_ text: String) -> Void,
+        goalTextWasEdited: (_ textField: EATextField) -> Void,
         numDaysPlaceholder: String,
-        numDaysTextWasEdited: (_ text: String) -> Void,
+        numDaysTextWasEdited: (_ textField: EATextField) -> Void,
         numDaysLabel: String
     )
     
     // MARK: - Other Elements
     
     /// Used to create a button
-    case button(buttonText: String, buttonPressed: () -> Void)
+    case button(
+        buttonText: String,
+        enabledOnStart: Bool,
+        viewSetter: (EAButton) -> Void,
+        buttonPressed: () -> Void
+    )
     
     /// Used to create a separator
     case separator
     
     /// Transforms the response object to a UIView and returns it
     /// - Returns: a UIView which is the response object
-    func getView() -> EAFormElementView {
+    func createView() -> EAFormElementView {
         switch self {
         case .textFieldQuestion(let question, let placeholder, _):
             let viewModel = EATextFieldQuestionViewModel(
@@ -75,8 +80,9 @@ enum EAFormElement {
             )
             let view = EACreateGoalQuestionView(viewModel: viewModel)
             return view
-        case .button(let buttonText, _):
-            let view = EAButton(text: buttonText)
+        case .button(let buttonText, let enabledOnStart, let viewSetter, _):
+            let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart)
+            viewSetter(view)
             return view
             
         case .separator:
