@@ -12,11 +12,8 @@ class EAGoalCreationFormViewController: UIViewController {
     private var goal: String?
     private var numDays: Int?
     private var additionalDetails = ""
-    
-    
+
     private var createGoalButton: EAButton?
-//    private lazy var createGoalButtonElement = EAFormElement
-//    )
     
     private var goalWasCreated: () -> Void
     init(goalWasCreated: @escaping () -> Void) {

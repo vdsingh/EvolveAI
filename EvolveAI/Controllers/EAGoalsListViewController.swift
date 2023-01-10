@@ -29,6 +29,11 @@ class EAGoalsListViewController: UIViewController {
     }
     
     override func loadView() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addGoalButtonPressed)
+        )
         let goalsView = EAGoalsView()
         goalsView.tableView.delegate = self
         goalsView.tableView.dataSource = self
@@ -40,20 +45,26 @@ class EAGoalsListViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    private func refreshView() {
-        guard let view = view as? EAGoalsView else {
-            fatalError("$Error: view is not EAGoalsView")
+    @objc private func addGoalButtonPressed() {
+        self.navigator.navigate(to: .createGoal(goalWasCreated: { [weak self] in
+            self?.goals = EAGoalsService.shared.getAllPersistedGoals()
+            self?.getView().refreshView()
+        }))
+    }
+    
+    private func getView() -> EAGoalsView {
+        if let view = self.view as? EAGoalsView {
+            return view
+        } else {
+            fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
         }
-        
-        view.refreshView()
     }
 }
 
 extension EAGoalsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
-//        navigator.navigate(to: .viewGoal(goal: goal))
-        navigator.navigate(to: .createGoal)
+        navigator.navigate(to: .viewGoal(goal: goal))
     }
 }
 
