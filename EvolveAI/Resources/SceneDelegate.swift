@@ -20,16 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         let navigationController = UINavigationController()
         let navigator = GoalsListNavigator(navigationController: navigationController)
-//        let goalsListController = EAGoalsViewController(
-//            navigator: navigator,
-//            goals: EAGoalsService.shared.getAllPersistedGoals()
-//        )
-        let goalCreationController = EAGoalCreationFormViewController()
-        navigationController.pushViewController(goalCreationController, animated: true)
-//        navigationController.show(goalsListController, sender: self)
+        let goalsListController = EAGoalsListViewController(
+            navigator: navigator,
+            goals: EAGoalsService.shared.getAllPersistedGoals()
+        )
+        navigationController.pushViewController(goalsListController, animated: true)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        print("scene finished")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

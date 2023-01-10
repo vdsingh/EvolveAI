@@ -14,19 +14,22 @@ class EAFormView: UIView {
     /// The UIViews for the questions
     var questionViews: [UIView]
     
-    /// A map for the callback functions for when text inputs have been edited
-    private var delegateCallbackGraph: [UIView: ((_ text: String) -> Void)] = [:]
+    /// A map for the callback functions for when TextFields have been edited
+    private var textFieldDelegateCallbackGraph: [UIView: ((_ textField: EATextField ) -> Void)] = [:]
     
+    /// A map for the callback functions for when TextViews have been edited
+    private var textViewDelegateCallbackGraph: [UIView: ((_ textView: UITextView ) -> Void)] = [:]
+
     /// A map for the callback functions for when buttons has been pressed
     private var buttonDelegateCallbackGraph: [UIView: (() -> Void)] = [:]
-
+    
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
     init(formElements: [EAFormElement]) {
         self.questionViews = []
         
         super.init(frame: .zero)
-        self.backgroundColor = .yellow
+        self.backgroundColor = .systemBackground
 
         self.addViewsAndEstablishConstraints(formElements: formElements)
     }
@@ -54,7 +57,7 @@ class EAFormView: UIView {
         elementStack.axis = .vertical
         
         for formElement in formElements {
-            let view = formElement.getView()
+            let view = formElement.createView()
             self.questionViews.append(view)
             elementStack.addArrangedSubview(view)
             
@@ -77,8 +80,8 @@ class EAFormView: UIView {
                 fatalError("$Error: expected EATextfieldQuestionView but got a different type.")
             }
             
-            questionView.textField.delegate = self
-            self.delegateCallbackGraph[questionView.textField] = textFieldWasEdited
+            questionView.editedDelegate = self
+            self.textFieldDelegateCallbackGraph[questionView.textField] = textFieldWasEdited
         
         case .textViewQuestion(_, let textViewWasEdited):
             guard let questionView = view as? EATextViewQuestionView else {
@@ -86,18 +89,18 @@ class EAFormView: UIView {
             }
             
             questionView.textView.delegate = self
-            self.delegateCallbackGraph[questionView.textView] = textViewWasEdited
+            self.textViewDelegateCallbackGraph[questionView.textView] = textViewWasEdited
             
         case .goalCreationQuestion(_,_,_, let goalEdited,_, let numDaysEdited, _):
             guard let questionView = view as? EACreateGoalQuestionView else {
                 fatalError("$Error: expected EACreateGoalQuestionView but got a different type.")
             }
             
-            questionView.goalTextField.delegate = self
-            questionView.numDaysTextField.delegate = self
-            self.delegateCallbackGraph[questionView.goalTextField] = goalEdited
-            self.delegateCallbackGraph[questionView.numDaysTextField] = numDaysEdited
-        case .button(_, let buttonPressed):
+            questionView.goalTextField.editedDelegate = self
+            questionView.numDaysTextField.editedDelegate = self
+            self.textFieldDelegateCallbackGraph[questionView.goalTextField] = goalEdited
+            self.textFieldDelegateCallbackGraph[questionView.numDaysTextField] = numDaysEdited
+        case .button(_, _, _, let buttonPressed):
             guard let buttonView = view as? EAButton else {
                 fatalError("$Error: expected EAButton but got a different type.")
             }
@@ -115,41 +118,40 @@ class EAFormView: UIView {
 }
 
 // MARK: - TextField Delegate
-extension EAFormView: UITextFieldDelegate {
-    /// Handles UITextFieldDidEndEditing for questions whose response is a textfield
-    /// - Parameter textField: the textfield in question
-    func textFieldDidEndEditing(_ textField: UITextField) {
+extension EAFormView: EATextFieldDelegate {
+    func textFieldWasEdited(_ textField: EATextField) {
         // Find the callback function for the specified textfield
-        guard let callback = delegateCallbackGraph[textField] else {
+        guard let callback = textFieldDelegateCallbackGraph[textField] else {
             return
         }
         
-        // Call the callback with the TextField's text.
-        callback(textField.text ?? "")
+        // Call the callback with the TextView's text.
+        callback(textField)
     }
 }
 
 // MARK: - TextView Delegate
 extension EAFormView: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        // Find the callback function for the specified textfield
-        guard let callback = delegateCallbackGraph[textView] else {
+        // Find the callback function for the specified TextView
+        guard let callback = textViewDelegateCallbackGraph[textView] else {
             return
         }
         
         // Call the callback with the TextView's text.
-        callback(textView.text ?? "")
+        callback(textView)
     }
 }
 
+// MARK: - Button Delegate
 extension EAFormView: EAButtonDelegate {
     func buttonWasPressed(_ button: EAButton) {
-        // Find the callback function for the specified textfield
+        // Find the callback function for the specified Button
         guard let callback = buttonDelegateCallbackGraph[button] else {
             return
         }
         
-        // Call the callback with the textfield's text.
+        // Call the callback for the Button
         callback()
     }
 }

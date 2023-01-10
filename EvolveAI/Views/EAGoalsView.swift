@@ -21,8 +21,6 @@ class EAGoalsView: UIView {
     /// Normal initializer
     init() {        
         super.init(frame: .zero)
-        self.backgroundColor = .green
-        
         addViewsAndEstablishConstraints()
     }
     
