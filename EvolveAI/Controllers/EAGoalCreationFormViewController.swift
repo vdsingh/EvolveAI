@@ -13,8 +13,8 @@ class EAGoalCreationFormViewController: UIViewController {
     }
     
     override func loadView() {
-        let view = EAFormView(questions: [
-            .goalCreation(
+        let view = EAFormView(formElements: [
+            .goalCreationQuestion(
                 actionText: "I am going to",
                 goalPlaceholder: "learn the violin",
                 connectorText: "within",
@@ -27,14 +27,20 @@ class EAGoalCreationFormViewController: UIViewController {
                 },
                 numDaysLabel: "days."
             ),
-            .textfield(
+            .separator,
+            .textFieldQuestion(
                 question: "Additional Details",
                 textfieldPlaceholder: "My budget for a violin is $400.",
                 textFieldWasEdited: { text in
                     print("Text was edited! \(text)")
                 }
             ),
-            
+            .textViewQuestion(question: "This is the question", textViewWasEdited: { text in
+                print("TextView was edited. \(text)")
+            }),
+            .button(buttonText: "BUTTON", buttonPressed: {
+                print("Button was pressed.")
+            }),
         ])
         
         self.view = view

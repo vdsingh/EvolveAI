@@ -16,7 +16,6 @@ class EAGoalsViewController: UIViewController {
     init(navigator: GoalsListNavigator, goals: [EAGoal]) {
         self.navigator = navigator
         self.goals = goals
-        
         super.init(nibName: nil, bundle: nil)
         self.title = "Goals List"
     }
