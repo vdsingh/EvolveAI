@@ -66,10 +66,20 @@ class EAFormView: UIView {
             switch question {
             case .textfield(_, _, let textFieldWasEdited):
                 guard let questionView = view as? EATextfieldQuestionView else {
-                    fatalError("$Error: expected UITextField but got a different type.")
+                    fatalError("$Error: expected EATextfieldQuestionView but got a different type.")
                 }
+                
                 questionView.textfield.delegate = self
                 self.textfieldCallbackGraph[questionView.textfield] = textFieldWasEdited
+            case .goalCreation(_,_,_, let goalEdited,_, let numDaysEdited, _):
+                guard let questionView = view as? EACreateGoalQuestionView else {
+                    fatalError("$Error: expected EACreateGoalQuestionView but got a different type.")
+                }
+                
+                questionView.goalTextField.delegate = self
+                questionView.numDaysTextField.delegate = self
+                self.textfieldCallbackGraph[questionView.goalTextField] = goalEdited
+                self.textfieldCallbackGraph[questionView.numDaysTextField] = numDaysEdited
             }
         }
         
