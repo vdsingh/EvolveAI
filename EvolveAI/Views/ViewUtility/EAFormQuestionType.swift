@@ -10,11 +10,11 @@ import UIKit
 
 /// Used to create user interactable response objects for questions on forms
 enum EAFormQuestionType {
-    /// Used to create a TextField as a question response for forms
+    /// Used to create a basic question and response question.
     case textfield(question: String,
                    textfieldPlaceholder: String,
                    textFieldWasEdited: (_ text: String) -> Void)
-    
+    /// Used to create a Goal creation question.
     case goalCreation(actionText: String,
                       goalPlaceholder: String,
                       connectorText: String,

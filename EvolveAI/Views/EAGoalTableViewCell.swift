@@ -11,18 +11,21 @@ import UIKit
 class EAGoalTableViewCell: UITableViewCell {
     /// Reuse Identifier for this cell
     static let reuseIdentifier = "EAGoalTableViewCell"
+    
     /// UILabel to display the title of the goal
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
+    
     /// UILabel to display the number of days of the goal
     let numDaysLabel: UILabel = {
         let numDaysLabel = UILabel()
         numDaysLabel.translatesAutoresizingMaskIntoConstraints = false
         return numDaysLabel
     }()
+    
     /// Adds the subviews and establishes the constraints
     private func addViewsAndEstablishConstraints() {
         addSubview(titleLabel)

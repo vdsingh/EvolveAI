@@ -41,6 +41,9 @@
 		B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D3296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift */; };
 		B9C056D6296BE635007B6DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D5296BE635007B6DBD /* Constants.swift */; };
 		B9C056D9296BE7B6007B6DBD /* EATextfieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */; };
+		B9C056DC296CF8BE007B6DBD /* EACreateGoalQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */; };
+		B9C056DE296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */; };
+		B9C056E0296D006C007B6DBD /* EAFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DF296D006C007B6DBD /* EAFontSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +85,9 @@
 		B9C056D3296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCreationFormViewController.swift; sourceTree = "<group>"; };
 		B9C056D5296BE635007B6DBD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextfieldQuestionView.swift; sourceTree = "<group>"; };
+		B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionView.swift; sourceTree = "<group>"; };
+		B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionViewModel.swift; sourceTree = "<group>"; };
+		B9C056DF296D006C007B6DBD /* EAFontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFontSize.swift; sourceTree = "<group>"; };
 		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
+				B9C056DF296D006C007B6DBD /* EAFontSize.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -273,6 +280,7 @@
 			children = (
 				B9C056A12967CEE5007B6DBD /* EAFormQuestionView.swift */,
 				B9C056D8296BE7B6007B6DBD /* EATextfieldQuestionView.swift */,
+				B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */,
 			);
 			path = FormQuestion;
 			sourceTree = "<group>";
@@ -281,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				B9C056AA2968F942007B6DBD /* EATextfieldQuestionViewModel.swift */,
+				B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */,
 			);
 			path = FormQuestionViewModels;
 			sourceTree = "<group>";
@@ -425,10 +434,13 @@
 				B9C056892962C1DD007B6DBD /* EAService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
 				B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */,
+				B9C056DC296CF8BE007B6DBD /* EACreateGoalQuestionView.swift in Sources */,
+				B9C056DE296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift in Sources */,
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C056D9296BE7B6007B6DBD /* EATextfieldQuestionView.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
 				B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */,
+				B9C056E0296D006C007B6DBD /* EAFontSize.swift in Sources */,
 				B9C056CD296BB41B007B6DBD /* EAGoalView.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,
 				B9C056BC296A887E007B6DBD /* EAGoalsView.swift in Sources */,

@@ -15,7 +15,6 @@ class EAGoalView: UIView {
     let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "NOT SET"
         return label
     }()
     

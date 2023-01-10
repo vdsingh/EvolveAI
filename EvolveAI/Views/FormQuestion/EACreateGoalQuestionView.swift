@@ -8,13 +8,17 @@
 import Foundation
 import UIKit
 class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
+    /// The required height of the View
     var requiredHeight: CGFloat = 190
+    
+    /// Label describing the action text (ex: "I am going to")
     let actionTextLabel: UILabel = {
         let actionTextLabel = UILabel()
         actionTextLabel.font = .systemFont(ofSize: EAFontSize.header1FontSize.rawValue, weight: .bold)
         return actionTextLabel
     }()
     
+    /// TextField where user must enter their goal (ex: "learn the violin")
     let goalTextField: UITextField = {
         let goalTextField = UITextField()
         goalTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -22,6 +26,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         return goalTextField
     }()
     
+    /// Label describing the connector text (ex: "within")
     let connectorTextLabel: UILabel = {
         let connectorTextLabel = UILabel()
         connectorTextLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +34,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         return connectorTextLabel
     }()
     
+    /// TextField where user must ender the number of days for the goal (ex: "30")
     let numDaysTextField: UITextField = {
         let numDaysTextField = UITextField()
         numDaysTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -36,6 +42,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         return numDaysTextField
     }()
     
+    /// Labl describing the unit for the number of days (ex: "days.")
     let numDaysUnitLabel: UILabel = {
         let numDaysUnitLabel = UILabel()
         numDaysUnitLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -43,6 +50,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         return numDaysUnitLabel
     }()
     
+    /// ViewModel initializer
+    /// - Parameter viewModel: The ViewModel used to display the correct information
     init(viewModel: EACreateGoalQuestionViewModel) {
         super.init(frame: .zero)
         
@@ -59,6 +68,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         
         self.addSubviewsAndEstablishConstraints()
     }
+    
     /// Add the subviews to the view and establish constraints
     private func addSubviewsAndEstablishConstraints() {
         let dayHStackView = UIStackView()
@@ -72,12 +82,6 @@ class EACreateGoalQuestionView: UIStackView,  EAFormQuestionView {
         self.addArrangedSubview(self.actionTextLabel)
         self.addArrangedSubview(self.goalTextField)
         self.addArrangedSubview(dayHStackView)
-        
-        NSLayoutConstraint.activate([
-//            self.actionTextLabel.heightAnchor.constraint(equalToConstant: 60),
-//            self.goalTextField.heightAnchor.constraint(equalToConstant: 60),
-//            dayHStackView.heightAnchor.constraint(equalToConstant: 60),
-        ])
     }
     
     required init(coder: NSCoder) {
