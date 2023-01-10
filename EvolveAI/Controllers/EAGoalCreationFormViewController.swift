@@ -14,9 +14,27 @@ class EAGoalCreationFormViewController: UIViewController {
     
     override func loadView() {
         let view = EAFormView(questions: [
-            .textfield(question: "Question", textfieldPlaceholder: "Placeholder", textFieldWasEdited: { text in
-                print("Text was edited! \(text)")
-            })
+            .goalCreation(
+                actionText: "I am going to",
+                goalPlaceholder: "learn the violin",
+                connectorText: "within",
+                goalTextWasEdited: { text in
+                    print("Goal text was edited: \(text)")
+                },
+                numDaysPlaceholder: "30",
+                numDaysTextWasEdited: { text in
+                    print("Num days text was edited: \(text)")
+                },
+                numDaysLabel: "days."
+            ),
+            .textfield(
+                question: "Additional Details",
+                textfieldPlaceholder: "My budget for a violin is $400.",
+                textFieldWasEdited: { text in
+                    print("Text was edited! \(text)")
+                }
+            ),
+            
         ])
         
         self.view = view
