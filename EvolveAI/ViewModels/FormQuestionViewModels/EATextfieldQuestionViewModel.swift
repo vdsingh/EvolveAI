@@ -7,9 +7,10 @@
 
 import Foundation
 /// A ViewModel for EAFormQuestions
-struct EATextfieldQuestionViewModel {
+struct EATextFieldQuestionViewModel {
     /// The question as a String
     let question: String
+    
     /// The placeholder for the response textfield
     let responsePlaceholder: String
 }

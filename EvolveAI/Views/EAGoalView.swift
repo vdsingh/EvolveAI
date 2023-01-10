@@ -7,8 +7,10 @@
 
 import Foundation
 import UIKit
+
 /// View to display an individual goal and all of its information
 class EAGoalView: UIView {
+    
     /// The ViewModel to use for the View's data
     let goalViewModel: EAGoalViewModel
     

@@ -9,6 +9,7 @@ import UIKit
 
 /// View to display EAGoal objects in a UITableView
 class EAGoalsView: UIView {
+    
     /// The UITableView in which the goals will be displayed
     var tableView: UITableView = {
         let tableView = UITableView()

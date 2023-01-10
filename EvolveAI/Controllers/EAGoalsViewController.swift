@@ -18,6 +18,7 @@ class EAGoalsViewController: UIViewController {
         self.goals = goals
         
         super.init(nibName: nil, bundle: nil)
+        self.title = "Goals List"
     }
     
     required init?(coder: NSCoder) {

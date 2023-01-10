@@ -9,6 +9,7 @@ import UIKit
 
 /// UITableViewCell to display EAGoal
 class EAGoalTableViewCell: UITableViewCell {
+    
     /// Reuse Identifier for this cell
     static let reuseIdentifier = "EAGoalTableViewCell"
     
