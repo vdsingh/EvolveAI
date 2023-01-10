@@ -7,16 +7,19 @@
 
 import Foundation
 import RealmSwift
+
 /// API for goals data (CRUD)
 class EAGoalsService {
+    
     /// Shared instance of the goals service
     static let shared = EAGoalsService()
+    
     /// Access to the Realm database
     let realm = try! Realm()
     
     /// Constants that are used in the goals service
     struct Constants {
-        static let characterLimit = 300
+        static let characterLimit = 10
         static let numDaysLimit = 30
     }
     
@@ -52,14 +55,15 @@ class EAGoalsService {
     ///   - numDays: The number of days to accomplish the goal in (ex: 30)
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int, characterLimit: Int) -> String {
-        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide to achieve this goal with a strict limit of \(characterLimit) characters."
+        let guideFormat = "Day [Day Number]: [Paragraph of tasks separated by the . character]"
+        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(characterLimit) characters."
     }
     
     /// Creates a goal and persists it to the Realm Database
     /// - Parameters:
     ///   - goal: The goal that user is trying to achieve (ex: "learn the violin")
     ///   - numDays: The number of days that the goal is to be achieved by (ex: 30 days)
-    public func createGoal(goal: String, numDays: Int) -> CreateGoalCode {
+    public func createGoal(goal: String, numDays: Int, completion: @escaping (Result<EAGoal, Error>) -> Void) -> CreateGoalCode {
         
         if(numDays > Constants.numDaysLimit) {
             return .dayLimitExceeded
@@ -88,6 +92,7 @@ class EAGoalsService {
                     strongSelf.writeToRealm {
                         strongSelf.realm.add(goal)
                     }
+                    completion(.success(goal))
                 }
                 
             case .failure(let error):

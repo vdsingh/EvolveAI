@@ -17,7 +17,7 @@
 		B9486DFE296D4DC000A0296E /* EAOpenAIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
-		B9C056722962C16E007B6DBD /* EAGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */; };
+		B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */; };
 		B9C056772962C16F007B6DBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C056762962C16F007B6DBD /* Assets.xcassets */; };
 		B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */; };
 		B9C056892962C1DD007B6DBD /* EAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EAService.swift */; };
@@ -67,7 +67,7 @@
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsViewController.swift; sourceTree = "<group>"; };
+		B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsListViewController.swift; sourceTree = "<group>"; };
 		B9C056762962C16F007B6DBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9C056792962C16F007B6DBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9C0567B2962C16F007B6DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 		B9C056812962C174007B6DBD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056712962C16E007B6DBD /* EAGoalsViewController.swift */,
+				B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */,
 				B9C056CA296BB3CF007B6DBD /* EAGoalViewController.swift */,
 				B9C056D3296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift */,
 			);
@@ -454,7 +454,7 @@
 				B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */,
 				B9C056AB2968F942007B6DBD /* EATextFieldQuestionViewModel.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
-				B9C056722962C16E007B6DBD /* EAGoalsViewController.swift in Sources */,
+				B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */,
 				B9C056C0296A8E5C007B6DBD /* EAGoalTableViewCell.swift in Sources */,
 				B9C056D6296BE635007B6DBD /* Constants.swift in Sources */,
 				B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */,

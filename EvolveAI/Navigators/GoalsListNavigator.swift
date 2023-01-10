@@ -12,7 +12,7 @@ class GoalsListNavigator: Navigator {
     /// Represents the destinations that can be reached from this navigator
     enum Destination {
         case viewGoal(goal: EAGoal)
-        case createGoal
+        case createGoal(goalWasCreated: () -> Void)
     }
 
     /// in some situations the navigation controller could end up causing a retain cycle.
@@ -43,8 +43,8 @@ class GoalsListNavigator: Navigator {
         switch destination {
         case .viewGoal(let goal):
             return EAGoalViewController(goal: goal)
-        case .createGoal:
-            return EAGoalCreationFormViewController()
+        case .createGoal(let goalWasCreated):
+            return EAGoalCreationFormViewController(goalWasCreated: goalWasCreated)
         }
     }
 }
