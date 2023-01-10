@@ -6,12 +6,16 @@
 //
 
 import Foundation
+
 /// Used to execute REST API requests
 final class EAService {
+    
     /// The shared instance that is used to access service functionality
     public static let shared = EAService()
+    
     /// Private initializer forces use of shared.
     private init() { }
+    
     /// Possible errors that can be encountered
     enum EAServiceError: Error {
         case failedToUnwrapURLRequest

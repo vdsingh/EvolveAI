@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
+/// Used to create requests to OpenAI endpoints
 final class EAOpenAIRequest: EARequest {
+    
     /// API Constants
     private struct Constants {
         static let baseUrl = "https://api.openai.com/v1"
@@ -14,10 +17,13 @@ final class EAOpenAIRequest: EARequest {
     
     /// Desired Endpoint
     private let endpoint: EAOpenAIEndpoint
+    
     /// Body for the request
     private let requestBody: EARequestBody?
+    
     /// Path Components for API if any
     private let pathComponents: [String]
+    
     /// Query Parameters for API if any
     private let queryParameters: [URLQueryItem]
     
@@ -45,8 +51,8 @@ final class EAOpenAIRequest: EARequest {
         return string
     }
     
+    /// Encodes the requestBody into data to be used in a request.
     private var requestBodyData: Data? {
-        
         if let requestBody = self.requestBody {
             // Encode the object as JSON data
             let encoder = JSONEncoder()
@@ -64,7 +70,6 @@ final class EAOpenAIRequest: EARequest {
         print("$Log: requestBody is nil.")
         return nil
     }
-    
     
     // MARK: - Public
     
@@ -84,17 +89,14 @@ final class EAOpenAIRequest: EARequest {
             fatalError("$Error retrieving API Key and Organization ID from config.")
         }
         
-        
         urlRequest.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         urlRequest.addValue(organizationID, forHTTPHeaderField: "OpenAI-Organization")
-        
         
         urlRequest.httpMethod = httpMethod.rawValue
         urlRequest.httpBody = requestBodyData
         
         return urlRequest
     }
-    
     
     /// Constructor for request
     /// - Parameters:
@@ -139,31 +141,4 @@ extension EAOpenAIRequest {
             max_tokens: max_tokens)
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }
-//    static func getInsiderTradingReportsRequest(forSymbol symbol: String) -> IPRequest {
-//        let query = IPInsiderTradingQuery(
-//            highestJunction:
-//                IPInsiderTradingClause(
-//                    operator: .AND,
-//                    junctionValues: [],
-//                    queryItemValues: [
-//                        IPInsiderTradingQueryItem(key: .tradingSymbol, value: symbol)
-//                    ]
-//                )
-//        )
-//
-////        print("QUERY STRING: \(query.highestJunction.constructClauseString())")
-//        let requestBody = IPInsiderTradingRequestBody(withQuery: query)
-////        print("QUERY STRING V2: \(requestBody.query?.query_string.query)")
-//
-//        return IPRequest(endpoint: .insiderTrading,
-//                         requestBody: requestBody)
-//    }
-//
-//    /// Constructs a IPRequest to get a specified number of transactions
-//    /// - Parameter numTransactions: The number of transactions to get
-//    /// - Returns: an IPRequest object to be used for making the API call.
-//    static func getInsiderTraingReportsRequest(numTransactions: Int) -> IPRequest {
-//        let requestBody = IPInsiderTradingRequestBody(size: 20)
-//        return IPRequest(endpoint: .insiderTrading, requestBody: requestBody)
-//    }
 }

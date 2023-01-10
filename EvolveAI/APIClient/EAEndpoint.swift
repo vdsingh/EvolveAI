@@ -6,10 +6,8 @@
 //
 
 import Foundation
+
+/// Protocol that all endpoints must follow
 protocol EAEndpoint {
     
-}
-
-enum EAOpenAIEndpoint: String, EAEndpoint {
-    case completions = "completions"
 }
