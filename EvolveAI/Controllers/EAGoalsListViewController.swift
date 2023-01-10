@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class EAGoalsViewController: UIViewController {
+class EAGoalsListViewController: UIViewController {
 
     var goals: [EAGoal]
     let navigator: GoalsListNavigator
@@ -49,7 +49,7 @@ class EAGoalsViewController: UIViewController {
     }
 }
 
-extension EAGoalsViewController: UITableViewDelegate {
+extension EAGoalsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
 //        navigator.navigate(to: .viewGoal(goal: goal))
@@ -57,7 +57,7 @@ extension EAGoalsViewController: UITableViewDelegate {
     }
 }
 
-extension EAGoalsViewController: UITableViewDataSource {
+extension EAGoalsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
