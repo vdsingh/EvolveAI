@@ -13,4 +13,7 @@ struct EAGoalViewModel {
     
     /// The number of days of the goal
     let numDays: Int
+    
+    /// The text to display about the guide for the goal
+    let guideText: String
 }

@@ -37,7 +37,7 @@ class EAGoal: Object {
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
-        self.aiResponse = apiResponse.choices.first?.text ?? ""
+        self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
@@ -46,7 +46,7 @@ class EAGoal: Object {
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
-        self.aiResponse = aiResponse
+        self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     

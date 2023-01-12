@@ -92,6 +92,7 @@ class EAGoalsService {
                                   numDays: numDays,
                                   additionalDetails: additionalDetails,
                                   apiResponse: apiResponse)
+                print("API RESPONSE: \(apiResponse). AI Response: \(goal.aiResponse)")
                 DispatchQueue.main.async {
                     strongSelf.writeToRealm {
                         strongSelf.realm.add(goal)

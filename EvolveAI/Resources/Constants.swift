@@ -7,5 +7,4 @@
 
 import Foundation
 struct Constants {
-    static let maxDays = 30
 }

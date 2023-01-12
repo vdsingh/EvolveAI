@@ -24,7 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navigator: navigator,
             goals: EAGoalsService.shared.getAllPersistedGoals()
         )
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.pushViewController(goalsListController, animated: true)
+//        goalsListController.navigationController.prefersLar
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
