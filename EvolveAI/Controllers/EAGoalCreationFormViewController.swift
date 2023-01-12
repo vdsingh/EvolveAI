@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 
 class EAGoalCreationFormViewController: UIViewController {
+    struct Constants {
+        static let maxGoalLength = 50
+        static let maxDays = 30
+    }
+    
     private var goal: String?
     private var numDays: Int?
     private var additionalDetails = ""
@@ -29,7 +34,19 @@ class EAGoalCreationFormViewController: UIViewController {
                 goalPlaceholder: "learn the violin",
                 connectorText: "within",
                 goalTextWasEdited: { [weak self] textField in
-                    self?.goal = textField.text ?? ""
+                    guard let strongSelf = self else {
+                        print("$Error: self is nil.")
+                        return
+                    }
+                    
+                    if let goal = textField.text, goal != "", goal.count < Constants.maxGoalLength {
+                        strongSelf.goal = goal
+                        textField.setBorderColor(color: .label)
+                    } else {
+                        strongSelf.goal = nil
+                        textField.setBorderColor(color: .red)
+                    }
+                    
                     self?.updateButton()
                 },
                 numDaysPlaceholder: "30",
@@ -39,16 +56,14 @@ class EAGoalCreationFormViewController: UIViewController {
                         return
                     }
                     
-                    guard let numDays = strongSelf.validateNumDays(text: textField.text),
-                            numDays <= Constants.maxDays else {
+                    if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
+                       numDays <= Constants.maxDays {
+                        strongSelf.numDays = numDays
+                        textField.setBorderColor(color: .label)
+                    } else {
                         strongSelf.numDays = nil
                         textField.setBorderColor(color: .red)
-                        strongSelf.updateButton()
-                        return
                     }
-                    
-                    strongSelf.numDays = numDays
-                    textField.setBorderColor(color: .label)
                     
                     strongSelf.updateButton()
                 },
@@ -107,12 +122,12 @@ class EAGoalCreationFormViewController: UIViewController {
         }
     }
     
-    private func validateNumDays(text: String?) -> Int? {
-        guard let text = text, let numDays = Int(text) else {
-            return nil
+    private func getNumber(text: String) -> Int? {
+        if let numDays = Int(text) {
+            return numDays
         }
         
-        return numDays
+        return nil
     }
     
     private func getView() -> EAFormView {
