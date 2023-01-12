@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class EAGoalCreationFormViewController: UIViewController {
-    struct Constants {
+    struct GoalCreationConstants {
         static let maxGoalLength = 50
         static let maxDays = 30
     }
@@ -39,7 +39,7 @@ class EAGoalCreationFormViewController: UIViewController {
                         return
                     }
                     
-                    if let goal = textField.text, goal != "", goal.count < Constants.maxGoalLength {
+                    if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
                         strongSelf.goal = goal
                         textField.setBorderColor(color: .label)
                     } else {
@@ -57,7 +57,7 @@ class EAGoalCreationFormViewController: UIViewController {
                     }
                     
                     if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
-                       numDays <= Constants.maxDays {
+                       numDays <= GoalCreationConstants.maxDays {
                         strongSelf.numDays = numDays
                         textField.setBorderColor(color: .label)
                     } else {

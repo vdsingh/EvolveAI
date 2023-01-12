@@ -132,7 +132,7 @@ extension EAOpenAIRequest {
         model: EAOpenAICompletionsModel = .davinci003,
         prompt: String,
         temperature: Int = 1,
-        max_tokens: Int = 100
+        max_tokens: Int
     ) -> EAOpenAIRequest {
         let requestBody = EAOpenAICompletionsRequestBody(
             model: model,

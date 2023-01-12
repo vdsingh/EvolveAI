@@ -18,7 +18,7 @@ class EAGoalsService {
     let realm = try! Realm()
     
     /// Constants that are used in the goals service
-    struct Constants {
+    struct GoalServiceConstants {
         static let characterLimit = 10
         static let numDaysLimit = 30
     }
@@ -39,7 +39,7 @@ class EAGoalsService {
             case .success:
                 return "Success"
             case .dayLimitExceeded:
-                return "Please choose a shorter number of days to achieve the goal. The limit is \(Constants.numDaysLimit)"
+                return "Please choose a shorter number of days to achieve the goal. The limit is \(GoalServiceConstants.numDaysLimit)"
             case .error:
                 return "Other error encountered"
             }
@@ -54,9 +54,9 @@ class EAGoalsService {
     ///   - goal: A description of the goal to accomplish (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal in (ex: 30)
     /// - Returns: A string to send to the OpenAI Completions endpoint
-    private func createOpenAICompletionsRequestString(goal: String, numDays: Int, characterLimit: Int) -> String {
-        let guideFormat = "Day [Day Number]: [Paragraph of tasks separated by the . character]"
-        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(characterLimit) characters."
+    private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
+        let guideFormat = "Day [Day Number]: [Paragraph of tasks in sentence form]"
+        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
     }
     
     /// Creates a goal and persists it to the Realm Database
@@ -68,15 +68,15 @@ class EAGoalsService {
                            additionalDetails: String,
                            completion: @escaping (Result<EAGoal, Error>) -> Void) -> CreateGoalCode {
         
-        if(numDays > Constants.numDaysLimit) {
+        if(numDays > GoalServiceConstants.numDaysLimit) {
             return .dayLimitExceeded
         }
         
         let prompt = createOpenAICompletionsRequestString(
             goal: goal,
-            numDays: numDays,
-            characterLimit: Constants.characterLimit)
-        let request = EAOpenAIRequest.completionsRequest(prompt: prompt)
+            numDays: numDays)
+        let request = EAOpenAIRequest.completionsRequest(prompt: prompt,
+                                                         max_tokens: Constants.maxTokens)
         var code = CreateGoalCode.success
         EAService.shared.execute(
             request,

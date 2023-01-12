@@ -7,4 +7,5 @@
 
 import Foundation
 struct Constants {
+    static let maxTokens = 300
 }
