@@ -63,7 +63,10 @@ class EAGoalsService {
     /// - Parameters:
     ///   - goal: The goal that user is trying to achieve (ex: "learn the violin")
     ///   - numDays: The number of days that the goal is to be achieved by (ex: 30 days)
-    public func createGoal(goal: String, numDays: Int, completion: @escaping (Result<EAGoal, Error>) -> Void) -> CreateGoalCode {
+    public func createGoal(goal: String,
+                           numDays: Int,
+                           additionalDetails: String,
+                           completion: @escaping (Result<EAGoal, Error>) -> Void) -> CreateGoalCode {
         
         if(numDays > Constants.numDaysLimit) {
             return .dayLimitExceeded
@@ -87,6 +90,7 @@ class EAGoalsService {
             case .success(let apiResponse):
                 let goal = EAGoal(goal: goal,
                                   numDays: numDays,
+                                  additionalDetails: additionalDetails,
                                   apiResponse: apiResponse)
                 DispatchQueue.main.async {
                     strongSelf.writeToRealm {

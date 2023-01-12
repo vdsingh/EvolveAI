@@ -77,11 +77,13 @@ class EAGoalCreationFormViewController: UIViewController {
     private func createGoal() {
         if let goal = self.goal, let numDays = self.numDays {
             print("Num days: \(numDays)")
-            let _ = EAGoalsService.shared.createGoal(goal: goal,
-                                             numDays: numDays) { [weak self] result in
+            let _ = EAGoalsService.shared.createGoal(
+                goal: goal,
+                numDays: numDays,
+                additionalDetails: self.additionalDetails
+            ) { [weak self] result in
                 print("Create Goal Completion called.")
                 self?.goalWasCreated()
-                //            self?.refreshDelegate.refreshView()
                 self?.navigationController?.popViewController(animated: true)
             }
         } else {

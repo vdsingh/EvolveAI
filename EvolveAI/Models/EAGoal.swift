@@ -10,12 +10,19 @@ import RealmSwift
 
 /// Represents user goals
 class EAGoal: Object {
+    
     /// The goal itself (ex: "learn the violin")
     @Persisted var goal: String
+    
     /// The number of days to accomplish the goal (ex: 30)
     @Persisted var numDays: Int
+    
+    /// The user specified additional details for the goal
+    @Persisted var additionalDetails: String
+    
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
+    
     /// The tasks associated with completing the goal (derived from parsing aiResponse)
     @Persisted var tasks: List<EAGoalDayGuide>
     
@@ -23,19 +30,22 @@ class EAGoal: Object {
     /// - Parameters:
     ///   - goal: The goal itself (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
+    ///   - additionalDetails: The user specified additional details for the goal
     ///   - apiResponse: The OpenAI Completions Response
-    convenience init(goal: String, numDays: Int, apiResponse: EAOpenAICompletionsResponse) {
+    convenience init(goal: String, numDays: Int, additionalDetails: String, apiResponse: EAOpenAICompletionsResponse) {
         self.init()
         self.goal = goal
         self.numDays = numDays
+        self.additionalDetails = additionalDetails
         self.aiResponse = apiResponse.choices.first?.text ?? ""
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }
     
-    convenience init(goal: String, numDays: Int, aiResponse: String) {
+    convenience init(goal: String, numDays: Int, additionalDetails: String, aiResponse: String) {
         self.init()
         self.goal = goal
         self.numDays = numDays
+        self.additionalDetails = additionalDetails
         self.aiResponse = aiResponse
         self.tasks = EAGoal.createTasks(from: aiResponse)
     }

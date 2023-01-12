@@ -25,6 +25,7 @@ class Mocking {
             }
             let goal = EAGoal(goal: randomGoal.key,
                               numDays: Int.random(in: 1...30),
+                              additionalDetails: "",
                               aiResponse: randomGoal.value)
             goals.append(goal)
         }
