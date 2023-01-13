@@ -17,10 +17,9 @@ class EAGoalCreationFormViewController: UIViewController {
     private var goal: String?
     private var numDays: Int?
     private var additionalDetails = ""
-
     private var createGoalButton: EAButton?
-    
     private var goalWasCreated: () -> Void
+    
     init(goalWasCreated: @escaping () -> Void) {
         self.goalWasCreated = goalWasCreated
         super.init(nibName: nil, bundle: nil)
@@ -90,6 +89,7 @@ class EAGoalCreationFormViewController: UIViewController {
     }
     
     private func createGoal() {
+        self.getView().setSpinner(isActive: true)
         if let goal = self.goal, let numDays = self.numDays {
             print("Num days: \(numDays)")
             let _ = EAGoalsService.shared.createGoal(
@@ -99,6 +99,7 @@ class EAGoalCreationFormViewController: UIViewController {
             ) { [weak self] result in
                 print("Create Goal Completion called.")
                 self?.goalWasCreated()
+                self?.getView().setSpinner(isActive: false)
                 self?.navigationController?.popViewController(animated: true)
             }
         } else {

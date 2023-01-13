@@ -23,6 +23,13 @@ class EAFormView: UIView {
     /// A map for the callback functions for when buttons has been pressed
     private var buttonDelegateCallbackGraph: [UIView: (() -> Void)] = [:]
     
+    let spinner: EASpinner = {
+        let spinner = EASpinner()
+        return spinner
+    }()
+    
+    // MARK: - Initiailizer
+    
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
     init(formElements: [EAFormElement]) {
@@ -34,19 +41,27 @@ class EAFormView: UIView {
         self.addViewsAndEstablishConstraints(formElements: formElements)
     }
     
+    // MARK: - Private Functions
+    
     /// Add the subviews to the view and establish constraints
     /// - Parameter formElements: The EAFormElements which specify the subviews to add
     private func addViewsAndEstablishConstraints(formElements: [EAFormElement]) {
         let stack = constructFormElementStackView(formElements: formElements)
         stack.spacing = EAIncrement.two.rawValue
-        addSubview(stack)
+        self.addSubview(stack)
+        self.addSubview(spinner)
         
         NSLayoutConstraint.activate([
             stack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: EAIncrement.two.rawValue),
             stack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -EAIncrement.two.rawValue),
             stack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: EAIncrement.two.rawValue),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
         ])
     }
+    
+    
     
     /// Constructs a UIStackView that contains all of the form element views
     /// - Parameter formElements: the EAFormElement which specify the subviews to add
@@ -109,6 +124,17 @@ class EAFormView: UIView {
             self.buttonDelegateCallbackGraph[buttonView] = buttonPressed
         case .separator:
             break
+        }
+    }
+    
+    // MARK: - Public Functions
+    public func setSpinner(isActive: Bool) {
+        if isActive {
+            self.isUserInteractionEnabled = false
+            self.spinner.startAnimating()
+        } else {
+            self.isUserInteractionEnabled = true
+            self.spinner.stopAnimating()
         }
     }
 
