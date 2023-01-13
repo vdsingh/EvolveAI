@@ -23,7 +23,8 @@ class EAFormView: UIView {
     /// A map for the callback functions for when buttons has been pressed
     private var buttonDelegateCallbackGraph: [UIView: (() -> Void)] = [:]
     
-    let spinner: EASpinner = {
+    /// A spinner to indicate when we are loading data
+    private let spinner: EASpinner = {
         let spinner = EASpinner()
         return spinner
     }()
@@ -128,6 +129,9 @@ class EAFormView: UIView {
     }
     
     // MARK: - Public Functions
+    
+    /// Sets the spinners active status
+    /// - Parameter isActive: Whether the spinner should be active or not
     public func setSpinner(isActive: Bool) {
         if isActive {
             self.isUserInteractionEnabled = false

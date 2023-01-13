@@ -20,11 +20,15 @@ class EAGoalCreationFormViewController: UIViewController {
     private var createGoalButton: EAButton?
     private var goalWasCreated: () -> Void
     
+    
+    /// Normal initializer
+    /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.
     init(goalWasCreated: @escaping () -> Void) {
         self.goalWasCreated = goalWasCreated
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// Load the view for the screen
     override func loadView() {
         self.title = "New Goal"
         let view = EAFormView(formElements: [
@@ -80,7 +84,7 @@ class EAGoalCreationFormViewController: UIViewController {
                 },
                 buttonPressed: { [weak self] in
                     print("Create Goal Button was pressed.")
-                    self?.createGoal()
+                    self?.createGoalButtonPressed()
                 }
             )
         ])
@@ -88,7 +92,8 @@ class EAGoalCreationFormViewController: UIViewController {
         self.view = view
     }
     
-    private func createGoal() {
+    /// Function that gets called when the "Create Goal Button" was pressed
+    private func createGoalButtonPressed() {
         self.getView().setSpinner(isActive: true)
         if let goal = self.goal, let numDays = self.numDays {
             print("Num days: \(numDays)")
@@ -107,6 +112,7 @@ class EAGoalCreationFormViewController: UIViewController {
         }
     }
     
+    /// Updates the status of the button based on whether the required fields are filled in correctly.
     private func updateButton() {
         if let buttonView = self.createGoalButton {
             guard let goal = self.goal,
@@ -123,6 +129,9 @@ class EAGoalCreationFormViewController: UIViewController {
         }
     }
     
+    /// Casts a String to an Int
+    /// - Parameter text: the Int within a String
+    /// - Returns: an Int (if it can be casted)
     private func getNumber(text: String) -> Int? {
         if let numDays = Int(text) {
             return numDays
@@ -131,6 +140,8 @@ class EAGoalCreationFormViewController: UIViewController {
         return nil
     }
     
+    /// Safely casts the view as an EAFormView (or creates a fatal error)
+    /// - Returns: The ViewController's view as an EAFormView
     private func getView() -> EAFormView {
         if let view = self.view as? EAFormView {
             return view
