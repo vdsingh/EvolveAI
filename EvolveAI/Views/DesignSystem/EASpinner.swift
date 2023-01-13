@@ -7,10 +7,11 @@
 
 import Foundation
 import UIKit
+
+/// Custom Activity Indicator Spinner View for this application
 class EASpinner: UIView {
-    
-    //TODO: Docstrings
-    
+
+    /// The container for the spinner. Provides a background for accessbility purposes
     private let spinnerContainer: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +30,16 @@ class EASpinner: UIView {
         return spinner
     }()
     
+    /// Normal Initializer
     init() {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviewsAndEstablishConstraints()
     }
     
+    // MARK: - Private Functions
+    
+    /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         self.spinnerContainer.addSubview(self.spinner)
         self.addSubview(spinnerContainer)
@@ -52,11 +57,15 @@ class EASpinner: UIView {
         ])
     }
     
+    // MARK: - Public Functions
+    
+    /// Function to call when we want to start animating the spinner
     public func startAnimating() {
         spinnerContainer.isHidden = false
         spinner.startAnimating()
     }
     
+    /// Function to call when we want to stop animating the spinner
     public func stopAnimating() {
         spinnerContainer.isHidden = true
         spinner.stopAnimating()

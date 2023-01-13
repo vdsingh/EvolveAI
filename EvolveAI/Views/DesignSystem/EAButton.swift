@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
+/// This delegate is used for when an EAButton was pressed.
 protocol EAButtonDelegate {
+    
+    /// Function that gets called when the button is pressed
+    /// - Parameter button: The button that was pressed
     func buttonWasPressed(_ button: EAButton)
 }
 
@@ -34,6 +38,8 @@ class EAButton: UIButton, EAFormElementView {
         delegate?.buttonWasPressed(self)
     }
     
+    // MARK: - Private Functions
+    
     /// Sets the UI properties of the Button
     /// - Parameter text: The text for the button
     private func setUIProperties(text: String) {
@@ -42,6 +48,10 @@ class EAButton: UIButton, EAFormElementView {
         self.layer.cornerRadius = EAIncrement.one.rawValue
     }
     
+    // MARK: - Public Functions
+    
+    /// Enables or disables the button
+    /// - Parameter enabled: whether the button should be enabled
     public func setEnabled(enabled: Bool) {
         self.isEnabled = enabled
         self.backgroundColor = enabled ? .orange : .systemGray
