@@ -14,8 +14,9 @@ class EASpinner: UIView {
     private let spinnerContainer: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = .black.withAlphaComponent(0.7)
+        container.backgroundColor = .label.withAlphaComponent(0.7)
         container.layer.cornerRadius = EAIncrement.one.rawValue
+        container.isHidden = true
         return container
     }()
     
@@ -25,12 +26,12 @@ class EASpinner: UIView {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.color = .white
         spinner.hidesWhenStopped = true
-        spinner.startAnimating()
         return spinner
     }()
     
     init() {
         super.init(frame: .zero)
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviewsAndEstablishConstraints()
     }
     
@@ -39,21 +40,25 @@ class EASpinner: UIView {
         self.addSubview(spinnerContainer)
         
         NSLayoutConstraint.activate([
+            self.spinnerContainer.heightAnchor.constraint(equalTo: self.spinner.heightAnchor, constant: EAIncrement.one.rawValue),
+            self.spinnerContainer.widthAnchor.constraint(equalTo: self.spinner.widthAnchor, constant: EAIncrement.one.rawValue),
             self.spinnerContainer.topAnchor.constraint(equalTo: self.topAnchor),
             self.spinnerContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.spinnerContainer.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.spinnerContainer.rightAnchor.constraint(equalTo: self.rightAnchor),
             
-            self.spinnerContainer.heightAnchor.constraint(equalTo: self.spinner.heightAnchor, constant: EAIncrement.one.rawValue),
-            self.spinnerContainer.widthAnchor.constraint(equalTo: self.spinner.widthAnchor, constant: EAIncrement.one.rawValue)
+            self.spinner.centerXAnchor.constraint(equalTo: self.spinnerContainer.centerXAnchor),
+            self.spinner.centerYAnchor.constraint(equalTo: self.spinnerContainer.centerYAnchor),
         ])
     }
     
     public func startAnimating() {
+        spinnerContainer.isHidden = false
         spinner.startAnimating()
     }
     
     public func stopAnimating() {
+        spinnerContainer.isHidden = true
         spinner.stopAnimating()
     }
     
