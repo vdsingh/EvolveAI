@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RealmSwift
+
 /// A ViewModel for EAGoals
 struct EAGoalViewModel {
     /// The title of the goal
@@ -14,6 +16,6 @@ struct EAGoalViewModel {
     /// The number of days of the goal
     let numDays: Int
     
-    /// The text to display about the guide for the goal
-    let guideText: String
+    /// The day guides to display for the goal
+    let dayGuides: List<EAGoalDayGuide>
 }

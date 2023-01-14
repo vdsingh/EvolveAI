@@ -23,8 +23,8 @@ class EAGoal: Object {
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
     
-    /// The tasks associated with completing the goal (derived from parsing aiResponse)
-    @Persisted var tasks: List<EAGoalDayGuide>
+    /// The daily guides associated with completing the goal (derived from parsing aiResponse)
+    @Persisted var dayGuides: List<EAGoalDayGuide>
     
     /// Initializer for EAGoal
     /// - Parameters:
@@ -38,7 +38,7 @@ class EAGoal: Object {
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        self.tasks = EAGoal.createTasks(from: aiResponse)
+        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }
     
     convenience init(goal: String, numDays: Int, additionalDetails: String, aiResponse: String) {
@@ -47,7 +47,7 @@ class EAGoal: Object {
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.tasks = EAGoal.createTasks(from: aiResponse)
+        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }
     
     /// Possible errors that can arise from parsing AI response to create task
@@ -60,7 +60,7 @@ class EAGoal: Object {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func createTasks(from aiResponse: String) -> List<EAGoalDayGuide> {
+    private static func createDayGuides(from aiResponse: String) -> List<EAGoalDayGuide> {
         let lines = aiResponse.split(separator: "\n")
         let dayGuides = List<EAGoalDayGuide>()
         // One line represents one EAGoalDayGuide Object
