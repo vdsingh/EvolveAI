@@ -13,6 +13,7 @@ class EAGoalCreationFormViewController: UIViewController {
     
     /// Constants for this screen
     struct GoalCreationConstants {
+        
         /// The maximum amount of characters for the goal field
         static let maxGoalLength = 50
         
@@ -109,6 +110,7 @@ class EAGoalCreationFormViewController: UIViewController {
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
         self.getView().setSpinner(isActive: true)
+        self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
             print("Num days: \(numDays)")
             let _ = EAGoalsService.shared.createGoal(
@@ -131,7 +133,8 @@ class EAGoalCreationFormViewController: UIViewController {
         if let buttonView = self.createGoalButton {
             guard let goal = self.goal,
                   self.numDays != nil,
-                    goal != ""
+                  !self.getView().isLoading(),
+                  goal != ""
             else {
                 buttonView.setEnabled(enabled: false)
                 return

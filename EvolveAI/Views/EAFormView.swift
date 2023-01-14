@@ -23,6 +23,9 @@ class EAFormView: UIView {
     /// A map for the callback functions for when buttons has been pressed
     private var buttonDelegateCallbackGraph: [UIView: (() -> Void)] = [:]
     
+    /// Boolean representing whether the form is loading or not
+    private var isFormLoading: Bool
+    
     /// A spinner to indicate when we are loading data
     private let spinner: EASpinner = {
         let spinner = EASpinner()
@@ -35,6 +38,7 @@ class EAFormView: UIView {
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
     init(formElements: [EAFormElement]) {
         self.questionViews = []
+        self.isFormLoading = false
         
         super.init(frame: .zero)
         self.backgroundColor = .systemBackground
@@ -133,11 +137,19 @@ class EAFormView: UIView {
     public func setSpinner(isActive: Bool) {
         if isActive {
             self.isUserInteractionEnabled = false
+            self.isFormLoading = true
             self.spinner.startAnimating()
         } else {
             self.isUserInteractionEnabled = true
+            self.isFormLoading = false
             self.spinner.stopAnimating()
         }
+    }
+    
+    /// Getter for whether the form is loading or not
+    /// - Returns: A boolean describing whether the form is loading or not
+    public func isLoading() -> Bool {
+        return self.isFormLoading
     }
 
     required init?(coder: NSCoder) {
