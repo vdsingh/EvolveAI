@@ -8,18 +8,32 @@
 import Foundation
 import UIKit
 
+/// ViewController for screen for creating new goal (form)
 class EAGoalCreationFormViewController: UIViewController {
+    
+    /// Constants for this screen
     struct GoalCreationConstants {
+        /// The maximum amount of characters for the goal field
         static let maxGoalLength = 50
+        
+        /// The maximum number of days the goal can be
         static let maxDays = 30
     }
     
+    /// A String describing the goal (ex: "learn the violin"). nil if empty
     private var goal: String?
-    private var numDays: Int?
-    private var additionalDetails = ""
-    private var createGoalButton: EAButton?
-    private var goalWasCreated: () -> Void
     
+    /// An Int describing the number of days for the goal (ex: 10). nil if empty
+    private var numDays: Int?
+    
+    /// A String describing additional details for the goal. Not used in generating the plan
+    private var additionalDetails = ""
+    
+    /// A Button that the user will press when they have specified all necessary info and are finished
+    private var createGoalButton: EAButton?
+    
+    /// Callback to use when the goal has been created
+    private var goalWasCreated: () -> Void
     
     /// Normal initializer
     /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.

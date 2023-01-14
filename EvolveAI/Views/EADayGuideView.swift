@@ -27,7 +27,6 @@ class EADayGuideView: UIStackView {
         return taskStackView
     }()
     
-    
     /// Regular initializer
     /// - Parameter viewModel: EADayGuideViewModel to supply information for the View
     init(with viewModel: EADayGuideViewModel) {

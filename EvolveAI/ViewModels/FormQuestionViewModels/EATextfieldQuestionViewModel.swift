@@ -6,8 +6,10 @@
 //
 
 import Foundation
+
 /// A ViewModel for EAFormQuestions
 struct EATextFieldQuestionViewModel {
+    
     /// The question as a String
     let question: String
     

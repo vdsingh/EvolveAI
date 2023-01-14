@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
+/// A ViewModel used to create a Create Goal Question for forms.
 struct EACreateGoalQuestionViewModel {
+    
     /// The action text for the question
     let actionText: String
     
