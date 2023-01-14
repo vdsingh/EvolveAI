@@ -7,13 +7,10 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 /// View to display an individual goal and all of its information
 class EAGoalView: UIView {
-    
-    /// The ViewModel to use for the View's data
-    let goalViewModel: EAGoalViewModel
-    
     let numDaysLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,27 +31,17 @@ class EAGoalView: UIView {
         guideContentView.axis = .vertical
         guideContentView.alignment = .fill
         guideContentView.distribution = .equalSpacing
-        guideContentView.spacing = EAIncrement.one.rawValue / 2
+        guideContentView.spacing = EAIncrement.one.rawValue
         return guideContentView
-    }()
-    
-    let guideLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .regular)
-        return label
     }()
     
     /// Initializer to instantiate this View with a ViewModel
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalViewModel) {
-        self.goalViewModel = viewModel
         self.numDaysLabel.text = "within \(viewModel.numDays) Days:"
-        self.guideLabel.text = "\(viewModel.guideText)"
         super.init(frame: .zero)
         self.backgroundColor = .systemBackground
-        self.addSubviewsAndEstablishConstraints()
+        self.addSubviewsAndEstablishConstraints(dayGuides: viewModel.dayGuides)
     }
     
     required init?(coder: NSCoder) {
@@ -62,11 +49,11 @@ class EAGoalView: UIView {
     }
     
     /// Adds the subviews of the View and activates the constraints
-    private func addSubviewsAndEstablishConstraints() {
+    private func addSubviewsAndEstablishConstraints(dayGuides: List<EAGoalDayGuide>) {
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(guideContentView)
         self.guideContentView.addArrangedSubview(self.numDaysLabel)
-        self.guideContentView.addArrangedSubview(self.guideLabel)
+        self.addDayGuidesToUI(dayGuides)
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             self.guideScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -79,5 +66,19 @@ class EAGoalView: UIView {
             self.guideContentView.rightAnchor.constraint(equalTo: guideScrollView.rightAnchor),
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
+    }
+    
+    private func addDayGuidesToUI(_ dayGuides: List<EAGoalDayGuide>) {
+        for guide in dayGuides {
+            var daysText = "Day \(guide.days[0]):"
+            if guide.days.count > 1 {
+                daysText = "Days \(guide.days[0]) - \(guide.days[1]):"
+            }
+            
+            let guideViewModel = EADayGuideViewModel(daysText: daysText, tasksTexts: guide.tasks)
+            
+            let guideView = EADayGuideView(with: guideViewModel)
+            self.guideContentView.addArrangedSubview(guideView)
+        }
     }
 }

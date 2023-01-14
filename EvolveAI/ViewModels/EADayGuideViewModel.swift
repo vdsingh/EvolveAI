@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RealmSwift
+
+struct EADayGuideViewModel {
+    let daysText: String
+    let tasksTexts: List<String>
+}
