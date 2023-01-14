@@ -57,6 +57,7 @@ class EAGoalsService {
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
         let guideFormat = "Day [Day Number]: [Paragraph of tasks in sentence form]"
         return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
+        
     }
     
     /// Creates a goal and persists it to the Realm Database
@@ -86,27 +87,26 @@ class EAGoalsService {
                     return
                 }
                 
-            switch result {
-            case .success(let apiResponse):
-                let goal = EAGoal(goal: goal,
-                                  numDays: numDays,
-                                  additionalDetails: additionalDetails,
-                                  apiResponse: apiResponse)
-                print("API RESPONSE: \(apiResponse). AI Response: \(goal.aiResponse)")
-                DispatchQueue.main.async {
-                    strongSelf.writeToRealm {
-                        strongSelf.realm.add(goal)
+                switch result {
+                case .success(let apiResponse):
+                    let goal = EAGoal(goal: goal,
+                                      numDays: numDays,
+                                      additionalDetails: additionalDetails,
+                                      apiResponse: apiResponse)
+                    DispatchQueue.main.async {
+                        strongSelf.writeToRealm {
+                            strongSelf.realm.add(goal)
+                        }
+                        completion(.success(goal))
                     }
-                    completion(.success(goal))
+                    
+                case .failure(let error):
+                    print("$Error: \(String(describing: error))")
+                    code = .error
+                    return
                 }
-                
-            case .failure(let error):
-                print("$Error: \(String(describing: error))")
-                code = .error
-                return
             }
-        })
-        
+        )
         return code
     }
     
