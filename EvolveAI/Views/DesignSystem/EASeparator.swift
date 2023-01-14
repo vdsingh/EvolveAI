@@ -19,6 +19,7 @@ class EASeparator: UIView, EAFormElementView {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .label
+        self.heightAnchor.constraint(equalToConstant: requiredHeight).isActive = true
     }
     
     required init?(coder: NSCoder) {

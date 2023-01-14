@@ -18,4 +18,7 @@ struct EAGoalViewModel {
     
     /// The day guides to display for the goal
     let dayGuides: List<EAGoalDayGuide>
+    
+    /// The additional details associated with the goal
+    let additionalDetails: String
 }

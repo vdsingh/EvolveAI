@@ -18,7 +18,7 @@ class EAGoalsService {
     let realm = try! Realm()
     
     /// Constants that are used in the goals service
-    struct GoalServiceConstants {
+    private struct GoalServiceConstants {
         static let characterLimit = 10
         static let numDaysLimit = 30
     }

@@ -12,14 +12,21 @@ import UIKit
 class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     
     /// The required height of the View
-    var requiredHeight: CGFloat = 190
+    var requiredHeight: CGFloat = 150
     
+    /// Delegate to use when a textfield has been edited.
     private var editedDelegate: EATextFieldDelegate?
+    
+    private struct Constants {
+        static let labelFontSize = EAIncrement.two.rawValue
+        static let labelFontWeight = UIFont.Weight.bold
+    }
     
     /// Label describing the action text (ex: "I am going to")
     let actionTextLabel: UILabel = {
         let actionTextLabel = UILabel()
-        actionTextLabel.font = .systemFont(ofSize: EAFontSize.header1FontSize.rawValue, weight: .bold)
+        actionTextLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
+                                           weight: EACreateGoalQuestionView.Constants.labelFontWeight)
         return actionTextLabel
     }()
     
@@ -33,14 +40,15 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     let connectorTextLabel: UILabel = {
         let connectorTextLabel = UILabel()
         connectorTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        connectorTextLabel.font = .systemFont(ofSize: EAFontSize.header1FontSize.rawValue, weight: .bold)
+        connectorTextLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
+                                              weight: EACreateGoalQuestionView.Constants.labelFontWeight)
         return connectorTextLabel
     }()
     
     /// TextField where user must ender the number of days for the goal (ex: "30")
     lazy var numDaysTextField: EATextField = {
         let numDaysTextField = EATextField(editedDelegate: self.editedDelegate)
-        
+        numDaysTextField.textAlignment = .center
         return numDaysTextField
     }()
     
@@ -48,7 +56,9 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     let numDaysUnitLabel: UILabel = {
         let numDaysUnitLabel = UILabel()
         numDaysUnitLabel.translatesAutoresizingMaskIntoConstraints = false
-        numDaysUnitLabel.font = .systemFont(ofSize: EAFontSize.header1FontSize.rawValue, weight: .bold)
+        numDaysUnitLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
+                                            weight: EACreateGoalQuestionView.Constants.labelFontWeight)
+        numDaysUnitLabel.textAlignment = .right
         return numDaysUnitLabel
     }()
     
@@ -78,9 +88,11 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     /// Add the subviews to the view and establish constraints
     private func addSubviewsAndEstablishConstraints() {
         let dayHStackView = UIStackView()
+        dayHStackView.translatesAutoresizingMaskIntoConstraints = false
         dayHStackView.axis = .horizontal
         dayHStackView.spacing = 5
         dayHStackView.distribution = .fillEqually
+        dayHStackView.alignment = .fill
         dayHStackView.addArrangedSubview(self.connectorTextLabel)
         dayHStackView.addArrangedSubview(self.numDaysTextField)
         dayHStackView.addArrangedSubview(self.numDaysUnitLabel)

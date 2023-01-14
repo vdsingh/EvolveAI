@@ -25,7 +25,8 @@ class EAGoalViewController: UIViewController {
     override func loadView() {
         let viewModel = EAGoalViewModel(title: goal.goal,
                                         numDays: goal.numDays,
-                                        dayGuides: goal.dayGuides)
+                                        dayGuides: goal.dayGuides,
+                                        additionalDetails: goal.additionalDetails)
         let goalView = EAGoalView(viewModel: viewModel)
         view = goalView
         self.title = viewModel.title

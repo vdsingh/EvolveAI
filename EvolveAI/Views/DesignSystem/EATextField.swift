@@ -8,12 +8,18 @@
 import Foundation
 import UIKit
 
+/// This protocol is used to specify what happens when a textField is edited
 protocol EATextFieldDelegate {
+    
+    /// Function that is called when an EATextField has been edited
+    /// - Parameter textField: The EATextField that was edited.
     func textFieldWasEdited(_ textField: EATextField)
 }
 
 /// Custom TextField for this application
 class EATextField: UITextField {
+    
+    /// Delegate to use when this TextField has been edited
     var editedDelegate: EATextFieldDelegate?
     
     /// Normal initializer
@@ -21,16 +27,22 @@ class EATextField: UITextField {
         self.editedDelegate = editedDelegate
 
         super.init(frame: .zero)
+        self.setUIProperties()
+
+        self.addTarget(self, action: #selector(textFieldWasEdited), for: .editingChanged)
+    }
+    
+    /// Sets the UI properties for this object
+    private func setUIProperties() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
         self.layer.borderColor = UIColor.label.cgColor
-        
-        self.addTarget(self, action: #selector(textFieldWasEdited), for: .editingChanged)
     }
     
+    /// Action for when this TextField was edited. Uses the delegate to call textFieldWasEdited
     @objc private func textFieldWasEdited() {
-        editedDelegate?.textFieldWasEdited(self)
+        self.editedDelegate?.textFieldWasEdited(self)
     }
     
     /// Sets the border color of the TextField

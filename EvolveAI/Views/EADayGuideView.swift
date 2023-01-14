@@ -54,7 +54,7 @@ class EADayGuideView: UIStackView {
             let taskLabel = UILabel(frame: .zero)
             taskLabel.translatesAutoresizingMaskIntoConstraints = false
             taskLabel.numberOfLines = 0
-            taskLabel.text = "\(i + 1). \(task)"
+            taskLabel.text = "(\(i + 1)) \(task)"
             self.taskStackView.addArrangedSubview(taskLabel)
         }
     }

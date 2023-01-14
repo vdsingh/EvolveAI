@@ -83,7 +83,8 @@ extension EAGoalsListViewController: UITableViewDataSource {
             let goalViewModel = EAGoalViewModel(
                 title: goal.goal,
                 numDays: goal.numDays,
-                dayGuides: goal.dayGuides
+                dayGuides: goal.dayGuides,
+                additionalDetails: goal.additionalDetails
             )
             cell.configure(with: goalViewModel)
             return cell

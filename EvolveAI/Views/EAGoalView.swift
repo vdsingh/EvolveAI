@@ -20,11 +20,19 @@ class EAGoalView: UIView {
         return label
     }()
     
+    /// Label that shows the additional details for the goal
+    let additionalDetailsLabel: UILabel = {
+        let detailsLabel = UILabel()
+        detailsLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailsLabel.numberOfLines = 0
+        return detailsLabel
+    }()
+    
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
         let guideScrollView = UIScrollView()
         guideScrollView.translatesAutoresizingMaskIntoConstraints = false
-        guideScrollView.showsVerticalScrollIndicator = true
+        guideScrollView.showsVerticalScrollIndicator = false
         return guideScrollView
     }()
     
@@ -43,6 +51,7 @@ class EAGoalView: UIView {
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalViewModel) {
         self.numDaysLabel.text = "within \(viewModel.numDays) Days:"
+        self.additionalDetailsLabel.text = viewModel.additionalDetails
         super.init(frame: .zero)
         self.backgroundColor = .systemBackground
         self.addSubviewsAndEstablishConstraints(dayGuides: viewModel.dayGuides)
@@ -54,9 +63,12 @@ class EAGoalView: UIView {
     /// - Parameter dayGuides: List of EAGoalDayGuide objects that we need to add to our View
     private func addSubviewsAndEstablishConstraints(dayGuides: List<EAGoalDayGuide>) {
         self.addSubview(guideScrollView)
-        self.guideScrollView.addSubview(guideContentView)
+        self.guideScrollView.addSubview(self.guideContentView)
         self.guideContentView.addArrangedSubview(self.numDaysLabel)
+        self.guideContentView.addArrangedSubview(EASeparator())
         self.addDayGuidesToUI(dayGuides)
+        self.guideContentView.addArrangedSubview(EASeparator())
+        self.guideContentView.addArrangedSubview(self.additionalDetailsLabel)
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             self.guideScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
