@@ -62,8 +62,6 @@ class EAFormView: UIView {
         ])
     }
     
-    
-    
     /// Constructs a UIStackView that contains all of the form element views
     /// - Parameter formElements: the EAFormElement which specify the subviews to add
     /// - Returns: a UIStackView that contains all of the Form Element views

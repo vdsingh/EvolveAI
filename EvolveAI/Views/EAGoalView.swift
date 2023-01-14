@@ -11,6 +11,8 @@ import RealmSwift
 
 /// View to display an individual goal and all of its information
 class EAGoalView: UIView {
+    
+    /// Label that shows the number of days for this goal
     let numDaysLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -18,13 +20,15 @@ class EAGoalView: UIView {
         return label
     }()
     
+    /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
         let guideScrollView = UIScrollView()
         guideScrollView.translatesAutoresizingMaskIntoConstraints = false
         guideScrollView.showsVerticalScrollIndicator = true
         return guideScrollView
     }()
-
+    
+    /// StackView that contains the content for the ScrollView.
     let guideContentView: UIStackView = {
         let guideContentView = UIStackView()
         guideContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -44,11 +48,10 @@ class EAGoalView: UIView {
         self.addSubviewsAndEstablishConstraints(dayGuides: viewModel.dayGuides)
     }
     
-    required init?(coder: NSCoder) {
-        return nil
-    }
+    // MARK: - Private Functions
     
     /// Adds the subviews of the View and activates the constraints
+    /// - Parameter dayGuides: List of EAGoalDayGuide objects that we need to add to our View
     private func addSubviewsAndEstablishConstraints(dayGuides: List<EAGoalDayGuide>) {
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(guideContentView)
@@ -68,6 +71,8 @@ class EAGoalView: UIView {
         ])
     }
     
+    /// Adds EAGoalDayGuide objects to the View
+    /// - Parameter dayGuides: A list of EAGoalDayGuide objects to add to the view
     private func addDayGuidesToUI(_ dayGuides: List<EAGoalDayGuide>) {
         for guide in dayGuides {
             var daysText = "Day \(guide.days[0]):"
@@ -76,9 +81,12 @@ class EAGoalView: UIView {
             }
             
             let guideViewModel = EADayGuideViewModel(daysText: daysText, tasksTexts: guide.tasks)
-            
             let guideView = EADayGuideView(with: guideViewModel)
             self.guideContentView.addArrangedSubview(guideView)
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
     }
 }

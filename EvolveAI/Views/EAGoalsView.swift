@@ -24,9 +24,7 @@ class EAGoalsView: UIView {
         addViewsAndEstablishConstraints()
     }
     
-    required init?(coder: NSCoder) {
-        return nil
-    }
+    // MARK: - Private Functions
     
     /// Adds the subviews and establishes constraints
     private func addViewsAndEstablishConstraints() {
@@ -40,8 +38,14 @@ class EAGoalsView: UIView {
         ])
     }
     
+    // MARK: - Public Functions
+    
     /// Refreshes the view
     public func refreshView() {
         tableView.reloadData()
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
     }
 }
