@@ -66,7 +66,6 @@ class EAGoal: Object {
         // One line represents one EAGoalDayGuide Object
         for line in lines {
             // Separate the line by ":" which separates the Day Number info from the other info
-            //            let components = line.split(separator: ":")
             guard let colonIndex = line.firstIndex(of: ":") else {
                 print("$Error: no colon found when constructing EAGoalDayGuide.")
                 continue
@@ -125,6 +124,7 @@ class EAGoal: Object {
                 }
             }
         }
+        
         return dayGuides
     }
     

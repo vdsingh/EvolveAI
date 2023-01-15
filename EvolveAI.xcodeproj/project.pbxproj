@@ -11,6 +11,8 @@
 		B90847DB2971277C00758477 /* EASpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DA2971277C00758477 /* EASpinner.swift */; };
 		B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DE2972586A00758477 /* EADayGuideView.swift */; };
 		B90847E1297258EB00758477 /* EADayGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E0297258EB00758477 /* EADayGuideViewModel.swift */; };
+		B90847E32972CB2200758477 /* NavigationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E22972CB2200758477 /* NavigationUtility.swift */; };
+		B90847E52973ADC400758477 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E42973ADC400758477 /* Flags.swift */; };
 		B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF0296D3A6300A0296E /* EAIncrement.swift */; };
 		B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */; };
 		B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */; };
@@ -63,6 +65,8 @@
 		B90847DA2971277C00758477 /* EASpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EASpinner.swift; sourceTree = "<group>"; };
 		B90847DE2972586A00758477 /* EADayGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADayGuideView.swift; sourceTree = "<group>"; };
 		B90847E0297258EB00758477 /* EADayGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADayGuideViewModel.swift; sourceTree = "<group>"; };
+		B90847E22972CB2200758477 /* NavigationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtility.swift; sourceTree = "<group>"; };
+		B90847E42973ADC400758477 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		B9486DF0296D3A6300A0296E /* EAIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAIncrement.swift; sourceTree = "<group>"; };
 		B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionView.swift; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
 				B9C056DF296D006C007B6DBD /* EAFontSize.swift */,
 				B9486DF0296D3A6300A0296E /* EAIncrement.swift */,
+				B90847E42973ADC400758477 /* Flags.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 			children = (
 				B9C056CF296BCBE9007B6DBD /* Navigator.swift */,
 				B9C056D1296BCC0A007B6DBD /* GoalsListNavigator.swift */,
+				B90847E22972CB2200758477 /* NavigationUtility.swift */,
 			);
 			path = Navigators;
 			sourceTree = "<group>";
@@ -460,6 +466,7 @@
 			files = (
 				B9486DFE296D4DC000A0296E /* EAOpenAIEndpoint.swift in Sources */,
 				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
+				B90847E32972CB2200758477 /* NavigationUtility.swift in Sources */,
 				B90847E1297258EB00758477 /* EADayGuideViewModel.swift in Sources */,
 				B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */,
 				B9C056AB2968F942007B6DBD /* EATextFieldQuestionViewModel.swift in Sources */,
@@ -492,6 +499,7 @@
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
 				B9C056A729682069007B6DBD /* EAFormElement.swift in Sources */,
+				B90847E52973ADC400758477 /* Flags.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */,
