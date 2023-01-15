@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+/// Used to control consistency with spacing, font sizes, etc.
 enum EAIncrement: CGFloat {
     case one = 12
     case two = 24

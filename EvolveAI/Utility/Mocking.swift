@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
+/// This class is used to create Mock objects
 class Mocking {
+    
     /// This function creates an array of mock goals
     /// - Parameter numGoals: The number of mock goals to generate
     /// - Returns: An array of mock goals

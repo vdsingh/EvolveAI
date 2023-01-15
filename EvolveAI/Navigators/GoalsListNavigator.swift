@@ -7,8 +7,10 @@
 
 import Foundation
 import UIKit
+
 /// Handles navigation from GoalsList View
 class GoalsListNavigator: Navigator {
+    
     /// Represents the destinations that can be reached from this navigator
     enum Destination {
         case viewGoal(goal: EAGoal)

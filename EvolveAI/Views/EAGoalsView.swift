@@ -10,6 +10,11 @@ import UIKit
 /// View to display EAGoal objects in a UITableView
 class EAGoalsView: UIView {
     
+    /// Constants for this View
+    private struct Constants {
+        static let emptyTableViewText = "You have no Goals yet. Create one using the \"+\" in the top right"
+    }
+    
     /// The UITableView in which the goals will be displayed
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -18,10 +23,11 @@ class EAGoalsView: UIView {
         return tableView
     }()
     
+    /// Label to display when the TableView is empty
     private let emptyTableViewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "You have no Goals yet. Create one using the \"+\" in the top right"
+        label.text = Constants.emptyTableViewText
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .lightGray
@@ -55,6 +61,7 @@ class EAGoalsView: UIView {
         ])
     }
     
+    /// Hides/unhides the message for when the tableView is empty
     private func updateEmptyTableViewMessage() {
         self.emptyTableViewLabel.isHidden = self.tableView.numberOfRows(inSection: 0) == 0 ? false : true
     }

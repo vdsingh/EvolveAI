@@ -23,7 +23,7 @@ class EAGoalsService {
         static let numDaysLimit = 30
     }
     
-    /// Possible codes to be returned by the create goal function
+    /// Possible errors to be returned by the create goal function
     enum CreateGoalError: Error {
         
         /// Proposed number of days was higher than the limit
@@ -75,6 +75,8 @@ class EAGoalsService {
         }
     }
     
+    /// Determines whether the user has the max number of allowed goals
+    /// - Returns: A Bool representing whether the user has the max number of allowed goals
     public func maximumGoalsReached() -> Bool {
         return getAllPersistedGoals().count >= Constants.maxGoalsAllowed
     }

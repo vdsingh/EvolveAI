@@ -10,6 +10,8 @@ import UIKit
 
 /// Custom Activity Indicator Spinner View for this application
 class EASpinner: UIStackView, EAFormElementView {
+    
+    /// Required height for this EASpinner
     var requiredHeight: CGFloat = 120
 
     /// A spinner for when we need to indicate loading.
@@ -21,6 +23,7 @@ class EASpinner: UIStackView, EAFormElementView {
         return spinner
     }()
     
+    /// Label for subtext of the spinner
     private let subTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +35,7 @@ class EASpinner: UIStackView, EAFormElementView {
     }()
     
     /// Normal Initializer
+    /// - Parameter subText: Sub Text String (if any) to display under the spinner
     init(subText: String? = nil) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +45,8 @@ class EASpinner: UIStackView, EAFormElementView {
     
     // MARK: - Private Functions
     
+    /// Set the UI properties for this View
+    /// - Parameter subText: the SubText (if any) for this spinner
     private func setUIProperties(subText: String?) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .label.withAlphaComponent(0.7)

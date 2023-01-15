@@ -25,10 +25,8 @@ class EATextField: UITextField {
     /// Normal initializer
     init(editedDelegate: EATextFieldDelegate?) {
         self.editedDelegate = editedDelegate
-
         super.init(frame: .zero)
         self.setUIProperties()
-
         self.addTarget(self, action: #selector(textFieldWasEdited), for: .editingChanged)
     }
     

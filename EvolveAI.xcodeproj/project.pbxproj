@@ -55,7 +55,6 @@
 		B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056D8296BE7B6007B6DBD /* EATextFieldQuestionView.swift */; };
 		B9C056DC296CF8BE007B6DBD /* EACreateGoalQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */; };
 		B9C056DE296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */; };
-		B9C056E0296D006C007B6DBD /* EAFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DF296D006C007B6DBD /* EAFontSize.swift */; };
 		B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056E1296D312F007B6DBD /* EATextField.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,7 +111,6 @@
 		B9C056D8296BE7B6007B6DBD /* EATextFieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextFieldQuestionView.swift; sourceTree = "<group>"; };
 		B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionView.swift; sourceTree = "<group>"; };
 		B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionViewModel.swift; sourceTree = "<group>"; };
-		B9C056DF296D006C007B6DBD /* EAFontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFontSize.swift; sourceTree = "<group>"; };
 		B9C056E1296D312F007B6DBD /* EATextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextField.swift; sourceTree = "<group>"; };
 		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
-				B9C056DF296D006C007B6DBD /* EAFontSize.swift */,
 				B9486DF0296D3A6300A0296E /* EAIncrement.swift */,
 				B90847E42973ADC400758477 /* Flags.swift */,
 			);
@@ -486,7 +483,6 @@
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
 				B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */,
-				B9C056E0296D006C007B6DBD /* EAFontSize.swift in Sources */,
 				B9486DFA296D423A00A0296E /* EAButton.swift in Sources */,
 				B9C056CD296BB41B007B6DBD /* EAGoalView.swift in Sources */,
 				B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */,

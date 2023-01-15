@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+/// Used to toggle certain functionalities within the app
 class Flags {
     
     /// Prints any Goals that are received from EAGoalsService

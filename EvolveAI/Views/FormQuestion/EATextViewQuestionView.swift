@@ -18,7 +18,7 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
     let questionLabel: UILabel = {
         let questionLabel = UILabel()
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.font = .systemFont(ofSize: EAFontSize.bodyFontSize.rawValue, weight: .medium)
+        questionLabel.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .medium)
         return questionLabel
     }()
     
@@ -54,7 +54,7 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
         self.addArrangedSubview(textView)
         
         NSLayoutConstraint.activate([
-            questionLabel.heightAnchor.constraint(equalToConstant: EAFontSize.bodyFontSize.rawValue)
+            questionLabel.heightAnchor.constraint(equalToConstant: EAIncrement.two.rawValue)
         ])
     }
     
