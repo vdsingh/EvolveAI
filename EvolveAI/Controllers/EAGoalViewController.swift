@@ -30,6 +30,32 @@ class EAGoalViewController: UIViewController {
         let goalView = EAGoalView(viewModel: viewModel)
         view = goalView
         self.title = viewModel.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
+    }
+    
+    @objc private func trashButtonPressed() {
+        let dialogMessage = UIAlertController(title: "Delete Goal", message: "Are you sure you want to delete this goal?", preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: { (action) -> Void in
+            dialogMessage.dismiss(animated: true)
+        })
+        
+        let deleteButton = UIAlertAction(title: "Delete",
+                                         style: .destructive,
+                                         handler: { [weak self] (action) -> Void in
+            dialogMessage.dismiss(animated: true)
+            self?.deleteButtonPressed()
+        })
+        
+        dialogMessage.addAction(deleteButton)
+        dialogMessage.addAction(cancelButton)
+        self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    private func deleteButtonPressed() {
+        EAGoalsService.shared.deletePersistedGoal(goal: self.goal)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     required init?(coder: NSCoder) {
