@@ -14,6 +14,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     /// The required height for this view
     var requiredHeight: CGFloat = 90
     
+    /// Delegate to use when the textfields are edited
     public var editedDelegate: EATextFieldDelegate?
     
     /// Label that displays the question
