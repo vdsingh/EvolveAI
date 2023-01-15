@@ -28,7 +28,7 @@ class EAFormView: UIView {
     
     /// A spinner to indicate when we are loading data
     private let spinner: EASpinner = {
-        let spinner = EASpinner()
+        let spinner = EASpinner(subText: "AI is working...")
         return spinner
     }()
     
@@ -63,6 +63,8 @@ class EAFormView: UIView {
             
             spinner.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            spinner.heightAnchor.constraint(equalToConstant: spinner.requiredHeight),
+            spinner.widthAnchor.constraint(equalToConstant: spinner.requiredHeight),
         ])
     }
     

@@ -9,18 +9,9 @@ import Foundation
 import UIKit
 
 /// Custom Activity Indicator Spinner View for this application
-class EASpinner: UIView {
+class EASpinner: UIStackView, EAFormElementView {
+    var requiredHeight: CGFloat = 120
 
-    /// The container for the spinner. Provides a background for accessbility purposes
-    private let spinnerContainer: UIView = {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = .label.withAlphaComponent(0.7)
-        container.layer.cornerRadius = EAIncrement.one.rawValue
-        container.isHidden = true
-        return container
-    }()
-    
     /// A spinner for when we need to indicate loading.
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -30,48 +21,62 @@ class EASpinner: UIView {
         return spinner
     }()
     
+    private let subTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textColor = .systemBackground
+        label.numberOfLines = 0
+        return label
+    }()
+    
     /// Normal Initializer
-    init() {
+    init(subText: String? = nil) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviewsAndEstablishConstraints()
+        self.setUIProperties(subText: subText)
     }
     
     // MARK: - Private Functions
     
+    private func setUIProperties(subText: String?) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .label.withAlphaComponent(0.7)
+        self.layer.cornerRadius = EAIncrement.one.rawValue
+        self.isHidden = true
+        self.axis = .vertical
+        self.distribution = .fillEqually
+        self.alignment = .center
+        self.spacing = 0
+
+        if let subText = subText {
+            self.subTextLabel.text = subText
+            self.addArrangedSubview(self.subTextLabel)
+        }
+    }
+    
     /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
-        self.spinnerContainer.addSubview(self.spinner)
-        self.addSubview(spinnerContainer)
-        
-        NSLayoutConstraint.activate([
-            self.spinnerContainer.heightAnchor.constraint(equalTo: self.spinner.heightAnchor, constant: EAIncrement.one.rawValue),
-            self.spinnerContainer.widthAnchor.constraint(equalTo: self.spinner.widthAnchor, constant: EAIncrement.one.rawValue),
-            self.spinnerContainer.topAnchor.constraint(equalTo: self.topAnchor),
-            self.spinnerContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.spinnerContainer.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.spinnerContainer.rightAnchor.constraint(equalTo: self.rightAnchor),
-            
-            self.spinner.centerXAnchor.constraint(equalTo: self.spinnerContainer.centerXAnchor),
-            self.spinner.centerYAnchor.constraint(equalTo: self.spinnerContainer.centerYAnchor),
-        ])
+        self.addArrangedSubview(self.spinner)
     }
     
     // MARK: - Public Functions
     
     /// Function to call when we want to start animating the spinner
     public func startAnimating() {
-        spinnerContainer.isHidden = false
+        self.isHidden = false
         spinner.startAnimating()
     }
     
     /// Function to call when we want to stop animating the spinner
     public func stopAnimating() {
-        spinnerContainer.isHidden = true
+        self.isHidden = true
         spinner.stopAnimating()
     }
     
-    required init?(coder: NSCoder) {
-        return nil
+    required init(coder: NSCoder) {
+        fatalError()
     }
 }
