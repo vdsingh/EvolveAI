@@ -24,23 +24,26 @@ class EAGoalsService {
     }
     
     /// Possible codes to be returned by the create goal function
-    enum CreateGoalCode: Int {
-        /// Goal was created successfully
-        case success = 0
+    enum CreateGoalError: Error {
+        
         /// Proposed number of days was higher than the limit
-        case dayLimitExceeded = 1
+        case dayLimitExceeded
+        
+        /// The user has already created the maximum allowed number of goals
+        case maxGoalsExceeded
+        
         /// Some other error was encountered
-        case error = 2
+        case unknownError(_ error: Error)
         
         /// Provides a description of the CreateGoalCode
         /// - Returns: a description of the CreateGoalCode
         func codeDescription() -> String {
             switch self {
-            case .success:
-                return "Success"
             case .dayLimitExceeded:
                 return "Please choose a shorter number of days to achieve the goal. The limit is \(GoalServiceConstants.numDaysLimit)"
-            case .error:
+            case .maxGoalsExceeded:
+                return "You've already created the maximum allowed number of goals (\(Constants.maxGoalsAllowed))"
+            case .unknownError:
                 return "Other error encountered"
             }
         }
@@ -55,9 +58,25 @@ class EAGoalsService {
     ///   - numDays: The number of days to accomplish the goal in (ex: 30)
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
-        let guideFormat = "Day [Day Number]: [Paragraph of tasks in sentence form]"
+        let guideFormat = "Day [Day Number]: [Paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"]"
         return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
         
+    }
+    
+    /// Helper function to communicate with realm. Abstracts error handling.
+    /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
+    private func writeToRealm(_ action: () -> Void) {
+        do {
+            try realm.write {
+                action()
+            }
+        } catch let error {
+            print("$Error: \(String(describing: error))")
+        }
+    }
+    
+    public func maximumGoalsReached() -> Bool {
+        return getAllPersistedGoals().count >= Constants.maxGoalsAllowed
     }
     
     /// Creates a goal and persists it to the Realm Database
@@ -67,10 +86,14 @@ class EAGoalsService {
     public func createGoal(goal: String,
                            numDays: Int,
                            additionalDetails: String,
-                           completion: @escaping (Result<EAGoal, Error>) -> Void) -> CreateGoalCode {
+                           completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void) {
+        
+        if(getAllPersistedGoals().count > Constants.maxGoalsAllowed) {
+            completion(.failure(CreateGoalError.maxGoalsExceeded))
+        }
         
         if(numDays > GoalServiceConstants.numDaysLimit) {
-            return .dayLimitExceeded
+            completion(.failure(CreateGoalError.dayLimitExceeded))
         }
         
         let prompt = createOpenAICompletionsRequestString(
@@ -78,7 +101,6 @@ class EAGoalsService {
             numDays: numDays)
         let request = EAOpenAIRequest.completionsRequest(prompt: prompt,
                                                          max_tokens: Constants.maxTokens)
-        var code = CreateGoalCode.success
         EAService.shared.execute(
             request,
             expecting: EAOpenAICompletionsResponse.self,
@@ -93,6 +115,10 @@ class EAGoalsService {
                                       numDays: numDays,
                                       additionalDetails: additionalDetails,
                                       apiResponse: apiResponse)
+                    if(Flags.printGoalResponseOutput) {
+                        print("Goal: \(goal)")
+                    }
+                    
                     DispatchQueue.main.async {
                         strongSelf.writeToRealm {
                             strongSelf.realm.add(goal)
@@ -101,13 +127,10 @@ class EAGoalsService {
                     }
                     
                 case .failure(let error):
-                    print("$Error: \(String(describing: error))")
-                    code = .error
-                    return
+                    completion(.failure(CreateGoalError.unknownError(error)))
                 }
             }
         )
-        return code
     }
     
     /// Gets all of the persisted EAGoal objects from the Realm database
@@ -132,18 +155,6 @@ class EAGoalsService {
     public func deletePersistedGoal(goal: EAGoal) {
         writeToRealm {
             realm.delete(goal)
-        }
-    }
-    
-    /// Helper function to communicate with realm. Abstracts error handling.
-    /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
-    private func writeToRealm(_ action: () -> Void) {
-        do {
-            try realm.write {
-                action()
-            }
-        } catch let error {
-            print("$Error: \(String(describing: error))")
         }
     }
 }
