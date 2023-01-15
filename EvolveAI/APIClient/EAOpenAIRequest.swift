@@ -60,6 +60,7 @@ final class EAOpenAIRequest: EARequest {
                 print("$Error encoding object as JSON data")
                 return nil
             }
+            
             if let string = String(data: data, encoding: String.Encoding.utf8) {
                 if(Flags.printRequestBodyData || Flags.debugAPIClient) {
                     print("$Log: Request Body DATA: \(string)")
@@ -85,13 +86,14 @@ final class EAOpenAIRequest: EARequest {
     /// Computed and constructed URL Request
     public var urlRequest: URLRequest? {
         let url = URL(string: urlString)
-        guard let unwrappedURL = url else { return nil }
+        guard let unwrappedURL = url else {
+            fatalError("$Error unwrapping URL.")
+        }
         var urlRequest = URLRequest(url: unwrappedURL)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
         let organizationID = Bundle.main.infoDictionary?["ORGANIZATION_ID"] as? String else {
-            
             fatalError("$Error retrieving API Key and Organization ID from config.")
         }
         
@@ -125,6 +127,7 @@ final class EAOpenAIRequest: EARequest {
     }
 }
 
+/// Static functions to construct commonly used EAOpenAIRequest objects live here
 extension EAOpenAIRequest {
     
     /// Creates a EAOpenAIRequest for the completions endpoint
@@ -134,7 +137,7 @@ extension EAOpenAIRequest {
     ///   - temperature: The sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
     ///   - max_tokens: The maximum number of tokens to generate in the completion.
     /// - Returns: An EAOpenAIRequest object
-    static func completionsRequest(
+    public static func completionsRequest(
         model: EAOpenAICompletionsModel = .davinci003,
         prompt: String,
         temperature: Int = 1,

@@ -17,8 +17,11 @@ class Flags {
     static let printRequestBodyData = false
     
     /// Prints debug messages when creating tasks from AI response.
-    static let printTaskMessages = true
+    static let printTaskMessages = false
     
     /// Prints messages associated with the API client.
     static let debugAPIClient = false
+    
+    /// Prints messages associated with the goals list
+    static let debugGoalsList = false
 }

@@ -128,9 +128,17 @@ class EAGoal: Object {
         return dayGuides
     }
     
+    /// Prints messages depending on whether the required flag is enabled
+    /// - Parameter message: The message to print
     private static func printDebug(_ message: String) {
         if(Flags.printTaskMessages) {
             print("$Log: \(message)")
         }
+    }
+    
+    /// Gets a simplified String description of this goal
+    /// - Returns: A String describing this goal
+    public func getSimplifiedDescription() -> String {
+        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
     }
 }

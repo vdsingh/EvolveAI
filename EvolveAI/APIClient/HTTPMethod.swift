@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Possible HTTPMethods to be used in our API Client layer.
+/// Possible HTTPMethods to be used in our API Service layer.
 enum HTTPMethod: String {
     case GET
     case POST

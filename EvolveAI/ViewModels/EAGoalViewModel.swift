@@ -10,6 +10,7 @@ import RealmSwift
 
 /// A ViewModel for EAGoals
 struct EAGoalViewModel {
+    
     /// The title of the goal
     let title: String
     
