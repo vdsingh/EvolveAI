@@ -8,4 +8,6 @@
 import Foundation
 struct Constants {
     static let maxTokens = 300
+    static let maxGoalsAllowed = 5
+    static let taskSeparatorCharacter = "&%"
 }
