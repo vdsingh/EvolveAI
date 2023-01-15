@@ -20,31 +20,52 @@ class EAGoalsListViewController: UIViewController {
         self.title = "Goals List"
     }
     
-    required init?(coder: NSCoder) {
-        return nil
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if(EAGoalsService.shared.maximumGoalsReached()) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "questionmark.circle"),
+                style: .plain,
+                target: self,
+                action: #selector(self.questionButtonPressed)
+            )
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .add,
+                target: self,
+                action: #selector(self.addGoalButtonPressed)
+            )
+        }
+        
+        self.goals = EAGoalsService.shared.getAllPersistedGoals()
+        self.getView().refreshView()
     }
     
     override func loadView() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
-            target: self,
-            action: #selector(addGoalButtonPressed)
-        )
         let goalsView = EAGoalsView()
-        goalsView.tableView.delegate = self
-        goalsView.tableView.dataSource = self
-        goals = EAGoalsService.shared.getAllPersistedGoals()
         view = goalsView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.getView().setTableViewDelegate(self)
+        self.getView().setTableViewDataSource(self)
     }
     
+    /// Function called when the user clicks the question button (max goal limit reached)
+    @objc private func questionButtonPressed() {
+        let dialogMessage = UIAlertController(title: "Goal Limit Reached", message: "You've reached the maximum amount of goals.", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            print("Ok button tapped")
+            dialogMessage.dismiss(animated: true)
+        })
+        
+        dialogMessage.addAction(okButton)
+        self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    /// Function called when the user clicks the add button to create a new goal
     @objc private func addGoalButtonPressed() {
         self.navigator.navigate(to: .createGoal(goalWasCreated: { [weak self] in
             self?.goals = EAGoalsService.shared.getAllPersistedGoals()
@@ -52,6 +73,8 @@ class EAGoalsListViewController: UIViewController {
         }))
     }
     
+    /// Safely unwraps the view as an EAGoalsView and returns it (or invokes fatal)
+    /// - Returns: The View as EAGoalsView
     private func getView() -> EAGoalsView {
         if let view = self.view as? EAGoalsView {
             return view
@@ -59,8 +82,13 @@ class EAGoalsListViewController: UIViewController {
             fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
         }
     }
+    
+    required init?(coder: NSCoder) {
+        return nil
+    }
 }
 
+// MARK: - TableView Delegate
 extension EAGoalsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goal = goals[indexPath.row]
@@ -68,6 +96,7 @@ extension EAGoalsListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - TableView DataSource
 extension EAGoalsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
