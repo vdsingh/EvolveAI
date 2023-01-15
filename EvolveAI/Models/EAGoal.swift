@@ -66,54 +66,71 @@ class EAGoal: Object {
         // One line represents one EAGoalDayGuide Object
         for line in lines {
             // Separate the line by ":" which separates the Day Number info from the other info
-            let components = line.split(separator: ":")
-            // There should always be two components: day number(s) and task info
-            if components.count == 2 {
-                // Separate the tasks into
-                let tasks = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                    .components(separatedBy: ".")
-                    .filter({$0 != ""})
-                    .map({return $0.trimmingCharacters(in: .whitespacesAndNewlines)})
-                let taskList = List<String>()
-                taskList.append(objectsIn: tasks)
-                
-                // Trim whitespaces and then "Day " to just get the number(s)
-                let dayRangeString = components[0]
-                    .trimmingCharacters(in: .whitespaces)
-                    .trimmingCharacters(in: CharacterSet(charactersIn: "Day "))
-                // If the string contains a dash, it is a range (Ex: 1-3 vs 1)
-                if dayRangeString.contains("-") {
-                    // Split on the "-" to get the days
-                    let days = dayRangeString.split(separator: "-")
-                    // Parse the day numbers to integers
-                    if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
-                        let dayList = List<Int>()
-                        dayList.append(objectsIn: [firstDay, lastDay])
-                        let dayGuide = EAGoalDayGuide(
-                            isMultipleDays: true,
-                            days: dayList,
-                            tasks: taskList)
-                        dayGuides.append(dayGuide)
-                    } else {
-                        print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
-                    }
+            //            let components = line.split(separator: ":")
+            guard let colonIndex = line.firstIndex(of: ":") else {
+                print("$Error: no colon found when constructing EAGoalDayGuide.")
+                continue
+            }
+            
+            let components = [
+                String(line[..<colonIndex]),
+                String(line[colonIndex...]).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+            ]
+            printDebug("Components are \(components)")
+            
+            // Separate the tasks into
+            let tasks = components[1]
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .components(separatedBy: Constants.taskSeparatorCharacter)
+                .filter({$0 != ""})
+                .map({return $0.trimmingCharacters(in: .whitespacesAndNewlines)})
+            printDebug("Tasks are \(tasks)")
+            
+            let taskList = List<String>()
+            taskList.append(objectsIn: tasks)
+            
+            // Trim whitespaces and then "Day " to just get the number(s)
+            let dayRangeString = components[0]
+                .trimmingCharacters(in: .whitespaces)
+                .trimmingCharacters(in: CharacterSet(charactersIn: "Day "))
+            // If the string contains a dash, it is a range (Ex: 1-3 vs 1)
+            if dayRangeString.contains("-") {
+                // Split on the "-" to get the days
+                let days = dayRangeString.split(separator: "-")
+                // Parse the day numbers to integers
+                if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
+                    let dayList = List<Int>()
+                    dayList.append(objectsIn: [firstDay, lastDay])
+                    printDebug("Multiple Days are \(dayList)")
+                    let dayGuide = EAGoalDayGuide(
+                        isMultipleDays: true,
+                        days: dayList,
+                        tasks: taskList)
+                    dayGuides.append(dayGuide)
                 } else {
-                    if let day = Int(dayRangeString) {
-                        let dayList = List<Int>()
-                        dayList.append(objectsIn: [day])
-                        let dayGuide = EAGoalDayGuide(
-                            isMultipleDays: false,
-                            days: dayList,
-                            tasks: taskList)
-                        dayGuides.append(dayGuide)
-                    } else {
-                        print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
-                    }
+                    print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
                 }
             } else {
-                print("$Error: \(String(describing: CreateTaskError.invalidNumberOfComponents)): \(components)")
+                if let day = Int(dayRangeString) {
+                    let dayList = List<Int>()
+                    dayList.append(objectsIn: [day])
+                    printDebug("Day is \(dayList)")
+                    let dayGuide = EAGoalDayGuide(
+                        isMultipleDays: false,
+                        days: dayList,
+                        tasks: taskList)
+                    dayGuides.append(dayGuide)
+                } else {
+                    print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
+                }
             }
         }
         return dayGuides
+    }
+    
+    private static func printDebug(_ message: String) {
+        if(Flags.printTaskMessages) {
+            print("$Log: \(message)")
+        }
     }
 }

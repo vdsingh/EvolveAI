@@ -36,7 +36,10 @@ final class EAService {
         expecting type: T.Type,
         completion: @escaping (Result<T, Error>) -> Void)
     {
-        print("$Log: Executing a PFService request.")
+        
+        if(Flags.debugAPIClient) {
+            print("$Log: Executing a PFService request.")
+        }
         
         // Unwrap the urlRequest property from the PFRequest object
         guard let urlRequest = request.urlRequest else {
@@ -78,7 +81,10 @@ final class EAService {
                 do {
                     let decoder = JSONDecoder()
                     let responseObject = try decoder.decode(type, from: data)
-                    print("$Log: successfully decoded data to type \(type).")
+                    if(Flags.debugAPIClient) {
+                        print("$Log: successfully decoded data to type \(type).")
+                    }
+                    
                     completion(.success(responseObject))
                 } catch let error {
                     if let decodingError = error as? DecodingError {

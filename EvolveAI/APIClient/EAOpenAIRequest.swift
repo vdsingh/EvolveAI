@@ -61,13 +61,19 @@ final class EAOpenAIRequest: EARequest {
                 return nil
             }
             if let string = String(data: data, encoding: String.Encoding.utf8) {
-                print("$Log: Request Body DATA: \(string)")
+                if(Flags.printRequestBodyData || Flags.debugAPIClient) {
+                    print("$Log: Request Body DATA: \(string)")
+                }
             } else {
                 print("$Error: Unable to convert request body data to string.")
             }
             return data
         }
-        print("$Log: requestBody is nil.")
+        
+        if(Flags.printRequestBodyData || Flags.debugAPIClient) {
+            print("$Log: requestBody is nil.")
+        }
+        
         return nil
     }
     
