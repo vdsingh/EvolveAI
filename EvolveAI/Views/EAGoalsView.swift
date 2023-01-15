@@ -11,31 +11,52 @@ import UIKit
 class EAGoalsView: UIView {
     
     /// The UITableView in which the goals will be displayed
-    var tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(EAGoalTableViewCell.self, forCellReuseIdentifier: EAGoalTableViewCell.reuseIdentifier)
         return tableView
     }()
     
+    private let emptyTableViewLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "You have no Goals yet. Create one using the \"+\" in the top right"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .lightGray
+        return label
+    }()
+    
     /// Normal initializer
     init() {        
         super.init(frame: .zero)
-        addViewsAndEstablishConstraints()
+        self.addViewsAndEstablishConstraints()
     }
     
     // MARK: - Private Functions
     
     /// Adds the subviews and establishes constraints
     private func addViewsAndEstablishConstraints() {
-        addSubview(tableView)
+        self.addSubview(self.tableView)
+        self.addSubview(self.emptyTableViewLabel)
+        self.updateEmptyTableViewMessage()
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tableView.rightAnchor.constraint(equalTo: rightAnchor),
-            tableView.leftAnchor.constraint(equalTo: leftAnchor),
+            self.tableView.topAnchor.constraint(equalTo: topAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            self.tableView.rightAnchor.constraint(equalTo: rightAnchor),
+            self.tableView.leftAnchor.constraint(equalTo: leftAnchor),
+            
+            self.emptyTableViewLabel.topAnchor.constraint(equalTo: topAnchor),
+            self.emptyTableViewLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            self.emptyTableViewLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -EAIncrement.four.rawValue),
+            self.emptyTableViewLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: EAIncrement.four.rawValue),
         ])
+    }
+    
+    private func updateEmptyTableViewMessage() {
+        self.emptyTableViewLabel.isHidden = self.tableView.numberOfRows(inSection: 0) == 0 ? false : true
     }
     
     // MARK: - Public Functions
@@ -43,6 +64,15 @@ class EAGoalsView: UIView {
     /// Refreshes the view
     public func refreshView() {
         tableView.reloadData()
+        updateEmptyTableViewMessage()
+    }
+    
+    public func setTableViewDelegate(_ delegate: UITableViewDelegate) {
+        self.tableView.delegate = delegate
+    }
+    
+    public func setTableViewDataSource(_ dataSource: UITableViewDataSource) {
+        self.tableView.dataSource = dataSource
     }
     
     required init?(coder: NSCoder) {
