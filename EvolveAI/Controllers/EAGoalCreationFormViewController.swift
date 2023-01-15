@@ -46,85 +46,53 @@ class EAGoalCreationFormViewController: UIViewController {
     /// Load the view for the screen
     override func loadView() {
         self.title = "New Goal"
-        let view = EAFormView(formElements: [
-            .goalCreationQuestion(
-                actionText: "I am going to",
-                goalPlaceholder: "learn the violin",
-                connectorText: "within",
-                goalTextWasEdited: { [weak self] textField in
-                    guard let strongSelf = self else {
-                        print("$Error: self is nil.")
-                        return
-                    }
-                    
-                    if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
-                        strongSelf.goal = goal
-                        textField.setBorderColor(color: .label)
-                    } else {
-                        strongSelf.goal = nil
-                        textField.setBorderColor(color: .red)
-                    }
-                    
-                    self?.updateButton()
-                },
-                numDaysPlaceholder: "30",
-                numDaysTextWasEdited: { [weak self] textField in
-                    guard let strongSelf = self else {
-                        print("$Error: self is nil.")
-                        return
-                    }
-                    
-                    if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
-                       numDays <= GoalCreationConstants.maxDays {
-                        strongSelf.numDays = numDays
-                        textField.setBorderColor(color: .label)
-                    } else {
-                        strongSelf.numDays = nil
-                        textField.setBorderColor(color: .red)
-                    }
-                    
-                    strongSelf.updateButton()
-                },
-                numDaysLabel: "days."
-            ),
-            .separator,
-            .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
-                self?.additionalDetails = textView.text
-            }),
-            .button(
-                buttonText: "Create Goal",
-                enabledOnStart: false,
-                viewSetter: { [weak self] button in
-                    self?.createGoalButton = button
-                },
-                buttonPressed: { [weak self] in
-                    print("Create Goal Button was pressed.")
-                    self?.createGoalButtonPressed()
-                }
-            )
-        ])
-        
+        let view = EAFormView(formElements: self.createFormElements())
         self.view = view
     }
+    
+    // MARK: - Private Functions
     
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
         self.getView().setSpinner(isActive: true)
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
-            print("Num days: \(numDays)")
-            let _ = EAGoalsService.shared.createGoal(
+            EAGoalsService.shared.createGoal(
                 goal: goal,
                 numDays: numDays,
                 additionalDetails: self.additionalDetails
             ) { [weak self] result in
-                print("Create Goal Completion called.")
-                self?.goalWasCreated()
-                self?.getView().setSpinner(isActive: false)
-                self?.navigationController?.popViewController(animated: true)
+                guard let self = self else { return }
+        
+                switch result {
+                case .success(let goal):
+                    DispatchQueue.main.async {
+                        self.goalWasCreated()
+                        self.getView().setSpinner(isActive: false)
+                        if let navigationController = self.navigationController {
+                            let vc = EAGoalViewController(goal: goal)
+                            NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)
+                        }
+                    }
+                case .failure(let error):
+                    self.handleGoalCreationFailure(error)
+                }
             }
         } else {
-            fatalError("$Error: user was able to trigger createGoal with nil fields.")
+            fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goal)), Num Days: \(String(describing: self.numDays)).")
+        }
+    }
+    
+    /// Handles any failures that occur with goal creation
+    /// - Parameter error: The error that occurred when attempting to create the goal
+    private func handleGoalCreationFailure(_ error: EAGoalsService.CreateGoalError) {
+        switch error {
+        case .maxGoalsExceeded:
+            print("$Error: max goals exceeded: \(String(describing: error))")
+        case .dayLimitExceeded:
+            print("$Error: day limit exceeded: \(String(describing: error))")
+        case .unknownError(let unknownError):
+            print("$Error: unknown error: \(String(describing: unknownError))")
         }
     }
     
@@ -165,6 +133,68 @@ class EAGoalCreationFormViewController: UIViewController {
         } else {
             fatalError("$Error: View is not of Type EAFormView.")
         }
+    }
+    
+    /// Constructs the form elements for this screen
+    /// - Returns: An array of EAFormElement objects
+    private func createFormElements() -> [EAFormElement] {
+        return [
+            .goalCreationQuestion(
+                actionText: "I am going to",
+                goalPlaceholder: "learn the violin",
+                connectorText: "within",
+                goalTextWasEdited: { [weak self] textField in
+                    guard let strongSelf = self else {
+                        print("$Error: self is nil.")
+                        return
+                    }
+                    
+                    if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
+                        strongSelf.goal = goal
+                        textField.setBorderColor(color: .label)
+                    } else {
+                        strongSelf.goal = nil
+                        textField.setBorderColor(color: .red)
+                    }
+                    
+                    self?.updateButton()
+                },
+                numDaysPlaceholder: "Max: \(GoalCreationConstants.maxDays)",
+                numDaysTextWasEdited: { [weak self] textField in
+                    guard let strongSelf = self else {
+                        print("$Error: self is nil.")
+                        return
+                    }
+                    
+                    if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
+                       numDays <= GoalCreationConstants.maxDays {
+                        strongSelf.numDays = numDays
+                        textField.setBorderColor(color: .label)
+                    } else {
+                        strongSelf.numDays = nil
+                        textField.setBorderColor(color: .red)
+                    }
+                    
+                    strongSelf.updateButton()
+                },
+                numDaysLabel: "days."
+            ),
+            .separator,
+            .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
+                self?.additionalDetails = textView.text
+            }),
+            .button(
+                buttonText: "Create Goal",
+                enabledOnStart: false,
+                viewSetter: { [weak self] button in
+                    self?.createGoalButton = button
+                },
+                buttonPressed: { [weak self] in
+                    print("Create Goal Button was pressed.")
+                    self?.createGoalButtonPressed()
+                }
+            )
+        ]
     }
     
     required init?(coder: NSCoder) {
