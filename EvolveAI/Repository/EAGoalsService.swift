@@ -59,7 +59,7 @@ class EAGoalsService {
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
         let guideFormat = "Day [Day Number]: [Paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"]"
-        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat) to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
+        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat), for every day, to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
         
     }
     
@@ -90,6 +90,17 @@ class EAGoalsService {
                            additionalDetails: String,
                            completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void) {
         
+        if(Flags.useMockGoals) {
+            let goal = Mocking.createMockGoal(goalString: goal, numDays: numDays)
+            DispatchQueue.main.async {
+                self.writeToRealm {
+                    self.realm.add(goal)
+                }
+                completion(.success(goal))
+            }
+            return
+        }
+        
         if(getAllPersistedGoals().count > Constants.maxGoalsAllowed) {
             completion(.failure(CreateGoalError.maxGoalsExceeded))
         }
@@ -117,8 +128,8 @@ class EAGoalsService {
                                       numDays: numDays,
                                       additionalDetails: additionalDetails,
                                       apiResponse: apiResponse)
-                    if(Flags.printGoalResponseOutput) {
-                        print("Goal: \(goal)")
+                    if(Flags.debugAPIClient) {
+                        print("$Log: Goal: \(goal)")
                     }
                     
                     DispatchQueue.main.async {

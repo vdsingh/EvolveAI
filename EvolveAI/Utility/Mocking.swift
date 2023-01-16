@@ -10,29 +10,57 @@ import Foundation
 /// This class is used to create Mock objects
 class Mocking {
     
+    private static let mockGoals: [String] = [
+       "learn the violin",
+       "read 3 books",
+       "lose 10 pounds",
+       "learn to cook",
+   ]
+    
     /// This function creates an array of mock goals
     /// - Parameter numGoals: The number of mock goals to generate
     /// - Returns: An array of mock goals
     public static func createMockGoals(numGoals: Int) -> [EAGoal] {
-        let mockGoalsMap: [String: String] = [
-            "learn the violin": "Day 1: Buy a violin.",
-            "read 3 books": "Day 1: Buy a book.",
-            "lose 10 pounds": "Day 1: Create a diet plan.",
-            "learn to cook": "Day 1: Buy kitchen supplies",
-        ]
-        
         var goals = [EAGoal]()
         for _ in 0..<numGoals {
-            guard let randomGoal = mockGoalsMap.randomElement() else {
+            guard let randomGoal = mockGoals.randomElement() else {
                 fatalError("$Error: no mock goals")
             }
-            let goal = EAGoal(goal: randomGoal.key,
-                              numDays: Int.random(in: 1...30),
-                              additionalDetails: "",
-                              aiResponse: randomGoal.value)
-            goals.append(goal)
+            
+            goals.append(createMockGoal(goalString: randomGoal))
         }
         
         return goals
+    }
+    
+    /// Creates one mock goal
+    /// - Returns: A Mock EAGoal
+    public static func createMockGoal(goalString: String?,
+                                      numDays: Int = Constants.maxDays,
+                                      additionalDetails: String = ""
+    ) -> EAGoal {
+        guard let randomGoal = mockGoals.randomElement() else {
+            fatalError("$Error: no mock goals")
+        }
+        
+        let goal = EAGoal(goal: goalString ?? randomGoal,
+                          numDays: Int.random(in: 1...numDays),
+                          additionalDetails: additionalDetails,
+                          aiResponse: self.createMockGoalAIResponse())
+        return goal
+    }
+    
+    public static func createMockGoalAIResponse() -> String {
+        var aiResponse = ""
+        let maxNumTasks = 3
+        for i in 1...Constants.maxDays {
+            aiResponse += "Day \(i): "
+            let numTasks = Int.random(in: 1...maxNumTasks)
+            for _ in 0..<numTasks {
+                aiResponse += "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor\(Constants.taskSeparatorCharacter)."
+            }
+            aiResponse += "\n"
+        }
+        return aiResponse
     }
 }
