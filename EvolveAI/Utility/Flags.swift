@@ -10,12 +10,9 @@ import Foundation
 /// Used to toggle certain functionalities within the app
 class Flags {
     
-    /// Prints any Goals that are received from EAGoalsService
-    static let printGoalResponseOutput = false
-    
-    /// Prints the request body of requests that are sent
-    static let printRequestBodyData = false
-    
+    /// Enable if you want to use Mock goals in EAGoalsService (they will be saved to Realm)
+    static let useMockGoals = true
+
     /// Prints debug messages when creating tasks from AI response.
     static let printTaskMessages = false
     
@@ -24,4 +21,10 @@ class Flags {
     
     /// Prints messages associated with the goals list
     static let debugGoalsList = false
+    
+    /// Prints messages associated with individual goals
+    static let debugIndividualGoal = false
+    
+    /// Prints messages associated with the creation of goals
+    static let debugGoalCreation = false
 }

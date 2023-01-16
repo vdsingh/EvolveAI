@@ -81,8 +81,8 @@ class EAGoal: Object {
             let tasks = components[1]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .components(separatedBy: Constants.taskSeparatorCharacter)
+                .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
                 .filter({$0 != ""})
-                .map({return $0.trimmingCharacters(in: .whitespacesAndNewlines)})
             printDebug("Tasks are \(tasks)")
             
             let taskList = List<String>()
