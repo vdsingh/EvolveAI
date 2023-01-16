@@ -16,9 +16,6 @@ class EAGoalCreationFormViewController: UIViewController {
         
         /// The maximum amount of characters for the goal field
         static let maxGoalLength = 50
-        
-        /// The maximum number of days the goal can be
-        static let maxDays = 30
     }
     
     /// A String describing the goal (ex: "learn the violin"). nil if empty
@@ -118,7 +115,8 @@ class EAGoalCreationFormViewController: UIViewController {
     /// - Parameter text: the Int within a String
     /// - Returns: an Int (if it can be casted)
     private func getNumber(text: String) -> Int? {
-        if let numDays = Int(text) {
+        if let numDays = Int(text),
+           numDays > 0 {
             return numDays
         }
         
@@ -149,6 +147,7 @@ class EAGoalCreationFormViewController: UIViewController {
                         return
                     }
                     
+                    strongSelf.printDebug("Goal Text Edited to: \(textField.text ?? "nil")")
                     if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
                         strongSelf.goal = goal
                         textField.setBorderColor(color: .systemGray)
@@ -159,15 +158,17 @@ class EAGoalCreationFormViewController: UIViewController {
                     
                     self?.updateButton()
                 },
-                numDaysPlaceholder: "Max: \(GoalCreationConstants.maxDays)",
+                numDaysPlaceholder: "Max: \(Constants.maxDays)",
                 numDaysTextWasEdited: { [weak self] textField in
                     guard let strongSelf = self else {
                         print("$Error: self is nil.")
                         return
                     }
                     
-                    if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
-                       numDays <= GoalCreationConstants.maxDays {
+                    strongSelf.printDebug("NumDays Text Edited to: \(textField.text ?? "nil")")
+                    if let text = textField.text,
+                        let numDays = strongSelf.getNumber(text: text),
+                       numDays <= Constants.maxDays {
                         strongSelf.numDays = numDays
                         textField.setBorderColor(color: .systemGray)
                     } else {
@@ -182,6 +183,7 @@ class EAGoalCreationFormViewController: UIViewController {
             .separator,
             .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
                 self?.additionalDetails = textView.text
+                self?.printDebug("Additional Details Text Edited to: \(textView.text ?? "nil")")
             }),
             .button(
                 buttonText: "Create Goal",
@@ -190,11 +192,17 @@ class EAGoalCreationFormViewController: UIViewController {
                     self?.createGoalButton = button
                 },
                 buttonPressed: { [weak self] in
-                    print("Create Goal Button was pressed.")
+                    self?.printDebug("Create Goal Button was pressed.")
                     self?.createGoalButtonPressed()
                 }
             )
         ]
+    }
+    
+    private func printDebug(_ message: String) {
+        if(Flags.debugGoalCreation) {
+            print("$Log: ")
+        }
     }
     
     required init?(coder: NSCoder) {

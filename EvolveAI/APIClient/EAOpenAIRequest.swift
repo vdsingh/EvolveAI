@@ -62,20 +62,23 @@ final class EAOpenAIRequest: EARequest {
             }
             
             if let string = String(data: data, encoding: String.Encoding.utf8) {
-                if(Flags.printRequestBodyData || Flags.debugAPIClient) {
-                    print("$Log: Request Body DATA: \(string)")
-                }
+                printDebug("Request Body DATA: \(string)")
             } else {
                 print("$Error: Unable to convert request body data to string.")
             }
             return data
         }
         
-        if(Flags.printRequestBodyData || Flags.debugAPIClient) {
-            print("$Log: requestBody is nil.")
-        }
-        
+        printDebug("requestBody is nil.")
         return nil
+    }
+    
+    /// Reads the relevant flags and prints debug messages only if they are enabled
+    /// - Parameter message: The message to print
+    private func printDebug(_ message: String) {
+        if(Flags.debugAPIClient) {
+            print("$Log: \(message)")
+        }
     }
     
     // MARK: - Public

@@ -18,7 +18,7 @@ class EASpinner: UIStackView, EAFormElementView {
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = .white
+        spinner.color = .systemBackground
         spinner.hidesWhenStopped = true
         return spinner
     }()

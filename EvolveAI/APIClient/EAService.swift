@@ -36,12 +36,9 @@ final class EAService {
         expecting type: T.Type,
         completion: @escaping (Result<T, Error>) -> Void)
     {
+        printDebug("Executing a EAService request.")
         
-        if(Flags.debugAPIClient) {
-            print("$Log: Executing a PFService request.")
-        }
-        
-        // Unwrap the urlRequest property from the PFRequest object
+        // Unwrap the urlRequest property from the EARequest object
         guard let urlRequest = request.urlRequest else {
             completion(.failure(EAServiceError.failedToUnwrapURLRequest))
             print("$Error: url request is nil.")
@@ -50,7 +47,7 @@ final class EAService {
         
         let task = URLSession.shared.dataTask(
             with: urlRequest,
-            completionHandler: { data, response, error in
+            completionHandler: { [weak self] data, response, error in
                 // There was an error fetching the data.
                 if let error = error {
                     print("$Error: \(String(describing: error))")
@@ -81,10 +78,7 @@ final class EAService {
                 do {
                     let decoder = JSONDecoder()
                     let responseObject = try decoder.decode(type, from: data)
-                    if(Flags.debugAPIClient) {
-                        print("$Log: successfully decoded data to type \(type).")
-                    }
-                    
+                    self?.printDebug("successfully decoded data to type \(type). Response Object: \(responseObject)")
                     completion(.success(responseObject))
                 } catch let error {
                     if let decodingError = error as? DecodingError {
@@ -98,5 +92,37 @@ final class EAService {
                 }
             })
         task.resume()
+    }
+    
+    /// Reads the relevant flags and prints debug messages only if they are enabled
+    /// - Parameter message: The message to print
+    private func printDebug(_ message: String) {
+        if(Flags.debugAPIClient) {
+            print("$Log: \(message)")
+        }
+    }
+    
+    
+    /// Takes a JSON object and turns it into a readable String
+    /// - Parameters:
+    ///   - json: The JSON object to stringify
+    ///   - prettyPrinted: Whether the String should be formatted to read easily
+    /// - Returns: A String representing the JSON object
+    private func stringify(json: Any, prettyPrinted: Bool = true) -> String {
+        var options: JSONSerialization.WritingOptions = []
+        if prettyPrinted {
+            options = JSONSerialization.WritingOptions.prettyPrinted
+        }
+        
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: options)
+            if let string = String(data: data, encoding: String.Encoding.utf8) {
+                return string
+            }
+        } catch {
+            print(error)
+        }
+        
+        return ""
     }
 }

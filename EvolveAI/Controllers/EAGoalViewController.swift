@@ -19,6 +19,7 @@ class EAGoalViewController: UIViewController {
     init(goal: EAGoal) {
         self.goal = goal
         super.init(nibName: nil, bundle: nil)
+        printDebug("Goal: \(goal)")
     }
     
     /// Loads the View
@@ -56,6 +57,12 @@ class EAGoalViewController: UIViewController {
     private func deleteButtonPressed() {
         EAGoalsService.shared.deletePersistedGoal(goal: self.goal)
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    private func printDebug(_ message: String) {
+        if(Flags.debugIndividualGoal) {
+            print("$Log: \(message)")
+        }
     }
     
     required init?(coder: NSCoder) {
