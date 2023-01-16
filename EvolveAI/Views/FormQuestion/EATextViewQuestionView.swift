@@ -24,7 +24,7 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
     
     /// TextView where user enters response
     let textView: EATextView = {
-        let textView = EATextView()
+        let textView = EATextView(borderColor: .systemGray)
         return textView
     }()
     

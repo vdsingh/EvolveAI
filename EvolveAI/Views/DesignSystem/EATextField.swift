@@ -23,19 +23,19 @@ class EATextField: UITextField {
     var editedDelegate: EATextFieldDelegate?
     
     /// Normal initializer
-    init(editedDelegate: EATextFieldDelegate?) {
+    init(editedDelegate: EATextFieldDelegate?, borderColor: UIColor) {
         self.editedDelegate = editedDelegate
         super.init(frame: .zero)
-        self.setUIProperties()
+        self.setUIProperties(borderColor: borderColor)
         self.addTarget(self, action: #selector(textFieldWasEdited), for: .editingChanged)
     }
     
     /// Sets the UI properties for this object
-    private func setUIProperties() {
+    private func setUIProperties(borderColor: UIColor) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.label.cgColor
+        self.layer.borderColor = borderColor.cgColor
     }
     
     /// Action for when this TextField was edited. Uses the delegate to call textFieldWasEdited

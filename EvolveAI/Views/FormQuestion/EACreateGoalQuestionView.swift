@@ -32,7 +32,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     
     /// TextField where user must enter their goal (ex: "learn the violin")
     lazy var goalTextField: EATextField = {
-        let goalTextField = EATextField(editedDelegate: self.editedDelegate)
+        let goalTextField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
         return goalTextField
     }()
     
@@ -47,7 +47,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     
     /// TextField where user must ender the number of days for the goal (ex: "30")
     lazy var numDaysTextField: EATextField = {
-        let numDaysTextField = EATextField(editedDelegate: self.editedDelegate)
+        let numDaysTextField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
         numDaysTextField.textAlignment = .center
         return numDaysTextField
     }()

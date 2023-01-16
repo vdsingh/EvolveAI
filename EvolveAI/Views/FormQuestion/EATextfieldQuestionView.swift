@@ -27,7 +27,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     
     /// TextField where user enters response
     lazy var textField: EATextField = {
-        let textField = EATextField(editedDelegate: self.editedDelegate)
+        let textField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
         return textField
     }()
     

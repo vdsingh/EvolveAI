@@ -12,12 +12,12 @@ import UIKit
 class EATextView: UITextView {
     
     /// Normal Initializer
-    init() {
+    init(borderColor: UIColor) {
         super.init(frame: .zero, textContainer: .none)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.label.cgColor
+        self.layer.borderColor = borderColor.cgColor
     }
     
     /// Sets the border color of the TextView

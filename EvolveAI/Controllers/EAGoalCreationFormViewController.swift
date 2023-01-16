@@ -151,7 +151,7 @@ class EAGoalCreationFormViewController: UIViewController {
                     
                     if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
                         strongSelf.goal = goal
-                        textField.setBorderColor(color: .label)
+                        textField.setBorderColor(color: .systemGray)
                     } else {
                         strongSelf.goal = nil
                         textField.setBorderColor(color: .red)
@@ -169,7 +169,7 @@ class EAGoalCreationFormViewController: UIViewController {
                     if let text = textField.text, let numDays = strongSelf.getNumber(text: text),
                        numDays <= GoalCreationConstants.maxDays {
                         strongSelf.numDays = numDays
-                        textField.setBorderColor(color: .label)
+                        textField.setBorderColor(color: .systemGray)
                     } else {
                         strongSelf.numDays = nil
                         textField.setBorderColor(color: .red)
