@@ -20,11 +20,11 @@ class EADayGuideView: UIStackView {
     }()
     
     /// StackView that holds the tasks associated with the Day Guide
-    let taskStackView: UIStackView = {
-       let taskStackView = UIStackView()
-        taskStackView.translatesAutoresizingMaskIntoConstraints = false
-        taskStackView.axis = .vertical
-        return taskStackView
+    let tasksStackView: UIStackView = {
+       let tasksStackView = UIStackView()
+        tasksStackView.translatesAutoresizingMaskIntoConstraints = false
+        tasksStackView.axis = .vertical
+        return tasksStackView
     }()
     
     /// Regular initializer
@@ -42,7 +42,7 @@ class EADayGuideView: UIStackView {
     /// - Parameter dayGuides: List of Strings representing Tasks that we need to add to our View
     private func addSubviewsAndEstablishConstraints(tasks: List<String>) {
         self.addArrangedSubview(daysLabel)
-        self.addArrangedSubview(taskStackView)
+        self.addArrangedSubview(tasksStackView)
         self.addTasksToView(tasks: tasks)
     }
     
@@ -51,16 +51,36 @@ class EADayGuideView: UIStackView {
     private func addTasksToView(tasks: List<String>) {
         for i in 0..<tasks.count {
             let task = tasks[i]
-            let taskLabel = UILabel(frame: .zero)
-            taskLabel.translatesAutoresizingMaskIntoConstraints = false
-            taskLabel.numberOfLines = 0
             if(Flags.printTaskMessages) {
                 print("$Log: Task: \(task)")
             }
             
-            taskLabel.text = "(\(i + 1)) \(task)"
-            self.taskStackView.addArrangedSubview(taskLabel)
+            let stack = createTaskStack(taskNum: i+1, taskText: task)
+            self.tasksStackView.addArrangedSubview(stack)
         }
+    }
+    
+    private func createTaskStack(taskNum: Int, taskText: String) -> UIStackView {
+        let taskLabel = UILabel(frame: .zero)
+        taskLabel.translatesAutoresizingMaskIntoConstraints = false
+        taskLabel.text = "\(taskText)"
+        taskLabel.numberOfLines = 0
+        
+        let numLabel = UILabel(frame: .zero)
+        numLabel.translatesAutoresizingMaskIntoConstraints = false
+        numLabel.text = "\(taskNum)) "
+        numLabel.textAlignment = .left
+        numLabel.numberOfLines = 1
+       
+        let taskStackView = UIStackView()
+        taskStackView.translatesAutoresizingMaskIntoConstraints = false
+        taskStackView.axis = .horizontal
+        taskStackView.alignment = .top
+        taskStackView.spacing = EAIncrement.one.rawValue / 2
+        taskStackView.distribution = .fillProportionally
+        taskStackView.addArrangedSubview(numLabel)
+        taskStackView.addArrangedSubview(taskLabel)
+        return taskStackView
     }
     
     required init(coder: NSCoder) {
