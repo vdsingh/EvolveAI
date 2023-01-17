@@ -35,17 +35,23 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
     
     /// Adds subviews and establishes constraints for this view
     private func addSubviewsAndEstablishConstraints() {
-        self.addSubview(self.titleLabel)
-        self.addSubview(self.daysLabel)
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.addArrangedSubview(self.titleLabel)
+        stackView.addArrangedSubview(self.daysLabel)
+        self.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            self.titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: EAIncrement.one.rawValue * 1.5),
-            self.titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: EAIncrement.one.rawValue * 1.5),
-            self.titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -EAIncrement.one.rawValue * 1.5),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            stackView.rightAnchor.constraint(equalTo: self.rightAnchor),
             
-            self.daysLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -EAIncrement.one.rawValue * 1.5),
-            self.daysLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: EAIncrement.one.rawValue * 1.5),
-            self.daysLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -EAIncrement.one.rawValue * 1.5),
+            self.titleLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8),
+            self.daysLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8),
         ])
     }
     

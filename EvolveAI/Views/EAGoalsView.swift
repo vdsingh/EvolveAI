@@ -20,7 +20,7 @@ class EAGoalsView: UIView {
         let numItemsPerRow: CGFloat = 2
         let screenWidth = UIScreen.main.bounds.width
         let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 6
+        let spacing: CGFloat = EAIncrement.two.rawValue
         let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
