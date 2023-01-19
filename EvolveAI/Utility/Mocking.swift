@@ -27,7 +27,7 @@ class Mocking {
                 fatalError("$Error: no mock goals")
             }
             
-            goals.append(createMockGoal(goalString: randomGoal))
+            goals.append(createMockGoal(goalString: randomGoal, numDays: nil))
         }
         
         return goals
@@ -36,7 +36,7 @@ class Mocking {
     /// Creates one mock goal
     /// - Returns: A Mock EAGoal
     public static func createMockGoal(goalString: String?,
-                                      numDays: Int = Constants.maxDays,
+                                      numDays: Int?,
                                       additionalDetails: String = ""
     ) -> EAGoal {
         guard let randomGoal = mockGoals.randomElement() else {
@@ -44,12 +44,14 @@ class Mocking {
         }
         
         let goal = EAGoal(goal: goalString ?? randomGoal,
-                          numDays: Int.random(in: 1...numDays),
+                          numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
                           additionalDetails: additionalDetails,
                           aiResponse: self.createMockGoalAIResponse())
         return goal
     }
     
+    /// Creates a mock goal AI Response (Lorem Ipsum text)
+    /// - Returns: A String representing an AI Response
     public static func createMockGoalAIResponse() -> String {
         var aiResponse = ""
         let maxNumTasks = 3
