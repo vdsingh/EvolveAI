@@ -11,7 +11,7 @@ import Foundation
 struct Constants {
     
     /// The maximum amount of tokens allowed in response for a goal ($0.02 for 1000 tokens).
-    static let maxTokens = 500
+    static let maxTokens = 4000
     
     /// The maximum number of goals a user can have
     static let maxGoalsAllowed = 5

@@ -15,7 +15,7 @@ class EAGoalCreationFormViewController: UIViewController {
     struct GoalCreationConstants {
         
         /// The maximum amount of characters for the goal field
-        static let maxGoalLength = 50
+        static let maxGoalLength = 100
     }
     
     /// A String describing the goal (ex: "learn the violin"). nil if empty
@@ -51,7 +51,9 @@ class EAGoalCreationFormViewController: UIViewController {
     
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
-        self.getView().setSpinner(isActive: true)
+        self.getView().setLoading(isLoading: true)
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
             EAGoalsService.shared.createGoal(
@@ -65,8 +67,10 @@ class EAGoalCreationFormViewController: UIViewController {
                 case .success(let goal):
                     DispatchQueue.main.async {
                         self.goalWasCreated()
-                        self.getView().setSpinner(isActive: false)
+                        self.getView().setLoading(isLoading: false)
                         if let navigationController = self.navigationController {
+                            navigationController.navigationBar.isUserInteractionEnabled = false
+                            navigationController.navigationBar.tintColor = .link
                             let vc = EAGoalViewController(goal: goal)
                             NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)
                         }
@@ -150,10 +154,10 @@ class EAGoalCreationFormViewController: UIViewController {
                     strongSelf.printDebug("Goal Text Edited to: \(textField.text ?? "nil")")
                     if let goal = textField.text, goal != "", goal.count < GoalCreationConstants.maxGoalLength {
                         strongSelf.goal = goal
-                        textField.setBorderColor(color: .systemGray)
+                        textField.setBorderColor(color: .systemGreen)
                     } else {
                         strongSelf.goal = nil
-                        textField.setBorderColor(color: .red)
+                        textField.setBorderColor(color: .systemRed)
                     }
                     
                     self?.updateButton()
@@ -170,10 +174,10 @@ class EAGoalCreationFormViewController: UIViewController {
                         let numDays = strongSelf.getNumber(text: text),
                        numDays <= Constants.maxDays {
                         strongSelf.numDays = numDays
-                        textField.setBorderColor(color: .systemGray)
+                        textField.setBorderColor(color: .systemGreen)
                     } else {
                         strongSelf.numDays = nil
-                        textField.setBorderColor(color: .red)
+                        textField.setBorderColor(color: .systemRed)
                     }
                     
                     strongSelf.updateButton()
@@ -200,7 +204,7 @@ class EAGoalCreationFormViewController: UIViewController {
     }
     
     private func printDebug(_ message: String) {
-        if(Flags.debugGoalCreation) {
+        if(Flags.debugGoalCreationForm) {
             print("$Log: ")
         }
     }

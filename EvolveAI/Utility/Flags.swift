@@ -11,7 +11,7 @@ import Foundation
 class Flags {
     
     /// Enable if you want to use Mock goals in EAGoalsService (they will be saved to Realm)
-    static let useMockGoals = true
+    static let useMockGoals = false
 
     /// Prints debug messages when creating tasks from AI response.
     static let printTaskMessages = false
@@ -25,6 +25,6 @@ class Flags {
     /// Prints messages associated with individual goals
     static let debugIndividualGoal = false
     
-    /// Prints messages associated with the creation of goals
-    static let debugGoalCreation = false
+    /// Prints messages associated with the goal creation form
+    static let debugGoalCreationForm = false
 }

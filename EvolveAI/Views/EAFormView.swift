@@ -134,10 +134,10 @@ class EAFormView: UIView {
     
     // MARK: - Public Functions
     
-    /// Sets the spinners active status
-    /// - Parameter isActive: Whether the spinner should be active or not
-    public func setSpinner(isActive: Bool) {
-        if isActive {
+    /// Toggle whether the form is loading or not (the spinners active status, user interaction)
+    /// - Parameter isActive: Whether the page is loading or not
+    public func setLoading(isLoading: Bool) {
+        if isLoading {
             self.isUserInteractionEnabled = false
             self.isFormLoading = true
             self.spinner.startAnimating()

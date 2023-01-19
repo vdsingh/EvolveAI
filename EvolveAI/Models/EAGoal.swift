@@ -61,13 +61,14 @@ class EAGoal: Object {
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
     private static func createDayGuides(from aiResponse: String) -> List<EAGoalDayGuide> {
-        let lines = aiResponse.split(separator: "\n")
+        let lines = aiResponse.split(separator: "\n").filter({ $0.trimmingCharacters(in:.whitespacesAndNewlines) != ""})
+        printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
         // One line represents one EAGoalDayGuide Object
         for line in lines {
             // Separate the line by ":" which separates the Day Number info from the other info
             guard let colonIndex = line.firstIndex(of: ":") else {
-                print("$Error: no colon found when constructing EAGoalDayGuide.")
+                print("$Error: no colon found when constructing EAGoalDayGuide. Line: \(line)")
                 continue
             }
             

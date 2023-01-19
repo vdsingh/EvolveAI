@@ -60,6 +60,11 @@ class EADayGuideView: UIStackView {
         }
     }
     
+    /// Creates a horizontal StackView for a given task
+    /// - Parameters:
+    ///   - taskNum: The task number
+    ///   - taskText: The text of the task
+    /// - Returns: A UIStackView containing 2 UILabels: Number UILabel and Task UILabel
     private func createTaskStack(taskNum: Int, taskText: String) -> UIStackView {
         let taskLabel = UILabel(frame: .zero)
         taskLabel.translatesAutoresizingMaskIntoConstraints = false

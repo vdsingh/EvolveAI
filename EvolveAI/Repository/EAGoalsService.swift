@@ -58,9 +58,8 @@ class EAGoalsService {
     ///   - numDays: The number of days to accomplish the goal in (ex: 30)
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
-        let guideFormat = "Day [Day Number]: [Paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"]"
-        return "I have the goal: \(goal). I want to complete it in \(numDays) days. Give me a day by day guide in the form \(guideFormat), for every day, to achieve this goal with a strict limit of \(Constants.maxTokens) characters."
-        
+        let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"] [New Line for next day]"
+        return "I have the goal: \(goal). I want to complete it in exactly \(numDays) days. Give me a guide for every day in the form \(guideFormat). It is important to provide a guide for every day within \(numDays) that follows the guide format! Also, make sure that your entire response, which includes \"Day\", the day number, and the colon, is within a limit of \(Constants.maxTokens - goal.numTokens(separatedBy: CharacterSet(charactersIn: " "))) characters."
     }
     
     /// Helper function to communicate with realm. Abstracts error handling.
@@ -112,7 +111,8 @@ class EAGoalsService {
         let prompt = createOpenAICompletionsRequestString(
             goal: goal,
             numDays: numDays)
-        let request = EAOpenAIRequest.completionsRequest(prompt: prompt,
+        let request = EAOpenAIRequest.completionsRequest(model: .davinci003,
+                                                         prompt: prompt,
                                                          max_tokens: Constants.maxTokens)
         EAService.shared.execute(
             request,

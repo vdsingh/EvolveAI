@@ -49,7 +49,7 @@ class EASpinner: UIStackView, EAFormElementView {
     /// - Parameter subText: the SubText (if any) for this spinner
     private func setUIProperties(subText: String?) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .label.withAlphaComponent(0.7)
+        self.backgroundColor = .label
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.isHidden = true
         self.axis = .vertical

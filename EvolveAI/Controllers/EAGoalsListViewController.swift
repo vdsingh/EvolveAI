@@ -60,7 +60,6 @@ class EAGoalsListViewController: UIViewController {
     @objc private func questionButtonPressed() {
         let dialogMessage = UIAlertController(title: "Goal Limit Reached", message: "You've reached the maximum amount of goals.", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-            print("Ok button tapped")
             dialogMessage.dismiss(animated: true)
         })
         
@@ -133,39 +132,3 @@ extension EAGoalsListViewController: UICollectionViewDelegate {
         navigator.navigate(to: .viewGoal(goal: goal))
     }
 }
-
-// MARK: - TableView Delegate
-//extension EAGoalsListViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let goal = goals[indexPath.row]
-//        navigator.navigate(to: .viewGoal(goal: goal))
-//    }
-//}
-//
-//// MARK: - TableView DataSource
-//extension EAGoalsListViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 60
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return goals.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if let cell = tableView.dequeueReusableCell(withIdentifier: EAGoalTableViewCell.reuseIdentifier, for: indexPath) as? EAGoalTableViewCell {
-//            let goal = goals[indexPath.row]
-//            let goalViewModel = EAGoalViewModel(
-//                title: goal.goal,
-//                numDays: goal.numDays,
-//                dayGuides: goal.dayGuides,
-//                additionalDetails: goal.additionalDetails
-//            )
-//            cell.configure(with: goalViewModel)
-//            return cell
-//        }
-//
-//        print("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
-//        return tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//    }
-//}
