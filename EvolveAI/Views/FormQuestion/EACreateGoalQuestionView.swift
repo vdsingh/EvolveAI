@@ -14,8 +14,11 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     /// The required height of the View
     var requiredHeight: CGFloat = 150
     
-    /// Delegate to use when a textfield has been edited.
-    private var editedDelegate: EATextFieldDelegate?
+    /// Callback to use when the goal textfield has been edited.
+    private var goalEditedCallback: (EATextField) -> Void
+    
+    /// Callback to use when the goal textfield has been edited.
+    private var numDaysEditedCallback: (EATextField) -> Void
     
     private struct Constants {
         static let labelFontSize = EAIncrement.two.rawValue
@@ -23,7 +26,7 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }
     
     /// Label describing the action text (ex: "I am going to")
-    let actionTextLabel: UILabel = {
+    private let actionTextLabel: UILabel = {
         let actionTextLabel = UILabel()
         actionTextLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
                                            weight: EACreateGoalQuestionView.Constants.labelFontWeight)
@@ -31,13 +34,13 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }()
     
     /// TextField where user must enter their goal (ex: "learn the violin")
-    lazy var goalTextField: EATextField = {
-        let goalTextField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
+    private lazy var goalTextField: EATextField = {
+        let goalTextField = EATextField(textWasEditedCallback: self.goalEditedCallback, borderColor: .systemGray)
         return goalTextField
     }()
     
     /// Label describing the connector text (ex: "within")
-    let connectorTextLabel: UILabel = {
+    private let connectorTextLabel: UILabel = {
         let connectorTextLabel = UILabel()
         connectorTextLabel.translatesAutoresizingMaskIntoConstraints = false
         connectorTextLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
@@ -46,14 +49,14 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }()
     
     /// TextField where user must ender the number of days for the goal (ex: "30")
-    lazy var numDaysTextField: EATextField = {
-        let numDaysTextField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
+    private lazy var numDaysTextField: EATextField = {
+        let numDaysTextField = EATextField(textWasEditedCallback: self.numDaysEditedCallback, borderColor: .systemGray)
         numDaysTextField.textAlignment = .center
         return numDaysTextField
     }()
     
     /// Labl describing the unit for the number of days (ex: "days.")
-    let numDaysUnitLabel: UILabel = {
+    private let numDaysUnitLabel: UILabel = {
         let numDaysUnitLabel = UILabel()
         numDaysUnitLabel.translatesAutoresizingMaskIntoConstraints = false
         numDaysUnitLabel.font = .systemFont(ofSize: EACreateGoalQuestionView.Constants.labelFontSize,
@@ -65,6 +68,8 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     /// ViewModel initializer
     /// - Parameter viewModel: The ViewModel used to display the correct information
     init(viewModel: EACreateGoalQuestionViewModel) {
+        self.numDaysEditedCallback = viewModel.numDaysEditedCallback
+        self.goalEditedCallback = viewModel.goalEditedCallback
         super.init(frame: .zero)
         self.setUIProperties(viewModel: viewModel)
         self.addSubviewsAndEstablishConstraints()
@@ -103,6 +108,6 @@ class EACreateGoalQuestionView: UIStackView,  EAFormElementView {
     }
     
     required init(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError()
     }
 }

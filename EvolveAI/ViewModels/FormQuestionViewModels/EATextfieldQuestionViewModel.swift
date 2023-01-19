@@ -15,4 +15,7 @@ struct EATextFieldQuestionViewModel {
     
     /// The placeholder for the response textfield
     let responsePlaceholder: String
+    
+    /// Callback for when the TextField is edited
+    let editedCallback: (EATextField) -> Void
 }

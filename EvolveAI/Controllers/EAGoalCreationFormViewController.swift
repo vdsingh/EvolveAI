@@ -27,7 +27,7 @@ class EAGoalCreationFormViewController: UIViewController {
     /// A String describing additional details for the goal. Not used in generating the plan
     private var additionalDetails = ""
     
-    /// A Button that the user will press when they have specified all necessary info and are finished
+    /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
     
     /// Callback to use when the goal has been created
@@ -185,6 +185,8 @@ class EAGoalCreationFormViewController: UIViewController {
                 numDaysLabel: "days."
             ),
             .separator,
+            .colorSelector,
+            .separator,
             .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
                 self?.additionalDetails = textView.text
                 self?.printDebug("Additional Details Text Edited to: \(textView.text ?? "nil")")
@@ -195,17 +197,19 @@ class EAGoalCreationFormViewController: UIViewController {
                 viewSetter: { [weak self] button in
                     self?.createGoalButton = button
                 },
-                buttonPressed: { [weak self] in
+                buttonPressed: { [weak self] button in
                     self?.printDebug("Create Goal Button was pressed.")
                     self?.createGoalButtonPressed()
                 }
-            )
+            ),
         ]
     }
     
+    /// Prints a debug message if the necessary flags are true
+    /// - Parameter message: The message to print
     private func printDebug(_ message: String) {
         if(Flags.debugGoalCreationForm) {
-            print("$Log: ")
+            print("$Log: \(message)")
         }
     }
     

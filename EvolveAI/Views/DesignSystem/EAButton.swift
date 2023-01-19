@@ -8,26 +8,19 @@
 import Foundation
 import UIKit
 
-/// This delegate is used for when an EAButton was pressed.
-protocol EAButtonDelegate {
-    
-    /// Function that gets called when the button is pressed
-    /// - Parameter button: The button that was pressed
-    func buttonWasPressed(_ button: EAButton)
-}
-
 /// Custom Button for this application
 class EAButton: UIButton, EAFormElementView {
     
     /// This button can be a FormElement and it must have a required height
     var requiredHeight = EAIncrement.five.rawValue
     
-    /// The delegate decides what to do when the button has been clicked
-    var delegate: EAButtonDelegate?
+    /// The callback for when the button has been clicked
+    private var buttonPressedCallback: (EAButton) -> Void
     
     /// Normal Initializer
     /// - Parameter text: The text for the button
-    init(text: String, enabledOnStart: Bool) {
+    init(text: String, enabledOnStart: Bool, buttonPressedCallback: @escaping (EAButton) -> Void) {
+        self.buttonPressedCallback = buttonPressedCallback
         super.init(frame: .zero)
         self.setUIProperties(text: text)
         self.setEnabled(enabled: enabledOnStart)
@@ -35,7 +28,7 @@ class EAButton: UIButton, EAFormElementView {
     }
     
     @objc private func pressed() {
-        delegate?.buttonWasPressed(self)
+        self.buttonPressedCallback(self)
     }
     
     // MARK: - Private Functions

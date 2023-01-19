@@ -14,11 +14,11 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     /// The required height for this view
     var requiredHeight: CGFloat = 90
     
-    /// Delegate to use when the textfields are edited
-    public var editedDelegate: EATextFieldDelegate?
+    /// callback to use when the textfields are edited
+    private var editedCallback: (EATextField) -> Void
     
     /// Label that displays the question
-    let questionLabel: UILabel = {
+    private let questionLabel: UILabel = {
         let questionLabel = UILabel()
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
         questionLabel.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .medium)
@@ -26,14 +26,15 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     }()
     
     /// TextField where user enters response
-    lazy var textField: EATextField = {
-        let textField = EATextField(editedDelegate: self.editedDelegate, borderColor: .systemGray)
+    private lazy var textField: EATextField = {
+        let textField = EATextField(textWasEditedCallback: self.editedCallback, borderColor: .systemGray)
         return textField
     }()
     
     /// ViewModel initializer
     /// - Parameter viewModel: The ViewModel used to set the data of the View
     init(viewModel: EATextFieldQuestionViewModel) {
+        self.editedCallback = viewModel.editedCallback
         super.init(frame: .zero)
         self.setUIProperties(viewModel: viewModel)
         self.addSubviewsAndEstablishConstraints()
@@ -47,7 +48,6 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         self.alignment = .fill
         self.axis = .vertical
         self.spacing = EAIncrement.one.rawValue
-        
         self.questionLabel.text = viewModel.question
     }
     
@@ -62,7 +62,6 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
     }
     
     required init(coder: NSCoder) {
-        self.editedDelegate = nil
-        super.init(coder: coder)
+        fatalError()
     }
 }

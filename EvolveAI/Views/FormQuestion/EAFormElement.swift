@@ -36,6 +36,8 @@ enum EAFormElement {
         numDaysLabel: String
     )
     
+    case colorSelector
+    
     // MARK: - Other Elements
     
     /// Used to create a button
@@ -43,7 +45,7 @@ enum EAFormElement {
         buttonText: String,
         enabledOnStart: Bool,
         viewSetter: (EAButton) -> Void,
-        buttonPressed: () -> Void
+        buttonPressed: (EAButton) -> Void
     )
     
     /// Used to create a separator
@@ -53,10 +55,11 @@ enum EAFormElement {
     /// - Returns: a UIView which is the response object
     func createView() -> EAFormElementView {
         switch self {
-        case .textFieldQuestion(let question, let placeholder, _):
+        case .textFieldQuestion(let question, let placeholder, let editedCallback):
             let viewModel = EATextFieldQuestionViewModel(
                 question: question,
-                responsePlaceholder: placeholder
+                responsePlaceholder: placeholder,
+                editedCallback: editedCallback
             )
             let view = EATextFieldQuestionView(viewModel: viewModel)
             return view
@@ -67,27 +70,31 @@ enum EAFormElement {
         case .goalCreationQuestion(
             let actionText,
             let goalPlaceholder,
-            let connectorText, _,
-            let numDaysPlaceholder, _,
+            let connectorText, let goalTextWasEdited,
+            let numDaysPlaceholder, let numDaysTextWasEdited,
             let numDaysLabel
         ):
             let viewModel = EACreateGoalQuestionViewModel(
                 actionText: actionText,
                 goalPlaceholderText: goalPlaceholder,
+                goalEditedCallback: goalTextWasEdited,
                 connectorText: connectorText,
                 numDaysPlaceholderText: numDaysPlaceholder,
+                numDaysEditedCallback: numDaysTextWasEdited,
                 numDaysUnitLabel: numDaysLabel
             )
             let view = EACreateGoalQuestionView(viewModel: viewModel)
             return view
-        case .button(let buttonText, let enabledOnStart, let viewSetter, _):
-            let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart)
+        case .button(let buttonText, let enabledOnStart, let viewSetter, let buttonPressed):
+            let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
             viewSetter(view)
             return view
             
+        case .colorSelector:
+            return EASeparator()
+            
         case .separator:
-            let view = EASeparator()
-            return view
+            return EASeparator()
         }
     }
 }

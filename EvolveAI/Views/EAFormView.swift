@@ -13,16 +13,7 @@ class EAFormView: UIView {
     
     /// The UIViews for the questions
     var questionViews: [UIView]
-    
-    /// A map for the callback functions for when TextFields have been edited
-    private var textFieldDelegateCallbackGraph: [UIView: ((_ textField: EATextField ) -> Void)] = [:]
-    
-    /// A map for the callback functions for when TextViews have been edited
-    private var textViewDelegateCallbackGraph: [UIView: ((_ textView: UITextView ) -> Void)] = [:]
 
-    /// A map for the callback functions for when buttons has been pressed
-    private var buttonDelegateCallbackGraph: [UIView: (() -> Void)] = [:]
-    
     /// Boolean representing whether the form is loading or not
     private var isFormLoading: Bool
     
@@ -32,7 +23,22 @@ class EAFormView: UIView {
         return spinner
     }()
     
-    // MARK: - Initiailizer
+    private let testButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .purple
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("BUTTON 1", for: .normal)
+        let action = UIAction(title: "ACTION 1") { action in
+            print("Action: \(action)")
+        }
+        
+        let uiMenu = UIMenu(title: "MENU", options: .displayInline, children: [action])
+        button.menu = uiMenu
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
+                          
+                          // MARK: - Initiailizer
     
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
@@ -43,28 +49,31 @@ class EAFormView: UIView {
         super.init(frame: .zero)
         self.backgroundColor = .systemBackground
 
-        self.addViewsAndEstablishConstraints(formElements: formElements)
+        self.addSubViewsAndEstablishConstraints(formElements: formElements)
     }
     
     // MARK: - Private Functions
     
     /// Add the subviews to the view and establish constraints
     /// - Parameter formElements: The EAFormElements which specify the subviews to add
-    private func addViewsAndEstablishConstraints(formElements: [EAFormElement]) {
+    private func addSubViewsAndEstablishConstraints(formElements: [EAFormElement]) {
         let stack = constructFormElementStackView(formElements: formElements)
         stack.spacing = EAIncrement.two.rawValue
         self.addSubview(stack)
-        self.addSubview(spinner)
+        self.addSubview(self.spinner)
+        
+        //TODO: Delete
+        stack.addArrangedSubview(testButton)
         
         NSLayoutConstraint.activate([
             stack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: EAIncrement.two.rawValue),
             stack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -EAIncrement.two.rawValue),
             stack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: EAIncrement.two.rawValue),
             
-            spinner.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
-            spinner.heightAnchor.constraint(equalToConstant: spinner.requiredHeight),
-            spinner.widthAnchor.constraint(equalToConstant: spinner.requiredHeight),
+            self.spinner.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            self.spinner.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            self.spinner.heightAnchor.constraint(equalToConstant: self.spinner.requiredHeight),
+            self.spinner.widthAnchor.constraint(equalToConstant: self.spinner.requiredHeight),
         ])
     }
     
@@ -82,54 +91,9 @@ class EAFormView: UIView {
             elementStack.addArrangedSubview(view)
             
             view.heightAnchor.constraint(equalToConstant: view.requiredHeight).isActive = true
-            
-            self.mapDelegates(formElement: formElement, view: view)
         }
         
         return elementStack
-    }
-    
-    /// Maps the delegate functions for questions that have responses so that a controller can specify a callback
-    /// - Parameters:
-    ///   - formElement: The EAFormElement representing the form element
-    ///   - view: The EAFormElementView used to access the corresponding Views and set the delegates
-    private func mapDelegates(formElement: EAFormElement, view: EAFormElementView) {
-        switch formElement {
-        case .textFieldQuestion(_, _, let textFieldWasEdited):
-            guard let questionView = view as? EATextFieldQuestionView else {
-                fatalError("$Error: expected EATextfieldQuestionView but got a different type.")
-            }
-            
-            questionView.editedDelegate = self
-            self.textFieldDelegateCallbackGraph[questionView.textField] = textFieldWasEdited
-        
-        case .textViewQuestion(_, let textViewWasEdited):
-            guard let questionView = view as? EATextViewQuestionView else {
-                fatalError("$Error: expected EATextViewQuestionView but got a different type.")
-            }
-            
-            questionView.textView.delegate = self
-            self.textViewDelegateCallbackGraph[questionView.textView] = textViewWasEdited
-            
-        case .goalCreationQuestion(_,_,_, let goalEdited,_, let numDaysEdited, _):
-            guard let questionView = view as? EACreateGoalQuestionView else {
-                fatalError("$Error: expected EACreateGoalQuestionView but got a different type.")
-            }
-            
-            questionView.goalTextField.editedDelegate = self
-            questionView.numDaysTextField.editedDelegate = self
-            self.textFieldDelegateCallbackGraph[questionView.goalTextField] = goalEdited
-            self.textFieldDelegateCallbackGraph[questionView.numDaysTextField] = numDaysEdited
-        case .button(_, _, _, let buttonPressed):
-            guard let buttonView = view as? EAButton else {
-                fatalError("$Error: expected EAButton but got a different type.")
-            }
-            
-            buttonView.delegate = self
-            self.buttonDelegateCallbackGraph[buttonView] = buttonPressed
-        case .separator:
-            break
-        }
     }
     
     // MARK: - Public Functions
@@ -156,44 +120,5 @@ class EAFormView: UIView {
 
     required init?(coder: NSCoder) {
         return nil
-    }
-}
-
-// MARK: - TextField Delegate
-extension EAFormView: EATextFieldDelegate {
-    func textFieldWasEdited(_ textField: EATextField) {
-        // Find the callback function for the specified textfield
-        guard let callback = textFieldDelegateCallbackGraph[textField] else {
-            return
-        }
-        
-        // Call the callback with the TextView's text.
-        callback(textField)
-    }
-}
-
-// MARK: - TextView Delegate
-extension EAFormView: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
-        // Find the callback function for the specified TextView
-        guard let callback = textViewDelegateCallbackGraph[textView] else {
-            return
-        }
-        
-        // Call the callback with the TextView's text.
-        callback(textView)
-    }
-}
-
-// MARK: - Button Delegate
-extension EAFormView: EAButtonDelegate {
-    func buttonWasPressed(_ button: EAButton) {
-        // Find the callback function for the specified Button
-        guard let callback = buttonDelegateCallbackGraph[button] else {
-            return
-        }
-        
-        // Call the callback for the Button
-        callback()
     }
 }
