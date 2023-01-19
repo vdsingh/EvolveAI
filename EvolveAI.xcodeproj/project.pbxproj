@@ -14,6 +14,7 @@
 		B90847E32972CB2200758477 /* NavigationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E22972CB2200758477 /* NavigationUtility.swift */; };
 		B90847E52973ADC400758477 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E42973ADC400758477 /* Flags.swift */; };
 		B90847E72973C99D00758477 /* EAGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E62973C99D00758477 /* EAGoalCollectionViewCell.swift */; };
+		B90847EA297665A200758477 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E9297665A200758477 /* Extensions.swift */; };
 		B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF0296D3A6300A0296E /* EAIncrement.swift */; };
 		B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */; };
 		B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */; };
@@ -68,6 +69,7 @@
 		B90847E22972CB2200758477 /* NavigationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtility.swift; sourceTree = "<group>"; };
 		B90847E42973ADC400758477 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		B90847E62973C99D00758477 /* EAGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		B90847E9297665A200758477 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B9486DF0296D3A6300A0296E /* EAIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAIncrement.swift; sourceTree = "<group>"; };
 		B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B90847E829765EA600758477 /* OpenAI */ = {
+			isa = PBXGroup;
+			children = (
+				B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */,
+				B9C056972962D28D007B6DBD /* EAOpenAICompletionsModel.swift */,
+				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
+			);
+			path = OpenAI;
+			sourceTree = "<group>";
+		};
 		B9486DF6296D3FAA00A0296E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,11 +258,10 @@
 			isa = PBXGroup;
 			children = (
 				B9C056882962C1DD007B6DBD /* EAService.swift */,
-				B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */,
+				B90847E829765EA600758477 /* OpenAI */,
 				B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */,
 				B9C056952962CEAF007B6DBD /* EARequest.swift */,
 				B9C056992962D4FD007B6DBD /* HTTPMethod.swift */,
-				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -260,7 +271,6 @@
 			children = (
 				B9C056902962C3BE007B6DBD /* EARequestBody.swift */,
 				B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */,
-				B9C056972962D28D007B6DBD /* EAOpenAICompletionsModel.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -297,6 +307,7 @@
 				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
 				B9486DF0296D3A6300A0296E /* EAIncrement.swift */,
 				B90847E42973ADC400758477 /* Flags.swift */,
+				B90847E9297665A200758477 /* Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -507,6 +518,7 @@
 				B9C056CB296BB3CF007B6DBD /* EAGoalViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
+				B90847EA297665A200758477 /* Extensions.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
 				B9C056A22967CEE5007B6DBD /* EAFormElementView.swift in Sources */,
 				B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */,
@@ -664,7 +676,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAI;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -692,7 +704,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAI;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
