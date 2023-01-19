@@ -6,3 +6,9 @@
 //
 
 import Foundation
+extension String {
+    public func numTokens(separatedBy charSet: CharacterSet) -> Int {
+        let components = self.components(separatedBy: charSet)
+        return components.count
+    }
+}

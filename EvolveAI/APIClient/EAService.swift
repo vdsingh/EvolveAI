@@ -48,6 +48,10 @@ final class EAService {
         let task = URLSession.shared.dataTask(
             with: urlRequest,
             completionHandler: { [weak self] data, response, error in
+                guard let self = self else {
+                    fatalError("$Error: EAService self is nil.")
+                }
+                
                 // There was an error fetching the data.
                 if let error = error {
                     print("$Error: \(String(describing: error))")
@@ -69,6 +73,10 @@ final class EAService {
                 }
                 
                 if !(200...299).contains(httpResponse.statusCode) {
+                    if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
+                        print("Data: \(JSONString)")
+                    }
+                    
                     print("$Error: invalid response code: \(httpResponse.statusCode).")
                     completion(.failure(EAServiceError.invalidResponseCode))
                     return
@@ -78,7 +86,7 @@ final class EAService {
                 do {
                     let decoder = JSONDecoder()
                     let responseObject = try decoder.decode(type, from: data)
-                    self?.printDebug("successfully decoded data to type \(type). Response Object: \(responseObject)")
+                    self.printDebug("successfully decoded data to type \(type). Response Object: \(responseObject)")
                     completion(.success(responseObject))
                 } catch let error {
                     if let decodingError = error as? DecodingError {
@@ -87,6 +95,7 @@ final class EAService {
                         completion(.failure(EAServiceError.failedToDecodeData))
                     } else {
                         // There was some other error
+                        print("$Error: \(String(describing: error))")
                         completion(.failure(error))
                     }
                 }
