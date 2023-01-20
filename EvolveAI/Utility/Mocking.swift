@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// This class is used to create Mock objects
 class Mocking {
@@ -46,6 +47,7 @@ class Mocking {
         let goal = EAGoal(goal: goalString ?? randomGoal,
                           numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
                           additionalDetails: additionalDetails,
+                          colorHex: UIColor.random.hexStringFromColor(),
                           aiResponse: self.createMockGoalAIResponse())
         return goal
     }

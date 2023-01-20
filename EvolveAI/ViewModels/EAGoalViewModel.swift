@@ -12,14 +12,25 @@ import RealmSwift
 struct EAGoalViewModel {
     
     /// The title of the goal
-    let title: String
+    public let title: String
     
     /// The number of days of the goal
-    let numDays: Int
+    public let numDays: Int
+    
+    /// The goal color
+    public let color: UIColor
     
     /// The day guides to display for the goal
-    let dayGuides: List<EAGoalDayGuide>
+    public let dayGuides: List<EAGoalDayGuide>
     
     /// The additional details associated with the goal
-    let additionalDetails: String
+    public let additionalDetails: String
+    
+    init(title: String, numDays: Int, color: UIColor, dayGuides: List<EAGoalDayGuide>, additionalDetails: String) {
+        self.title = title
+        self.numDays = numDays
+        self.color = color
+        self.dayGuides = dayGuides
+        self.additionalDetails = additionalDetails
+    }
 }

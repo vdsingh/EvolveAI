@@ -58,7 +58,7 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
     /// Sets UI properties for this View
     /// - Parameter viewModel: The ViewModel which supplies the data
     private func setUIProperties(viewModel: EAGoalViewModel) {
-        self.backgroundColor = .systemPurple
+        self.backgroundColor = viewModel.color
         self.layer.cornerRadius = EAIncrement.two.rawValue
         self.titleLabel.text = viewModel.title
         self.daysLabel.text = "\(viewModel.numDays) days"
