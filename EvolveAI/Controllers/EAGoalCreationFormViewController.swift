@@ -27,7 +27,8 @@ class EAGoalCreationFormViewController: UIViewController {
     /// A String describing additional details for the goal. Not used in generating the plan
     private var additionalDetails = ""
     
-    private var color: UIColor?
+    /// A color for the goal
+    private var color: UIColor = Constants.defaultColor
     
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
@@ -61,7 +62,8 @@ class EAGoalCreationFormViewController: UIViewController {
             EAGoalsService.shared.createGoal(
                 goal: goal,
                 numDays: numDays,
-                additionalDetails: self.additionalDetails
+                additionalDetails: self.additionalDetails,
+                colorHex: self.color.hexStringFromColor()
             ) { [weak self] result in
                 guard let self = self else { return }
         

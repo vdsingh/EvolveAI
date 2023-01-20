@@ -122,6 +122,7 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
             let goalViewModel = EAGoalViewModel(
                 title: goal.goal,
                 numDays: goal.numDays,
+                color: goal.color,
                 dayGuides: goal.dayGuides,
                 additionalDetails: goal.additionalDetails
             )

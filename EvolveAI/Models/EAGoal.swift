@@ -23,8 +23,24 @@ class EAGoal: Object {
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
     
+    /// The Hex value for this goal's color
+    @Persisted var colorHex: String
+    
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
+    
+    /// The UIColor for this goal (computed)
+    public var color: UIColor {
+        return UIColor(hex: self.colorHex)!
+    }
+    
+    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
+        self.init()
+        self.goal = goal
+        self.numDays = numDays
+        self.additionalDetails = additionalDetails
+        self.colorHex = colorHex
+    }
     
     /// Initializer for EAGoal
     /// - Parameters:
@@ -32,20 +48,14 @@ class EAGoal: Object {
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - apiResponse: The OpenAI Completions Response
-    convenience init(goal: String, numDays: Int, additionalDetails: String, apiResponse: EAOpenAICompletionsResponse) {
-        self.init()
-        self.goal = goal
-        self.numDays = numDays
-        self.additionalDetails = additionalDetails
+    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, apiResponse: EAOpenAICompletionsResponse) {
+        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }
     
-    convenience init(goal: String, numDays: Int, additionalDetails: String, aiResponse: String) {
-        self.init()
-        self.goal = goal
-        self.numDays = numDays
-        self.additionalDetails = additionalDetails
+    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
+        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }

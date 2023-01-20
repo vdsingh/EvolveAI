@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Global, Easy Access Constants
 struct Constants {
@@ -21,4 +22,7 @@ struct Constants {
     
     /// The maximum number of days the goal can be
     static let maxDays = 30
+    
+    /// Color to use for default theme
+    static let defaultColor = UIColor.purple
 }

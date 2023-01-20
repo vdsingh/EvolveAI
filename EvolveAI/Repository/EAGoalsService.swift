@@ -87,6 +87,7 @@ class EAGoalsService {
     public func createGoal(goal: String,
                            numDays: Int,
                            additionalDetails: String,
+                           colorHex: String,
                            completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void) {
         
         if(Flags.useMockGoals) {
@@ -127,6 +128,7 @@ class EAGoalsService {
                     let goal = EAGoal(goal: goal,
                                       numDays: numDays,
                                       additionalDetails: additionalDetails,
+                                      colorHex: colorHex,
                                       apiResponse: apiResponse)
                     if(Flags.debugAPIClient) {
                         print("$Log: Goal: \(goal)")
