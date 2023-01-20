@@ -13,7 +13,7 @@ class EAFormView: UIView {
     
     /// The UIViews for the questions
     var questionViews: [UIView]
-
+    
     /// Boolean representing whether the form is loading or not
     private var isFormLoading: Bool
     
@@ -23,33 +23,18 @@ class EAFormView: UIView {
         return spinner
     }()
     
-    private let testButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .purple
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("BUTTON 1", for: .normal)
-        let action = UIAction(title: "ACTION 1") { action in
-            print("Action: \(action)")
-        }
-        
-        let uiMenu = UIMenu(title: "MENU", options: .displayInline, children: [action])
-        button.menu = uiMenu
-        button.showsMenuAsPrimaryAction = true
-        return button
-    }()
-                          
-                          // MARK: - Initiailizer
+    // MARK: - Initiailizer
     
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
     init(formElements: [EAFormElement]) {
         self.questionViews = []
         self.isFormLoading = false
-        
         super.init(frame: .zero)
         self.backgroundColor = .systemBackground
-
         self.addSubViewsAndEstablishConstraints(formElements: formElements)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.endEditing))
+        self.addGestureRecognizer(tap)
     }
     
     // MARK: - Private Functions
@@ -61,9 +46,6 @@ class EAFormView: UIView {
         stack.spacing = EAIncrement.two.rawValue
         self.addSubview(stack)
         self.addSubview(self.spinner)
-        
-        //TODO: Delete
-        stack.addArrangedSubview(testButton)
         
         NSLayoutConstraint.activate([
             stack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: EAIncrement.two.rawValue),
@@ -117,7 +99,7 @@ class EAFormView: UIView {
     public func isLoading() -> Bool {
         return self.isFormLoading
     }
-
+    
     required init?(coder: NSCoder) {
         return nil
     }

@@ -36,6 +36,8 @@ class EATextField: UITextField {
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
         self.layer.borderColor = borderColor.cgColor
+        self.returnKeyType = UIReturnKeyType.done
+        self.delegate = self
     }
     
     /// Action for when this TextField was edited. Uses the delegate to call textFieldWasEdited
@@ -66,5 +68,16 @@ class EATextField: UITextField {
     
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
+    }
+}
+
+extension EATextField: UITextFieldDelegate {
+    
+    /// Dismisses the keyboard when use clicks the "done" key
+    /// - Parameter textField: The TextField being edited
+    /// - Returns: A Boolean determining whether the textField should return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }
