@@ -188,7 +188,7 @@ class EAGoalCreationFormViewController: UIViewController {
                 numDaysLabel: "days."
             ),
             .separator,
-            .colorSelector(colors: [.red, .orange, .yellow, .green, .blue, .purple, .systemPink], colorWasSelected: { [weak self] color in
+            .colorSelector(colors: [.red, .orange, .yellow, .green, .blue, .purple, .systemPink, .label, .systemCyan, .brown], colorWasSelected: { [weak self] color in
                 print("Color was selected")
                 self?.color = color
                 self?.updateButton()

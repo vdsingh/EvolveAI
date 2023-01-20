@@ -11,6 +11,9 @@ import UIKit
 /// A Form Element for selecting a color
 final class EAColorSelector: UIStackView, EAFormElementView {
     
+    /// The spacing between Color Views
+    private let colorSpacing: CGFloat = 6
+        
     /// The color options that the user can select
     private let colors: [UIColor]
     
@@ -53,6 +56,10 @@ final class EAColorSelector: UIStackView, EAFormElementView {
         super.init(frame: .zero)
         self.setUIProperties()
         self.addSubViewsAndEstablishConstraints(colors: colors)
+        
+        if(colors.count.quotientAndRemainder(dividingBy: numColorsPerRow).remainder != 0) {
+            print("$WARNING: Number of colors in color selector is not divisible by the number of colors per row. This will lead to rows with different numbers of colors")
+        }
     }
     
     /// Adds the necessary Sub Views and establishes constraints
@@ -68,8 +75,8 @@ final class EAColorSelector: UIStackView, EAFormElementView {
     private func setUIProperties() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = .vertical
-        self.distribution = .fill
-        self.spacing = 0
+        self.distribution = .fillEqually
+//        self.spacing = 0
     }
     
     /// Creates an array of Horizontal stacks, which contain Color Views
@@ -83,31 +90,23 @@ final class EAColorSelector: UIStackView, EAFormElementView {
             let colorView = UIView()
             colorView.translatesAutoresizingMaskIntoConstraints = false
             colorView.backgroundColor = color
-            colorView.widthAnchor.constraint(equalToConstant: self.rowHeight).isActive = true
-            colorView.heightAnchor.constraint(equalToConstant: self.rowHeight).isActive = true
+            colorView.widthAnchor.constraint(equalToConstant: self.rowHeight - (self.colorSpacing * 2)).isActive = true
+            colorView.heightAnchor.constraint(equalToConstant: self.rowHeight - (self.colorSpacing * 2)).isActive = true
+            colorView.layer.cornerRadius = (self.rowHeight - (self.colorSpacing * 2)) / 2
             colorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.colorWasClicked(_:))))
             
             if stacks.last == nil ||
                 stacks.last!.arrangedSubviews.count >= self.numColorsPerRow {
                 let stack = UIStackView()
                 stack.translatesAutoresizingMaskIntoConstraints = false
-                stack.distribution = .fill
+                stack.distribution = .equalCentering
                 stack.axis = .horizontal
-                stack.spacing = 0
-                stack.alignment = .leading
+                stack.alignment = .center
                 stacks.append(stack)
             }
             
             stacks.last?.addArrangedSubview(colorView)
             self.colorViews.append(colorView)
-        }
-        
-        if let last = stacks.last,
-           last.arrangedSubviews.count < self.numColorsPerRow {
-            let fillerView = UIView()
-            fillerView.translatesAutoresizingMaskIntoConstraints = false
-            fillerView.backgroundColor = .systemBackground
-            stacks.last?.addArrangedSubview(fillerView)
         }
 
         return stacks
