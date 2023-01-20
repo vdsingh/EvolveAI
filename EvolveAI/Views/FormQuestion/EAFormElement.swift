@@ -36,7 +36,10 @@ enum EAFormElement {
         numDaysLabel: String
     )
     
-    case colorSelector
+    case colorSelector(
+        colors: [UIColor],
+        colorWasSelected: (UIColor) -> Void
+    )
     
     // MARK: - Other Elements
     
@@ -90,8 +93,8 @@ enum EAFormElement {
             viewSetter(view)
             return view
             
-        case .colorSelector:
-            return EASeparator()
+        case .colorSelector(let colors, let colorWasSelected):
+            return EAColorSelector(colors: colors, colorWasSelectedCallback: colorWasSelected)
             
         case .separator:
             return EASeparator()

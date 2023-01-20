@@ -27,6 +27,8 @@ class EAGoalCreationFormViewController: UIViewController {
     /// A String describing additional details for the goal. Not used in generating the plan
     private var additionalDetails = ""
     
+    private var color: UIColor?
+    
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
     
@@ -110,6 +112,7 @@ class EAGoalCreationFormViewController: UIViewController {
             }
             
             buttonView.setEnabled(enabled: true)
+            buttonView.backgroundColor = self.color
         } else {
             fatalError("$Error: buttonView is not an EAButton type.")
         }
@@ -185,7 +188,11 @@ class EAGoalCreationFormViewController: UIViewController {
                 numDaysLabel: "days."
             ),
             .separator,
-            .colorSelector,
+            .colorSelector(colors: [.red, .orange, .yellow, .green, .blue, .purple, .systemPink], colorWasSelected: { [weak self] color in
+                print("Color was selected")
+                self?.color = color
+                self?.updateButton()
+            }),
             .separator,
             .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
                 self?.additionalDetails = textView.text
