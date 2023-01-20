@@ -9,10 +9,17 @@ import UIKit
 import RealmSwift
 
 class EAGoalsListViewController: UIViewController {
-
+    
+    /// The goals that we are viewing
     var goals: [EAGoal]
+    
+    /// Navigator that dictates the flow
     let navigator: GoalsListNavigator
     
+    /// Normal initializer
+    /// - Parameters:
+    ///   - navigator: The navigator which specifies the flow
+    ///   - goals: The goals we are viewing
     init(navigator: GoalsListNavigator, goals: [EAGoal]) {
         self.navigator = navigator
         self.goals = goals
@@ -86,6 +93,8 @@ class EAGoalsListViewController: UIViewController {
         }
     }
     
+    /// Prints a debug message if the necessary flags are true
+    /// - Parameter message: the message to print
     private func printDebug(_ message: String) {
         if(Flags.debugGoalsList) {
             print("$Log: \(message)")
