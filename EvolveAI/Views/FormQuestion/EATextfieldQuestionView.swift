@@ -10,13 +10,13 @@ import UIKit
 
 /// View for basic TextField Questions
 class EATextFieldQuestionView: UIStackView, EAFormElementView {
-    
+
     /// The required height for this view
     var requiredHeight: CGFloat = 90
-    
+
     /// callback to use when the textfields are edited
     private var editedCallback: (EATextField) -> Void
-    
+
     /// Label that displays the question
     private let questionLabel: UILabel = {
         let questionLabel = UILabel()
@@ -24,13 +24,13 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         questionLabel.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .medium)
         return questionLabel
     }()
-    
+
     /// TextField where user enters response
     private lazy var textField: EATextField = {
         let textField = EATextField(textWasEditedCallback: self.editedCallback, borderColor: .systemGray)
         return textField
     }()
-    
+
     /// ViewModel initializer
     /// - Parameter viewModel: The ViewModel used to set the data of the View
     init(viewModel: EATextFieldQuestionViewModel) {
@@ -39,7 +39,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         self.setUIProperties(viewModel: viewModel)
         self.addSubviewsAndEstablishConstraints()
     }
-    
+
     /// Sets the UI properties for this View
     /// - Parameter viewModel: The ViewModel contains the information to assign for the properties
     private func setUIProperties(viewModel: EATextFieldQuestionViewModel) {
@@ -50,17 +50,17 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         self.spacing = EAIncrement.one.rawValue
         self.questionLabel.text = viewModel.question
     }
-    
+
     /// Add the subviews to the view and establish constraints
     private func addSubviewsAndEstablishConstraints() {
         self.addArrangedSubview(questionLabel)
         self.addArrangedSubview(textField)
-        
+
         NSLayoutConstraint.activate([
             questionLabel.heightAnchor.constraint(equalToConstant: EAIncrement.two.rawValue)
         ])
     }
-    
+
     required init(coder: NSCoder) {
         fatalError()
     }

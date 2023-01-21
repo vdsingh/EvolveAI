@@ -11,7 +11,7 @@ import RealmSwift
 
 /// View to display an individual goal and all of its information
 class EAGoalView: UIView {
-    
+
     /// Label that shows the number of days for this goal
     let numDaysLabel: UILabel = {
         let label = UILabel()
@@ -19,7 +19,7 @@ class EAGoalView: UIView {
         label.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .regular)
         return label
     }()
-    
+
     /// Label that shows the additional details for the goal
     let additionalDetailsLabel: UILabel = {
         let detailsLabel = UILabel()
@@ -27,7 +27,7 @@ class EAGoalView: UIView {
         detailsLabel.numberOfLines = 0
         return detailsLabel
     }()
-    
+
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
         let guideScrollView = UIScrollView()
@@ -35,7 +35,7 @@ class EAGoalView: UIView {
         guideScrollView.showsVerticalScrollIndicator = false
         return guideScrollView
     }()
-    
+
     /// StackView that contains the content for the ScrollView.
     let guideContentView: UIStackView = {
         let guideContentView = UIStackView()
@@ -46,7 +46,7 @@ class EAGoalView: UIView {
         guideContentView.spacing = EAIncrement.one.rawValue
         return guideContentView
     }()
-    
+
     /// Initializer to instantiate this View with a ViewModel
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalViewModel) {
@@ -56,9 +56,9 @@ class EAGoalView: UIView {
         self.backgroundColor = .systemBackground
         self.addSubviewsAndEstablishConstraints(dayGuides: viewModel.dayGuides)
     }
-    
+
     // MARK: - Private Functions
-    
+
     /// Adds the subviews of the View and activates the constraints
     /// - Parameter dayGuides: List of EAGoalDayGuide objects that we need to add to our View
     private func addSubviewsAndEstablishConstraints(dayGuides: List<EAGoalDayGuide>) {
@@ -82,7 +82,7 @@ class EAGoalView: UIView {
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
     }
-    
+
     /// Adds EAGoalDayGuide objects to the View
     /// - Parameter dayGuides: A list of EAGoalDayGuide objects to add to the view
     private func addDayGuidesToUI(_ dayGuides: List<EAGoalDayGuide>) {
@@ -91,13 +91,13 @@ class EAGoalView: UIView {
             if guide.days.count > 1 {
                 daysText = "Days \(guide.days[0]) - \(guide.days[1]):"
             }
-            
+
             let guideViewModel = EADayGuideViewModel(daysText: daysText, tasksTexts: guide.tasks)
             let guideView = EADayGuideView(with: guideViewModel)
             self.guideContentView.addArrangedSubview(guideView)
         }
     }
-    
+
     required init?(coder: NSCoder) {
         return nil
     }

@@ -10,14 +10,14 @@ import UIKit
 
 /// This class is used to create Mock objects
 class Mocking {
-    
+
     private static let mockGoals: [String] = [
-       "learn the violin",
-       "read 3 books",
-       "lose 10 pounds",
-       "learn to cook",
-   ]
-    
+        "learn the violin",
+        "read 3 books",
+        "lose 10 pounds",
+        "learn to cook"
+    ]
+
     /// This function creates an array of mock goals
     /// - Parameter numGoals: The number of mock goals to generate
     /// - Returns: An array of mock goals
@@ -27,31 +27,34 @@ class Mocking {
             guard let randomGoal = mockGoals.randomElement() else {
                 fatalError("$Error: no mock goals")
             }
-            
+
             goals.append(createMockGoal(goalString: randomGoal, numDays: nil))
         }
-        
+
         return goals
     }
-    
+
     /// Creates one mock goal
     /// - Returns: A Mock EAGoal
-    public static func createMockGoal(goalString: String?,
-                                      numDays: Int?,
-                                      additionalDetails: String = ""
+    public static func createMockGoal(
+        goalString: String?,
+        numDays: Int?,
+        additionalDetails: String = ""
     ) -> EAGoal {
         guard let randomGoal = mockGoals.randomElement() else {
             fatalError("$Error: no mock goals")
         }
-        
-        let goal = EAGoal(goal: goalString ?? randomGoal,
-                          numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
-                          additionalDetails: additionalDetails,
-                          colorHex: UIColor.random.hexStringFromColor(),
-                          aiResponse: self.createMockGoalAIResponse())
+
+        let goal = EAGoal(
+            goal: goalString ?? randomGoal,
+            numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
+            additionalDetails: additionalDetails,
+            colorHex: UIColor.random.hexStringFromColor(),
+            aiResponse: self.createMockGoalAIResponse()
+        )
         return goal
     }
-    
+
     /// Creates a mock goal AI Response (Lorem Ipsum text)
     /// - Returns: A String representing an AI Response
     public static func createMockGoalAIResponse() -> String {

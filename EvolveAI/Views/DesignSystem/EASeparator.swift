@@ -10,10 +10,10 @@ import UIKit
 
 /// A separator for Forms (a horizontal line)
 class EASeparator: UIView, EAFormElementView {
-    
+
     /// The height for this separator
     var requiredHeight: CGFloat = 1
-    
+
     /// Normal Initializer
     init() {
         super.init(frame: .zero)
@@ -21,7 +21,7 @@ class EASeparator: UIView, EAFormElementView {
         self.backgroundColor = .label
         self.heightAnchor.constraint(equalToConstant: requiredHeight).isActive = true
     }
-    
+
     required init?(coder: NSCoder) {
         return nil
     }

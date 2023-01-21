@@ -9,5 +9,5 @@ import Foundation
 
 /// Protocol that all endpoints must follow
 protocol EAEndpoint {
-    
+
 }

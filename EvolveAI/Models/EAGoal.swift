@@ -7,33 +7,34 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// Represents user goals
 class EAGoal: Object {
-    
+
     /// The goal itself (ex: "learn the violin")
     @Persisted var goal: String
-    
+
     /// The number of days to accomplish the goal (ex: 30)
     @Persisted var numDays: Int
-    
+
     /// The user specified additional details for the goal
     @Persisted var additionalDetails: String
-    
+
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
-    
+
     /// The Hex value for this goal's color
     @Persisted var colorHex: String
-    
+
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
-    
+
     /// The UIColor for this goal (computed)
     public var color: UIColor {
-        return UIColor(hex: self.colorHex)!
+        return UIColor(hex: self.colorHex) ?? Constants.defaultColor
     }
-    
+
     convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
         self.init()
         self.goal = goal
@@ -41,7 +42,7 @@ class EAGoal: Object {
         self.additionalDetails = additionalDetails
         self.colorHex = colorHex
     }
-    
+
     /// Initializer for EAGoal
     /// - Parameters:
     ///   - goal: The goal itself (ex: "learn the violin")
@@ -53,25 +54,25 @@ class EAGoal: Object {
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }
-    
+
     convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
         self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
     }
-    
+
     /// Possible errors that can arise from parsing AI response to create task
     private enum CreateTaskError: Error {
         case invalidNumberOfComponents
         case failedToParseDays
         case failedToParseDay
     }
-    
+
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
     private static func createDayGuides(from aiResponse: String) -> List<EAGoalDayGuide> {
-        let lines = aiResponse.split(separator: "\n").filter({ $0.trimmingCharacters(in:.whitespacesAndNewlines) != ""})
+        let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
         printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
         // One line represents one EAGoalDayGuide Object
@@ -81,24 +82,24 @@ class EAGoal: Object {
                 print("$Error: no colon found when constructing EAGoalDayGuide. Line: \(line)")
                 continue
             }
-            
+
             let components = [
                 String(line[..<colonIndex]),
                 String(line[colonIndex...]).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
             ]
             printDebug("Components are \(components)")
-            
+
             // Separate the tasks into
             let tasks = components[1]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .components(separatedBy: Constants.taskSeparatorCharacter)
                 .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
-                .filter({$0 != ""})
+                .filter({!$0.isEmpty})
             printDebug("Tasks are \(tasks)")
-            
+
             let taskList = List<String>()
             taskList.append(objectsIn: tasks)
-            
+
             // Trim whitespaces and then "Day " to just get the number(s)
             let dayRangeString = components[0]
                 .trimmingCharacters(in: .whitespaces)
@@ -115,7 +116,8 @@ class EAGoal: Object {
                     let dayGuide = EAGoalDayGuide(
                         isMultipleDays: true,
                         days: dayList,
-                        tasks: taskList)
+                        tasks: taskList
+                    )
                     dayGuides.append(dayGuide)
                 } else {
                     print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
@@ -128,25 +130,26 @@ class EAGoal: Object {
                     let dayGuide = EAGoalDayGuide(
                         isMultipleDays: false,
                         days: dayList,
-                        tasks: taskList)
+                        tasks: taskList
+                    )
                     dayGuides.append(dayGuide)
                 } else {
                     print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
                 }
             }
         }
-        
+
         return dayGuides
     }
-    
+
     /// Prints messages depending on whether the required flag is enabled
     /// - Parameter message: The message to print
     private static func printDebug(_ message: String) {
-        if(Flags.printTaskMessages) {
+        if Flags.printTaskMessages {
             print("$Log: \(message)")
         }
     }
-    
+
     /// Gets a simplified String description of this goal
     /// - Returns: A String describing this goal
     public func getSimplifiedDescription() -> String {

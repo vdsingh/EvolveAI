@@ -10,7 +10,7 @@ import UIKit
 
 /// All custom form questions must conform to this protocol
 protocol EAFormElementView: UIView {
-    
+
     /// Value specifying what height the View should be
     var requiredHeight: CGFloat { get }
 }

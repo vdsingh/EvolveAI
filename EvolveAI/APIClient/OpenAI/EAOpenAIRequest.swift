@@ -9,24 +9,24 @@ import Foundation
 
 /// Used to create requests to OpenAI endpoints
 final class EAOpenAIRequest: EARequest {
-    
+
     /// API Constants
     private struct Constants {
         static let baseUrl = "https://api.openai.com/v1"
     }
-    
+
     /// Desired Endpoint
     private let endpoint: EAOpenAIEndpoint
-    
+
     /// Body for the request
     private let requestBody: EARequestBody?
-    
+
     /// Path Components for API if any
     private let pathComponents: [String]
-    
+
     /// Query Parameters for API if any
     private let queryParameters: [URLQueryItem]
-    
+
     /// Constructed url for the API request in string format
     private var urlString: String {
         var string = Constants.baseUrl
@@ -37,20 +37,20 @@ final class EAOpenAIRequest: EARequest {
                 string += "/\(component)"
             }
         }
-        
+
         if !queryParameters.isEmpty {
             string += "?"
             let argumentString = queryParameters.compactMap({
                 guard let value = $0.value else { return nil }
                 return "\($0.name)=\(value)"
             }).joined(separator: "&")
-            
+
             string += argumentString
         }
-        
+
         return string
     }
-    
+
     /// Encodes the requestBody into data to be used in a request.
     private var requestBodyData: Data? {
         if let requestBody = self.requestBody {
@@ -60,7 +60,7 @@ final class EAOpenAIRequest: EARequest {
                 print("$Error encoding object as JSON data")
                 return nil
             }
-            
+
             if let string = String(data: data, encoding: String.Encoding.utf8) {
                 printDebug("Request Body DATA: \(string)")
             } else {
@@ -68,24 +68,24 @@ final class EAOpenAIRequest: EARequest {
             }
             return data
         }
-        
+
         printDebug("requestBody is nil.")
         return nil
     }
-    
+
     /// Reads the relevant flags and prints debug messages only if they are enabled
     /// - Parameter message: The message to print
     private func printDebug(_ message: String) {
-        if(Flags.debugAPIClient) {
+        if Flags.debugAPIClient {
             print("$Log: \(message)")
         }
     }
-    
+
     // MARK: - Public
-    
+
     /// Desired HTTP Method
     public let httpMethod: HTTPMethod
-    
+
     /// Computed and constructed URL Request
     public var urlRequest: URLRequest? {
         let url = URL(string: urlString)
@@ -94,35 +94,37 @@ final class EAOpenAIRequest: EARequest {
         }
         var urlRequest = URLRequest(url: unwrappedURL)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
-        let organizationID = Bundle.main.infoDictionary?["ORGANIZATION_ID"] as? String else {
+              let organizationID = Bundle.main.infoDictionary?["ORGANIZATION_ID"] as? String else {
             fatalError("$Error retrieving API Key and Organization ID from config.")
         }
-        
+
         urlRequest.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         urlRequest.addValue(organizationID, forHTTPHeaderField: "OpenAI-Organization")
-        
+
         urlRequest.httpMethod = httpMethod.rawValue
         urlRequest.httpBody = requestBodyData
-        
+
         return urlRequest
     }
-    
+
     /// Constructor for request
     /// - Parameters:
     ///   - endpoint: target endpoint
     ///   - pathComponents: Collection of path components
     ///   - queryParameters: Collection of query parameteres
-    public init(endpoint: EAOpenAIEndpoint,
-                requestBody: EARequestBody?,
-                pathComponents: [String] = [],
-                queryParameters: [URLQueryItem] = []) {
+    public init(
+        endpoint: EAOpenAIEndpoint,
+        requestBody: EARequestBody?,
+        pathComponents: [String] = [],
+        queryParameters: [URLQueryItem] = []
+    ) {
         self.endpoint = endpoint
         self.requestBody = requestBody
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
-        
+
         switch endpoint {
         case .completions:
             self.httpMethod = .POST
@@ -132,7 +134,7 @@ final class EAOpenAIRequest: EARequest {
 
 /// Static functions to construct commonly used EAOpenAIRequest objects live here
 extension EAOpenAIRequest {
-    
+
     /// Creates a EAOpenAIRequest for the completions endpoint
     /// - Parameters:
     ///   - model: the AI model that will receive the request
@@ -146,15 +148,16 @@ extension EAOpenAIRequest {
         temperature: Int = 1,
         max_tokens: Int
     ) -> EAOpenAIRequest {
-        if(max_tokens > model.getTokenLimit()) {
+        if max_tokens > model.getTokenLimit() {
             print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
         }
-        
+
         let requestBody = EAOpenAICompletionsRequestBody(
             model: model,
             prompt: prompt,
             temperature: temperature,
-            max_tokens: max_tokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " ")))
+            max_tokens: max_tokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
+        )
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }
 }

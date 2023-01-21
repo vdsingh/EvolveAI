@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// A ViewModel for EAGoals
 struct EAGoalViewModel {
@@ -26,7 +27,13 @@ struct EAGoalViewModel {
     /// The additional details associated with the goal
     public let additionalDetails: String
     
-    init(title: String, numDays: Int, color: UIColor, dayGuides: List<EAGoalDayGuide>, additionalDetails: String) {
+    init(
+        title: String,
+        numDays: Int,
+        color: UIColor,
+        dayGuides: List<EAGoalDayGuide>,
+        additionalDetails: String
+    ) {
         self.title = title
         self.numDays = numDays
         self.color = color

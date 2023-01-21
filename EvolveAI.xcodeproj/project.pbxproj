@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C1805FEDA7C7AE9F7F18876 /* Pods_EvolveAI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */; };
 		B90847DB2971277C00758477 /* EASpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DA2971277C00758477 /* EASpinner.swift */; };
 		B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DE2972586A00758477 /* EADayGuideView.swift */; };
 		B90847E1297258EB00758477 /* EADayGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E0297258EB00758477 /* EADayGuideViewModel.swift */; };
@@ -16,6 +15,11 @@
 		B90847E72973C99D00758477 /* EAGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E62973C99D00758477 /* EAGoalCollectionViewCell.swift */; };
 		B90847EA297665A200758477 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E9297665A200758477 /* Extensions.swift */; };
 		B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847EB2979012D00758477 /* EAColorSelector.swift */; };
+		B91EE2E1297B207B003FF560 /* EvolveAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2E0297B207B003FF560 /* EvolveAITests.swift */; };
+		B91EE2EE297B2127003FF560 /* EvolveAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */; };
+		B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */; };
+		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
+		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
 		B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF0296D3A6300A0296E /* EAIncrement.swift */; };
 		B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */; };
 		B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */; };
@@ -59,11 +63,28 @@
 		B9C056DC296CF8BE007B6DBD /* EACreateGoalQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */; };
 		B9C056DE296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */; };
 		B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056E1296D312F007B6DBD /* EATextField.swift */; };
+		B9F4D3AB297B812700AE8959 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AA297B812700AE8959 /* Realm */; };
+		B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AC297B812700AE8959 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B91EE2E2297B207B003FF560 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9C056622962C16E007B6DBD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9C056692962C16E007B6DBD;
+			remoteInfo = EvolveAI;
+		};
+		B91EE2F1297B2127003FF560 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B9C056622962C16E007B6DBD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9C056692962C16E007B6DBD;
+			remoteInfo = EvolveAI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EvolveAI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.release.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.release.xcconfig"; sourceTree = "<group>"; };
 		B90847DA2971277C00758477 /* EASpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EASpinner.swift; sourceTree = "<group>"; };
 		B90847DE2972586A00758477 /* EADayGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADayGuideView.swift; sourceTree = "<group>"; };
 		B90847E0297258EB00758477 /* EADayGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADayGuideViewModel.swift; sourceTree = "<group>"; };
@@ -72,6 +93,13 @@
 		B90847E62973C99D00758477 /* EAGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		B90847E9297665A200758477 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B90847EB2979012D00758477 /* EAColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColorSelector.swift; sourceTree = "<group>"; };
+		B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B91EE2E0297B207B003FF560 /* EvolveAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAITests.swift; sourceTree = "<group>"; };
+		B91EE2EB297B2127003FF560 /* EvolveAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAIUITests.swift; sourceTree = "<group>"; };
+		B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
+		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B9486DF0296D3A6300A0296E /* EAIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAIncrement.swift; sourceTree = "<group>"; };
 		B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionView.swift; sourceTree = "<group>"; };
@@ -118,15 +146,29 @@
 		B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionView.swift; sourceTree = "<group>"; };
 		B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056E1296D312F007B6DBD /* EATextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextField.swift; sourceTree = "<group>"; };
-		F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvolveAI.debug.xcconfig"; path = "Target Support Files/Pods-EvolveAI/Pods-EvolveAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B91EE2DB297B207B003FF560 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91EE2E8297B2127003FF560 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C056672962C16E007B6DBD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C1805FEDA7C7AE9F7F18876 /* Pods_EvolveAI.framework in Frameworks */,
+				B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */,
+				B9F4D3AB297B812700AE8959 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +183,24 @@
 				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
 			);
 			path = OpenAI;
+			sourceTree = "<group>";
+		};
+		B91EE2DF297B207B003FF560 /* EvolveAITests */ = {
+			isa = PBXGroup;
+			children = (
+				B91EE2E0297B207B003FF560 /* EvolveAITests.swift */,
+				B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */,
+			);
+			path = EvolveAITests;
+			sourceTree = "<group>";
+		};
+		B91EE2EC297B2127003FF560 /* EvolveAIUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */,
+				B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */,
+			);
+			path = EvolveAIUITests;
 			sourceTree = "<group>";
 		};
 		B9486DF6296D3FAA00A0296E /* DesignSystem */ = {
@@ -158,11 +218,13 @@
 		B9C056612962C16E007B6DBD = {
 			isa = PBXGroup;
 			children = (
+				B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */,
 				B9C056A02962EDCD007B6DBD /* Config.xcconfig */,
 				B9C0566C2962C16E007B6DBD /* EvolveAI */,
+				B91EE2DF297B207B003FF560 /* EvolveAITests */,
+				B91EE2EC297B2127003FF560 /* EvolveAIUITests */,
 				B9C0566B2962C16E007B6DBD /* Products */,
 				E6F9B39AE50E2E56EDA71848 /* Pods */,
-				EC32B6049AF904AB1AFC9F42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,6 +232,8 @@
 			isa = PBXGroup;
 			children = (
 				B9C0566A2962C16E007B6DBD /* EvolveAI.app */,
+				B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */,
+				B91EE2EB297B2127003FF560 /* EvolveAIUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -350,38 +414,67 @@
 		E6F9B39AE50E2E56EDA71848 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */,
-				AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		EC32B6049AF904AB1AFC9F42 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				62A36FAB8FE25BA05F18D066 /* Pods_EvolveAI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B91EE2DD297B207B003FF560 /* EvolveAITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B91EE2E4297B207B003FF560 /* Build configuration list for PBXNativeTarget "EvolveAITests" */;
+			buildPhases = (
+				B91EE2DA297B207B003FF560 /* Sources */,
+				B91EE2DB297B207B003FF560 /* Frameworks */,
+				B91EE2DC297B207B003FF560 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B91EE2E3297B207B003FF560 /* PBXTargetDependency */,
+			);
+			name = EvolveAITests;
+			productName = EvolveAITests;
+			productReference = B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B91EE2EA297B2127003FF560 /* EvolveAIUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B91EE2F3297B2127003FF560 /* Build configuration list for PBXNativeTarget "EvolveAIUITests" */;
+			buildPhases = (
+				B91EE2E7297B2127003FF560 /* Sources */,
+				B91EE2E8297B2127003FF560 /* Frameworks */,
+				B91EE2E9297B2127003FF560 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B91EE2F2297B2127003FF560 /* PBXTargetDependency */,
+			);
+			name = EvolveAIUITests;
+			productName = EvolveAIUITests;
+			productReference = B91EE2EB297B2127003FF560 /* EvolveAIUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B9C056692962C16E007B6DBD /* EvolveAI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9C0567E2962C16F007B6DBD /* Build configuration list for PBXNativeTarget "EvolveAI" */;
 			buildPhases = (
-				01CB8FCF0B0932F0DE9A5C05 /* [CP] Check Pods Manifest.lock */,
 				B9C056662962C16E007B6DBD /* Sources */,
 				B9C056672962C16E007B6DBD /* Frameworks */,
 				B9C056682962C16E007B6DBD /* Resources */,
-				F0C93328997EE93089EFAF7C /* [CP] Embed Pods Frameworks */,
+				B91EE2F8297B293C003FF560 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = EvolveAI;
+			packageProductDependencies = (
+				B9F4D3AA297B812700AE8959 /* Realm */,
+				B9F4D3AC297B812700AE8959 /* RealmSwift */,
+			);
 			productName = EvolveAI;
 			productReference = B9C0566A2962C16E007B6DBD /* EvolveAI.app */;
 			productType = "com.apple.product-type.application";
@@ -396,6 +489,14 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					B91EE2DD297B207B003FF560 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = B9C056692962C16E007B6DBD;
+					};
+					B91EE2EA297B2127003FF560 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = B9C056692962C16E007B6DBD;
+					};
 					B9C056692962C16E007B6DBD = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -410,20 +511,40 @@
 				Base,
 			);
 			mainGroup = B9C056612962C16E007B6DBD;
+			packageReferences = (
+				B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = B9C0566B2962C16E007B6DBD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				B9C056692962C16E007B6DBD /* EvolveAI */,
+				B91EE2DD297B207B003FF560 /* EvolveAITests */,
+				B91EE2EA297B2127003FF560 /* EvolveAIUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B91EE2DC297B207B003FF560 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91EE2E9297B2127003FF560 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C056682962C16E007B6DBD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */,
 				B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */,
 				B9C056772962C16F007B6DBD /* Assets.xcassets in Resources */,
 			);
@@ -432,48 +553,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		01CB8FCF0B0932F0DE9A5C05 /* [CP] Check Pods Manifest.lock */ = {
+		B91EE2F8297B293C003FF560 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			dependencyFile = "$(DERIVED_FILES_DIR)/$(INPUT_FILE_PATH).d";
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EvolveAI-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F0C93328997EE93089EFAF7C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EvolveAI/Pods-EvolveAI-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B91EE2DA297B207B003FF560 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */,
+				B91EE2E1297B207B003FF560 /* EvolveAITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91EE2E7297B2127003FF560 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */,
+				B91EE2EE297B2127003FF560 /* EvolveAIUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B9C056662962C16E007B6DBD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -532,6 +650,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B91EE2E3297B207B003FF560 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9C056692962C16E007B6DBD /* EvolveAI */;
+			targetProxy = B91EE2E2297B207B003FF560 /* PBXContainerItemProxy */;
+		};
+		B91EE2F2297B2127003FF560 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9C056692962C16E007B6DBD /* EvolveAI */;
+			targetProxy = B91EE2F1297B2127003FF560 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -544,6 +675,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B91EE2E5297B207B003FF560 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolveAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EvolveAI";
+			};
+			name = Debug;
+		};
+		B91EE2E6297B207B003FF560 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvolveAI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EvolveAI";
+			};
+			name = Release;
+		};
+		B91EE2F4297B2127003FF560 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EvolveAI;
+			};
+			name = Debug;
+		};
+		B91EE2F5297B2127003FF560 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vikramsingh.EvolveAIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EvolveAI;
+			};
+			name = Release;
+		};
 		B9C0567C2962C16F007B6DBD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9C056A02962EDCD007B6DBD /* Config.xcconfig */;
@@ -581,6 +786,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -595,7 +801,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -642,6 +848,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -650,7 +857,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -662,19 +869,20 @@
 		};
 		B9C0567F2962C16F007B6DBD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F47E4427A6CBDBCE35A7E7C4 /* Pods-EvolveAI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -690,19 +898,20 @@
 		};
 		B9C056802962C16F007B6DBD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA9E5E8A7DA148873A3B5B67 /* Pods-EvolveAI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VJUSE27PV3;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -719,6 +928,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B91EE2E4297B207B003FF560 /* Build configuration list for PBXNativeTarget "EvolveAITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B91EE2E5297B207B003FF560 /* Debug */,
+				B91EE2E6297B207B003FF560 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B91EE2F3297B2127003FF560 /* Build configuration list for PBXNativeTarget "EvolveAIUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B91EE2F4297B2127003FF560 /* Debug */,
+				B91EE2F5297B2127003FF560 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B9C056652962C16E007B6DBD /* Build configuration list for PBXProject "EvolveAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -738,6 +965,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B9F4D3AA297B812700AE8959 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		B9F4D3AC297B812700AE8959 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9C056622962C16E007B6DBD /* Project object */;
 }

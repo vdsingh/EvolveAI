@@ -10,7 +10,7 @@ import UIKit
 
 /// Custom Activity Indicator Spinner View for this application
 class EASpinner: UIStackView, EAFormElementView {
-    
+
     /// Required height for this EASpinner
     var requiredHeight: CGFloat = 120
 
@@ -22,7 +22,7 @@ class EASpinner: UIStackView, EAFormElementView {
         spinner.hidesWhenStopped = true
         return spinner
     }()
-    
+
     /// Label for subtext of the spinner
     private let subTextLabel: UILabel = {
         let label = UILabel()
@@ -33,7 +33,7 @@ class EASpinner: UIStackView, EAFormElementView {
         label.numberOfLines = 0
         return label
     }()
-    
+
     /// Normal Initializer
     /// - Parameter subText: Sub Text String (if any) to display under the spinner
     init(subText: String? = nil) {
@@ -42,9 +42,9 @@ class EASpinner: UIStackView, EAFormElementView {
         self.addSubviewsAndEstablishConstraints()
         self.setUIProperties(subText: subText)
     }
-    
+
     // MARK: - Private Functions
-    
+
     /// Set the UI properties for this View
     /// - Parameter subText: the SubText (if any) for this spinner
     private func setUIProperties(subText: String?) {
@@ -62,26 +62,26 @@ class EASpinner: UIStackView, EAFormElementView {
             self.addArrangedSubview(self.subTextLabel)
         }
     }
-    
+
     /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         self.addArrangedSubview(self.spinner)
     }
-    
+
     // MARK: - Public Functions
-    
+
     /// Function to call when we want to start animating the spinner
     public func startAnimating() {
         self.isHidden = false
         spinner.startAnimating()
     }
-    
+
     /// Function to call when we want to stop animating the spinner
     public func stopAnimating() {
         self.isHidden = true
         spinner.stopAnimating()
     }
-    
+
     required init(coder: NSCoder) {
         fatalError()
     }

@@ -9,10 +9,10 @@ import UIKit
 
 /// A UICollectionViewCell to hold EAGoal information
 class EAGoalCollectionViewCell: UICollectionViewCell {
-    
+
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
-    
+
     /// Displays the EAGoal title
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -23,7 +23,7 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         return label
     }()
-    
+
     /// Displays the EAGoal number of days
     private let daysLabel: UILabel = {
         let label = UILabel()
@@ -32,7 +32,7 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
     /// Adds subviews and establishes constraints for this view
     private func addSubviewsAndEstablishConstraints() {
         let stackView = UIStackView()
@@ -43,18 +43,18 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
         stackView.addArrangedSubview(self.titleLabel)
         stackView.addArrangedSubview(self.daysLabel)
         self.addSubview(stackView)
-        
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
             stackView.rightAnchor.constraint(equalTo: self.rightAnchor),
-            
+
             self.titleLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8),
-            self.daysLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8),
+            self.daysLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8)
         ])
     }
-    
+
     /// Sets UI properties for this View
     /// - Parameter viewModel: The ViewModel which supplies the data
     private func setUIProperties(viewModel: EAGoalViewModel) {
@@ -63,7 +63,7 @@ class EAGoalCollectionViewCell: UICollectionViewCell {
         self.titleLabel.text = viewModel.title
         self.daysLabel.text = "\(viewModel.numDays) days"
     }
-    
+
     /// Configures the cell with a given ViewModel
     /// - Parameter viewModel: The ViewModel with which to configure the cell
     public func configure(with viewModel: EAGoalViewModel) {
