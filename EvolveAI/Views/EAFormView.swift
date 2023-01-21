@@ -9,13 +9,19 @@ import Foundation
 import UIKit
 
 /// View for Forms
-class EAFormView: UIView {
+class EAFormView: UIScrollView {
 
     /// The UIViews for the questions
     var questionViews: [UIView]
 
     /// Boolean representing whether the form is loading or not
     private var isFormLoading: Bool
+    
+    private let contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
 
     /// A spinner to indicate when we are loading data
     private let spinner: EASpinner = {
@@ -42,18 +48,25 @@ class EAFormView: UIView {
     /// Add the subviews to the view and establish constraints
     /// - Parameter formElements: The EAFormElements which specify the subviews to add
     private func addSubViewsAndEstablishConstraints(formElements: [EAFormElement]) {
+        self.addSubview(contentView)
         let stack = constructFormElementStackView(formElements: formElements)
         stack.spacing = EAIncrement.two.rawValue
-        self.addSubview(stack)
-        self.addSubview(self.spinner)
+        self.contentView.addSubview(stack)
+        self.contentView.addSubview(self.spinner)
 
         NSLayoutConstraint.activate([
-            stack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: EAIncrement.two.rawValue),
-            stack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -EAIncrement.two.rawValue),
-            stack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: EAIncrement.two.rawValue),
+            self.contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            self.contentView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
-            self.spinner.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            self.spinner.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            
+            stack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.two.rawValue),
+            stack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.two.rawValue),
+            stack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.two.rawValue),
+
+            self.spinner.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.spinner.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.spinner.heightAnchor.constraint(equalToConstant: self.spinner.requiredHeight),
             self.spinner.widthAnchor.constraint(equalToConstant: self.spinner.requiredHeight)
         ])

@@ -179,7 +179,7 @@ class EAGoalCreationFormViewController: UIViewController {
 
                     strongSelf.printDebug("NumDays Text Edited to: \(textField.text ?? "nil")")
                     if let text = textField.text,
-                        let numDays = strongSelf.getNumber(text: text),
+                       let numDays = strongSelf.getNumber(text: text),
                        numDays <= Constants.maxDays {
                         strongSelf.numDays = numDays
                         textField.setBorderColor(color: .systemGreen)
@@ -193,16 +193,21 @@ class EAGoalCreationFormViewController: UIViewController {
                 numDaysLabel: "days."
             ),
             .separator,
-            .colorSelector(colors: [.red, .orange, .yellow, .green, .blue, .purple, .systemPink, .label, .systemGreen, .brown], colorWasSelected: { [weak self] color in
-                print("Color was selected")
-                self?.color = color
-                self?.updateButton()
-            }),
+            .colorSelector(
+                colors: UIColor.eaColors,
+                colorWasSelected: { [weak self] color in
+                    self?.color = color
+                    self?.updateButton()
+                }
+            ),
             .separator,
-            .textViewQuestion(question: "Additional Details", textViewWasEdited: { [weak self] textView in
-                self?.additionalDetails = textView.text
-                self?.printDebug("Additional Details Text Edited to: \(textView.text ?? "nil")")
-            }),
+            .textViewQuestion(
+                question: "Additional Details",
+                textViewWasEdited: { [weak self] textView in
+                    self?.additionalDetails = textView.text
+                    self?.printDebug("Additional Details Text Edited to: \(textView.text ?? "nil")")
+                }
+            ),
             .button(
                 buttonText: "Create Goal",
                 enabledOnStart: false,

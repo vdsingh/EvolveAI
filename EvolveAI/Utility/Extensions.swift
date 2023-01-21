@@ -31,7 +31,18 @@ extension UIColor {
         )
     }
 
-    static var EAGreen: UIColor { return UIColor(red: 1, green: 0, blue: 0, alpha: 1) }
+    static var eaColors: [UIColor] = [
+        UIColor(hex: "#ff0142") ?? .black,
+        UIColor(hex: "#d53e4f") ?? .black,
+        UIColor(hex: "#f46d43") ?? .black,
+        UIColor(hex: "#fdae61") ?? .black,
+        UIColor(hex: "#fee08b") ?? .black,
+        UIColor(hex: "#e6f598") ?? .black,
+        UIColor(hex: "#abdda4") ?? .black,
+        UIColor(hex: "#66c2a5") ?? .black,
+        UIColor(hex: "#3288bd") ?? .black,
+        UIColor(hex: "#5e4fa2") ?? .black
+    ]
 
     /// Initializes a UIColor using a hex string
     /// - Parameter hex: The hex String
