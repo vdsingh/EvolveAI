@@ -46,6 +46,7 @@ class Mocking {
         }
 
         let goal = EAGoal(
+            creationDate: Date(),
             goal: goalString ?? randomGoal,
             numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
             additionalDetails: additionalDetails,

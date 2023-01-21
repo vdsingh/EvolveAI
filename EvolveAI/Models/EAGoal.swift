@@ -12,6 +12,12 @@ import UIKit
 /// Represents user goals
 class EAGoal: Object {
 
+    /// Date when the goal was created
+    @Persisted var creationDate: Date
+
+    /// A list of tags associated with this goal
+    @Persisted var tags: List<String>
+
     /// The goal itself (ex: "learn the violin")
     @Persisted var goal: String
 
@@ -35,8 +41,10 @@ class EAGoal: Object {
         return UIColor(hex: self.colorHex) ?? Constants.defaultColor
     }
 
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
+    convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
         self.init()
+        self.creationDate = creationDate
+        self.tags = tags
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
@@ -49,16 +57,20 @@ class EAGoal: Object {
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - apiResponse: The OpenAI Completions Response
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, apiResponse: EAOpenAICompletionsResponse) {
-        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+    convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String, apiResponse: EAOpenAICompletionsResponse) {
+        self.init(creationDate: creationDate, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        self.dayGuides = parsedResponse.dayGuides
+        self.tags = parsedResponse.tags
     }
 
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
-        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+    convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
+        self.init(creationDate: creationDate, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        self.dayGuides = parsedResponse.dayGuides
+        self.tags = parsedResponse.tags
     }
 
     /// Possible errors that can arise from parsing AI response to create task
@@ -71,12 +83,22 @@ class EAGoal: Object {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func createDayGuides(from aiResponse: String) -> List<EAGoalDayGuide> {
+    private static func parseAIResponse(from aiResponse: String) -> (dayGuides: List<EAGoalDayGuide>, tags: List<String>) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
         printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
+        var tags: [String] = []
         // One line represents one EAGoalDayGuide Object
+
         for line in lines {
+            if line.first == "[" {
+                tags = line
+                    .components(separatedBy: CharacterSet(charactersIn: ","))
+                    .compactMap({$0.trimmingCharacters(in: CharacterSet(charactersIn: "[ ]"))})
+                printDebug("Tags: \(tags)")
+                continue
+            }
+
             // Separate the line by ":" which separates the Day Number info from the other info
             guard let colonIndex = line.firstIndex(of: ":") else {
                 print("$Error: no colon found when constructing EAGoalDayGuide. Line: \(line)")
@@ -139,7 +161,9 @@ class EAGoal: Object {
             }
         }
 
-        return dayGuides
+        let tagsList = List<String>()
+        tagsList.append(objectsIn: tags)
+        return (dayGuides, tagsList)
     }
 
     /// Prints messages depending on whether the required flag is enabled
