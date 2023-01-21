@@ -24,6 +24,7 @@ class EADayGuideView: UIStackView {
        let tasksStackView = UIStackView()
         tasksStackView.translatesAutoresizingMaskIntoConstraints = false
         tasksStackView.axis = .vertical
+        tasksStackView.spacing = EAIncrement.one.rawValue / 2
         return tasksStackView
     }()
 
@@ -71,20 +72,26 @@ class EADayGuideView: UIStackView {
         taskLabel.text = "\(taskText)"
         taskLabel.numberOfLines = 0
 
-        let numLabel = UILabel(frame: .zero)
-        numLabel.translatesAutoresizingMaskIntoConstraints = false
-        numLabel.text = "\(taskNum)) "
-        numLabel.textAlignment = .left
-        numLabel.numberOfLines = 1
+        // Shrink checkbox to make it appear the same size as text
+        let checkbox = EACheckbox(size: EAIncrement.two.rawValue * 2/3)
+        // Add padding above checkbox to make it inline with text
+        let checkboxPadding = UIView()
+        checkboxPadding.translatesAutoresizingMaskIntoConstraints = false
+        let checkboxStack = UIStackView()
+        checkboxStack.translatesAutoresizingMaskIntoConstraints = false
+        checkboxStack.axis = .vertical
+        checkboxStack.addArrangedSubview(checkboxPadding)
+        checkboxStack.addArrangedSubview(checkbox)
+        checkboxPadding.heightAnchor.constraint(equalToConstant: EAIncrement.one.rawValue / 3).isActive = true
 
         let taskStackView = UIStackView()
         taskStackView.translatesAutoresizingMaskIntoConstraints = false
         taskStackView.axis = .horizontal
         taskStackView.alignment = .top
-        taskStackView.spacing = EAIncrement.one.rawValue / 2
-        taskStackView.distribution = .fillProportionally
-        taskStackView.addArrangedSubview(numLabel)
+        taskStackView.spacing = EAIncrement.one.rawValue
+        taskStackView.addArrangedSubview(checkboxStack)
         taskStackView.addArrangedSubview(taskLabel)
+
         return taskStackView
     }
 
