@@ -33,6 +33,7 @@ class EADayGuideView: UIStackView {
     init(with viewModel: EADayGuideViewModel) {
         super.init(frame: .zero)
         self.axis = .vertical
+        self.spacing = EAIncrement.one.rawValue
         self.daysLabel.text = viewModel.daysText
         self.addSubviewsAndEstablishConstraints(tasks: viewModel.tasksTexts)
     }

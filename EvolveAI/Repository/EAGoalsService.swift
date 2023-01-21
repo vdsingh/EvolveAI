@@ -15,7 +15,13 @@ class EAGoalsService {
     static let shared = EAGoalsService()
 
     /// Access to the Realm database
-    let realm = try? Realm()
+    var realm: Realm {
+        do {
+            return try Realm()
+        } catch {
+            fatalError("$Error: Realm is nil.")
+        }
+    }
 
     /// Constants that are used in the goals service
     private struct GoalServiceConstants {
@@ -32,6 +38,9 @@ class EAGoalsService {
         /// The user has already created the maximum allowed number of goals
         case maxGoalsExceeded
 
+        /// The realm instance is nil
+        case realmWasNil
+
         /// Some other error was encountered
         case unknownError(_ error: Error)
 
@@ -43,8 +52,10 @@ class EAGoalsService {
                 return "Please choose a shorter number of days to achieve the goal. The limit is \(GoalServiceConstants.numDaysLimit)"
             case .maxGoalsExceeded:
                 return "You've already created the maximum allowed number of goals (\(Constants.maxGoalsAllowed))"
+            case .realmWasNil:
+                return "We had an issue saving your data. Please restart the app."
             case .unknownError:
-                return "Other error encountered"
+                return "Unknown error occurred"
             }
         }
     }
@@ -59,7 +70,8 @@ class EAGoalsService {
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
         let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"] [New Line for next day]"
-        var prompt = "I have the goal: \(goal). I want to complete it in exactly \(numDays) days. Give me a guide for every day in the form \(guideFormat)."
+        var prompt = "I have the goal: \(goal). Firstly, give me between 3 and 5 tags that can be used to categorize this goal in the format: \"[tag1,tag2,tag3] *New Line\"."
+        prompt += "I want to complete it in exactly \(numDays) days. Next, give me a guide for every day in the form \(guideFormat)."
         prompt += " It is important to provide a guide for every day within \(numDays) that follows the guide format!"
 
         prompt += " Also, make sure that your entire response, which includes \"Day\", the day number, and the colon, is within a limit of"
@@ -70,9 +82,8 @@ class EAGoalsService {
     /// Helper function to communicate with realm. Abstracts error handling.
     /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
     private func writeToRealm(_ action: () -> Void) {
-        guard let realm = self.realm else { return }
         do {
-            try realm.write {
+            try self.realm.write {
                 action()
             }
         } catch let error {
@@ -97,13 +108,11 @@ class EAGoalsService {
         colorHex: String,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
-
         if Flags.useMockGoals {
             let goal = Mocking.createMockGoal(goalString: goal, numDays: numDays)
             DispatchQueue.main.async {
-                guard let realm = self.realm else { return }
                 self.writeToRealm {
-                    realm.add(goal)
+                    self.realm.add(goal)
                 }
                 completion(.success(goal))
             }
@@ -138,6 +147,7 @@ class EAGoalsService {
                 switch result {
                 case .success(let apiResponse):
                     let goal = EAGoal(
+                        creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
@@ -149,9 +159,8 @@ class EAGoalsService {
                     }
 
                     DispatchQueue.main.async {
-                        guard let realm = strongSelf.realm else { return }
                         strongSelf.writeToRealm {
-                            realm.add(goal)
+                            strongSelf.realm.add(goal)
                         }
                         completion(.success(goal))
                     }
@@ -166,7 +175,6 @@ class EAGoalsService {
     /// Gets all of the persisted EAGoal objects from the Realm database
     /// - Returns: an array of EAGoal objects from the Realm database
     public func getAllPersistedGoals() -> [EAGoal] {
-        guard let realm = self.realm else { return [] }
         var goals = [EAGoal]()
         goals.append(contentsOf: realm.objects(EAGoal.self))
         return goals
@@ -184,7 +192,6 @@ class EAGoalsService {
     /// Deletes a provided goal
     /// - Parameter goal: The goal to be deleted
     public func deletePersistedGoal(goal: EAGoal) {
-        guard let realm = self.realm else { return }
         writeToRealm {
             realm.delete(goal)
         }
