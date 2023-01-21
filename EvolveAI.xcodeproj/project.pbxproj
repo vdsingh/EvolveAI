@@ -32,7 +32,7 @@
 		B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */; };
 		B9C056772962C16F007B6DBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9C056762962C16F007B6DBD /* Assets.xcassets */; };
 		B9C0567A2962C16F007B6DBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9C056782962C16F007B6DBD /* LaunchScreen.storyboard */; };
-		B9C056892962C1DD007B6DBD /* EAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EAService.swift */; };
+		B9C056892962C1DD007B6DBD /* EARestAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EARestAPIService.swift */; };
 		B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */; };
 		B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */; };
 		B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */; };
@@ -65,6 +65,7 @@
 		B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056E1296D312F007B6DBD /* EATextField.swift */; };
 		B9F4D3AB297B812700AE8959 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AA297B812700AE8959 /* Realm */; };
 		B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AC297B812700AE8959 /* RealmSwift */; };
+		B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,7 +115,7 @@
 		B9C056762962C16F007B6DBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9C056792962C16F007B6DBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9C0567B2962C16F007B6DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B9C056882962C1DD007B6DBD /* EAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAService.swift; sourceTree = "<group>"; };
+		B9C056882962C1DD007B6DBD /* EARestAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EARestAPIService.swift; sourceTree = "<group>"; };
 		B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIRequest.swift; sourceTree = "<group>"; };
 		B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAAPIResponse.swift; sourceTree = "<group>"; };
 		B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEndpoint.swift; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 		B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionView.swift; sourceTree = "<group>"; };
 		B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056E1296D312F007B6DBD /* EATextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextField.swift; sourceTree = "<group>"; };
+		B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACheckbox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				B90847DA2971277C00758477 /* EASpinner.swift */,
 				B9486DF9296D423A00A0296E /* EAButton.swift */,
 				B9486DFB296D495000A0296E /* EASeparator.swift */,
+				B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -322,7 +325,7 @@
 		B9C056872962C1B7007B6DBD /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056882962C1DD007B6DBD /* EAService.swift */,
+				B9C056882962C1DD007B6DBD /* EARestAPIService.swift */,
 				B90847E829765EA600758477 /* OpenAI */,
 				B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */,
 				B9C056952962CEAF007B6DBD /* EARequest.swift */,
@@ -601,7 +604,7 @@
 				B9C056C0296A8E5C007B6DBD /* EAGoalTableViewCell.swift in Sources */,
 				B9C056D6296BE635007B6DBD /* Constants.swift in Sources */,
 				B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */,
-				B9C056892962C1DD007B6DBD /* EAService.swift in Sources */,
+				B9C056892962C1DD007B6DBD /* EARestAPIService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
 				B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */,
 				B9C056DC296CF8BE007B6DBD /* EACreateGoalQuestionView.swift in Sources */,
@@ -628,6 +631,7 @@
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */,
+				B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
 				B9C056CB296BB3CF007B6DBD /* EAGoalViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,

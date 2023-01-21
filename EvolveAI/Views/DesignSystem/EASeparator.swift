@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// A separator for Forms (a horizontal line)
-class EASeparator: UIView, EAFormElementView {
+final class EASeparator: UIView, EAFormElementView {
 
     /// The height for this separator
     var requiredHeight: CGFloat = 1

@@ -8,10 +8,10 @@
 import Foundation
 
 /// Used to execute REST API requests
-final class EAService {
+final class EARestAPIService {
 
     /// The shared instance that is used to access service functionality
-    public static let shared = EAService()
+    public static let shared = EARestAPIService()
 
     /// Private initializer forces use of shared.
     private init() { }

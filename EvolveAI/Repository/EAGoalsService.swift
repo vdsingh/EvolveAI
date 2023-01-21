@@ -127,7 +127,7 @@ class EAGoalsService {
             prompt: prompt,
             max_tokens: Constants.maxTokens
         )
-        EAService.shared.execute(
+        EARestAPIService.shared.execute(
             request,
             expecting: EAOpenAICompletionsResponse.self,
             completion: { [weak self] (result) in

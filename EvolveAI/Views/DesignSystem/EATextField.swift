@@ -8,16 +8,8 @@
 import Foundation
 import UIKit
 
-///// This protocol is used to specify what happens when a textField is edited
-// protocol EATextFieldDelegate {
-//
-//    /// Function that is called when an EATextField has been edited
-//    /// - Parameter textField: The EATextField that was edited.
-//    func textFieldWasEdited(_ textField: EATextField)
-// }
-
 /// Custom TextField for this application
-class EATextField: UITextField {
+final class EATextField: UITextField {
 
     /// Callback to use when this TextField has been edited
     var textWasEditedCallback: (EATextField) -> Void
@@ -58,15 +50,15 @@ class EATextField: UITextField {
     // MARK: - Sets the padding for the TextField (adding a small space in the beginning)
     let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5)
 
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+    override public func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
 
-    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+    override public func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
 }

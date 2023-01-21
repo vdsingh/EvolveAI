@@ -10,10 +10,10 @@ import UIKit
 
 /// Checkbox component
 final class EACheckbox: UIButton {
-    
+
     /// Size of the checkbox (width = height)
     private var dimension: CGFloat
-    
+
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
     init(size: CGFloat = EAIncrement.two.rawValue) {
@@ -24,22 +24,22 @@ final class EACheckbox: UIButton {
         self.addSubviewsAndEstablishConstraints()
         self.setUIProperties()
     }
-    
+
     /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalToConstant: dimension),
-            self.heightAnchor.constraint(equalToConstant: dimension),
+            self.heightAnchor.constraint(equalToConstant: dimension)
         ])
     }
-    
+
     /// Sets the UI Properties for this view
     private func setUIProperties() {
         self.layer.cornerRadius = dimension / 4
         self.layer.borderColor = UIColor.label.cgColor
         self.layer.borderWidth = 1
     }
-    
+
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
         self.isSelected = !self.isSelected

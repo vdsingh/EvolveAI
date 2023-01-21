@@ -16,7 +16,8 @@ class EAFormView: UIScrollView {
 
     /// Boolean representing whether the form is loading or not
     private var isFormLoading: Bool
-    
+
+    /// The forms content
     private let contentView: UIView = {
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +61,6 @@ class EAFormView: UIScrollView {
             self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
-            
             stack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.two.rawValue),
             stack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.two.rawValue),
             stack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.two.rawValue),

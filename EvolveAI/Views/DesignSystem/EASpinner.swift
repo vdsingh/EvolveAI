@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Custom Activity Indicator Spinner View for this application
-class EASpinner: UIStackView, EAFormElementView {
+final class EASpinner: UIStackView, EAFormElementView {
 
     /// Required height for this EASpinner
     var requiredHeight: CGFloat = 120

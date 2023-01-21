@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Custom TextView for this application (for long responses)
-class EATextView: UITextView {
+final class EATextView: UITextView {
 
     /// Normal Initializer
     init(borderColor: UIColor) {
