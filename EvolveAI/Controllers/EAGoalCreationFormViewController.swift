@@ -69,9 +69,9 @@ class EAGoalCreationFormViewController: UIViewController {
 
                 switch result {
                 case .success(let goal):
+                    self.printDebug("Successfully created goal: \(goal.goal)")
                     DispatchQueue.main.async {
                         self.goalWasCreated()
-                        self.getView().setLoading(isLoading: false)
                         if let navigationController = self.navigationController {
                             navigationController.navigationBar.isUserInteractionEnabled = false
                             navigationController.navigationBar.tintColor = .link
@@ -82,6 +82,10 @@ class EAGoalCreationFormViewController: UIViewController {
 
                 case .failure(let error):
                     self.handleGoalCreationFailure(error)
+                }
+
+                DispatchQueue.main.async {
+                    self.getView().setLoading(isLoading: false)
                 }
             }
         } else {
@@ -94,10 +98,13 @@ class EAGoalCreationFormViewController: UIViewController {
     private func handleGoalCreationFailure(_ error: EAGoalsService.CreateGoalError) {
         switch error {
         case .maxGoalsExceeded:
-            print("$Error: max goals exceeded: \(String(describing: error))")
+            print("$Error: max goals exceeded: \(error.codeDescription())")
 
         case .dayLimitExceeded:
-            print("$Error: day limit exceeded: \(String(describing: error))")
+            print("$Error: day limit exceeded: \(error.codeDescription())")
+
+        case .realmWasNil:
+            print("$Error: realm was nil: \(error.codeDescription())")
 
         case .unknownError(let unknownError):
             print("$Error: unknown error: \(String(describing: unknownError))")
