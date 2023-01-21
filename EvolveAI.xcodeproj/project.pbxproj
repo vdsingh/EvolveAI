@@ -283,7 +283,6 @@
 				B9C056762962C16F007B6DBD /* Assets.xcassets */,
 				B9C0566D2962C16E007B6DBD /* AppDelegate.swift */,
 				B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */,
-				B9C056D5296BE635007B6DBD /* Constants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -372,6 +371,7 @@
 		B9C056C1296A90A3007B6DBD /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				B9C056D5296BE635007B6DBD /* Constants.swift */,
 				B9C056C2296A90AC007B6DBD /* Mocking.swift */,
 				B9486DF0296D3A6300A0296E /* EAIncrement.swift */,
 				B90847E42973ADC400758477 /* Flags.swift */,
