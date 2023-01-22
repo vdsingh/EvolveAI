@@ -13,6 +13,8 @@ class EAGoalViewController: UIViewController {
 
     /// The EAGoal that we are focused on
     let goal: EAGoal
+    
+//    let viewModel = EAGoalViewModel(title: <#T##String#>, numDays: <#T##Int#>, color: <#T##UIColor#>, dayGuides: <#T##List<EAGoalDayGuide>#>, additionalDetails: <#T##String#>)
 
     /// Normal Initializer
     /// - Parameter goal: The goal that we are focused on

@@ -7,11 +7,13 @@
 
 import UIKit
 import RealmSwift
+import RxSwift
 
 class EAGoalsListViewController: UIViewController {
 
     /// The goals that we are viewing
     var goals: [EAGoal]
+    let viewModel = EAGoalsListViewModel()
 
     /// Navigator that dictates the flow
     let navigator: GoalsListNavigator
@@ -81,6 +83,10 @@ class EAGoalsListViewController: UIViewController {
             self?.goals = EAGoalsService.shared.getAllPersistedGoals()
             self?.getView().refreshView()
         }))
+    }
+    
+    private func bind() {
+        self.viewModel.goals.
     }
 
     /// Safely unwraps the view as an EAGoalsView and returns it (or invokes fatal)

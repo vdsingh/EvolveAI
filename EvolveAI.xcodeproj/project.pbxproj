@@ -66,6 +66,10 @@
 		B9F4D3AB297B812700AE8959 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AA297B812700AE8959 /* Realm */; };
 		B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AC297B812700AE8959 /* RealmSwift */; };
 		B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */; };
+		B9F4D3DA297C951100AE8959 /* EAGoalsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4D3D9297C951100AE8959 /* EAGoalsListViewModel.swift */; };
+		B9F4D3DD297C972400AE8959 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3DC297C972400AE8959 /* RxCocoa */; };
+		B9F4D3DF297C972400AE8959 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3DE297C972400AE8959 /* RxRelay */; };
+		B9F4D3E1297C972400AE8959 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3E0297C972400AE8959 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +152,7 @@
 		B9C056DD296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACreateGoalQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056E1296D312F007B6DBD /* EATextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextField.swift; sourceTree = "<group>"; };
 		B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EACheckbox.swift; sourceTree = "<group>"; };
+		B9F4D3D9297C951100AE8959 /* EAGoalsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +174,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9F4D3DD297C972400AE8959 /* RxCocoa in Frameworks */,
 				B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */,
+				B9F4D3E1297C972400AE8959 /* RxSwift in Frameworks */,
+				B9F4D3DF297C972400AE8959 /* RxRelay in Frameworks */,
 				B9F4D3AB297B812700AE8959 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +281,7 @@
 				B9C056DA296BE93E007B6DBD /* FormQuestionViewModels */,
 				B9C056BD296A8B43007B6DBD /* EAGoalViewModel.swift */,
 				B90847E0297258EB00758477 /* EADayGuideViewModel.swift */,
+				B9F4D3D9297C951100AE8959 /* EAGoalsListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -469,6 +478,9 @@
 			packageProductDependencies = (
 				B9F4D3AA297B812700AE8959 /* Realm */,
 				B9F4D3AC297B812700AE8959 /* RealmSwift */,
+				B9F4D3DC297C972400AE8959 /* RxCocoa */,
+				B9F4D3DE297C972400AE8959 /* RxRelay */,
+				B9F4D3E0297C972400AE8959 /* RxSwift */,
 			);
 			productName = EvolveAI;
 			productReference = B9C0566A2962C16E007B6DBD /* EvolveAI.app */;
@@ -508,6 +520,7 @@
 			mainGroup = B9C056612962C16E007B6DBD;
 			packageReferences = (
 				B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = B9C0566B2962C16E007B6DBD /* Products */;
 			projectDirPath = "";
@@ -612,6 +625,7 @@
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
+				B9F4D3DA297C951100AE8959 /* EAGoalsListViewModel.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
 				B9C056BE296A8B43007B6DBD /* EAGoalViewModel.swift in Sources */,
 				B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */,
@@ -971,6 +985,14 @@
 				kind = branch;
 			};
 		};
+		B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -983,6 +1005,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		B9F4D3DC297C972400AE8959 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		B9F4D3DE297C972400AE8959 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		B9F4D3E0297C972400AE8959 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

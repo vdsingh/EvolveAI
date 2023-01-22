@@ -17,6 +17,9 @@ class EAGoal: Object {
 
     /// A list of tags associated with this goal
     @Persisted var tags: List<String>
+    
+    /// Unique identifier for the goal
+    @Persisted var id: String
 
     /// The goal itself (ex: "learn the violin")
     @Persisted var goal: String
@@ -41,9 +44,10 @@ class EAGoal: Object {
         return UIColor(hex: self.colorHex) ?? Constants.defaultColor
     }
 
-    convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
+    convenience init(creationDate: Date, id: String, goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
         self.init()
         self.creationDate = creationDate
+        self.id = id
         self.tags = tags
         self.goal = goal
         self.numDays = numDays
@@ -58,15 +62,15 @@ class EAGoal: Object {
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - apiResponse: The OpenAI Completions Response
     convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String, apiResponse: EAOpenAICompletionsResponse) {
-        self.init(creationDate: creationDate, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+        self.init(creationDate: creationDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides
         self.tags = parsedResponse.tags
     }
 
-    convenience init(creationDate: Date, goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
-        self.init(creationDate: creationDate, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+    convenience init(creationDate: Date, id: String, goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
+        self.init(creationDate: creationDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides
@@ -178,5 +182,9 @@ class EAGoal: Object {
     /// - Returns: A String describing this goal
     public func getSimplifiedDescription() -> String {
         return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
     }
 }

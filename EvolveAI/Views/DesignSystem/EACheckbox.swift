@@ -46,7 +46,7 @@ final class EACheckbox: UIButton {
         if self.isSelected {
             self.backgroundColor = .green
         } else {
-            self.backgroundColor = .red
+            self.backgroundColor = .clear
         }
     }
 
