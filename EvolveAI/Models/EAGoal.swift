@@ -17,7 +17,7 @@ class EAGoal: Object {
 
     /// A list of tags associated with this goal
     @Persisted var tags: List<String>
-    
+
     /// Unique identifier for the goal
     @Persisted var id: String
 

@@ -146,9 +146,9 @@ extension EAOpenAIRequest {
         model: EAOpenAICompletionsModel = .davinci003,
         prompt: String,
         temperature: Int = 1,
-        max_tokens: Int
+        maxTokens: Int
     ) -> EAOpenAIRequest {
-        if max_tokens > model.getTokenLimit() {
+        if maxTokens > model.getTokenLimit() {
             print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
         }
 
@@ -156,7 +156,7 @@ extension EAOpenAIRequest {
             model: model,
             prompt: prompt,
             temperature: temperature,
-            max_tokens: max_tokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
+            maxTokens: maxTokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
         )
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }

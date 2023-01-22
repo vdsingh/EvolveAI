@@ -6,18 +6,31 @@ struct EAOpenAICompletionsResponse: EAAPIResponse {
     let object: String
     let created: Float
     let model: EAOpenAICompletionsModel
-    let choices: [EAOpenAICompletionsResponseChoice]
+    let choices: [EAOpenAICompletionsChoice]
 }
 
-struct EAOpenAICompletionsResponseChoice: EAAPIResponse {
+struct EAOpenAICompletionsChoice: EAAPIResponse {
     let text: String
     let index: Int
     let logprobs: String?
-    let finish_reason: String
+    let finishReason: String
+
+    enum CodingKeys: String, CodingKey {
+        case text
+        case index
+        case logprobs
+        case finishReason = "finish_reason"
+    }
 }
 
 struct EAOpenAICompletionsResponseUsage: EAAPIResponse {
-    let prompt_tokens: Int
-    let completion_tokens: Int
-    let total_tokens: Int
+    let promptTokens: Int
+    let completionTokens: Int
+    let totalTokens: Int
+
+    enum CodingKeys: String, CodingKey {
+        case promptTokens = "prompt_tokens"
+        case completionTokens = "completion_tokens"
+        case totalTokens = "total_tokens"
+    }
 }

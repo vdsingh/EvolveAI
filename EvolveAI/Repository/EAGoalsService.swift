@@ -134,7 +134,7 @@ class EAGoalsService {
         let request = EAOpenAIRequest.completionsRequest(
             model: .davinci003,
             prompt: prompt,
-            max_tokens: Constants.maxTokens
+            maxTokens: Constants.maxTokens
         )
         EARestAPIService.shared.execute(
             request,
