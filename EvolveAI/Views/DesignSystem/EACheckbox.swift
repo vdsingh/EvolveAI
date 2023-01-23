@@ -13,6 +13,8 @@ final class EACheckbox: UIButton {
 
     /// Size of the checkbox (width = height)
     private var dimension: CGFloat
+    // TODO: Docstrings
+    private var checkboxWasToggled: ((Bool) -> Void)?
 
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
@@ -43,11 +45,20 @@ final class EACheckbox: UIButton {
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
         self.isSelected = !self.isSelected
-        if self.isSelected {
-            self.backgroundColor = .green
-        } else {
-            self.backgroundColor = .clear
+        self.backgroundColor = self.isSelected ? .green : .clear
+        if let handler = self.checkboxWasToggled {
+            handler(self.isSelected)
         }
+    }
+
+    // MARK: - Public
+    public func setCheckboxHandler(checkboxWasToggled: @escaping (Bool) -> Void) {
+        self.checkboxWasToggled = checkboxWasToggled
+    }
+
+    public func setActive(active: Bool) {
+        self.isSelected = active
+        self.backgroundColor = self.isSelected ? .green : .clear
     }
 
     required init?(coder: NSCoder) {
