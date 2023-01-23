@@ -11,7 +11,7 @@ import RealmSwift
 class EAGoalsListViewController: UIViewController {
 
     /// The goals that we are viewing
-    var viewModel: EAGoalsListViewModel {
+    lazy var viewModel: EAGoalsListViewModel  = {
         return DefaultEAGoalsListViewModel(
             goalsService: EAGoalsService.shared,
             actions: EAGoalsListViewModelActions(
@@ -24,7 +24,7 @@ class EAGoalsListViewController: UIViewController {
                 }
             )
         )
-    }
+    }()
 
     /// Navigator that dictates the flow
     let navigator: GoalsListNavigator

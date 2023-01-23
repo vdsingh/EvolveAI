@@ -63,7 +63,7 @@ class EAGoalCreationFormViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
-            EAGoalsService.shared.createGoal(
+            goalsService.createGoal(
                 goal: goal,
                 numDays: numDays,
                 additionalDetails: self.additionalDetails,

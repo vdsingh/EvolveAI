@@ -31,17 +31,21 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     /// The EAGoalDayGuide that this ViewModel represents
     private let dayGuide: EAGoalDayGuide
 
+    /// A service to interact with goals and other related types
+    private let goalsService: EAGoalsService
+
     var daysText: String {
         return dayGuide.days.count > 1 ? "Days \(dayGuide.days[0]) - \(dayGuide.days[1]):" : "Day \(dayGuide.days[0]):"
     }
 
     var taskViewModels: [EAGoalTaskViewModel] {
         return dayGuide.tasks.compactMap({
-            DefaultEAGoalTaskViewModel(task: $0, goalsService: EAGoalsService.shared)
+            DefaultEAGoalTaskViewModel(task: $0, goalsService: self.goalsService)
         })
     }
 
-    init(dayGuide: EAGoalDayGuide) {
+    init(dayGuide: EAGoalDayGuide, goalsService: EAGoalsService) {
         self.dayGuide = dayGuide
+        self.goalsService = goalsService
     }
 }

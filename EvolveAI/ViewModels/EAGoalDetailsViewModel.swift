@@ -51,7 +51,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     let colorHex: String
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
-            DefaultEAGoalDayGuideViewModel(dayGuide: $0)
+            DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalsService: self.goalsService)
         })
     }
 
