@@ -34,12 +34,16 @@ class EAGoalCreationFormViewController: UIViewController {
     private var createGoalButton: EAButton?
 
     /// Callback to use when the goal has been created
-    private var goalWasCreated: () -> Void
+    private let goalWasCreated: () -> Void
+
+    /// Service to interact with Goals (and other associated types)
+    private let goalsService: EAGoalsService
 
     /// Normal initializer
     /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.
-    init(goalWasCreated: @escaping () -> Void) {
+    init(goalWasCreated: @escaping () -> Void, goalsService: EAGoalsService) {
         self.goalWasCreated = goalWasCreated
+        self.goalsService = goalsService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -75,10 +79,9 @@ class EAGoalCreationFormViewController: UIViewController {
                         if let navigationController = self.navigationController {
                             navigationController.navigationBar.isUserInteractionEnabled = false
                             navigationController.navigationBar.tintColor = .link
-                            // TODO: Pass through the goals service and use it here.
                             let detailsViewModel = DefaultEAGoalDetailsViewModel(
                                 goal: goal,
-                                goalsService: EAGoalsService.shared
+                                goalsService: self.goalsService
                             )
                             let vc = EAGoalDetailsViewController(viewModel: detailsViewModel)
                             NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)

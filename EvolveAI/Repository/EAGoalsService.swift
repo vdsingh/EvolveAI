@@ -198,6 +198,11 @@ class EAGoalsService {
     }
 
     // MARK: - Tasks
+
+    /// Sets a given task's completion status
+    /// - Parameters:
+    ///   - task: The task we are editing
+    ///   - complete: Whether the task should be marked as complete or not
     public func toggleTaskCompletion(task: EAGoalTask, complete: Bool) {
         self.writeToRealm {
             task.complete = complete

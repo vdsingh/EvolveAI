@@ -8,22 +8,25 @@
 import Foundation
 import UIKit
 
-// TODO: Docstrings
-
+/// View that displays an individual task for a goal
 class EAGoalTaskView: UIStackView {
-    let taskLabel: UILabel = {
+
+    /// A label displaying the task's text
+    private let taskLabel: UILabel = {
         let taskLabel = UILabel(frame: .zero)
         taskLabel.translatesAutoresizingMaskIntoConstraints = false
         taskLabel.numberOfLines = 0
         return taskLabel
     }()
 
-    let checkbox: EACheckbox = {
+    /// A checkbox indicating whether the task has been marked complete (and giving user opportunity to mark it)
+    private let checkbox: EACheckbox = {
         let checkbox = EACheckbox(size: EAIncrement.two.rawValue * 2/3)
         return checkbox
     }()
 
-    lazy var checkboxStack: UIStackView = {
+    /// StackView that lets us add a UIView above the checkbox for padding
+    private lazy var checkboxStack: UIStackView = {
         let checkboxPadding = UIView()
         checkboxPadding.translatesAutoresizingMaskIntoConstraints = false
         let checkboxStack = UIStackView()
@@ -41,8 +44,8 @@ class EAGoalTaskView: UIStackView {
         self.configure(with: viewModel)
     }
 
+    /// Adds the relevant subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
-//        let taskStackView = UIStackView()
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = .horizontal
         self.alignment = .top
@@ -51,6 +54,8 @@ class EAGoalTaskView: UIStackView {
         self.addArrangedSubview(taskLabel)
     }
 
+    /// Configures this View with a ViewModel
+    /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
     private func configure(with viewModel: EAGoalTaskViewModel) {
         self.taskLabel.text = viewModel.text
         self.checkbox.setActive(active: viewModel.complete)

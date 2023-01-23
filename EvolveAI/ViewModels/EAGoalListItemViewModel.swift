@@ -9,15 +9,22 @@ import Foundation
 import RealmSwift
 import UIKit
 
-// TODO: Fix docstrings
-
+/// Possible inputs to this ViewModel
 protocol EAGoalListItemViewModelInput {
-    func wasTapped()
+
+    /// Handler for when a goal list item was tapped
+    func listItemWasTapped()
 }
 
+/// Properties that can be extracted from this ViewModel
 protocol EAGoalListItemViewModelOutput {
+    /// The title of the goal
     var title: String { get }
+
+    /// The number of days of the goal
     var numDays: Int { get }
+
+    /// The goal color
     var colorHex: String { get }
 }
 
@@ -32,17 +39,14 @@ struct EAGoalListItemViewModelActions {
 /// A ViewModel for EAGoals
 final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
 
-    /// The title of the goal
     let title: String
-
-    /// The number of days of the goal
     let numDays: Int
-
-    /// The goal color
     let colorHex: String
 
+    /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
 
+    /// The goal that this ViewModel represents
     private let goal: EAGoal
 
     /// Common initializer
@@ -63,7 +67,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
 }
 
 extension DefaultEAGoalListItemViewModel {
-    func wasTapped() {
+    func listItemWasTapped() {
         self.actions?.showGoalDetails(self.goal)
     }
 }

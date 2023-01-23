@@ -7,13 +7,24 @@
 
 import UIKit
 import RealmSwift
-import RxSwift
-import RxCocoa
 
 class EAGoalsListViewController: UIViewController {
 
     /// The goals that we are viewing
-    var viewModel: EAGoalsListViewModel!
+    var viewModel: EAGoalsListViewModel {
+        return DefaultEAGoalsListViewModel(
+            goalsService: EAGoalsService.shared,
+            actions: EAGoalsListViewModelActions(
+                showGoalDetails: { [weak self] goal in
+                    let goalDetailsViewModel = DefaultEAGoalDetailsViewModel(
+                        goal: goal,
+                        goalsService: EAGoalsService.shared
+                    )
+                    self?.navigator.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                }
+            )
+        )
+    }
 
     /// Navigator that dictates the flow
     let navigator: GoalsListNavigator
@@ -22,11 +33,9 @@ class EAGoalsListViewController: UIViewController {
     /// - Parameters:
     ///   - navigator: The navigator which specifies the flow
     ///   - goals: The goals we are viewing
-    init(navigator: GoalsListNavigator, viewModel: EAGoalsListViewModel) {
+    init(navigator: GoalsListNavigator) {
         self.navigator = navigator
-        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-//        self.printDebug("Set goals to \(self.goals.compactMap { $0.getSimplifiedDescription() + "\n"})")
         self.title = "Goals List"
     }
 
@@ -119,8 +128,6 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
-//            self.viewModel.didSelect(at: indexPath)
-//            let goalListItemViewModel = self.viewModel.items[indexPath.row]
             let goalListItemViewModel = self.viewModel.items[indexPath.row]
             cell.configure(with: goalListItemViewModel)
             self.printDebug("returned cell and configured with \(goalListItemViewModel) at \(indexPath)")

@@ -8,8 +8,6 @@
 import Foundation
 import RxSwift
 
-// TODO: Docstrings
-
 /// Input methods for the ViewModel
 protocol EAGoalsListViewModelInput {
 
@@ -39,12 +37,14 @@ protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOu
 
 final class DefaultEAGoalsListViewModel: EAGoalsListViewModel {
 
+    /// Service to interact with goals and other related types
     private let goalsService: EAGoalsService
+
+    /// Actions that this ViewModel may need to execute
     private let actions: EAGoalsListViewModelActions
 
-    private var goals: [EAGoal] = []
-
     // MARK: - Output
+
     var items: [EAGoalListItemViewModel] = []
 
     init(
@@ -56,26 +56,23 @@ final class DefaultEAGoalsListViewModel: EAGoalsListViewModel {
     }
 }
 
-// MARK: - Input. View event methods
+// MARK: - Input
 extension DefaultEAGoalsListViewModel {
 
     /// Callback for when a cell is selected. Calls the showGoalDetails action.
     /// - Parameter indexPath: The indexPath of the selected cell
     func didSelect(at indexPath: IndexPath) {
         let listItemViewModel = items[indexPath.row]
-        listItemViewModel.wasTapped()
-//        self.actions?.showGoalDetails(goals[indexPath.row])
+        listItemViewModel.listItemWasTapped()
     }
 
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals() {
-        self.goals = self.goalsService.getAllPersistedGoals()
-        self.items = self.goals.compactMap({
-                return DefaultEAGoalListItemViewModel(
-                    goal: $0,
-                    actions: EAGoalListItemViewModelActions(showGoalDetails: self.actions.showGoalDetails)
-                )
-            }
-        )
+        self.items = self.goalsService.getAllPersistedGoals().compactMap {
+            return DefaultEAGoalListItemViewModel(
+                goal: $0,
+                actions: EAGoalListItemViewModelActions(showGoalDetails: self.actions.showGoalDetails)
+            )
+        }
     }
 }

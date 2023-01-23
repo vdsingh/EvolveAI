@@ -57,22 +57,10 @@ class EADayGuideView: UIStackView {
                 print("$Log: Task: \(taskViewModel.text)")
             }
 
-//            let stack = createTaskStack(taskNum: index+1, taskText: task.text)
             let taskView = EAGoalTaskView(viewModel: taskViewModel)
             self.tasksStackView.addArrangedSubview(taskView)
         }
     }
-
-    /// Creates a horizontal StackView for a given task
-    /// - Parameters:
-    ///   - taskNum: The task number
-    ///   - taskText: The text of the task
-//    /// - Returns: A UIStackView containing 2 UILabels: Number UILabel and Task UILabel
-//    private func createTaskStack(taskNum: Int, taskText: String) -> UIStackView {
-//
-//
-////        return taskStackView
-//    }
 
     required init(coder: NSCoder) {
         fatalError()

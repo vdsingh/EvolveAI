@@ -8,9 +8,13 @@
 import Foundation
 import RealmSwift
 
-// TODO: Docstrings
+/// Model for tasks that exist within Goal Day Guides
 final class EAGoalTask: Object {
+
+    /// String describing the task
     @Persisted var taskString: String
+
+    /// Whether the task has been marked as complete
     @Persisted var complete: Bool
 
     convenience init(taskString: String, complete: Bool) {

@@ -20,11 +20,15 @@ class GoalsListNavigator: Navigator {
     /// in some situations the navigation controller could end up causing a retain cycle.
     private weak var navigationController: UINavigationController?
 
+    /// Service to pass to ViewControllers to interact with Goals and other relevant types
+    private let goalsService: EAGoalsService
+
     // MARK: - Initializer
 
     /// Navigator must be instantiated with a UINavigationController so we can push new screens
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, goalsService: EAGoalsService) {
         self.navigationController = navigationController
+        self.goalsService = goalsService
     }
 
     // MARK: - Navigator
@@ -47,7 +51,7 @@ class GoalsListNavigator: Navigator {
             return EAGoalDetailsViewController(viewModel: goalViewModel)
 
         case .createGoal(let goalWasCreated):
-            return EAGoalCreationFormViewController(goalWasCreated: goalWasCreated)
+            return EAGoalCreationFormViewController(goalWasCreated: goalWasCreated, goalsService: self.goalsService)
         }
     }
 }
