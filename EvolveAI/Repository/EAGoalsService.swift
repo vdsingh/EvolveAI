@@ -196,4 +196,11 @@ class EAGoalsService {
             realm.delete(goal)
         }
     }
+
+    // MARK: - Tasks
+    public func toggleTaskCompletion(task: EAGoalTask, complete: Bool) {
+        self.writeToRealm {
+            task.complete = complete
+        }
+    }
 }
