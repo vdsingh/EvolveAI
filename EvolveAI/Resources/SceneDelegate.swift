@@ -21,7 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigator = GoalsListNavigator(navigationController: navigationController)
         let goalsListController = EAGoalsListViewController(
             navigator: navigator,
-            goals: EAGoalsService.shared.getAllPersistedGoals()
+            viewModel: DefaultEAGoalsListViewModel(
+                goalsService: EAGoalsService.shared,
+                actions: EAGoalsListViewModelActions(
+                    showGoalDetails: { goal in
+                        let goalDetailsViewModel = DefaultEAGoalDetailsViewModel(
+                            goal: goal,
+                            goalsService: EAGoalsService.shared
+                        )
+                        navigator.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                    }
+                )
+            )
         )
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.pushViewController(goalsListController, animated: true)

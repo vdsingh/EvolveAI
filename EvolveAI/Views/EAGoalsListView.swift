@@ -16,7 +16,7 @@ class EAGoalsListView: UIView {
     }
 
     /// CollectionView used to display goals
-    private let collectionView: UICollectionView = {
+    public let collectionView: UICollectionView = {
         let numItemsPerRow: CGFloat = 2
         let screenWidth = UIScreen.main.bounds.width
         let layout = UICollectionViewFlowLayout()
