@@ -116,15 +116,18 @@ class EAGoal: Object {
             printDebug("Components are \(components)")
 
             // Separate the tasks into
-            let tasks = components[1]
+            let taskStrings = components[1]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .components(separatedBy: Constants.taskSeparatorCharacter)
                 .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
                 .filter({!$0.isEmpty})
-            printDebug("Tasks are \(tasks)")
+            printDebug("Tasks are \(taskStrings)")
 
-            let taskList = List<String>()
-            taskList.append(objectsIn: tasks)
+            let taskList = List<EAGoalTask>()
+            for string in taskStrings {
+                let task = EAGoalTask(taskString: string, complete: false)
+                taskList.append(task)
+            }
 
             // Trim whitespaces and then "Day " to just get the number(s)
             let dayRangeString = components[0]
@@ -183,7 +186,7 @@ class EAGoal: Object {
     public func getSimplifiedDescription() -> String {
         return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
     }
-    
+
     override static func primaryKey() -> String? {
         return "id"
     }
