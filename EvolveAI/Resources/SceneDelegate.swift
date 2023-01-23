@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let navigationController = UINavigationController()
-        let navigator = GoalsListNavigator(navigationController: navigationController, goalsService: EAGoalsService.shared)
-        let goalsListController = EAGoalsListViewController(navigator: navigator)
+        let goalsService = EAGoalsService()
+        let goalsListController = EAGoalsListViewController(goalsService: goalsService)
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.pushViewController(goalsListController, animated: true)
         window?.rootViewController = navigationController

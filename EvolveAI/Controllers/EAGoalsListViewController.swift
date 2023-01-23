@@ -11,30 +11,47 @@ import RealmSwift
 class EAGoalsListViewController: UIViewController {
 
     /// The goals that we are viewing
-    lazy var viewModel: EAGoalsListViewModel  = {
+    lazy var viewModel: EAGoalsListViewModel = {
         return DefaultEAGoalsListViewModel(
-            goalsService: EAGoalsService.shared,
+            goalsService: self.goalsService,
             actions: EAGoalsListViewModelActions(
                 showGoalDetails: { [weak self] goal in
+                    guard let self = self else { return }
                     let goalDetailsViewModel = DefaultEAGoalDetailsViewModel(
                         goal: goal,
-                        goalsService: EAGoalsService.shared
+                        goalsService: self.goalsService
                     )
-                    self?.navigator.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                    self.navigator?.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                },
+                showGoalCreationForm: { [weak self] in
+                    self?.navigator?.navigate(to: .createGoal(goalWasCreated: { [weak self] in
+                        self?.printDebug("Goal was created from form. Refreshing goals data and view.")
+                        self?.viewModel.fetchGoals()
+                        self?.getView().refreshView()
+                    }))
                 }
             )
         )
     }()
 
     /// Navigator that dictates the flow
-    let navigator: GoalsListNavigator
+    private lazy var navigator: GoalsListNavigator? = {
+        guard let navigationController = self.navigationController else {
+            print("$Error: navigationController is nil")
+            return nil
+        }
+        return GoalsListNavigator(navigationController: navigationController, goalsService: self.goalsService)
+
+    }()
+
+    private let goalsService: EAGoalsService
 
     /// Normal initializer
     /// - Parameters:
     ///   - navigator: The navigator which specifies the flow
     ///   - goals: The goals we are viewing
-    init(navigator: GoalsListNavigator) {
-        self.navigator = navigator
+    init(goalsService: EAGoalsService) {
+        self.goalsService = goalsService
         super.init(nibName: nil, bundle: nil)
         self.title = "Goals List"
     }
@@ -42,7 +59,7 @@ class EAGoalsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if EAGoalsService.shared.maximumGoalsReached() {
+        if self.goalsService.maximumGoalsReached() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "questionmark.circle"),
                 style: .plain,
@@ -53,7 +70,7 @@ class EAGoalsListViewController: UIViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .add,
                 target: self,
-                action: #selector(self.addGoalButtonPressed)
+                action: #selector(self.addGoalButtonClicked)
             )
         }
 
@@ -85,12 +102,8 @@ class EAGoalsListViewController: UIViewController {
     }
 
     /// Function called when the user clicks the add button to create a new goal
-    @objc private func addGoalButtonPressed() {
-        self.navigator.navigate(to: .createGoal(goalWasCreated: { [weak self] in
-            self?.printDebug("Goal was created from form. Refreshing goals data and view.")
-            self?.viewModel.fetchGoals()
-            self?.getView().refreshView()
-        }))
+    @objc private func addGoalButtonClicked() {
+        self.viewModel.addGoalButtonClicked()
     }
 
     /// Safely unwraps the view as an EAGoalsView and returns it (or invokes fatal)

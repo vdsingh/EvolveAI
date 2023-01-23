@@ -15,6 +15,9 @@ protocol EAGoalsListViewModelInput {
     /// - Parameter indexPath: The indexPath of the selected cell
     func didSelect(at indexPath: IndexPath)
 
+    /// Callback for when the "add goal" button was clicked
+    func addGoalButtonClicked()
+
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals()
 }
@@ -31,6 +34,9 @@ struct EAGoalsListViewModelActions {
 
     /// Function for when we want to show the details screen for an EAGoal
     let showGoalDetails: (EAGoal) -> Void
+
+    /// Function for when we want to show the goal creation form
+    let showGoalCreationForm: () -> Void
 }
 
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
@@ -64,6 +70,10 @@ extension DefaultEAGoalsListViewModel {
     func didSelect(at indexPath: IndexPath) {
         let listItemViewModel = items[indexPath.row]
         listItemViewModel.listItemWasTapped()
+    }
+
+    func addGoalButtonClicked() {
+        self.actions.showGoalCreationForm()
     }
 
     /// Fetches the EAGoal objects and updates the items array
