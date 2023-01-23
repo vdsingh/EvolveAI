@@ -11,34 +11,26 @@ import UIKit
 /// ViewController for screen for viewing a single goal's information
 class EAGoalDetailsViewController: UIViewController {
 
-    /// The EAGoal that we are focused on
-    let goal: EAGoal
-    
-//    let viewModel = EAGoalViewModel(title: <#T##String#>, numDays: <#T##Int#>, color: <#T##UIColor#>, dayGuides: <#T##List<EAGoalDayGuide>#>, additionalDetails: <#T##String#>)
+    /// ViewModel for the Goal Details
+    let viewModel: EAGoalDetailsViewModel
 
     /// Normal Initializer
     /// - Parameter goal: The goal that we are focused on
-    init(goal: EAGoal) {
-        self.goal = goal
+    init(viewModel: EAGoalDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        printDebug("Goal: \(goal)")
+        printDebug("ViewModel: \(viewModel)")
     }
 
     /// Loads the View
     override func loadView() {
-        let viewModel = EAGoalViewModel(
-            title: goal.goal,
-            numDays: goal.numDays,
-            color: goal.color,
-            dayGuides: goal.dayGuides,
-            additionalDetails: goal.additionalDetails
-        )
         let goalView = EAGoalDetailsView(viewModel: viewModel)
         view = goalView
         self.title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
     }
 
+    /// Function called when trash can icon is pressed
     @objc private func trashButtonPressed() {
         let dialogMessage = UIAlertController(title: "Delete Goal", message: "Are you sure you want to delete this goal?", preferredStyle: .alert)
         let cancelButton = UIAlertAction(
@@ -63,11 +55,14 @@ class EAGoalDetailsViewController: UIViewController {
         self.present(dialogMessage, animated: true, completion: nil)
     }
 
+    /// Function called when delete is pressed
     private func deleteButtonPressed() {
-        EAGoalsService.shared.deletePersistedGoal(goal: self.goal)
+        self.viewModel.didPressDelete()
         self.navigationController?.popToRootViewController(animated: true)
     }
 
+    /// Prints messages when the necessary flags are true
+    /// - Parameter message: The message to print
     private func printDebug(_ message: String) {
         if Flags.debugIndividualGoal {
             print("$Log: \(message)")

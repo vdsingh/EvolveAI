@@ -75,7 +75,12 @@ class EAGoalCreationFormViewController: UIViewController {
                         if let navigationController = self.navigationController {
                             navigationController.navigationBar.isUserInteractionEnabled = false
                             navigationController.navigationBar.tintColor = .link
-                            let vc = EAGoalViewController(goal: goal)
+                            // TODO: Pass through the goals service and use it here.
+                            let detailsViewModel = DefaultEAGoalDetailsViewModel(
+                                goal: goal,
+                                goalsService: EAGoalsService.shared
+                            )
+                            let vc = EAGoalDetailsViewController(viewModel: detailsViewModel)
                             NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)
                         }
                     }

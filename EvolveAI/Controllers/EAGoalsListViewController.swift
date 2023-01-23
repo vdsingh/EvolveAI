@@ -8,12 +8,12 @@
 import UIKit
 import RealmSwift
 import RxSwift
+import RxCocoa
 
 class EAGoalsListViewController: UIViewController {
 
     /// The goals that we are viewing
-    var goals: [EAGoal]
-    let viewModel = EAGoalsListViewModel()
+    var viewModel: EAGoalsListViewModel!
 
     /// Navigator that dictates the flow
     let navigator: GoalsListNavigator
@@ -22,11 +22,11 @@ class EAGoalsListViewController: UIViewController {
     /// - Parameters:
     ///   - navigator: The navigator which specifies the flow
     ///   - goals: The goals we are viewing
-    init(navigator: GoalsListNavigator, goals: [EAGoal]) {
+    init(navigator: GoalsListNavigator, viewModel: EAGoalsListViewModel) {
         self.navigator = navigator
-        self.goals = goals
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.printDebug("Set goals to \(self.goals.compactMap { $0.getSimplifiedDescription() + "\n"})")
+//        self.printDebug("Set goals to \(self.goals.compactMap { $0.getSimplifiedDescription() + "\n"})")
         self.title = "Goals List"
     }
 
@@ -48,13 +48,12 @@ class EAGoalsListViewController: UIViewController {
             )
         }
 
-        self.goals = EAGoalsService.shared.getAllPersistedGoals()
-        printDebug("Set goals to \(self.goals.compactMap({$0.getSimplifiedDescription() + "\n"}))")
+        self.viewModel.fetchGoals()
         self.getView().refreshView()
     }
 
     override func loadView() {
-        let goalsView = EAGoalsView()
+        let goalsView = EAGoalsListView()
         view = goalsView
     }
 
@@ -80,19 +79,15 @@ class EAGoalsListViewController: UIViewController {
     @objc private func addGoalButtonPressed() {
         self.navigator.navigate(to: .createGoal(goalWasCreated: { [weak self] in
             self?.printDebug("Goal was created from form. Refreshing goals data and view.")
-            self?.goals = EAGoalsService.shared.getAllPersistedGoals()
+            self?.viewModel.fetchGoals()
             self?.getView().refreshView()
         }))
-    }
-    
-    private func bind() {
-        self.viewModel.goals.
     }
 
     /// Safely unwraps the view as an EAGoalsView and returns it (or invokes fatal)
     /// - Returns: The View as EAGoalsView
-    private func getView() -> EAGoalsView {
-        if let view = self.view as? EAGoalsView {
+    private func getView() -> EAGoalsListView {
+        if let view = self.view as? EAGoalsListView {
             return view
         } else {
             fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
@@ -118,22 +113,17 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        printDebug("Number of items: \(self.goals.count)")
-        return self.goals.count
+        printDebug("Number of items: \(self.viewModel.items.count)")
+        return self.viewModel.items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalCollectionViewCell {
-            let goal = goals[indexPath.row]
-            let goalViewModel = EAGoalViewModel(
-                title: goal.goal,
-                numDays: goal.numDays,
-                color: goal.color,
-                dayGuides: goal.dayGuides,
-                additionalDetails: goal.additionalDetails
-            )
-            cell.configure(with: goalViewModel)
-            self.printDebug("returned cell and configured with \(goalViewModel) at \(indexPath)")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
+//            self.viewModel.didSelect(at: indexPath)
+//            let goalListItemViewModel = self.viewModel.items[indexPath.row]
+            let goalListItemViewModel = self.viewModel.items[indexPath.row]
+            cell.configure(with: goalListItemViewModel)
+            self.printDebug("returned cell and configured with \(goalListItemViewModel) at \(indexPath)")
             return cell
         }
 
@@ -144,7 +134,6 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
 
 extension EAGoalsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let goal = goals[indexPath.row]
-        navigator.navigate(to: .viewGoal(goal: goal))
+        self.viewModel.didSelect(at: indexPath)
     }
 }
