@@ -11,9 +11,6 @@ import RealmSwift
 /// API for goals data (CRUD)
 class EAGoalsService {
 
-    /// Shared instance of the goals service
-    static let shared = EAGoalsService()
-
     /// Access to the Realm database
     var realm: Realm {
         do {
@@ -59,9 +56,6 @@ class EAGoalsService {
             }
         }
     }
-
-    /// Private initializer ensures that the shared instance is used
-    private init() { }
 
     /// Creates a string to send to the OpenAI Completions endpoint
     /// - Parameters:
