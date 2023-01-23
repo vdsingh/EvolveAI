@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 /// View to display an individual goal and all of its information
-class EAGoalView: UIView {
+class EAGoalDetailsView: UIView {
 
     /// Label that shows the number of days for this goal
     let numDaysLabel: UILabel = {

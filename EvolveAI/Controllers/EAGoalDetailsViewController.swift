@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// ViewController for screen for viewing a single goal's information
-class EAGoalViewController: UIViewController {
+class EAGoalDetailsViewController: UIViewController {
 
     /// The EAGoal that we are focused on
     let goal: EAGoal
@@ -33,7 +33,7 @@ class EAGoalViewController: UIViewController {
             dayGuides: goal.dayGuides,
             additionalDetails: goal.additionalDetails
         )
-        let goalView = EAGoalView(viewModel: viewModel)
+        let goalView = EAGoalDetailsView(viewModel: viewModel)
         view = goalView
         self.title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))

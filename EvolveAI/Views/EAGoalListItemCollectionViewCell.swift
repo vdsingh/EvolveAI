@@ -8,7 +8,7 @@
 import UIKit
 
 /// A UICollectionViewCell to hold EAGoal information
-class EAGoalCollectionViewCell: UICollectionViewCell {
+class EAGoalListItemCollectionViewCell: UICollectionViewCell {
 
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
