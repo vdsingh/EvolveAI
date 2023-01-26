@@ -22,10 +22,10 @@ protocol EAGoalDetailsViewModelOutput {
 
     /// A String representing the number of days of the goal
     var numDaysString: String { get }
-    
+
     /// A String representing the date when the goal was created (formatted)
     var dateCreatedString: String { get }
-    
+
     /// An array of Strings representing the tags for the goal
     var tagStrings: [String] { get }
 
@@ -56,14 +56,14 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var numDaysString: String {
         return "within \(goal.numDays) Days:"
     }
-    
+
     var dateCreatedString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateString = dateFormatter.string(from: self.goal.creationDate)
         return "Created on: \(dateString)"
     }
-    
+
     var tagStrings: [String]
     let colorHex: String
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
