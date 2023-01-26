@@ -32,7 +32,8 @@ class EAGoalDetailsView: UIView {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
-        stack.distribution = .equalSpacing
+        stack.spacing = EAIncrement.one.rawValue
+        stack.distribution = .fillProportionally
         return stack
     }()
 
@@ -81,10 +82,11 @@ class EAGoalDetailsView: UIView {
     /// - Parameter viewModel: The EAGoalDetailsViewModel that contains the tag information
     private func addTagViews(viewModel: EAGoalDetailsViewModel) {
         for tagString in viewModel.tagStrings {
-            let label = UILabel()
+            let label = UIButton()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = tagString
-            label.textColor = .systemBackground
+            label.setTitle(tagString, for: .normal)
+            label.setTitleColor(.white, for: .normal)
+            label.sizeToFit()
             label.backgroundColor = .link
             label.layer.cornerRadius = EAIncrement.one.rawValue
             tagsStack.addArrangedSubview(label)
