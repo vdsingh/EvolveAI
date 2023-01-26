@@ -20,13 +20,14 @@ class EAGoalDetailsView: UIView {
         return label
     }()
     
-    //TODO: Docstrings
+    /// Label that displays the creation date of the goal
     let dateCreatedLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    /// Display the tags associated with the goal.
     let tagsStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -76,6 +77,8 @@ class EAGoalDetailsView: UIView {
 
     // MARK: - Private Functions
     
+    /// Add the tags to the tagsStack
+    /// - Parameter viewModel: The EAGoalDetailsViewModel that contains the tag information
     private func addTagViews(viewModel: EAGoalDetailsViewModel) {
         for tagString in viewModel.tagStrings {
             let label = UILabel()

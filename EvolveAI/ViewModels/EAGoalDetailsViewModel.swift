@@ -20,12 +20,13 @@ protocol EAGoalDetailsViewModelOutput {
     /// The title of the goal
     var title: String { get }
 
-    /// The number of days of the goal
+    /// A String representing the number of days of the goal
     var numDaysString: String { get }
     
-    //TODO: Docstrings
+    /// A String representing the date when the goal was created (formatted)
     var dateCreatedString: String { get }
     
+    /// An array of Strings representing the tags for the goal
     var tagStrings: [String] { get }
 
     /// The goal color
@@ -55,6 +56,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var numDaysString: String {
         return "within \(goal.numDays) Days:"
     }
+    
     var dateCreatedString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -63,7 +65,6 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     }
     
     var tagStrings: [String]
-    
     let colorHex: String
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
@@ -82,8 +83,6 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         self.goal = goal
         self.goalsService = goalsService
         self.tagStrings = goal.tags.map({$0})
-        
-        print("Tags: \(goal.tags)")
     }
 }
 
