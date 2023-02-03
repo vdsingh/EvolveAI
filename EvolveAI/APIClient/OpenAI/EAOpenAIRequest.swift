@@ -92,6 +92,7 @@ final class EAOpenAIRequest: EARequest {
         guard let unwrappedURL = url else {
             fatalError("$Error unwrapping URL.")
         }
+
         var urlRequest = URLRequest(url: unwrappedURL)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -124,7 +125,6 @@ final class EAOpenAIRequest: EARequest {
         self.requestBody = requestBody
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
-
         switch endpoint {
         case .completions:
             self.httpMethod = .POST

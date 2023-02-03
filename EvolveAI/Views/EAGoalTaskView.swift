@@ -21,7 +21,7 @@ class EAGoalTaskView: UIStackView {
 
     /// A checkbox indicating whether the task has been marked complete (and giving user opportunity to mark it)
     private let checkbox: EACheckbox = {
-        let checkbox = EACheckbox(size: EAIncrement.two.rawValue * 2/3)
+        let checkbox = EACheckbox(size: EAIncrement.two.rawValue * 2 / 3)
         return checkbox
     }()
 
@@ -57,9 +57,16 @@ class EAGoalTaskView: UIStackView {
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
     private func configure(with viewModel: EAGoalTaskViewModel) {
-        self.taskLabel.text = viewModel.text
+        self.updateTaskUI(with: viewModel)
+        self.checkbox.setCheckboxHandler { [weak self] complete in
+            viewModel.toggleTaskCompletion(complete: complete)
+            self?.updateTaskUI(with: viewModel)
+        }
+    }
+
+    private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
         self.checkbox.setActive(active: viewModel.complete)
-        self.checkbox.setCheckboxHandler(checkboxWasToggled: viewModel.toggleTaskCompletion)
+        self.taskLabel.attributedText = viewModel.attributedText
     }
 
     required init(coder: NSCoder) {
