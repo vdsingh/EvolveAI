@@ -23,6 +23,8 @@ protocol EAGoalTaskViewModelOutput {
 
     /// Whether the task is complete or not
     var complete: Bool { get }
+
+    var attributedText: NSMutableAttributedString { get }
 }
 
 protocol EAGoalTaskViewModel: EAGoalTaskViewModelInput, EAGoalTaskViewModelOutput { }
@@ -36,8 +38,20 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel {
     /// A service to interact with goals and other related types (Task!)
     private let goalsService: EAGoalsService
 
-    let text: String
     var complete: Bool
+    let text: String
+    var attributedText: NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString(string: self.text)
+        if self.complete {
+            attributedString.addAttribute(
+                NSAttributedString.Key.strikethroughStyle,
+                value: 2,
+                range: NSRange(location: 0, length: attributedString.length)
+            )
+        }
+
+        return attributedString
+    }
 
     init(task: EAGoalTask, goalsService: EAGoalsService) {
         self.text = task.taskString
@@ -50,5 +64,6 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel {
 extension DefaultEAGoalTaskViewModel {
     func toggleTaskCompletion(complete: Bool) {
         goalsService.toggleTaskCompletion(task: self.task, complete: complete)
+        self.complete = complete
     }
 }
