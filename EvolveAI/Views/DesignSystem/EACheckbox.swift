@@ -45,10 +45,11 @@ final class EACheckbox: UIButton {
 
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
-        self.isSelected = !self.isSelected
-        self.backgroundColor = self.isSelected ? .green : .clear
+        self.setActive(active: !self.isSelected)
         if let handler = self.checkboxWasToggled {
             handler(self.isSelected)
+        } else {
+            print("$Error: checkbox handler was not specified.")
         }
     }
 
