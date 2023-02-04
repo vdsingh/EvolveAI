@@ -29,7 +29,8 @@ class EAGoalsListViewController: UIViewController {
                         self?.viewModel.fetchGoals()
                         self?.getView().refreshView()
                     }))
-                }
+                },
+                toggleListItemLoading: <#(Bool) -> Void#>
             )
         )
     }()
