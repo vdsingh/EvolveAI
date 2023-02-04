@@ -37,6 +37,9 @@ struct EAGoalsListViewModelActions {
 
     /// Function for when we want to show the goal creation form
     let showGoalCreationForm: () -> Void
+    
+    //TODO: Docstring
+    let toggleListItemLoading: (Bool) -> Void
 }
 
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
@@ -71,7 +74,8 @@ extension DefaultEAGoalsListViewModel {
         let listItemViewModel = items[indexPath.row]
         listItemViewModel.listItemWasTapped()
     }
-
+    
+    /// Callback for when the "add goal" button was clicked
     func addGoalButtonClicked() {
         self.actions.showGoalCreationForm()
     }
@@ -81,7 +85,11 @@ extension DefaultEAGoalsListViewModel {
         self.items = self.goalsService.getAllPersistedGoals().compactMap {
             return DefaultEAGoalListItemViewModel(
                 goal: $0,
-                actions: EAGoalListItemViewModelActions(showGoalDetails: self.actions.showGoalDetails)
+                colorHex: $0.colorHex,
+                actions: EAGoalListItemViewModelActions(
+                    showGoalDetails: self.actions.showGoalDetails,
+                    toggleListItemLoading: self.actions.toggleListItemLoading
+                )
             )
         }
     }
