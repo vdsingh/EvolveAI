@@ -122,7 +122,7 @@ class EAGoalsListViewController: UIViewController {
     /// Prints a debug message if the necessary flags are true
     /// - Parameter message: the message to print
     private func printDebug(_ message: String) {
-        if Flags.debugGoalsList {
+        if Flags.debugGoalsList || self.debug {
             print("$Log: \(message)")
         }
     }
@@ -146,7 +146,6 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
             let goalListItemViewModel = self.viewModel.items[indexPath.row]
             cell.configure(with: goalListItemViewModel)
-            self.printDebug("returned cell and configured with \(goalListItemViewModel) at \(indexPath)")
             return cell
         }
 

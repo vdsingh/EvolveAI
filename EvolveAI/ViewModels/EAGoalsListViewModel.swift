@@ -94,5 +94,11 @@ extension DefaultEAGoalsListViewModel {
                 )
             )
         }
+
+extension DefaultEAGoalsListViewModel: Debuggable {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

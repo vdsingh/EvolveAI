@@ -242,8 +242,8 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
 
     /// Prints a debug message if the necessary flags are true
     /// - Parameter message: The message to print
-    private func printDebug(_ message: String) {
-        if Flags.debugGoalCreationForm {
+    func printDebug(_ message: String) {
+        if Flags.debugGoalCreationForm || self.debug {
             print("$Log: \(message)")
         }
     }

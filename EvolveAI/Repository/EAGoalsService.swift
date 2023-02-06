@@ -62,6 +62,12 @@ class EAGoalsService: Debuggable {
         }
     }
 
+    func printDebug(_ message: String) {
+        if self.debug || Flags.debugGoalCreationForm {
+            print("$Log: \(message)")
+        }
+    }
+
     /// Creates a string to send to the OpenAI Completions endpoint
     /// - Parameters:
     ///   - goal: A description of the goal to accomplish (ex: "learn the violin")
