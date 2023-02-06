@@ -19,13 +19,13 @@ protocol EAGoalListItemViewModelInput {
 /// Properties that can be extracted from this ViewModel
 protocol EAGoalListItemViewModelOutput {
     /// The title of the goal
-    var title: String? { get }
+    var title: String { get }
 
     /// The number of days of the goal
-    var numDays: Int? { get }
+    var numDays: Int { get }
 
     /// The goal color
-    var colorHex: String { get }
+    var color: UIColor { get }
 }
 
 protocol EAGoalListItemViewModel: EAGoalListItemViewModelInput, EAGoalListItemViewModelOutput { }
@@ -35,18 +35,16 @@ struct EAGoalListItemViewModelActions {
 
     /// Function for when we want to show the details screen for an EAGoal
     let showGoalDetails: (EAGoal) -> Void
-    
-    //TODO: Docstring
-    let toggleListItemLoading: (Bool) -> Void
 }
 
 /// A ViewModel for EAGoals
 final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
-    //TODO: Convert from colorHex to UIColor
 
-    var title: String?
-    var numDays: Int?
-    var colorHex: String = "ffffff"
+    // TODO: Convert from colorHex to UIColor
+
+    var title: String
+    var numDays: Int
+    var color: UIColor
 
     /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
@@ -59,25 +57,39 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
             }
         }
     }
-    
+
     /// Common initializer
     /// - Parameters:
     ///   - title: The title of the goal
     ///   - numDays: The number of days of the goal
-    ///   - colorHex: The goal color
+    ///   - color: The goal color
     init(
-        goal: EAGoal?,
-        colorHex: String,
+        goal: EAGoal,
         actions: EAGoalListItemViewModelActions?
     ) {
         self.goal = goal
+        self.title = goal.goal
+        self.numDays = goal.numDays
+        self.color = goal.color
         self.actions = actions
     }
-    
+
+    init(
+        title: String,
+        numDays: Int,
+        color: UIColor,
+        actions: EAGoalListItemViewModelActions?
+    ) {
+        self.title = title
+        self.numDays = numDays
+        self.color = color
+        self.actions = actions
+    }
+
     private func setGoalValues(goal: EAGoal) {
         self.title = goal.goal
         self.numDays = goal.numDays
-        self.colorHex = goal.colorHex
+        self.color = goal.color
     }
 }
 
