@@ -110,7 +110,7 @@ class EAGoalsService: Debuggable {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        colorHex: String,
+        color: UIColor,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
         if Flags.useMockGoals {
@@ -156,7 +156,7 @@ class EAGoalsService: Debuggable {
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
-                        colorHex: colorHex,
+                        color: color,
                         apiResponse: apiResponse
                     )
                     if Flags.debugAPIClient {

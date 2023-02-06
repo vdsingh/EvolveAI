@@ -34,14 +34,15 @@ class EAGoal: Object {
     @Persisted var aiResponse: String
 
     /// The Hex value for this goal's color
-    @Persisted var colorHex: String
+    @Persisted private var colorHex: String
 
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
 
-    /// The UIColor for this goal (computed)
+    /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
-        return UIColor(hex: self.colorHex) ?? Constants.defaultColor
+        get { UIColor(hex: self.colorHex) ?? Constants.defaultColor }
+        set { self.colorHex = newValue.hexStringFromColor() }
     }
 
     convenience init(
@@ -50,7 +51,7 @@ class EAGoal: Object {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        colorHex: String
+        color: UIColor
     ) {
         self.init()
         self.creationDate = creationDate
@@ -59,7 +60,7 @@ class EAGoal: Object {
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
-        self.colorHex = colorHex
+        self.color = color
     }
 
     /// Initializer for EAGoal
@@ -73,10 +74,10 @@ class EAGoal: Object {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        colorHex: String,
+        color: UIColor,
         apiResponse: EAOpenAICompletionsResponse
     ) {
-        self.init(creationDate: creationDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+        self.init(creationDate: creationDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides
@@ -89,10 +90,10 @@ class EAGoal: Object {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        colorHex: String,
+        color: UIColor,
         aiResponse: String
     ) {
-        self.init(creationDate: creationDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+        self.init(creationDate: creationDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides

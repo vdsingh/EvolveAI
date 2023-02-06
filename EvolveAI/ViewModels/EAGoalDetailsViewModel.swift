@@ -74,11 +74,12 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     let additionalDetails: String
 
+    // TODO: Convert from ColorHex to UIColor
     /// Goal initializer
     /// - Parameter goal: The goal that this ViewModel represents
     init(goal: EAGoal, goalsService: EAGoalsService) {
         self.title = goal.goal
-        self.colorHex = goal.colorHex
+        self.colorHex = goal.color.hexStringFromColor()
         self.additionalDetails = goal.additionalDetails
         self.goal = goal
         self.goalsService = goalsService
