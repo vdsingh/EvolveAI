@@ -7,11 +7,14 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
 
     let debug = true
+
+    private var loadingGoals = [EALoadingGoal]()
 
     /// Access to the Realm database
     var realm: Realm {
@@ -174,6 +177,48 @@ class EAGoalsService: Debuggable {
         var goals = [EAGoal]()
         goals.append(contentsOf: realm.objects(EAGoal.self))
         return goals
+    }
+
+    // TODO: Docstring
+    public func getAllLoadingGoals() -> [EALoadingGoal] {
+        return self.loadingGoals
+    }
+
+    public func saveLoadingGoal(_ loadingGoal: EALoadingGoal, goalWasAddedToQueue: @escaping () -> Void, goalWasLoaded: @escaping (EAGoal) -> Void) {
+        self.loadingGoals.append(loadingGoal)
+        self.printDebug("Loading Goal \(loadingGoal.title) was added to the queue. Queue: \(self.loadingGoals).")
+        goalWasAddedToQueue()
+        self.createLoadingGoals(completion: goalWasLoaded)
+    }
+
+    private func createLoadingGoals(completion: @escaping (EAGoal) -> Void) {
+        if self.loadingGoals.isEmpty {
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0..<self.loadingGoals.count {
+                if let loadingGoal = self.loadingGoals.last {
+                    self.printDebug("Loading Goal \(loadingGoal.title) was dequeued. Creating now.")
+                    self.createGoal(
+                        goal: loadingGoal.title,
+                        numDays: loadingGoal.numDays,
+                        additionalDetails: loadingGoal.additionalDetails,
+                        color: loadingGoal.color
+                    ) { [weak self] result in
+                        self?.loadingGoals.removeLast()
+                        switch result {
+                        case .success(let goal):
+                            self?.printDebug("Goal was successfully created: \(goal.goal)")
+                            completion(goal)
+                            
+                        case .failure(let error):
+                            print("$Error creating loading goal: \(error)")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// Updates a provided goal
