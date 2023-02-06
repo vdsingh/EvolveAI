@@ -36,15 +36,20 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
 
+    // TODO: Docstring
+    private let goalWillBeCreated: () -> Void
+
     /// Callback to use when the goal has been created
     private let goalWasCreated: () -> Void
 
     /// Service to interact with Goals (and other associated types)
     private let goalsService: EAGoalsService
 
+    // TODO: Docstring
     /// Normal initializer
     /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.
-    init(goalWasCreated: @escaping () -> Void, goalsService: EAGoalsService) {
+    init(goalWillBeCreated: @escaping () -> Void, goalWasCreated: @escaping () -> Void, goalsService: EAGoalsService) {
+        self.goalWillBeCreated = goalWillBeCreated
         self.goalWasCreated = goalWasCreated
         self.goalsService = goalsService
         super.init(nibName: nil, bundle: nil)
@@ -61,43 +66,24 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
 
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
-        self.getView().setLoading(isLoading: true)
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
-            goalsService.createGoal(
-                goal: goal,
-                numDays: numDays,
-                additionalDetails: self.additionalDetails,
-                colorHex: self.color.hexStringFromColor()
-            ) { [weak self] result in
-                guard let self = self else { return }
-
-                switch result {
-                case .success(let goal):
-                    self.printDebug("Successfully created goal: \(goal.goal)")
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, additionalDetails: self.additionalDetails)
+                self.goalsService.saveLoadingGoal(
+                    loadingGoal,
+                    goalWasAddedToQueue: {
+                        self.printDebug("Calling goal was added to queue.")
+                        self.goalWillBeCreated()
+                    },
+                    goalWasLoaded: { goal in
+                        self.printDebug("Goal was loaded: \(goal.goal)")
                         self.goalWasCreated()
-                        if let navigationController = self.navigationController {
-                            navigationController.navigationBar.isUserInteractionEnabled = false
-                            navigationController.navigationBar.tintColor = .link
-                            let detailsViewModel = DefaultEAGoalDetailsViewModel(
-                                goal: goal,
-                                goalsService: self.goalsService
-                            )
-                            let vc = EAGoalDetailsViewController(viewModel: detailsViewModel)
-                            NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)
-                        }
                     }
-
-                case .failure(let error):
-                    self.handleGoalCreationFailure(error)
-                }
-
-                DispatchQueue.main.async {
-                    self.getView().setLoading(isLoading: false)
-                }
+                )
+                self.navigationController?.popViewController(animated: true)
             }
         } else {
             fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goal)), Num Days: \(String(describing: self.numDays)).")
