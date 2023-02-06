@@ -49,6 +49,7 @@ class EATextFieldQuestionView: UIStackView, EAFormElementView {
         self.axis = .vertical
         self.spacing = EAIncrement.one.rawValue
         self.questionLabel.text = viewModel.question
+        self.textField.keyboardType = viewModel.keyboardType
     }
 
     /// Add the subviews to the view and establish constraints
