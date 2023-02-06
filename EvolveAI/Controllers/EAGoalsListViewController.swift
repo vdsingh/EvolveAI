@@ -67,6 +67,7 @@ class EAGoalsListViewController: UIViewController {
 
     }()
 
+    /// Goals Service to interact with EAGoals or other related types
     private let goalsService: EAGoalsService
 
     /// Normal initializer
@@ -97,7 +98,6 @@ class EAGoalsListViewController: UIViewController {
             )
         }
 
-        print("VIEW WILL APPEAR")
         self.viewModel.fetchGoals()
         self.getView().refreshView()
     }
