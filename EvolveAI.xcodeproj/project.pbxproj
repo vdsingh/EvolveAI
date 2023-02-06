@@ -15,6 +15,8 @@
 		B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */; };
 		B90847EA297665A200758477 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E9297665A200758477 /* Extensions.swift */; };
 		B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847EB2979012D00758477 /* EAColorSelector.swift */; };
+		B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144A29905AF80093EB0C /* EALoadingGoal.swift */; };
+		B90D144D299071840093EB0C /* Debuggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144C299071840093EB0C /* Debuggable.swift */; };
 		B91EE2E1297B207B003FF560 /* EvolveAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2E0297B207B003FF560 /* EvolveAITests.swift */; };
 		B91EE2EE297B2127003FF560 /* EvolveAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */; };
 		B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */; };
@@ -101,6 +103,8 @@
 		B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalListItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		B90847E9297665A200758477 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B90847EB2979012D00758477 /* EAColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColorSelector.swift; sourceTree = "<group>"; };
+		B90D144A29905AF80093EB0C /* EALoadingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALoadingGoal.swift; sourceTree = "<group>"; };
+		B90D144C299071840093EB0C /* Debuggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debuggable.swift; sourceTree = "<group>"; };
 		B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91EE2E0297B207B003FF560 /* EvolveAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAITests.swift; sourceTree = "<group>"; };
 		B91EE2EB297B2127003FF560 /* EvolveAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,6 +331,7 @@
 				B9C0569E2962E045007B6DBD /* EAGoal.swift */,
 				B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */,
 				B9584E82297F4253000368C2 /* EAGoalTask.swift */,
+				B90D144A29905AF80093EB0C /* EALoadingGoal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				B9486DF0296D3A6300A0296E /* EAIncrement.swift */,
 				B90847E42973ADC400758477 /* Flags.swift */,
 				B90847E9297665A200758477 /* Extensions.swift */,
+				B90D144C299071840093EB0C /* Debuggable.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -635,6 +641,7 @@
 				B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */,
 				B9584E7D297DE06D000368C2 /* EAGoalDetailsViewModel.swift in Sources */,
 				B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */,
+				B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
 				B9F4D3DA297C951100AE8959 /* EAGoalsListViewModel.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
@@ -665,6 +672,7 @@
 				B90847EA297665A200758477 /* Extensions.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
 				B9C056A22967CEE5007B6DBD /* EAFormElementView.swift in Sources */,
+				B90D144D299071840093EB0C /* Debuggable.swift in Sources */,
 				B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */,
 				B9C056962962CEAF007B6DBD /* EARequest.swift in Sources */,
 			);

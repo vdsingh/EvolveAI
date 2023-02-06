@@ -39,9 +39,6 @@ struct EAGoalListItemViewModelActions {
 
 /// A ViewModel for EAGoals
 final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
-
-    // TODO: Convert from colorHex to UIColor
-
     var title: String
     var numDays: Int
     var color: UIColor

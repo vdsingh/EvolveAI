@@ -15,8 +15,13 @@ class EAGoalsListViewController: UIViewController {
     /// The goals that we are viewing
     private lazy var viewModel: EAGoalsListViewModel = {
         return DefaultEAGoalsListViewModel(
+            // Passing the Goals Service to the ViewModel
             goalsService: self.goalsService,
+
+            // Actions that the ViewModel may need to handle
             actions: EAGoalsListViewModelActions(
+
+                // We may need to show a Goal Details screen
                 showGoalDetails: { [weak self] goal in
                     guard let self = self else { return }
                     let goalDetailsViewModel = DefaultEAGoalDetailsViewModel(
@@ -25,14 +30,29 @@ class EAGoalsListViewController: UIViewController {
                     )
                     self.navigator?.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
                 },
+
+                // We may need to show a Goal Creation Form
                 showGoalCreationForm: { [weak self] in
-                    self?.navigator?.navigate(to: .createGoal(goalWasCreated: { [weak self] in
-                        self?.printDebug("Goal was created from form. Refreshing goals data and view.")
-                        self?.viewModel.fetchGoals()
-                        self?.getView().refreshView()
-                    }))
-                },
-                toggleListItemLoading: <#(Bool) -> Void#>
+                    // We'll navigate to the goal creation screen
+                    self?.navigator?.navigate(
+                        to: .createGoal(
+                            goalWillBeCreated: {
+                                DispatchQueue.main.async {
+                                    self?.printDebug("Goal will be created from form. Refreshing goals data and view to retrieve the loading goals.")
+                                    self?.viewModel.fetchGoals()
+                                    self?.getView().refreshView()
+                                }
+                            },
+                            goalWasCreated: { [weak self] in
+                                DispatchQueue.main.async {
+                                    self?.printDebug("Goal was created from form. Refreshing goals data and view.")
+                                    self?.viewModel.fetchGoals()
+                                    self?.getView().refreshView()
+                                }
+                            }
+                        )
+                    )
+                }
             )
         )
     }()
@@ -77,6 +97,7 @@ class EAGoalsListViewController: UIViewController {
             )
         }
 
+        print("VIEW WILL APPEAR")
         self.viewModel.fetchGoals()
         self.getView().refreshView()
     }

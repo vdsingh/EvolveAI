@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// Input functions
 protocol EAGoalDetailsViewModelInput {
@@ -30,7 +31,7 @@ protocol EAGoalDetailsViewModelOutput {
     var tagStrings: [String] { get }
 
     /// The goal color
-    var colorHex: String { get }
+    var color: UIColor { get }
 
     /// The day guides to display for the goal
     var dayGuideViewModels: [EAGoalDayGuideViewModel] { get }
@@ -65,7 +66,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     }
 
     var tagStrings: [String]
-    let colorHex: String
+    let color: UIColor
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
             DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalsService: self.goalsService)
@@ -74,12 +75,12 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     let additionalDetails: String
 
-    // TODO: Convert from ColorHex to UIColor
     /// Goal initializer
     /// - Parameter goal: The goal that this ViewModel represents
+    /// - Parameter goalsService: Goals Service to interact with EAGoals and other related types
     init(goal: EAGoal, goalsService: EAGoalsService) {
         self.title = goal.goal
-        self.colorHex = goal.color.hexStringFromColor()
+        self.color = goal.color
         self.additionalDetails = goal.additionalDetails
         self.goal = goal
         self.goalsService = goalsService

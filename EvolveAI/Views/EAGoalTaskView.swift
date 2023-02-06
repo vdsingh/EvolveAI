@@ -63,7 +63,7 @@ class EAGoalTaskView: UIStackView {
             self?.updateTaskUI(with: viewModel)
         }
     }
-    
+
     /// Updates the UI of this View with a ViewModel
     /// - Parameter viewModel: The ViewModel that supplies the information for this View
     private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {

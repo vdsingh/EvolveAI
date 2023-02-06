@@ -190,7 +190,7 @@ class EAGoalsService: Debuggable {
     public func getAllLoadingGoals() -> [EALoadingGoal] {
         return self.loadingGoals
     }
-    
+
     /// Saves a loading goal
     /// - Parameters:
     ///   - loadingGoal: The EALoadingGoal to be saved
@@ -202,7 +202,7 @@ class EAGoalsService: Debuggable {
         goalWasAddedToQueue()
         self.createLoadingGoals(completion: goalWasLoaded)
     }
-    
+
     /// Dequeues loading goals and creates them
     /// - Parameter completion: Callback for when the loading goals have all been created
     private func createLoadingGoals(completion: @escaping (EAGoal) -> Void) {
@@ -225,7 +225,7 @@ class EAGoalsService: Debuggable {
                         case .success(let goal):
                             self?.printDebug("Goal was successfully created: \(goal.goal)")
                             completion(goal)
-                            
+
                         case .failure(let error):
                             print("$Error creating loading goal: \(error)")
                         }

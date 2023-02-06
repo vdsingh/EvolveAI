@@ -10,8 +10,6 @@ import UIKit
 
 /// ViewController for screen for creating new goal (form)
 class EAGoalCreationFormViewController: UIViewController, Debuggable {
-
-    // TODO: Docstring
     let debug = true
 
     /// Constants for this screen
@@ -36,7 +34,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
 
-    // TODO: Docstring
+    /// Callback to use when the goal will be created (put into the loading queue)
     private let goalWillBeCreated: () -> Void
 
     /// Callback to use when the goal has been created
@@ -45,9 +43,10 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     /// Service to interact with Goals (and other associated types)
     private let goalsService: EAGoalsService
 
-    // TODO: Docstring
     /// Normal initializer
     /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.
+    /// - Parameter goalWillBeCreated: function to call when a goal will be created.
+    /// - Parameter goalsService: GoalsService to interact with EAGoals and other related types
     init(goalWillBeCreated: @escaping () -> Void, goalWasCreated: @escaping () -> Void, goalsService: EAGoalsService) {
         self.goalWillBeCreated = goalWillBeCreated
         self.goalWasCreated = goalWasCreated

@@ -23,7 +23,7 @@ protocol EAGoalTaskViewModelOutput {
 
     /// Whether the task is complete or not
     var complete: Bool { get }
-    
+
     /// Attributed text for the task, which includes strikethrough
     var attributedText: NSMutableAttributedString { get }
 }
