@@ -185,18 +185,26 @@ class EAGoalsService: Debuggable {
         return goals
     }
 
-    // TODO: Docstring
+    /// Retrieves all of the currently loading goals
+    /// - Returns: An array of EALoadingGoals
     public func getAllLoadingGoals() -> [EALoadingGoal] {
         return self.loadingGoals
     }
-
+    
+    /// Saves a loading goal
+    /// - Parameters:
+    ///   - loadingGoal: The EALoadingGoal to be saved
+    ///   - goalWasAddedToQueue: Callback for when the goal was added to the queue
+    ///   - goalWasLoaded: Callback for when the goal was loaded
     public func saveLoadingGoal(_ loadingGoal: EALoadingGoal, goalWasAddedToQueue: @escaping () -> Void, goalWasLoaded: @escaping (EAGoal) -> Void) {
         self.loadingGoals.append(loadingGoal)
         self.printDebug("Loading Goal \(loadingGoal.title) was added to the queue. Queue: \(self.loadingGoals).")
         goalWasAddedToQueue()
         self.createLoadingGoals(completion: goalWasLoaded)
     }
-
+    
+    /// Dequeues loading goals and creates them
+    /// - Parameter completion: Callback for when the loading goals have all been created
     private func createLoadingGoals(completion: @escaping (EAGoal) -> Void) {
         if self.loadingGoals.isEmpty {
             return
