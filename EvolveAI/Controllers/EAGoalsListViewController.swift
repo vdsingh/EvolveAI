@@ -10,6 +10,8 @@ import RealmSwift
 
 class EAGoalsListViewController: UIViewController {
 
+    private let debug = true
+
     /// The goals that we are viewing
     private lazy var viewModel: EAGoalsListViewModel = {
         return DefaultEAGoalsListViewModel(

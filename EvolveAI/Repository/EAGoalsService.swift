@@ -9,7 +9,9 @@ import Foundation
 import RealmSwift
 
 /// API for goals data (CRUD)
-class EAGoalsService {
+class EAGoalsService: Debuggable {
+
+    let debug = true
 
     /// Access to the Realm database
     var realm: Realm {
