@@ -36,21 +36,21 @@ final class EASpinner: UIStackView, EAFormElementView {
 
     /// Normal Initializer
     /// - Parameter subText: Sub Text String (if any) to display under the spinner
-    init(subText: String? = nil) {
+    init(subText: String? = nil, backgroundColor: UIColor = .label) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviewsAndEstablishConstraints()
-        self.setUIProperties(subText: subText)
+        self.setUIProperties(subText: subText, backgroundColor: backgroundColor)
     }
 
     // MARK: - Private Functions
 
     /// Set the UI properties for this View
     /// - Parameter subText: the SubText (if any) for this spinner
-    private func setUIProperties(subText: String?) {
+    private func setUIProperties(subText: String?, backgroundColor: UIColor) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .label
-        self.layer.cornerRadius = EAIncrement.one.rawValue
+        self.backgroundColor = backgroundColor
+        self.layer.cornerRadius = EAIncrement.two.rawValue
         self.isHidden = true
         self.axis = .vertical
         self.distribution = .fillEqually

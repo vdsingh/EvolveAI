@@ -26,6 +26,9 @@ protocol EAGoalListItemViewModelOutput {
 
     /// The goal color
     var color: UIColor { get }
+
+    /// Whether the goal is loading or not
+    var loading: Bool { get }
 }
 
 protocol EAGoalListItemViewModel: EAGoalListItemViewModelInput, EAGoalListItemViewModelOutput { }
@@ -42,6 +45,9 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     var title: String
     var numDays: Int
     var color: UIColor
+    var loading: Bool {
+        goal == nil
+    }
 
     /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
