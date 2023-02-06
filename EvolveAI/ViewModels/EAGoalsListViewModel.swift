@@ -37,9 +37,6 @@ struct EAGoalsListViewModelActions {
 
     /// Function for when we want to show the goal creation form
     let showGoalCreationForm: () -> Void
-    
-    //TODO: Docstring
-    let toggleListItemLoading: (Bool) -> Void
 }
 
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
@@ -76,7 +73,7 @@ extension DefaultEAGoalsListViewModel {
         let listItemViewModel = items[indexPath.row]
         listItemViewModel.listItemWasTapped()
     }
-    
+
     /// Callback for when the "add goal" button was clicked
     func addGoalButtonClicked() {
         self.actions.showGoalCreationForm()
@@ -84,16 +81,33 @@ extension DefaultEAGoalsListViewModel {
 
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals() {
-        self.items = self.goalsService.getAllPersistedGoals().compactMap {
+        let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap {
             return DefaultEAGoalListItemViewModel(
                 goal: $0,
-                colorHex: $0.colorHex,
                 actions: EAGoalListItemViewModelActions(
-                    showGoalDetails: self.actions.showGoalDetails,
-                    toggleListItemLoading: self.actions.toggleListItemLoading
+                    showGoalDetails: self.actions.showGoalDetails
                 )
             )
         }
+
+        let loadingListItemViewModels = self.goalsService.getAllLoadingGoals().compactMap {
+            return DefaultEAGoalListItemViewModel(
+                title: $0.title,
+                numDays: $0.numDays,
+                color: $0.color,
+                actions: EAGoalListItemViewModelActions(
+                    showGoalDetails: self.actions.showGoalDetails
+                )
+            )
+        }
+
+        self.items = []
+        self.items.append(contentsOf: goalListItemViewModels)
+        self.items.append(contentsOf: loadingListItemViewModels)
+
+        printDebug("Fetched Goals: \(self.items.compactMap({ $0.title }))")
+    }
+}
 
 extension DefaultEAGoalsListViewModel: Debuggable {
     func printDebug(_ message: String) {
