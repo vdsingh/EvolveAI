@@ -8,7 +8,7 @@
 import UIKit
 
 /// View to display EAGoal objects in a UITableView
-class EAGoalsView: UIView {
+class EAGoalsListView: UIView {
 
     /// Constants for this View
     private struct Constants {
@@ -16,7 +16,7 @@ class EAGoalsView: UIView {
     }
 
     /// CollectionView used to display goals
-    private let collectionView: UICollectionView = {
+    public let collectionView: UICollectionView = {
         let numItemsPerRow: CGFloat = 2
         let screenWidth = UIScreen.main.bounds.width
         let layout = UICollectionViewFlowLayout()
@@ -29,7 +29,7 @@ class EAGoalsView: UIView {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(EAGoalCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalCollectionViewCell.reuseIdentifier)
+        collectionView.register(EAGoalListItemCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
 

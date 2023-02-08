@@ -10,28 +10,80 @@ import RealmSwift
 
 class EAGoalsListViewController: UIViewController {
 
+    private let debug = true
+
     /// The goals that we are viewing
-    var goals: [EAGoal]
+    private lazy var viewModel: EAGoalsListViewModel = {
+        return DefaultEAGoalsListViewModel(
+            // Passing the Goals Service to the ViewModel
+            goalsService: self.goalsService,
+
+            // Actions that the ViewModel may need to handle
+            actions: EAGoalsListViewModelActions(
+
+                // We may need to show a Goal Details screen
+                showGoalDetails: { [weak self] goal in
+                    guard let self = self else { return }
+                    let goalDetailsViewModel = DefaultEAGoalDetailsViewModel(
+                        goal: goal,
+                        goalsService: self.goalsService
+                    )
+                    self.navigator?.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                },
+
+                // We may need to show a Goal Creation Form
+                showGoalCreationForm: { [weak self] in
+                    // We'll navigate to the goal creation screen
+                    self?.navigator?.navigate(
+                        to: .createGoal(
+                            goalWillBeCreated: {
+                                DispatchQueue.main.async {
+                                    self?.printDebug("Goal will be created from form. Refreshing goals data and view to retrieve the loading goals.")
+                                    self?.viewModel.fetchGoals()
+                                    self?.getView().refreshView()
+                                }
+                            },
+                            goalWasCreated: { [weak self] in
+                                DispatchQueue.main.async {
+                                    self?.printDebug("Goal was created from form. Refreshing goals data and view.")
+                                    self?.viewModel.fetchGoals()
+                                    self?.getView().refreshView()
+                                }
+                            }
+                        )
+                    )
+                }
+            )
+        )
+    }()
 
     /// Navigator that dictates the flow
-    let navigator: GoalsListNavigator
+    private lazy var navigator: GoalsListNavigator? = {
+        guard let navigationController = self.navigationController else {
+            print("$Error: navigationController is nil")
+            return nil
+        }
+        return GoalsListNavigator(navigationController: navigationController, goalsService: self.goalsService)
+
+    }()
+
+    /// Goals Service to interact with EAGoals or other related types
+    private let goalsService: EAGoalsService
 
     /// Normal initializer
     /// - Parameters:
     ///   - navigator: The navigator which specifies the flow
     ///   - goals: The goals we are viewing
-    init(navigator: GoalsListNavigator, goals: [EAGoal]) {
-        self.navigator = navigator
-        self.goals = goals
+    init(goalsService: EAGoalsService) {
+        self.goalsService = goalsService
         super.init(nibName: nil, bundle: nil)
-        self.printDebug("Set goals to \(self.goals.compactMap { $0.getSimplifiedDescription() + "\n"})")
         self.title = "Goals List"
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if EAGoalsService.shared.maximumGoalsReached() {
+        if self.goalsService.maximumGoalsReached() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "questionmark.circle"),
                 style: .plain,
@@ -42,17 +94,16 @@ class EAGoalsListViewController: UIViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .add,
                 target: self,
-                action: #selector(self.addGoalButtonPressed)
+                action: #selector(self.addGoalButtonClicked)
             )
         }
 
-        self.goals = EAGoalsService.shared.getAllPersistedGoals()
-        printDebug("Set goals to \(self.goals.compactMap({$0.getSimplifiedDescription() + "\n"}))")
+        self.viewModel.fetchGoals()
         self.getView().refreshView()
     }
 
     override func loadView() {
-        let goalsView = EAGoalsView()
+        let goalsView = EAGoalsListView()
         view = goalsView
     }
 
@@ -75,18 +126,14 @@ class EAGoalsListViewController: UIViewController {
     }
 
     /// Function called when the user clicks the add button to create a new goal
-    @objc private func addGoalButtonPressed() {
-        self.navigator.navigate(to: .createGoal(goalWasCreated: { [weak self] in
-            self?.printDebug("Goal was created from form. Refreshing goals data and view.")
-            self?.goals = EAGoalsService.shared.getAllPersistedGoals()
-            self?.getView().refreshView()
-        }))
+    @objc private func addGoalButtonClicked() {
+        self.viewModel.addGoalButtonClicked()
     }
 
     /// Safely unwraps the view as an EAGoalsView and returns it (or invokes fatal)
     /// - Returns: The View as EAGoalsView
-    private func getView() -> EAGoalsView {
-        if let view = self.view as? EAGoalsView {
+    private func getView() -> EAGoalsListView {
+        if let view = self.view as? EAGoalsListView {
             return view
         } else {
             fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
@@ -96,7 +143,7 @@ class EAGoalsListViewController: UIViewController {
     /// Prints a debug message if the necessary flags are true
     /// - Parameter message: the message to print
     private func printDebug(_ message: String) {
-        if Flags.debugGoalsList {
+        if Flags.debugGoalsList || self.debug {
             print("$Log: \(message)")
         }
     }
@@ -112,22 +159,14 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        printDebug("Number of items: \(self.goals.count)")
-        return self.goals.count
+        printDebug("Number of items: \(self.viewModel.items.count)")
+        return self.viewModel.items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalCollectionViewCell {
-            let goal = goals[indexPath.row]
-            let goalViewModel = EAGoalViewModel(
-                title: goal.goal,
-                numDays: goal.numDays,
-                color: goal.color,
-                dayGuides: goal.dayGuides,
-                additionalDetails: goal.additionalDetails
-            )
-            cell.configure(with: goalViewModel)
-            self.printDebug("returned cell and configured with \(goalViewModel) at \(indexPath)")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
+            let goalListItemViewModel = self.viewModel.items[indexPath.row]
+            cell.configure(with: goalListItemViewModel)
             return cell
         }
 
@@ -138,7 +177,6 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
 
 extension EAGoalsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let goal = goals[indexPath.row]
-        navigator.navigate(to: .viewGoal(goal: goal))
+        self.viewModel.didSelect(at: indexPath)
     }
 }

@@ -14,6 +14,9 @@ final class EACheckbox: UIButton {
     /// Size of the checkbox (width = height)
     private var dimension: CGFloat
 
+    /// Optional handler for when this checkbox was toggled
+    private var checkboxWasToggled: ((Bool) -> Void)?
+
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
     init(size: CGFloat = EAIncrement.two.rawValue) {
@@ -42,12 +45,27 @@ final class EACheckbox: UIButton {
 
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
-        self.isSelected = !self.isSelected
-        if self.isSelected {
-            self.backgroundColor = .green
+        self.setActive(active: !self.isSelected)
+        if let handler = self.checkboxWasToggled {
+            handler(self.isSelected)
         } else {
-            self.backgroundColor = .red
+            print("$Error: checkbox handler was not specified.")
         }
+    }
+
+    // MARK: - Public
+
+    /// Sets the handler for when this checkbox is toggled
+    /// - Parameter checkboxWasToggled: The handler for when this checkbox is toggled
+    public func setCheckboxHandler(checkboxWasToggled: @escaping (Bool) -> Void) {
+        self.checkboxWasToggled = checkboxWasToggled
+    }
+
+    /// Checks or unchecks this checkbox
+    /// - Parameter active: Whether the checkbox is checked or not
+    public func setActive(active: Bool) {
+        self.isSelected = active
+        self.backgroundColor = self.isSelected ? .green : .clear
     }
 
     required init?(coder: NSCoder) {

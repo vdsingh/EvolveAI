@@ -30,69 +30,36 @@ class EADayGuideView: UIStackView {
 
     /// Regular initializer
     /// - Parameter viewModel: EADayGuideViewModel to supply information for the View
-    init(with viewModel: EADayGuideViewModel) {
+    init(with viewModel: EAGoalDayGuideViewModel) {
         super.init(frame: .zero)
         self.axis = .vertical
+        self.spacing = EAIncrement.one.rawValue
         self.daysLabel.text = viewModel.daysText
-        self.addSubviewsAndEstablishConstraints(tasks: viewModel.tasksTexts)
+        self.addSubviewsAndEstablishConstraints(taskViewModels: viewModel.taskViewModels)
     }
 
     // MARK: - Private Functions
 
     /// Adds the subviews of the View and activates the constraints
     /// - Parameter dayGuides: List of Strings representing Tasks that we need to add to our View
-    private func addSubviewsAndEstablishConstraints(tasks: List<String>) {
+    private func addSubviewsAndEstablishConstraints(taskViewModels: [EAGoalTaskViewModel]) {
         self.addArrangedSubview(daysLabel)
         self.addArrangedSubview(tasksStackView)
-        self.addTasksToView(tasks: tasks)
+        self.addTasksToView(taskViewModels: taskViewModels)
     }
 
     /// Adds tasks information to the View
     /// - Parameter tasks: A list of Strings representing Tasks to add to the View
-    private func addTasksToView(tasks: List<String>) {
-        for index in 0..<tasks.count {
-            let task = tasks[index]
+    private func addTasksToView(taskViewModels: [EAGoalTaskViewModel]) {
+        for index in 0..<taskViewModels.count {
+            let taskViewModel = taskViewModels[index]
             if Flags.printTaskMessages {
-                print("$Log: Task: \(task)")
+                print("$Log: Task: \(taskViewModel.text)")
             }
 
-            let stack = createTaskStack(taskNum: index+1, taskText: task)
-            self.tasksStackView.addArrangedSubview(stack)
+            let taskView = EAGoalTaskView(viewModel: taskViewModel)
+            self.tasksStackView.addArrangedSubview(taskView)
         }
-    }
-
-    /// Creates a horizontal StackView for a given task
-    /// - Parameters:
-    ///   - taskNum: The task number
-    ///   - taskText: The text of the task
-    /// - Returns: A UIStackView containing 2 UILabels: Number UILabel and Task UILabel
-    private func createTaskStack(taskNum: Int, taskText: String) -> UIStackView {
-        let taskLabel = UILabel(frame: .zero)
-        taskLabel.translatesAutoresizingMaskIntoConstraints = false
-        taskLabel.text = "\(taskText)"
-        taskLabel.numberOfLines = 0
-
-        // Shrink checkbox to make it appear the same size as text
-        let checkbox = EACheckbox(size: EAIncrement.two.rawValue * 2/3)
-        // Add padding above checkbox to make it inline with text
-        let checkboxPadding = UIView()
-        checkboxPadding.translatesAutoresizingMaskIntoConstraints = false
-        let checkboxStack = UIStackView()
-        checkboxStack.translatesAutoresizingMaskIntoConstraints = false
-        checkboxStack.axis = .vertical
-        checkboxStack.addArrangedSubview(checkboxPadding)
-        checkboxStack.addArrangedSubview(checkbox)
-        checkboxPadding.heightAnchor.constraint(equalToConstant: EAIncrement.one.rawValue / 3).isActive = true
-
-        let taskStackView = UIStackView()
-        taskStackView.translatesAutoresizingMaskIntoConstraints = false
-        taskStackView.axis = .horizontal
-        taskStackView.alignment = .top
-        taskStackView.spacing = EAIncrement.one.rawValue
-        taskStackView.addArrangedSubview(checkboxStack)
-        taskStackView.addArrangedSubview(taskLabel)
-
-        return taskStackView
     }
 
     required init(coder: NSCoder) {

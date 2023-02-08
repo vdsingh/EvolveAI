@@ -16,6 +16,7 @@ enum EAFormElement {
     case textFieldQuestion(
         question: String,
         textfieldPlaceholder: String,
+        keyboardType: UIKeyboardType,
         textFieldWasEdited: (_ textField: EATextField) -> Void
     )
 
@@ -58,11 +59,12 @@ enum EAFormElement {
     /// - Returns: a UIView which is the response object
     func createView() -> EAFormElementView {
         switch self {
-        case .textFieldQuestion(let question, let placeholder, let editedCallback):
+        case .textFieldQuestion(let question, let placeholder, let keyboardType, let editedCallback):
             let viewModel = EATextFieldQuestionViewModel(
                 question: question,
                 responsePlaceholder: placeholder,
-                editedCallback: editedCallback
+                editedCallback: editedCallback,
+                keyboardType: keyboardType
             )
             let view = EATextFieldQuestionView(viewModel: viewModel)
             return view

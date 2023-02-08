@@ -10,8 +10,8 @@ import Foundation
 /// Used to toggle certain functionalities within the app
 class Flags {
 
-    /// Enable if you want to use Mock goals in EAGoalsService (they will be saved to Realm)
-    static let useMockGoals = true
+    /// Enable if you want to use Mock goals in EAGoalsService (they will be still be saved to Realm)
+    static let useMockGoals = false
 
     /// Prints debug messages when creating tasks from AI response.
     static let printTaskMessages = false

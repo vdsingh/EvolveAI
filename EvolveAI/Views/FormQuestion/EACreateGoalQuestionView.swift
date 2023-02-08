@@ -56,6 +56,7 @@ class EACreateGoalQuestionView: UIStackView, EAFormElementView {
     private lazy var numDaysTextField: EATextField = {
         let numDaysTextField = EATextField(textWasEditedCallback: self.numDaysEditedCallback, borderColor: .systemGray)
         numDaysTextField.textAlignment = .center
+        numDaysTextField.keyboardType = .asciiCapableNumberPad
         return numDaysTextField
     }()
 
