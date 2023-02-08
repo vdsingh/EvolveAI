@@ -92,6 +92,7 @@ final class EAOpenAIRequest: EARequest {
         guard let unwrappedURL = url else {
             fatalError("$Error unwrapping URL.")
         }
+
         var urlRequest = URLRequest(url: unwrappedURL)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -124,7 +125,6 @@ final class EAOpenAIRequest: EARequest {
         self.requestBody = requestBody
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
-
         switch endpoint {
         case .completions:
             self.httpMethod = .POST
@@ -146,9 +146,9 @@ extension EAOpenAIRequest {
         model: EAOpenAICompletionsModel = .davinci003,
         prompt: String,
         temperature: Int = 1,
-        max_tokens: Int
+        maxTokens: Int
     ) -> EAOpenAIRequest {
-        if max_tokens > model.getTokenLimit() {
+        if maxTokens > model.getTokenLimit() {
             print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
         }
 
@@ -156,7 +156,7 @@ extension EAOpenAIRequest {
             model: model,
             prompt: prompt,
             temperature: temperature,
-            max_tokens: max_tokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
+            maxTokens: maxTokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
         )
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }

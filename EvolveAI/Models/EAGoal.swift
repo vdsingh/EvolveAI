@@ -12,6 +12,15 @@ import UIKit
 /// Represents user goals
 class EAGoal: Object {
 
+    /// Date when the goal was created
+    @Persisted var creationDate: Date
+
+    /// A list of tags associated with this goal
+    @Persisted var tags: List<String>
+
+    /// Unique identifier for the goal
+    @Persisted var id: String
+
     /// The goal itself (ex: "learn the violin")
     @Persisted var goal: String
 
@@ -25,22 +34,33 @@ class EAGoal: Object {
     @Persisted var aiResponse: String
 
     /// The Hex value for this goal's color
-    @Persisted var colorHex: String
+    @Persisted private var colorHex: String
 
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
 
-    /// The UIColor for this goal (computed)
+    /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
-        return UIColor(hex: self.colorHex) ?? Constants.defaultColor
+        get { UIColor(hex: self.colorHex) ?? Constants.defaultColor }
+        set { self.colorHex = newValue.hexStringFromColor() }
     }
 
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String) {
+    convenience init(
+        creationDate: Date,
+        id: String,
+        goal: String,
+        numDays: Int,
+        additionalDetails: String,
+        color: UIColor
+    ) {
         self.init()
+        self.creationDate = creationDate
+        self.id = id
+        self.tags = tags
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
-        self.colorHex = colorHex
+        self.color = color
     }
 
     /// Initializer for EAGoal
@@ -49,16 +69,35 @@ class EAGoal: Object {
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - apiResponse: The OpenAI Completions Response
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, apiResponse: EAOpenAICompletionsResponse) {
-        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+    convenience init(
+        creationDate: Date,
+        goal: String,
+        numDays: Int,
+        additionalDetails: String,
+        color: UIColor,
+        apiResponse: EAOpenAICompletionsResponse
+    ) {
+        self.init(creationDate: creationDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        self.dayGuides = parsedResponse.dayGuides
+        self.tags = parsedResponse.tags
     }
 
-    convenience init(goal: String, numDays: Int, additionalDetails: String, colorHex: String, aiResponse: String) {
-        self.init(goal: goal, numDays: numDays, additionalDetails: additionalDetails, colorHex: colorHex)
+    convenience init(
+        creationDate: Date,
+        id: String,
+        goal: String,
+        numDays: Int,
+        additionalDetails: String,
+        color: UIColor,
+        aiResponse: String
+    ) {
+        self.init(creationDate: creationDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.dayGuides = EAGoal.createDayGuides(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        self.dayGuides = parsedResponse.dayGuides
+        self.tags = parsedResponse.tags
     }
 
     /// Possible errors that can arise from parsing AI response to create task
@@ -71,12 +110,22 @@ class EAGoal: Object {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func createDayGuides(from aiResponse: String) -> List<EAGoalDayGuide> {
+    private static func parseAIResponse(from aiResponse: String) -> (dayGuides: List<EAGoalDayGuide>, tags: List<String>) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
         printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
+        var tags: [String] = []
         // One line represents one EAGoalDayGuide Object
+
         for line in lines {
+            if line.first == "[" {
+                tags = line
+                    .components(separatedBy: CharacterSet(charactersIn: ","))
+                    .compactMap({$0.trimmingCharacters(in: CharacterSet(charactersIn: "[ ]"))})
+                printDebug("Tags: \(tags)")
+                continue
+            }
+
             // Separate the line by ":" which separates the Day Number info from the other info
             guard let colonIndex = line.firstIndex(of: ":") else {
                 print("$Error: no colon found when constructing EAGoalDayGuide. Line: \(line)")
@@ -90,15 +139,18 @@ class EAGoal: Object {
             printDebug("Components are \(components)")
 
             // Separate the tasks into
-            let tasks = components[1]
+            let taskStrings = components[1]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .components(separatedBy: Constants.taskSeparatorCharacter)
                 .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
                 .filter({!$0.isEmpty})
-            printDebug("Tasks are \(tasks)")
+            printDebug("Tasks are \(taskStrings)")
 
-            let taskList = List<String>()
-            taskList.append(objectsIn: tasks)
+            let taskList = List<EAGoalTask>()
+            for string in taskStrings {
+                let task = EAGoalTask(taskString: string, complete: false)
+                taskList.append(task)
+            }
 
             // Trim whitespaces and then "Day " to just get the number(s)
             let dayRangeString = components[0]
@@ -139,7 +191,9 @@ class EAGoal: Object {
             }
         }
 
-        return dayGuides
+        let tagsList = List<String>()
+        tagsList.append(objectsIn: tags)
+        return (dayGuides, tagsList)
     }
 
     /// Prints messages depending on whether the required flag is enabled
@@ -154,5 +208,9 @@ class EAGoal: Object {
     /// - Returns: A String describing this goal
     public func getSimplifiedDescription() -> String {
         return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
+    }
+
+    override static func primaryKey() -> String? {
+        return "id"
     }
 }

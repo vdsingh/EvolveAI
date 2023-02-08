@@ -46,10 +46,12 @@ class Mocking {
         }
 
         let goal = EAGoal(
+            creationDate: Date(),
+            id: UUID().uuidString,
             goal: goalString ?? randomGoal,
             numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
             additionalDetails: additionalDetails,
-            colorHex: UIColor.random.hexStringFromColor(),
+            color: UIColor.random,
             aiResponse: self.createMockGoalAIResponse()
         )
         return goal

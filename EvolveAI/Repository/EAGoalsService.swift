@@ -7,15 +7,23 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// API for goals data (CRUD)
-class EAGoalsService {
+class EAGoalsService: Debuggable {
 
-    /// Shared instance of the goals service
-    static let shared = EAGoalsService()
+    let debug = true
+
+    private var loadingGoals = [EALoadingGoal]()
 
     /// Access to the Realm database
-    let realm = try? Realm()
+    var realm: Realm {
+        do {
+            return try Realm()
+        } catch {
+            fatalError("$Error: Realm is nil.")
+        }
+    }
 
     /// Constants that are used in the goals service
     private struct GoalServiceConstants {
@@ -32,6 +40,9 @@ class EAGoalsService {
         /// The user has already created the maximum allowed number of goals
         case maxGoalsExceeded
 
+        /// The realm instance is nil
+        case realmWasNil
+
         /// Some other error was encountered
         case unknownError(_ error: Error)
 
@@ -43,14 +54,19 @@ class EAGoalsService {
                 return "Please choose a shorter number of days to achieve the goal. The limit is \(GoalServiceConstants.numDaysLimit)"
             case .maxGoalsExceeded:
                 return "You've already created the maximum allowed number of goals (\(Constants.maxGoalsAllowed))"
+            case .realmWasNil:
+                return "We had an issue saving your data. Please restart the app."
             case .unknownError:
-                return "Other error encountered"
+                return "Unknown error occurred"
             }
         }
     }
 
-    /// Private initializer ensures that the shared instance is used
-    private init() { }
+    func printDebug(_ message: String) {
+        if self.debug || Flags.debugGoalCreationForm {
+            print("$Log: \(message)")
+        }
+    }
 
     /// Creates a string to send to the OpenAI Completions endpoint
     /// - Parameters:
@@ -59,7 +75,8 @@ class EAGoalsService {
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
         let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"] [New Line for next day]"
-        var prompt = "I have the goal: \(goal). I want to complete it in exactly \(numDays) days. Give me a guide for every day in the form \(guideFormat)."
+        var prompt = "I have the goal: \(goal). Firstly, give me between 3 and 5 tags that can be used to categorize this goal in the format: \"[tag1,tag2,tag3] *New Line\"."
+        prompt += "I want to complete it in exactly \(numDays) days. Next, give me a guide for every day in the form \(guideFormat)."
         prompt += " It is important to provide a guide for every day within \(numDays) that follows the guide format!"
 
         prompt += " Also, make sure that your entire response, which includes \"Day\", the day number, and the colon, is within a limit of"
@@ -70,9 +87,8 @@ class EAGoalsService {
     /// Helper function to communicate with realm. Abstracts error handling.
     /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
     private func writeToRealm(_ action: () -> Void) {
-        guard let realm = self.realm else { return }
         do {
-            try realm.write {
+            try self.realm.write {
                 action()
             }
         } catch let error {
@@ -94,16 +110,14 @@ class EAGoalsService {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        colorHex: String,
+        color: UIColor,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
-
         if Flags.useMockGoals {
             let goal = Mocking.createMockGoal(goalString: goal, numDays: numDays)
             DispatchQueue.main.async {
-                guard let realm = self.realm else { return }
                 self.writeToRealm {
-                    realm.add(goal)
+                    self.realm.add(goal)
                 }
                 completion(.success(goal))
             }
@@ -125,7 +139,7 @@ class EAGoalsService {
         let request = EAOpenAIRequest.completionsRequest(
             model: .davinci003,
             prompt: prompt,
-            max_tokens: Constants.maxTokens
+            maxTokens: Constants.maxTokens
         )
         EARestAPIService.shared.execute(
             request,
@@ -138,10 +152,11 @@ class EAGoalsService {
                 switch result {
                 case .success(let apiResponse):
                     let goal = EAGoal(
+                        creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
-                        colorHex: colorHex,
+                        color: color,
                         apiResponse: apiResponse
                     )
                     if Flags.debugAPIClient {
@@ -149,9 +164,8 @@ class EAGoalsService {
                     }
 
                     DispatchQueue.main.async {
-                        guard let realm = strongSelf.realm else { return }
                         strongSelf.writeToRealm {
-                            realm.add(goal)
+                            strongSelf.realm.add(goal)
                         }
                         completion(.success(goal))
                     }
@@ -166,10 +180,59 @@ class EAGoalsService {
     /// Gets all of the persisted EAGoal objects from the Realm database
     /// - Returns: an array of EAGoal objects from the Realm database
     public func getAllPersistedGoals() -> [EAGoal] {
-        guard let realm = self.realm else { return [] }
         var goals = [EAGoal]()
         goals.append(contentsOf: realm.objects(EAGoal.self))
         return goals
+    }
+
+    /// Retrieves all of the currently loading goals
+    /// - Returns: An array of EALoadingGoals
+    public func getAllLoadingGoals() -> [EALoadingGoal] {
+        return self.loadingGoals
+    }
+
+    /// Saves a loading goal
+    /// - Parameters:
+    ///   - loadingGoal: The EALoadingGoal to be saved
+    ///   - goalWasAddedToQueue: Callback for when the goal was added to the queue
+    ///   - goalWasLoaded: Callback for when the goal was loaded
+    public func saveLoadingGoal(_ loadingGoal: EALoadingGoal, goalWasAddedToQueue: @escaping () -> Void, goalWasLoaded: @escaping (EAGoal) -> Void) {
+        self.loadingGoals.append(loadingGoal)
+        self.printDebug("Loading Goal \(loadingGoal.title) was added to the queue. Queue: \(self.loadingGoals).")
+        goalWasAddedToQueue()
+        self.createLoadingGoals(completion: goalWasLoaded)
+    }
+
+    /// Dequeues loading goals and creates them
+    /// - Parameter completion: Callback for when the loading goals have all been created
+    private func createLoadingGoals(completion: @escaping (EAGoal) -> Void) {
+        if self.loadingGoals.isEmpty {
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0..<self.loadingGoals.count {
+                if let loadingGoal = self.loadingGoals.last {
+                    self.printDebug("Loading Goal \(loadingGoal.title) was dequeued. Creating now.")
+                    self.createGoal(
+                        goal: loadingGoal.title,
+                        numDays: loadingGoal.numDays,
+                        additionalDetails: loadingGoal.additionalDetails,
+                        color: loadingGoal.color
+                    ) { [weak self] result in
+                        self?.loadingGoals.removeLast()
+                        switch result {
+                        case .success(let goal):
+                            self?.printDebug("Goal was successfully created: \(goal.goal)")
+                            completion(goal)
+
+                        case .failure(let error):
+                            print("$Error creating loading goal: \(error)")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// Updates a provided goal
@@ -184,9 +247,20 @@ class EAGoalsService {
     /// Deletes a provided goal
     /// - Parameter goal: The goal to be deleted
     public func deletePersistedGoal(goal: EAGoal) {
-        guard let realm = self.realm else { return }
         writeToRealm {
             realm.delete(goal)
+        }
+    }
+
+    // MARK: - Tasks
+
+    /// Sets a given task's completion status
+    /// - Parameters:
+    ///   - task: The task we are editing
+    ///   - complete: Whether the task should be marked as complete or not
+    public func toggleTaskCompletion(task: EAGoalTask, complete: Bool) {
+        self.writeToRealm {
+            task.complete = complete
         }
     }
 }

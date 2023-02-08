@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 /// ViewController for screen for creating new goal (form)
-class EAGoalCreationFormViewController: UIViewController {
+class EAGoalCreationFormViewController: UIViewController, Debuggable {
+    let debug = true
 
     /// Constants for this screen
     struct GoalCreationConstants {
@@ -33,13 +34,23 @@ class EAGoalCreationFormViewController: UIViewController {
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
 
+    /// Callback to use when the goal will be created (put into the loading queue)
+    private let goalWillBeCreated: () -> Void
+
     /// Callback to use when the goal has been created
-    private var goalWasCreated: () -> Void
+    private let goalWasCreated: () -> Void
+
+    /// Service to interact with Goals (and other associated types)
+    private let goalsService: EAGoalsService
 
     /// Normal initializer
     /// - Parameter goalWasCreated: function to call when a goal was created using this form. Use to refresh UI elements.
-    init(goalWasCreated: @escaping () -> Void) {
+    /// - Parameter goalWillBeCreated: function to call when a goal will be created.
+    /// - Parameter goalsService: GoalsService to interact with EAGoals and other related types
+    init(goalWillBeCreated: @escaping () -> Void, goalWasCreated: @escaping () -> Void, goalsService: EAGoalsService) {
+        self.goalWillBeCreated = goalWillBeCreated
         self.goalWasCreated = goalWasCreated
+        self.goalsService = goalsService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,35 +65,26 @@ class EAGoalCreationFormViewController: UIViewController {
 
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
-        self.getView().setLoading(isLoading: true)
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
-            EAGoalsService.shared.createGoal(
-                goal: goal,
-                numDays: numDays,
-                additionalDetails: self.additionalDetails,
-                colorHex: self.color.hexStringFromColor()
-            ) { [weak self] result in
-                guard let self = self else { return }
-
-                switch result {
-                case .success(let goal):
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, additionalDetails: self.additionalDetails)
+                self.goalsService.saveLoadingGoal(
+                    loadingGoal,
+                    goalWasAddedToQueue: {
+                        self.printDebug("Calling goal was added to queue.")
+                        self.goalWillBeCreated()
+                    },
+                    goalWasLoaded: { goal in
+                        self.printDebug("Goal was loaded: \(goal.goal)")
                         self.goalWasCreated()
-                        self.getView().setLoading(isLoading: false)
-                        if let navigationController = self.navigationController {
-                            navigationController.navigationBar.isUserInteractionEnabled = false
-                            navigationController.navigationBar.tintColor = .link
-                            let vc = EAGoalViewController(goal: goal)
-                            NavigationUtility.replaceLastVC(with: vc, navigationController: navigationController)
-                        }
                     }
-
-                case .failure(let error):
-                    self.handleGoalCreationFailure(error)
-                }
+                )
+                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.navigationBar.isUserInteractionEnabled = true
+                self.navigationController?.navigationBar.tintColor = .link
             }
         } else {
             fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goal)), Num Days: \(String(describing: self.numDays)).")
@@ -94,10 +96,13 @@ class EAGoalCreationFormViewController: UIViewController {
     private func handleGoalCreationFailure(_ error: EAGoalsService.CreateGoalError) {
         switch error {
         case .maxGoalsExceeded:
-            print("$Error: max goals exceeded: \(String(describing: error))")
+            print("$Error: max goals exceeded: \(error.codeDescription())")
 
         case .dayLimitExceeded:
-            print("$Error: day limit exceeded: \(String(describing: error))")
+            print("$Error: day limit exceeded: \(error.codeDescription())")
+
+        case .realmWasNil:
+            print("$Error: realm was nil: \(error.codeDescription())")
 
         case .unknownError(let unknownError):
             print("$Error: unknown error: \(String(describing: unknownError))")
@@ -198,6 +203,7 @@ class EAGoalCreationFormViewController: UIViewController {
                 colorWasSelected: { [weak self] color in
                     self?.color = color
                     self?.updateButton()
+                    self?.getView().endEditing(false)
                 }
             ),
             .separator,
@@ -224,8 +230,8 @@ class EAGoalCreationFormViewController: UIViewController {
 
     /// Prints a debug message if the necessary flags are true
     /// - Parameter message: The message to print
-    private func printDebug(_ message: String) {
-        if Flags.debugGoalCreationForm {
+    func printDebug(_ message: String) {
+        if Flags.debugGoalCreationForm || self.debug {
             print("$Log: \(message)")
         }
     }
