@@ -82,14 +82,8 @@ class EAGoalDetailsView: UIView {
     /// - Parameter viewModel: The EAGoalDetailsViewModel that contains the tag information
     private func addTagViews(viewModel: EAGoalDetailsViewModel) {
         for tagString in viewModel.tagStrings {
-            let label = UIButton()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.setTitle(tagString, for: .normal)
-            label.setTitleColor(.white, for: .normal)
-            label.sizeToFit()
-            label.backgroundColor = .link
-            label.layer.cornerRadius = EAIncrement.one.rawValue
-            tagsStack.addArrangedSubview(label)
+            let tag = EATagButton(tag: tagString)
+            tagsStack.addArrangedSubview(tag)
         }
     }
 
