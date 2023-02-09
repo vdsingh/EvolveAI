@@ -29,6 +29,13 @@ protocol EAGoalListItemViewModelOutput {
 
     /// Whether the goal is loading or not
     var loading: Bool { get }
+
+    // TODO: Docstrings
+    var currentDayNumber: Int? { get }
+
+    var nextTask: EAGoalTask? { get }
+
+    var tags: [String] { get }
 }
 
 protocol EAGoalListItemViewModel: EAGoalListItemViewModelInput, EAGoalListItemViewModelOutput { }
@@ -48,6 +55,25 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     var loading: Bool {
         goal == nil
     }
+    // Computable (use today's date, the goal start date, subtract)
+    var currentDayNumber: Int? {
+        // TODO: Fix
+        if let goal = self.goal {
+            return Date().distance(to: goal.startDate).significandWidth + 1
+        }
+
+        return nil
+    }
+
+    var nextTask: EAGoalTask? {
+        return self.todaysDayGuide?.tasks.first(where: { task in
+            !task.complete
+        })
+    }
+
+    var tags: [String] {
+        goal?.tags ?? []
+    }
 
     /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
@@ -59,6 +85,16 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
                 self.setGoalValues(goal: goal)
             }
         }
+    }
+
+    private var todaysDayGuide: EAGoalDayGuide? {
+        if let dayNumber = self.currentDayNumber {
+            return goal?.dayGuides.first(where: { dayGuide in
+                return dayGuide.days.contains(dayNumber)
+            })
+        }
+
+        return nil
     }
 
     /// Common initializer
@@ -74,7 +110,14 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         self.title = goal.goal
         self.numDays = goal.numDays
         self.color = goal.color
+
+        // TODO: Docstring
+//        var currentDayNumber: Int { get }
+//
+//        var nextTask: EAGoalTask? { get }
+
         self.actions = actions
+//        self.tags = goal.tags
     }
 
     init(
