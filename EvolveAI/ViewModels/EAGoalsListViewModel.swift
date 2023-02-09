@@ -85,7 +85,8 @@ extension DefaultEAGoalsListViewModel {
                 goal: $0,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
-                )
+                ),
+                goalsService: self.goalsService
             )
         }
 
@@ -96,7 +97,8 @@ extension DefaultEAGoalsListViewModel {
                 color: $0.color,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
-                )
+                ),
+                goalsService: self.goalsService
             )
         }
 
