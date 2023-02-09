@@ -23,6 +23,9 @@
 		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
 		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
 		B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3D29956FA800316017 /* EATagButton.swift */; };
+		B93E8B40299583B700316017 /* EADateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3F299583B700316017 /* EADateSelector.swift */; };
+		B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4129958C2B00316017 /* EAStackView.swift */; };
+		B93E8B4429958E4E00316017 /* EALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4329958E4E00316017 /* EALabel.swift */; };
 		B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF0296D3A6300A0296E /* EAIncrement.swift */; };
 		B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */; };
 		B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */; };
@@ -114,6 +117,9 @@
 		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
 		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B93E8B3D29956FA800316017 /* EATagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATagButton.swift; sourceTree = "<group>"; };
+		B93E8B3F299583B700316017 /* EADateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADateSelector.swift; sourceTree = "<group>"; };
+		B93E8B4129958C2B00316017 /* EAStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAStackView.swift; sourceTree = "<group>"; };
+		B93E8B4329958E4E00316017 /* EALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALabel.swift; sourceTree = "<group>"; };
 		B9486DF0296D3A6300A0296E /* EAIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAIncrement.swift; sourceTree = "<group>"; };
 		B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionView.swift; sourceTree = "<group>"; };
@@ -235,6 +241,9 @@
 				B9486DFB296D495000A0296E /* EASeparator.swift */,
 				B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */,
 				B93E8B3D29956FA800316017 /* EATagButton.swift */,
+				B93E8B3F299583B700316017 /* EADateSelector.swift */,
+				B93E8B4129958C2B00316017 /* EAStackView.swift */,
+				B93E8B4329958E4E00316017 /* EALabel.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -664,12 +673,15 @@
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
 				B9C056A729682069007B6DBD /* EAFormElement.swift in Sources */,
+				B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */,
 				B90847E52973ADC400758477 /* Flags.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */,
+				B93E8B40299583B700316017 /* EADateSelector.swift in Sources */,
 				B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
+				B93E8B4429958E4E00316017 /* EALabel.swift in Sources */,
 				B9C056CB296BB3CF007B6DBD /* EAGoalDetailsViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
@@ -919,6 +931,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -950,6 +963,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
