@@ -33,7 +33,7 @@ protocol EAGoalListItemViewModelOutput {
     // TODO: Docstrings
     var currentDayNumber: Int? { get }
 
-    var nextTask: EAGoalTask? { get }
+    var nextTaskViewModel: EAGoalTaskViewModel? { get }
 
     var tags: [String] { get }
 }
@@ -65,10 +65,12 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         return nil
     }
 
-    var nextTask: EAGoalTask? {
-        return self.todaysDayGuide?.tasks.first(where: { task in
-            !task.complete
-        })
+    var nextTaskViewModel: EAGoalTaskViewModel? {
+        if let task = self.nextTask {
+            let viewModel = DefaultEAGoalTaskViewModel(task: task, goalsService: self.goalsService)
+        }
+
+        return nil
     }
 
     var tags: [String] {
@@ -78,6 +80,8 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
 
+    private let goalsService: EAGoalsService
+
     /// The goal that this ViewModel represents
     private var goal: EAGoal? {
         didSet {
@@ -85,6 +89,12 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
                 self.setGoalValues(goal: goal)
             }
         }
+    }
+
+    private var nextTask: EAGoalTask? {
+        return self.todaysDayGuide?.tasks.first(where: { task in
+            !task.complete
+        })
     }
 
     private var todaysDayGuide: EAGoalDayGuide? {
@@ -104,7 +114,8 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     ///   - color: The goal color
     init(
         goal: EAGoal,
-        actions: EAGoalListItemViewModelActions?
+        actions: EAGoalListItemViewModelActions?,
+        goalsService: EAGoalsService
     ) {
         self.goal = goal
         self.title = goal.goal
@@ -117,6 +128,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
 //        var nextTask: EAGoalTask? { get }
 
         self.actions = actions
+        self.goalsService = goalsService
 //        self.tags = goal.tags
     }
 
@@ -124,12 +136,14 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         title: String,
         numDays: Int,
         color: UIColor,
-        actions: EAGoalListItemViewModelActions?
+        actions: EAGoalListItemViewModelActions?,
+        goalsService: EAGoalsService
     ) {
         self.title = title
         self.numDays = numDays
         self.color = color
         self.actions = actions
+        self.goalsService = goalsService
     }
 
     private func setGoalValues(goal: EAGoal) {
