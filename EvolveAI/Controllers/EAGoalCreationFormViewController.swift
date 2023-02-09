@@ -30,6 +30,9 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
 
     /// A color for the goal
     private var color: UIColor = Constants.defaultColor
+    
+    //TODO: Docstring
+    private var date: Date = Date()
 
     /// A Button that the user will press when they have specified all necessary info and are finished. Reference is needed to enable/disable the button as necessary.
     private var createGoalButton: EAButton?
@@ -70,7 +73,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
         self.updateButton()
         if let goal = self.goal, let numDays = self.numDays {
             DispatchQueue.main.async {
-                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, additionalDetails: self.additionalDetails)
+                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, startDate: self.date, additionalDetails: self.additionalDetails)
                 self.goalsService.saveLoadingGoal(
                     loadingGoal,
                     goalWasAddedToQueue: {
@@ -206,6 +209,14 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     self?.getView().endEditing(false)
                 }
             ),
+            .separator,
+            .stack(axis: .vertical, spacing: .two, elements: [
+                .label(text: "I am going to start on:", textStyle: .heading1),
+                .dateSelector(style: .compact, mode: .date, dateWasSelected: { [weak self] date in
+                    self?.date = date
+                    self?.printDebug("Date was selected: \(date)")
+                })
+            ]),
             .separator,
             .textViewQuestion(
                 question: "Additional Details",
