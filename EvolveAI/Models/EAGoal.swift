@@ -16,7 +16,7 @@ class EAGoal: Object {
     @Persisted var creationDate: Date
 
     /// A list of tags associated with this goal
-    @Persisted var tags: List<String>
+    @Persisted private var tagsList: List<String>
 
     /// Unique identifier for the goal
     @Persisted var id: String
@@ -39,14 +39,27 @@ class EAGoal: Object {
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
 
+    // TODO: docstring
+    @Persisted var startDate: Date
+
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
         get { UIColor(hex: self.colorHex) ?? Constants.defaultColor }
         set { self.colorHex = newValue.hexStringFromColor() }
     }
 
+    public var tags: [String] {
+        get { [String](tagsList) }
+        set {
+            let newList = List<String>()
+            newList.append(objectsIn: newValue)
+            self.tagsList = newList
+        }
+    }
+
     convenience init(
         creationDate: Date,
+        startDate: Date,
         id: String,
         goal: String,
         numDays: Int,
@@ -55,6 +68,7 @@ class EAGoal: Object {
     ) {
         self.init()
         self.creationDate = creationDate
+        self.startDate = startDate
         self.id = id
         self.tags = tags
         self.goal = goal
@@ -71,13 +85,14 @@ class EAGoal: Object {
     ///   - apiResponse: The OpenAI Completions Response
     convenience init(
         creationDate: Date,
+        startDate: Date,
         goal: String,
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
         apiResponse: EAOpenAICompletionsResponse
     ) {
-        self.init(creationDate: creationDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
+        self.init(creationDate: creationDate, startDate: startDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides
@@ -86,6 +101,7 @@ class EAGoal: Object {
 
     convenience init(
         creationDate: Date,
+        startDate: Date,
         id: String,
         goal: String,
         numDays: Int,
@@ -93,7 +109,7 @@ class EAGoal: Object {
         color: UIColor,
         aiResponse: String
     ) {
-        self.init(creationDate: creationDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
+        self.init(creationDate: creationDate, startDate: startDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
         self.dayGuides = parsedResponse.dayGuides
@@ -110,7 +126,7 @@ class EAGoal: Object {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func parseAIResponse(from aiResponse: String) -> (dayGuides: List<EAGoalDayGuide>, tags: List<String>) {
+    private static func parseAIResponse(from aiResponse: String) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
         printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
@@ -191,9 +207,7 @@ class EAGoal: Object {
             }
         }
 
-        let tagsList = List<String>()
-        tagsList.append(objectsIn: tags)
-        return (dayGuides, tagsList)
+        return (dayGuides, tags)
     }
 
     /// Prints messages depending on whether the required flag is enabled
