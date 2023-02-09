@@ -151,8 +151,10 @@ class EAGoalsService: Debuggable {
 
                 switch result {
                 case .success(let apiResponse):
+                    //TODO: Fix the startDate field
                     let goal = EAGoal(
                         creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
+                        startDate: Date(),
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
