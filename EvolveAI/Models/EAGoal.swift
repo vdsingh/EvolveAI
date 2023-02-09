@@ -39,7 +39,7 @@ class EAGoal: Object {
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)
     @Persisted var dayGuides: List<EAGoalDayGuide>
 
-    // TODO: docstring
+    /// When the user wants to start the goal
     @Persisted var startDate: Date
 
     /// The UIColor for this goal (uses colorHex)

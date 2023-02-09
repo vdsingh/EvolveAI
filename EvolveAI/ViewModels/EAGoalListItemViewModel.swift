@@ -30,11 +30,13 @@ protocol EAGoalListItemViewModelOutput {
     /// Whether the goal is loading or not
     var loading: Bool { get }
 
-    // TODO: Docstrings
+    /// The current day number for the goal
     var currentDayNumber: Int? { get }
 
+    /// A ViewModel that represents the next task to complete
     var nextTaskViewModel: EAGoalTaskViewModel? { get }
-
+    
+    /// The tags for the goal
     var tags: [String] { get }
 }
 

@@ -33,7 +33,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    // TODO: Docstring
+    /// Displays the information text for the next task
     private let nextTaskLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -100,13 +100,12 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
         self.daysLabel.text = "\(viewModel.numDays) days"
         if let nextTaskViewModel = viewModel.nextTaskViewModel {
             self.nextTaskLabel.text = "Next Task (Day 2)"
-            //        let taskViewModel = EAGoalTaskViewModel(task: viewModel.nextTask, viewModel.goalsService)
             self.nextTaskView.configure(with: nextTaskViewModel)
             print("$Log: configuring next task: \(nextTaskViewModel.text)")
         } else {
             print("$Log: no detected next task for goal \(viewModel.title).")
         }
-        
+
         if viewModel.loading {
             self.spinner.startAnimating()
         } else {
@@ -114,7 +113,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    // TODO: Docstring
+    /// Creates a UIStackView which contains the specified SubViews
+    /// - Parameter views: The subviews that should be contained within the UIStackView
+    /// - Returns: A UIStackView that contains the specified subviews
     private func createStackView(with views: [UIView]) -> UIStackView {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
