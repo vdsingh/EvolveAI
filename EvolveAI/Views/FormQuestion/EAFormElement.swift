@@ -10,7 +10,7 @@ import UIKit
 
 /// Used to create user interactable form elements
 enum EAFormElement {
-    // MARK: - Question Elements
+    // MARK: - Input Elements
 
     /// Used to create a basic question and response question.
     case textFieldQuestion(
@@ -37,12 +37,17 @@ enum EAFormElement {
         numDaysLabel: String
     )
 
+    // TODO: DOcstring
+
     case colorSelector(
         colors: [UIColor],
         colorWasSelected: (UIColor) -> Void
     )
 
-    // MARK: - Other Elements
+    case dateSelector(
+        style: UIDatePickerStyle,
+        dateWasSelected: (Date) -> Void
+    )
 
     /// Used to create a button
     case button(
@@ -51,6 +56,21 @@ enum EAFormElement {
         viewSetter: (EAButton) -> Void,
         buttonPressed: (EAButton) -> Void
     )
+
+    // MARK: - Static Elements
+    case label(
+        text: String
+    )
+
+    // MARK: - Containers
+
+    // TODO: DOcstring
+    case stack(
+        axis: NSLayoutConstraint.Axis,
+        elements: [EAFormElement]
+    )
+
+    // MARK: - Other Elements
 
     /// Used to create a separator
     case separator
@@ -94,13 +114,25 @@ enum EAFormElement {
             let view = EACreateGoalQuestionView(viewModel: viewModel)
             return view
 
+        case .colorSelector(let colors, let colorWasSelected):
+            return EAColorSelector(colors: colors, colorWasSelectedCallback: colorWasSelected)
+
+        case .dateSelector(style: let style, dateWasSelected: let dateWasSelected):
+            return EADateSelector(style: style, dateWasSelectedCallback: dateWasSelected)
+
         case .button(let buttonText, let enabledOnStart, let viewSetter, let buttonPressed):
             let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
             viewSetter(view)
             return view
 
-        case .colorSelector(let colors, let colorWasSelected):
-            return EAColorSelector(colors: colors, colorWasSelectedCallback: colorWasSelected)
+        case .label(let text):
+            let label = EALabel(text: text)
+            return label
+
+        case .stack(let axis, let elements):
+            let subViews = elements.map { $0.createView() }
+            let stack = EAStackView(axis: axis, subViews: subViews)
+            return stack
 
         case .separator:
             return EASeparator()
