@@ -46,6 +46,7 @@ enum EAFormElement {
 
     case dateSelector(
         style: UIDatePickerStyle,
+        mode: UIDatePicker.Mode,
         dateWasSelected: (Date) -> Void
     )
 
@@ -59,7 +60,8 @@ enum EAFormElement {
 
     // MARK: - Static Elements
     case label(
-        text: String
+        text: String,
+        textStyle: EATextStyle
     )
 
     // MARK: - Containers
@@ -67,6 +69,7 @@ enum EAFormElement {
     // TODO: DOcstring
     case stack(
         axis: NSLayoutConstraint.Axis,
+        spacing: EAIncrement,
         elements: [EAFormElement]
     )
 
@@ -117,21 +120,22 @@ enum EAFormElement {
         case .colorSelector(let colors, let colorWasSelected):
             return EAColorSelector(colors: colors, colorWasSelectedCallback: colorWasSelected)
 
-        case .dateSelector(style: let style, dateWasSelected: let dateWasSelected):
-            return EADateSelector(style: style, dateWasSelectedCallback: dateWasSelected)
+        case .dateSelector(let style, let mode, let dateWasSelected):
+            return EADateSelector(style: style, mode: mode, dateWasSelectedCallback: dateWasSelected)
 
         case .button(let buttonText, let enabledOnStart, let viewSetter, let buttonPressed):
             let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
             viewSetter(view)
             return view
 
-        case .label(let text):
-            let label = EALabel(text: text)
+        case .label(let text, let textStyle):
+            let label = EALabel(text: text, textStyle: textStyle)
             return label
 
-        case .stack(let axis, let elements):
+        case .stack(let axis, let spacing, let elements):
             let subViews = elements.map { $0.createView() }
             let stack = EAStackView(axis: axis, subViews: subViews)
+            stack.spacing = spacing.rawValue
             return stack
 
         case .separator:
