@@ -111,6 +111,7 @@ class EAGoalsService: Debuggable {
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
+        startDate: Date,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
         if Flags.useMockGoals {
@@ -151,10 +152,9 @@ class EAGoalsService: Debuggable {
 
                 switch result {
                 case .success(let apiResponse):
-                    // TODO: Fix the startDate field
                     let goal = EAGoal(
                         creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
-                        startDate: Date(),
+                        startDate: startDate,
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
@@ -220,7 +220,8 @@ class EAGoalsService: Debuggable {
                         goal: loadingGoal.title,
                         numDays: loadingGoal.numDays,
                         additionalDetails: loadingGoal.additionalDetails,
-                        color: loadingGoal.color
+                        color: loadingGoal.color,
+                        startDate: loadingGoal.startDate
                     ) { [weak self] result in
                         self?.loadingGoals.removeLast()
                         switch result {

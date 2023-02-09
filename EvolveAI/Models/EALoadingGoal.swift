@@ -19,15 +19,19 @@ final class EALoadingGoal {
 
     /// The goal's theme color
     var color: UIColor
+    
+    /// The Date that the user wants to start the goal
+    var startDate: Date
 
     /// Additional Details associated with the goal
     var additionalDetails: String
 
     /// Normal initializer
-    init(title: String, numDays: Int, color: UIColor, additionalDetails: String) {
+    init(title: String, numDays: Int, color: UIColor, startDate: Date, additionalDetails: String) {
         self.title = title
         self.numDays = numDays
         self.color = color
+        self.startDate = startDate
         self.additionalDetails = additionalDetails
     }
 }

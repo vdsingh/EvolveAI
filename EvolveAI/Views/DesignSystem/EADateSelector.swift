@@ -15,18 +15,24 @@ final class EADateSelector: UIDatePicker, EAFormElementView {
         return 50
     }
 
-    init(style: UIDatePickerStyle, dateWasSelectedCallback: @escaping (Date) -> Void) {
+    init(style: UIDatePickerStyle, mode: Mode, dateWasSelectedCallback: @escaping (Date) -> Void) {
         self.dateWasSelectedCallback = dateWasSelectedCallback
         super.init(frame: .zero)
-        self.setUIProperties(style: style)
-
+        self.setUIProperties(style: style, mode: mode)
+        self.addTarget(self, action: #selector(dateWasChanged), for: .valueChanged)
     }
 
-    private func setUIProperties(style: UIDatePickerStyle) {
+    private func setUIProperties(style: UIDatePickerStyle, mode: Mode) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.preferredDatePickerStyle = style
+        self.datePickerMode = .date
+        self.setDate(Date(), animated: true)
         self.contentHorizontalAlignment = .leading
-        self.backgroundColor = .green
+    }
+    
+    @objc private func dateWasChanged() {
+        self.dateWasSelectedCallback(self.date)
+//        self.
     }
 
     required init?(coder: NSCoder) {
