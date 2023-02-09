@@ -38,6 +38,13 @@ class EAGoalTaskView: UIStackView {
         return checkboxStack
     }()
 
+    // TODO: Docstring
+
+    init() {
+        super.init(frame: .zero)
+        self.addSubviewsAndEstablishConstraints()
+    }
+
     init(viewModel: EAGoalTaskViewModel) {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
@@ -54,21 +61,21 @@ class EAGoalTaskView: UIStackView {
         self.addArrangedSubview(taskLabel)
     }
 
-    /// Configures this View with a ViewModel
-    /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
-    private func configure(with viewModel: EAGoalTaskViewModel) {
-        self.updateTaskUI(with: viewModel)
-        self.checkbox.setCheckboxHandler { [weak self] complete in
-            viewModel.toggleTaskCompletion(complete: complete)
-            self?.updateTaskUI(with: viewModel)
-        }
-    }
-
     /// Updates the UI of this View with a ViewModel
     /// - Parameter viewModel: The ViewModel that supplies the information for this View
     private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
+    }
+
+    /// Configures this View with a ViewModel
+    /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
+    func configure(with viewModel: EAGoalTaskViewModel) {
+        self.updateTaskUI(with: viewModel)
+        self.checkbox.setCheckboxHandler { [weak self] complete in
+            viewModel.toggleTaskCompletion(complete: complete)
+            self?.updateTaskUI(with: viewModel)
+        }
     }
 
     required init(coder: NSCoder) {
