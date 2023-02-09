@@ -58,16 +58,17 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     // Computable (use today's date, the goal start date, subtract)
     var currentDayNumber: Int? {
         // TODO: Fix
-        if let goal = self.goal {
-            return Date().distance(to: goal.startDate).significandWidth + 1
-        }
-
-        return nil
+//        if let goal = self.goal {
+//            return Date().distance(to: goal.startDate).significandWidth + 1
+//        }
+//
+//        return nil
+        return 1
     }
 
     var nextTaskViewModel: EAGoalTaskViewModel? {
         if let task = self.nextTask {
-            let viewModel = DefaultEAGoalTaskViewModel(task: task, goalsService: self.goalsService)
+            return DefaultEAGoalTaskViewModel(task: task, goalsService: self.goalsService)
         }
 
         return nil
@@ -122,14 +123,8 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         self.numDays = goal.numDays
         self.color = goal.color
 
-        // TODO: Docstring
-//        var currentDayNumber: Int { get }
-//
-//        var nextTask: EAGoalTask? { get }
-
         self.actions = actions
         self.goalsService = goalsService
-//        self.tags = goal.tags
     }
 
     init(

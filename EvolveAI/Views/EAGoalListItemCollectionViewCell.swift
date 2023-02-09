@@ -65,7 +65,8 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
         ])
 
         let nextTaskStackView = self.createStackView(with: [
-            self.nextTaskLabel
+            self.nextTaskLabel,
+            self.nextTaskView
         ])
 
         let mainStackView = self.createStackView(with: [
@@ -82,9 +83,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -EAIncrement.one.rawValue),
             mainStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: EAIncrement.one.rawValue),
             mainStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -EAIncrement.one.rawValue),
-
-//            self.titleLabel.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 0.8),
-//            self.daysLabel.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 0.8),
 
             self.spinner.topAnchor.constraint(equalTo: self.topAnchor),
             self.spinner.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -104,7 +102,11 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
             self.nextTaskLabel.text = "Next Task (Day 2)"
             //        let taskViewModel = EAGoalTaskViewModel(task: viewModel.nextTask, viewModel.goalsService)
             self.nextTaskView.configure(with: nextTaskViewModel)
+            print("$Log: configuring next task: \(nextTaskViewModel.text)")
+        } else {
+            print("$Log: no detected next task for goal \(viewModel.title).")
         }
+        
         if viewModel.loading {
             self.spinner.startAnimating()
         } else {
