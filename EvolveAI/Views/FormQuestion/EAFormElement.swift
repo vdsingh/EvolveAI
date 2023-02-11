@@ -37,13 +37,13 @@ enum EAFormElement {
         numDaysLabel: String
     )
 
-    // TODO: DOcstring
-
+    /// Used to create a color selector
     case colorSelector(
         colors: [UIColor],
         colorWasSelected: (UIColor) -> Void
     )
 
+    /// Used to create a date selector
     case dateSelector(
         style: UIDatePickerStyle,
         mode: UIDatePicker.Mode,
@@ -59,6 +59,8 @@ enum EAFormElement {
     )
 
     // MARK: - Static Elements
+
+    /// Used to create a basic label
     case label(
         text: String,
         textStyle: EATextStyle
@@ -66,7 +68,7 @@ enum EAFormElement {
 
     // MARK: - Containers
 
-    // TODO: DOcstring
+    /// Used to create a StackView container
     case stack(
         axis: NSLayoutConstraint.Axis,
         spacing: EAIncrement,

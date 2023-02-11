@@ -48,7 +48,7 @@ class EAGoal: Object {
         set { self.colorHex = newValue.hexStringFromColor() }
     }
 
-    //TODO: Docstring
+    /// The tags associated with this goal
     public var tags: [String] {
         get { [String](tagsList) }
         set {

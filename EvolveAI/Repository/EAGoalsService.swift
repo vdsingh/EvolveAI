@@ -62,8 +62,8 @@ class EAGoalsService: Debuggable {
         }
     }
     
-    //TODO: Docstring
-
+    /// Prints a message if the correct flags are enabled or the debug boolean is enabled
+    /// - Parameter message: The message to print
     func printDebug(_ message: String) {
         if self.debug || Flags.debugGoalCreationForm {
             print("$Log: \(message)")

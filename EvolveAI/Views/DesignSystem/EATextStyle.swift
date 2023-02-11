@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 
-// TODO: Docstrings
+/// Text styles that text-based UI elements can use
 enum EATextStyle {
     case title
     case heading1
     case heading2
     case body
 
+    /// Computes a UIFont based on the TextStyle
     var font: UIFont {
         switch self {
         case .title:

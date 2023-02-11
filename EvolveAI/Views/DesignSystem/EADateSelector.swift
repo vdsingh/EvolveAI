@@ -10,15 +10,15 @@ import UIKit
 
 /// Custom Date Selector
 final class EADateSelector: UIDatePicker, EAFormElementView {
-    
+
     /// Callback for when a date is selected through this DatePicker
     private let dateWasSelectedCallback: (Date) -> Void
-    
+
     /// The height required for this UI element
     var requiredHeight: CGFloat {
         return 50
     }
-    
+
     /// Normal Initializer
     /// - Parameters:
     ///   - style: The style for this DateSelector
@@ -30,7 +30,7 @@ final class EADateSelector: UIDatePicker, EAFormElementView {
         self.setUIProperties(style: style, mode: mode)
         self.addTarget(self, action: #selector(dateWasChanged), for: .valueChanged)
     }
-    
+
     /// Sets the UI properties for this DateSelector
     /// - Parameters:
     ///   - style: The style of the DatePicker

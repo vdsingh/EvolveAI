@@ -19,7 +19,7 @@ final class EALoadingGoal {
 
     /// The goal's theme color
     var color: UIColor
-    
+
     /// The Date that the user wants to start the goal
     var startDate: Date
 

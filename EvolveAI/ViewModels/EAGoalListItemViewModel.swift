@@ -57,6 +57,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     var loading: Bool {
         goal == nil
     }
+
     // Computable (use today's date, the goal start date, subtract)
     var currentDayNumber: Int? {
         // TODO: Fix
