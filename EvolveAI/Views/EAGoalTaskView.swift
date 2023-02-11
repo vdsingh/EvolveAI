@@ -37,13 +37,13 @@ class EAGoalTaskView: UIStackView {
         checkboxPadding.heightAnchor.constraint(equalToConstant: EAIncrement.one.rawValue / 3).isActive = true
         return checkboxStack
     }()
-    
+
     /// Initializer for EAGoalTaskViews that should be configured with a ViewModel later
     init() {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
     }
-    
+
     /// Initializer for EAGoalTaskViews that can be configured with a ViewModel immediately
     /// - Parameter viewModel: The ViewModel used to configure the TaskView
     init(viewModel: EAGoalTaskViewModel) {

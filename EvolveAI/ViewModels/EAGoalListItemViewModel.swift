@@ -35,7 +35,7 @@ protocol EAGoalListItemViewModelOutput {
 
     /// A ViewModel that represents the next task to complete
     var nextTaskViewModel: EAGoalTaskViewModel? { get }
-    
+
     /// The tags for the goal
     var tags: [String] { get }
 }

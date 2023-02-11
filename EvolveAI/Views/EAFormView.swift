@@ -79,6 +79,7 @@ class EAFormView: UIScrollView {
         let elementStack = UIStackView()
         elementStack.translatesAutoresizingMaskIntoConstraints = false
         elementStack.axis = .vertical
+        elementStack.alignment = .fill
 
         for formElement in formElements {
             let view = formElement.createView()
