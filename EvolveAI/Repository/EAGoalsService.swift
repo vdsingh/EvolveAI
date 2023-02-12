@@ -61,7 +61,7 @@ class EAGoalsService: Debuggable {
             }
         }
     }
-    
+
     /// Prints a message if the correct flags are enabled or the debug boolean is enabled
     /// - Parameter message: The message to print
     func printDebug(_ message: String) {
