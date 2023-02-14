@@ -63,7 +63,9 @@ enum EAFormElement {
     /// Used to create a basic label
     case label(
         text: String,
-        textStyle: EATextStyle
+        textStyle: EATextStyle = .body,
+        textColor: UIColor = .label,
+        numLines: Int = 0
     )
 
     // MARK: - Containers
@@ -130,8 +132,8 @@ enum EAFormElement {
             viewSetter(view)
             return view
 
-        case .label(let text, let textStyle):
-            let label = EALabel(text: text, textStyle: textStyle)
+        case .label(let text, let textStyle, let textColor, let numLines):
+            let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
             return label
 
         case .stack(let axis, let spacing, let elements):

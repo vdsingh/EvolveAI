@@ -20,19 +20,26 @@ final class EALabel: UILabel, EAFormElementView {
     /// - Parameters:
     ///   - text: The text to display
     ///   - textStyle: The style of the text to display
-    init(text: String, textStyle: EATextStyle) {
+    init(text: String, textStyle: EATextStyle, textColor: UIColor, numLines: Int) {
         super.init(frame: .zero)
-        self.setUIProperties(text: text, textStyle: textStyle)
+        self.setUIProperties(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
     }
 
     /// Sets the UI properties of this label View
     /// - Parameters:
     ///   - text: The text to display
     ///   - textStyle: The style of the text to display
-    private func setUIProperties(text: String, textStyle: EATextStyle) {
+    private func setUIProperties(
+        text: String,
+        textStyle: EATextStyle,
+        textColor: UIColor,
+        numLines: Int
+    ) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.text = text
         self.font = textStyle.font
+        self.textColor = textColor
+        self.numberOfLines = numLines
     }
 
     required init?(coder: NSCoder) {
