@@ -8,7 +8,8 @@
 import UIKit
 
 /// A UICollectionViewCell to hold EAGoal information
-class EAGoalListItemCollectionViewCell: UICollectionViewCell {
+class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
+    let debug: Bool = true
 
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
@@ -147,6 +148,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell {
         stack.distribution = .fillProportionally
         for view in views {
             stack.addArrangedSubview(view)
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
         }
         return stack
     }
