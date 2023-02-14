@@ -155,7 +155,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
 
     /// Constructs the form elements for this screen
     /// - Returns: An array of EAFormElement objects
-    private func createFormElements() -> [EAFormElement] {
+    private func createFormElements() -> [EAUIElement] {
         return [
             .goalCreationQuestion(
                 actionText: "I am going to",

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Used to create user interactable form elements
-enum EAFormElement {
+enum EAUIElement {
     // MARK: - Input Elements
 
     /// Used to create a basic question and response question.
@@ -57,6 +57,10 @@ enum EAFormElement {
         viewSetter: (EAButton) -> Void,
         buttonPressed: (EAButton) -> Void
     )
+    
+    case task(
+        viewModel: EAGoalTaskViewModel?
+    )
 
     // MARK: - Static Elements
 
@@ -74,7 +78,7 @@ enum EAFormElement {
     case stack(
         axis: NSLayoutConstraint.Axis,
         spacing: EAIncrement,
-        elements: [EAFormElement]
+        elements: [EAUIElement]
     )
 
     // MARK: - Other Elements
@@ -131,6 +135,13 @@ enum EAFormElement {
             let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
             viewSetter(view)
             return view
+            
+        case .task(let viewModel):
+            if let viewModel = viewModel {
+                return EAGoalTaskView(viewModel: viewModel)
+            } else {
+                return EAEmptyView()
+            }
 
         case .label(let text, let textStyle, let textColor, let numLines):
             let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
