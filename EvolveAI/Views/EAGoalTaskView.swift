@@ -10,6 +10,7 @@ import UIKit
 
 /// View that displays an individual task for a goal
 class EAGoalTaskView: UIStackView {
+    let debug: Bool = true
 
     /// A label displaying the task's text
     private let taskLabel: UILabel = {
@@ -65,6 +66,7 @@ class EAGoalTaskView: UIStackView {
     /// Updates the UI of this View with a ViewModel
     /// - Parameter viewModel: The ViewModel that supplies the information for this View
     private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
+        printDebug("Updating Task UI. Task Completion: \(viewModel.complete)")
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
     }
@@ -81,5 +83,13 @@ class EAGoalTaskView: UIStackView {
 
     required init(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension EAGoalTaskView: Debuggable {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

@@ -31,7 +31,8 @@ protocol EAGoalTaskViewModelOutput {
 protocol EAGoalTaskViewModel: EAGoalTaskViewModelInput, EAGoalTaskViewModelOutput { }
 
 /// Default ViewModel which conforms to the required input/output protocols
-final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel {
+final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
+    let debug = true
 
     /// The task that this ViewModel represents
     private let task: EAGoalTask
@@ -66,5 +67,14 @@ extension DefaultEAGoalTaskViewModel {
     func toggleTaskCompletion(complete: Bool) {
         goalsService.toggleTaskCompletion(task: self.task, complete: complete)
         self.complete = complete
+        printDebug("Toggled task completion. Task completion is now \(complete)")
+    }
+}
+
+extension DefaultEAGoalTaskViewModel {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }
