@@ -9,8 +9,12 @@ import Foundation
 import UIKit
 
 /// View that displays an individual task for a goal
-class EAGoalTaskView: UIStackView {
+class EAGoalTaskView: UIStackView, EAFormElementView {
     let debug: Bool = true
+
+    var requiredHeight: CGFloat {
+        self.intrinsicContentSize.height
+    }
 
     /// A label displaying the task's text
     private let taskLabel: UILabel = {
@@ -52,7 +56,11 @@ class EAGoalTaskView: UIStackView {
         self.addSubviewsAndEstablishConstraints()
         self.configure(with: viewModel)
     }
+    
+    
 
+    // MARK: - Private Functions
+    
     /// Adds the relevant subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +78,8 @@ class EAGoalTaskView: UIStackView {
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
     }
+    
+    // MARK: - Public Functions
 
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View

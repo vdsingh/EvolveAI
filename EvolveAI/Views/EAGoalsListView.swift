@@ -18,16 +18,26 @@ class EAGoalsListView: UIView {
     /// CollectionView used to display goals
     public let collectionView: UICollectionView = {
         let numItemsPerRow: CGFloat = 1
-        let screenWidth = UIScreen.main.bounds.width
-        let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = EAIncrement.two.rawValue
-        let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
+
+        let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        layout.itemSize = CGSize(width: 200, height: 100)
+//        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+
+//        let commentFlowLayout = CommentFlowLayout()
+//        commentCollection.register(CommentCell.self, forCellWithReuseIdentifier: "cell")
+//        commentFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+//        commentFlowLayout.minimumInteritemSpacing = 10
+//        commentFlowLayout.minimumLineSpacing = 10
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.collectionViewLayout = commentFlowLayout
+//        collectionView.contentInsetAdjustmentBehavior = .always
+
+//        let collectionView =
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(EAGoalListItemCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier)
         return collectionView
