@@ -10,7 +10,7 @@ import UIKit
 
 /// ViewController for screen for creating new goal (form)
 class EAGoalCreationFormViewController: UIViewController, Debuggable {
-    let debug = true
+    let debug = false
 
     /// Constants for this screen
     struct GoalCreationConstants {

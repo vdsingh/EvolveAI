@@ -12,7 +12,7 @@ import UIKit
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
 
-    let debug = true
+    let debug = false
 
     private var loadingGoals = [EALoadingGoal]()
 
