@@ -40,7 +40,10 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
     /// A service to interact with goals and other related types (Task!)
     private let goalsService: EAGoalsService
 
-    var complete: Bool
+    var complete: Bool {
+        return task.complete
+    }
+
     let text: String
     var attributedText: NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: self.text)
@@ -58,7 +61,6 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
     init(task: EAGoalTask, goalsService: EAGoalsService) {
         self.text = task.taskString
         self.goalsService = goalsService
-        self.complete = task.complete
         self.task = task
     }
 }
@@ -66,7 +68,6 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
 extension DefaultEAGoalTaskViewModel {
     func toggleTaskCompletion(complete: Bool) {
         goalsService.toggleTaskCompletion(task: self.task, complete: complete)
-        self.complete = complete
         printDebug("Toggled task completion. Task completion is now \(complete)")
     }
 }
