@@ -8,9 +8,9 @@
 import UIKit
 import RealmSwift
 
-class EAGoalsListViewController: UIViewController {
+class EAGoalsListViewController: UIViewController, Debuggable {
 
-    private let debug = true
+    let debug = true
 
     /// The goals that we are viewing
     private lazy var viewModel: EAGoalsListViewModel = {
@@ -140,9 +140,7 @@ class EAGoalsListViewController: UIViewController {
         }
     }
 
-    /// Prints a debug message if the necessary flags are true
-    /// - Parameter message: the message to print
-    private func printDebug(_ message: String) {
+    func printDebug(_ message: String) {
         if Flags.debugGoalsList || self.debug {
             print("$Log: \(message)")
         }
@@ -166,12 +164,12 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
             let goalListItemViewModel = self.viewModel.items[indexPath.row]
+            printDebug("Dequeueing EAGoalListItemCollectionViewCell with viewModel \(goalListItemViewModel)")
             cell.configure(with: goalListItemViewModel)
             return cell
         }
 
-        print("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        fatalError("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
     }
 }
 
