@@ -15,51 +15,13 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     static let reuseIdentifier = "EAGoalCollectionViewCell"
 
     // TODO: Docstring
-    
+
     private var mainStack: EAFormElementView?
 
-    private var viewModel: EAGoalListItemViewModel? {
-        didSet {
-            
-            if let viewModel = viewModel {
-                printDebug("configuring ListItem with viewModel \(viewModel)")
-
-                // Next Task View
-//                if let nextTaskViewModel = viewModel.nextTaskViewModel {
-//                    self.nextTaskView.configure(with: nextTaskViewModel)
-//                    printDebug("configuring next task: \(nextTaskViewModel.text)")
-//                } else {
-//                    printDebug("no detected next task for goal \(viewModel.title).")
-//                }
-
-                // Main View Code
-                let elementStack = EAUIElement.stack(
-                    axis: .vertical,
-                    spacing: .one,
-                    elements: [
-                        .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: .white),
-                        .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: .white),
-                        .label(text: "Next Task (\(viewModel.currentDayNumber)):"),
-                        .task(viewModel: viewModel.nextTaskViewModel)
-                    ]
-                )
-
-                self.mainStack = elementStack.createView()
-                self.contentView.backgroundColor = viewModel.color
-                // Spinner Code
-                if viewModel.loading {
-                    self.spinner.startAnimating()
-                } else {
-                    self.spinner.stopAnimating()
-                }
-            }
-        }
-    }
-
-//    private let nextTaskView: EAGoalTaskView = {
-//        let nextTaskView = EAGoalTaskView()
-//        return nextTaskView
-//    }()
+    //    private let nextTaskView: EAGoalTaskView = {
+    //        let nextTaskView = EAGoalTaskView()
+    //        return nextTaskView
+    //    }()
 
     /// Spinner for if the goal is loading
     private let spinner: EASpinner = {
@@ -84,11 +46,10 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Main Stack code
         guard let mainStack = self.mainStack else {
-            print("$Error trying to establish constraints before instantiating the main stack.")
-            return
+            fatalError("$Error: trying to establish constraints before instantiating the main stack.")
         }
 
-//        mainStack.backgroundColor =
+        //        mainStack.backgroundColor =
         self.contentView.addSubview(mainStack)
         printDebug("Added main stack to content view")
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -101,13 +62,13 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         NSLayoutConstraint.activate([
             // ContentView Constraints
             self.contentView.widthAnchor.constraint(equalToConstant: cellWidth),
-//            self.contentView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            //            self.contentView.rightAnchor.constraint(equalTo: self.rightAnchor),
             self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
             // Main Stack constraints
-//            mainStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-//            mainStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            //            mainStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            //            mainStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
             mainStack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.one.rawValue),
@@ -123,36 +84,70 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     // MARK: - Public Functions
 
-    //TODO: Docstring
+    // TODO: Docstring
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
         layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return layoutAttributes
     }
-    
+
     func configure(with viewModel: EAGoalListItemViewModel) {
-        self.viewModel = viewModel
-        self.establishConstraints()
-//        self.backgroundColor = viewModel.color
-//        self.backgroundColor = .orange
+        self.contentView.subviews.forEach({ $0.removeFromSuperview() })
+        self.contentView.backgroundColor = viewModel.color
         self.layer.cornerRadius = EAIncrement.two.rawValue
+
+        printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(viewModel.nextTaskViewModel)")
+
+        // Main View Code
+        guard let elementStack = EAUIElement.stack(
+            axis: .vertical,
+            spacing: .one,
+            elements: [
+                .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: .white),
+                .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: .white)
+            ]
+        ).createView() as? EAStackView else {
+            fatalError("$Error: Wrong element type")
+        }
+
+        // If there is a next task, add it to the element stack
+        if let nextTaskViewModel = viewModel.nextTaskViewModel {
+            elementStack.addElements([
+                .label(text: "Next Task (\(viewModel.currentDayNumber)):"),
+                .task(viewModel: nextTaskViewModel)
+            ])
+        }
+
+        // Set the main stack to the created stack.
+        self.mainStack = elementStack
+
+        // Spinner Code
+        if viewModel.loading {
+            self.spinner.startAnimating()
+        } else {
+            self.spinner.stopAnimating()
+        }
+
+        self.establishConstraints()
+        
+        printDebug("contentview subview count: \(contentView.subviews.count)")
     }
 }
 
 final class CommentFlowLayout: UICollectionViewFlowLayout {
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-            let layoutAttributesObjects = super.layoutAttributesForElements(in: rect)?.map { $0.copy() } as? [UICollectionViewLayoutAttributes]
-            layoutAttributesObjects?.forEach({ layoutAttributes in
-                if layoutAttributes.representedElementCategory == .cell {
-                    if let newFrame = layoutAttributesForItem(at: layoutAttributes.indexPath)?.frame {
-                        layoutAttributes.frame = newFrame
-                    }
+        let layoutAttributesObjects = super.layoutAttributesForElements(in: rect)?.map { $0.copy() } as? [UICollectionViewLayoutAttributes]
+        layoutAttributesObjects?.forEach({ layoutAttributes in
+            if layoutAttributes.representedElementCategory == .cell {
+                if let newFrame = layoutAttributesForItem(at: layoutAttributes.indexPath)?.frame {
+                    layoutAttributes.frame = newFrame
                 }
-            })
-            return layoutAttributesObjects
-        }
+            }
+        })
+        return layoutAttributesObjects
+    }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let collectionView = collectionView else { fatalError() }
