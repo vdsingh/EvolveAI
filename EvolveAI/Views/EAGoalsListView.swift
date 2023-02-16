@@ -8,7 +8,8 @@
 import UIKit
 
 /// View to display EAGoal objects in a UITableView
-class EAGoalsListView: UIView {
+class EAGoalsListView: UIView, Debuggable {
+    let debug: Bool = true
 
     /// Constants for this View
     private struct Constants {
@@ -24,7 +25,7 @@ class EAGoalsListView: UIView {
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        layout.itemSize = CGSize(width: 200, height: 100)
+        layout.itemSize = CGSize(width: 200, height: 200)
 //        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 
 //        let commentFlowLayout = CommentFlowLayout()
@@ -90,11 +91,18 @@ class EAGoalsListView: UIView {
 
     /// Refreshes the view
     public func refreshView() {
-        if Flags.debugGoalsList {
-            print("$Log: refreshing view.")
-        }
+       printDebug("Refreshing GoalsListView")
 
         collectionView.reloadData()
+
+//        for cell in collectionView.visibleCells {
+//            guard let cell = cell as? EAGoalListItemCollectionViewCell else {
+//                fatalError("$Error: wrong cell type")
+//            }
+//
+//            printDebug("Refreshing a Goal cell")
+//            cell.refresh()
+//        }
         updateEmptyTableViewMessage()
     }
 
@@ -112,5 +120,13 @@ class EAGoalsListView: UIView {
 
     required init?(coder: NSCoder) {
         return nil
+    }
+}
+
+extension EAGoalsListView {
+    func printDebug(_ message: String) {
+        if self.debug ||  Flags.debugGoalsList {
+            print("$Log: \(message)")
+        }
     }
 }

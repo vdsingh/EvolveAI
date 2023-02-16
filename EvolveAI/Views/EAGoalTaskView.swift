@@ -56,11 +56,9 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
         self.addSubviewsAndEstablishConstraints()
         self.configure(with: viewModel)
     }
-    
-    
 
     // MARK: - Private Functions
-    
+
     /// Adds the relevant subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +76,7 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
     }
-    
+
     // MARK: - Public Functions
 
     /// Configures this View with a ViewModel
