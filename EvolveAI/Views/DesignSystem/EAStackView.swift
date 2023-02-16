@@ -36,6 +36,10 @@ final class EAStackView: UIStackView, EAFormElementView {
         self.addSubviews(subViews: subViews)
     }
 
+    private func addSubview(_ subview: EAFormElementView) {
+        self.addArrangedSubview(subview)
+    }
+
     /// Adds sub views to this StackView
     /// - Parameter subViews: The sub views to add to this StackView
     private func addSubviews(subViews: [EAFormElementView]) {
@@ -50,6 +54,13 @@ final class EAStackView: UIStackView, EAFormElementView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = axis
 
+    }
+
+    func addElements(_ elements: [EAUIElement]) {
+        for element in elements {
+            let view = element.createView()
+            self.addSubview(view)
+        }
     }
 
     required init(coder: NSCoder) {

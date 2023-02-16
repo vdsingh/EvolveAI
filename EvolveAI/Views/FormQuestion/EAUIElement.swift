@@ -57,7 +57,7 @@ enum EAUIElement {
         viewSetter: (EAButton) -> Void,
         buttonPressed: (EAButton) -> Void
     )
-    
+
     case task(
         viewModel: EAGoalTaskViewModel?
     )
@@ -135,11 +135,12 @@ enum EAUIElement {
             let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
             viewSetter(view)
             return view
-            
+
         case .task(let viewModel):
             if let viewModel = viewModel {
                 return EAGoalTaskView(viewModel: viewModel)
             } else {
+                print("$Log: Task has a nil ViewModel. Returning an EmptyView")
                 return EAEmptyView()
             }
 
