@@ -82,6 +82,7 @@ enum EAUIElement {
     /// Used to create a StackView container
     case stack(
         axis: NSLayoutConstraint.Axis,
+        distribution: UIStackView.Distribution = .fill,
         spacing: EAIncrement,
         elements: [EAUIElement]
     )
@@ -157,10 +158,11 @@ enum EAUIElement {
             let tag = EATagButton(tag: text)
             return tag
 
-        case .stack(let axis, let spacing, let elements):
+        case .stack(let axis, let distribution, let spacing, let elements):
             let subViews = elements.map { $0.createView() }
             let stack = EAStackView(axis: axis, subViews: subViews)
             stack.spacing = spacing.rawValue
+            stack.distribution = distribution
             return stack
 
         case .separator:
