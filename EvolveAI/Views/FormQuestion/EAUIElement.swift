@@ -69,7 +69,8 @@ enum EAUIElement {
         text: String,
         textStyle: EATextStyle = .body,
         textColor: UIColor = .label,
-        numLines: Int = 0
+        numLines: Int = 0,
+        textWasClicked: (() -> Void)? = nil
     )
 
     // MARK: - Containers
@@ -144,8 +145,8 @@ enum EAUIElement {
                 return EAEmptyView()
             }
 
-        case .label(let text, let textStyle, let textColor, let numLines):
-            let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
+        case .label(let text, let textStyle, let textColor, let numLines, let textWasClicked):
+            let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines, textWasClicked: textWasClicked)
             return label
 
         case .stack(let axis, let spacing, let elements):
