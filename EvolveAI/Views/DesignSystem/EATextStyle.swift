@@ -28,7 +28,7 @@ enum EATextStyle {
             return UIFont.systemFont(ofSize: EAIncrement.two.rawValue)
 
         case .body:
-            return UIFont.systemFont(ofSize: EAIncrement.one.rawValue)
+            return UIFont.systemFont(ofSize: EAIncrement.one.rawValue * 1.5)
         }
     }
 }
