@@ -9,13 +9,15 @@ import Foundation
 import UIKit
 
 /// Custom Label View
-final class EALabel: UILabel, EAFormElementView {
-
+final class EALabel: UILabel, EAFormElementView, Debuggable {
+    let debug = true
+    
     /// The height required for this Label
     var requiredHeight: CGFloat {
         self.font.pointSize * CGFloat(self.numberOfLines) + EAIncrement.one.rawValue
     }
-    
+
+    /// The callback function for when the label is clicked
     private var textWasClicked: (() -> Void)?
 
     /// Normal initializer
@@ -26,10 +28,7 @@ final class EALabel: UILabel, EAFormElementView {
         super.init(frame: .zero)
         self.setUIProperties(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
         if let textWasClicked = textWasClicked {
-            self.textWasClicked = textWasClicked
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.textWasClickedTarget))
-            self.isUserInteractionEnabled = true
-            self.addGestureRecognizer(tap)
+            self.setClickHandler(handler: textWasClicked)
         }
     }
 
@@ -48,16 +47,21 @@ final class EALabel: UILabel, EAFormElementView {
         self.font = textStyle.font
         self.textColor = textColor
         self.numberOfLines = numLines
+        
+        if debug {
+            self.backgroundColor = .gray
+        }
     }
-    
-    //TODO: Docstring
-    
+
+    /// Calls the click handler when label is clicked
     @objc private func textWasClickedTarget() {
         if let textWasClicked = self.textWasClicked {
             textWasClicked()
         }
     }
-    
+
+    /// Sets a click handler for when the label is clicked
+    /// - Parameter handler: The function called when the label is clicked
     func setClickHandler(handler: @escaping () -> Void) {
         self.textWasClicked = handler
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.textWasClickedTarget))
@@ -67,5 +71,13 @@ final class EALabel: UILabel, EAFormElementView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension EALabel {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }
