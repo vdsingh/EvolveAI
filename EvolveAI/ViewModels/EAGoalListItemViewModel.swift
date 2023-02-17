@@ -31,7 +31,7 @@ protocol EAGoalListItemViewModelOutput {
     var loading: Bool { get }
 
     /// The current day number for the goal
-    var currentDayNumber: Int? { get }
+    var currentDayNumber: Int { get }
 
     /// A ViewModel that represents the next task to complete
     var nextTaskViewModel: EAGoalTaskViewModel? { get }
@@ -59,7 +59,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     }
 
     // Computable (use today's date, the goal start date, subtract)
-    var currentDayNumber: Int? {
+    var currentDayNumber: Int {
         // TODO: Fix
 //        if let goal = self.goal {
 //            return Date().distance(to: goal.startDate).significandWidth + 1
@@ -102,12 +102,9 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     }
 
     private var todaysDayGuide: EAGoalDayGuide? {
-        if let dayNumber = self.currentDayNumber {
-            return goal?.dayGuides.first(where: { dayGuide in
-                return dayGuide.days.contains(dayNumber)
-            })
-        }
-
+        return goal?.dayGuides.first(where: { dayGuide in
+            return dayGuide.days.contains(self.currentDayNumber)
+        })
         return nil
     }
 
