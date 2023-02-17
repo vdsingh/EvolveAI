@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 /// Checkbox component
-final class EACheckbox: UIButton {
+final class EACheckbox: UIButton, Debuggable {
+    let debug = true
 
     /// Size of the checkbox (width = height)
     private var dimension: CGFloat
@@ -45,6 +46,7 @@ final class EACheckbox: UIButton {
 
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
+        printDebug("Checkbox was clicked")
         self.setActive(active: !self.isSelected)
         if let handler = self.checkboxWasToggled {
             handler(self.isSelected)
@@ -70,5 +72,13 @@ final class EACheckbox: UIButton {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension EACheckbox {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }
