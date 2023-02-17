@@ -160,3 +160,11 @@ final class CommentFlowLayout: UICollectionViewFlowLayout {
         return layoutAttributes
     }
 }
+
+extension EAGoalListItemCollectionViewCell {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
+    }
+}
