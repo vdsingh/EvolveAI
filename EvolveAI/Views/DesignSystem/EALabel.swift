@@ -25,11 +25,12 @@ final class EALabel: UILabel, EAFormElementView {
     init(text: String, textStyle: EATextStyle, textColor: UIColor, numLines: Int, textWasClicked: (() -> Void)?) {
         super.init(frame: .zero)
         self.setUIProperties(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
-        self.textWasClicked = textWasClicked
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.textWasClickedTarget))
-        self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(tap)
-//        self.
+        if let textWasClicked = textWasClicked {
+            self.textWasClicked = textWasClicked
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.textWasClickedTarget))
+            self.isUserInteractionEnabled = true
+            self.addGestureRecognizer(tap)
+        }
     }
 
     /// Sets the UI properties of this label View
@@ -59,6 +60,9 @@ final class EALabel: UILabel, EAFormElementView {
     
     func setClickHandler(handler: @escaping () -> Void) {
         self.textWasClicked = handler
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.textWasClickedTarget))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tap)
     }
 
     required init?(coder: NSCoder) {
