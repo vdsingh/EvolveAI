@@ -17,10 +17,11 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
     }
 
     /// A label displaying the task's text
-    private let taskLabel: UILabel = {
-        let taskLabel = UILabel(frame: .zero)
-        taskLabel.translatesAutoresizingMaskIntoConstraints = false
-        taskLabel.numberOfLines = 0
+    private let taskLabel: EALabel = {
+        guard let taskLabel = EAUIElement.label(text: "", numLines: 0).createView() as? EALabel else {
+            fatalError("$Error: taskLabel isn't EALabel type")
+        }
+        
         return taskLabel
     }()
 
@@ -84,7 +85,14 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
     func configure(with viewModel: EAGoalTaskViewModel) {
         self.updateTaskUI(with: viewModel)
         self.checkbox.setCheckboxHandler { [weak self] complete in
+            self?.printDebug("Checkbox was toggled. Complete: \(complete)")
             viewModel.toggleTaskCompletion(complete: complete)
+            self?.updateTaskUI(with: viewModel)
+        }
+        
+        self.taskLabel.setClickHandler { [weak self] in
+            viewModel.toggleTaskCompletion(complete: !viewModel.complete)
+            self?.printDebug("Task label was clicked. Complete: \(viewModel.complete)")
             self?.updateTaskUI(with: viewModel)
         }
     }
