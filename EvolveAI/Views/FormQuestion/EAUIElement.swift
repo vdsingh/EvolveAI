@@ -72,6 +72,10 @@ enum EAUIElement {
         numLines: Int = 0,
         textWasClicked: (() -> Void)? = nil
     )
+    
+    case tag(
+        text: String
+    )
 
     // MARK: - Containers
 
@@ -148,6 +152,10 @@ enum EAUIElement {
         case .label(let text, let textStyle, let textColor, let numLines, let textWasClicked):
             let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines, textWasClicked: textWasClicked)
             return label
+            
+        case .tag(let text):
+            let tag = EATagButton(tag: text)
+            return tag
 
         case .stack(let axis, let spacing, let elements):
             let subViews = elements.map { $0.createView() }

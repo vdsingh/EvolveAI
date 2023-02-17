@@ -9,7 +9,11 @@ import Foundation
 import UIKit
 
 /// Custom Button View to represent goal tags
-final class EATagButton: UIButton {
+final class EATagButton: UIButton, EAFormElementView {
+    
+    var requiredHeight: CGFloat {
+        return EAIncrement.two.rawValue
+    }
 
     /// Normal initializer
     /// - Parameter tag: The name of the tag (ex: "Fitness")
