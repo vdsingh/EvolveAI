@@ -114,11 +114,19 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         // If there is a next task, add it to the element stack
         if let nextTaskViewModel = viewModel.nextTaskViewModel {
             elementStack.addElements([
-                .label(text: "Next Task (\(viewModel.currentDayNumber)):"),
+                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: .white),
                 .task(viewModel: nextTaskViewModel)
             ])
         }
 
+        // Add the tags
+        elementStack.addElements([
+            .stack(axis: .horizontal, distribution: .fillProportionally, spacing: .one, elements: [
+                .tag(text: "Hello"),
+                .tag(text: "Goodbye")
+            ])
+        ])
+        
         // Set the main stack to the created stack.
         self.mainStack = elementStack
 
