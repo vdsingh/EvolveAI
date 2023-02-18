@@ -14,14 +14,8 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
 
-    // TODO: Docstring
-
+    /// The StackView that contains the content for this cell
     private var mainStack: EAFormElementView?
-
-    //    private let nextTaskView: EAGoalTaskView = {
-    //        let nextTaskView = EAGoalTaskView()
-    //        return nextTaskView
-    //    }()
 
     /// Spinner for if the goal is loading
     private let spinner: EASpinner = {
@@ -49,7 +43,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             fatalError("$Error: trying to establish constraints before instantiating the main stack.")
         }
 
-        //        mainStack.backgroundColor =
         self.contentView.addSubview(mainStack)
         printDebug("Added main stack to content view")
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,24 +55,16 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         NSLayoutConstraint.activate([
             // ContentView Constraints
             self.contentView.widthAnchor.constraint(equalToConstant: cellWidth),
-            //            self.contentView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            self.contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
             // Main Stack constraints
-            //            mainStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            //            mainStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.one.rawValue),
+            mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -EAIncrement.one.rawValue),
             mainStack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.one.rawValue),
             mainStack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.one.rawValue)
         ])
-    }
-
-    func printDebug(_ message: String) {
-        if self.debug {
-            print("$Log: \(message)")
-        }
     }
 
     // MARK: - Public Functions
@@ -95,9 +80,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     func configure(with viewModel: EAGoalListItemViewModel) {
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })
         self.contentView.backgroundColor = viewModel.color
-        self.layer.cornerRadius = EAIncrement.two.rawValue
+        self.contentView.layer.cornerRadius = EAIncrement.two.rawValue
 
-        printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(viewModel.nextTaskViewModel)")
+        printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(String(describing: viewModel.nextTaskViewModel))")
 
         // Main View Code
         guard let elementStack = EAUIElement.stack(
@@ -126,7 +111,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
                 .tag(text: "Goodbye")
             ])
         ])
-        
+
         // Set the main stack to the created stack.
         self.mainStack = elementStack
 
@@ -138,7 +123,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         }
 
         self.establishConstraints()
-        
         printDebug("contentview subview count: \(contentView.subviews.count)")
     }
 }
