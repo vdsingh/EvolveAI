@@ -21,7 +21,7 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
         guard let taskLabel = EAUIElement.label(text: "", numLines: 0).createView() as? EALabel else {
             fatalError("$Error: taskLabel isn't EALabel type")
         }
-        
+
         return taskLabel
     }()
 
@@ -89,7 +89,7 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
             viewModel.toggleTaskCompletion(complete: complete)
             self?.updateTaskUI(with: viewModel)
         }
-        
+
         self.taskLabel.setClickHandler { [weak self] in
             viewModel.toggleTaskCompletion(complete: !viewModel.complete)
             self?.printDebug("Task label was clicked. Complete: \(viewModel.complete)")

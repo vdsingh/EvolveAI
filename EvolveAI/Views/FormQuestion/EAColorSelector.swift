@@ -76,7 +76,6 @@ final class EAColorSelector: UIStackView, EAFormElementView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = .vertical
         self.distribution = .fillEqually
-//        self.spacing = 0
     }
 
     /// Creates an array of Horizontal stacks, which contain Color Views

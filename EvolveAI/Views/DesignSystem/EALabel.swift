@@ -11,7 +11,7 @@ import UIKit
 /// Custom Label View
 final class EALabel: UILabel, EAFormElementView, Debuggable {
     let debug = true
-    
+
     /// The height required for this Label
     var requiredHeight: CGFloat {
         self.font.pointSize * CGFloat(self.numberOfLines) + EAIncrement.one.rawValue
@@ -47,7 +47,7 @@ final class EALabel: UILabel, EAFormElementView, Debuggable {
         self.font = textStyle.font
         self.textColor = textColor
         self.numberOfLines = numLines
-        
+
         if debug {
             self.backgroundColor = .gray
         }
