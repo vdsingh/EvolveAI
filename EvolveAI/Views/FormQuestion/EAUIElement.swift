@@ -72,7 +72,13 @@ enum EAUIElement {
         numLines: Int = 0,
         textWasClicked: (() -> Void)? = nil
     )
-
+    
+    case image(
+        eaImage: EAImage,
+        color: UIColor
+    )
+    
+    //TODO: Tag
     case tag(
         text: String
     )
@@ -153,7 +159,11 @@ enum EAUIElement {
         case .label(let text, let textStyle, let textColor, let numLines, let textWasClicked):
             let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines, textWasClicked: textWasClicked)
             return label
-
+            
+        case .image(let eaImage, let color):
+            let imageView = EAImageView(eaImage: eaImage, color: color)
+            
+            return imageView
         case .tag(let text):
             let tag = EATagButton(tag: text)
             return tag
