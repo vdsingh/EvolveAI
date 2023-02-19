@@ -106,13 +106,14 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
                 .task(viewModel: nextTaskViewModel)
             ])
         }
-
-        // Add the tags
+        
         elementStack.addElements([
-            .stack(axis: .horizontal, distribution: .fillProportionally, spacing: .one, elements: [
-                .tag(text: "Hello"),
-                .tag(text: "Goodbye")
-            ])
+            .stack(
+                axis: .horizontal,
+                distribution: .fillProportionally,
+                spacing: .one,
+                elements: viewModel.tags.compactMap{ EAUIElement.tag(text: $0) }
+            )
         ])
 
         // Set the main stack to the created stack.
