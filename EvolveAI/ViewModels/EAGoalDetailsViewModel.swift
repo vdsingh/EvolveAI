@@ -32,6 +32,9 @@ protocol EAGoalDetailsViewModelOutput {
 
     /// The goal color
     var color: UIColor { get }
+    
+    /// The darker goal color
+    var darkColor: UIColor { get }
 
     /// The day guides to display for the goal
     var dayGuideViewModels: [EAGoalDayGuideViewModel] { get }
@@ -67,9 +70,13 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     var tagStrings: [String]
     let color: UIColor
+    var darkColor: UIColor {
+        return color.darker(by: 60) ?? .link
+    }
+
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
-            DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalsService: self.goalsService)
+            DefaultEAGoalDayGuideViewModel(dayGuide: $0, color: self.darkColor, goalsService: self.goalsService)
         })
     }
 

@@ -74,6 +74,7 @@ class EAGoalTaskView: UIStackView, EAFormElementView {
     /// - Parameter viewModel: The ViewModel that supplies the information for this View
     private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
         printDebug("Updating Task UI. Task Completion: \(viewModel.complete)")
+        self.checkbox.setColor(viewModel.textColor)
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
     }

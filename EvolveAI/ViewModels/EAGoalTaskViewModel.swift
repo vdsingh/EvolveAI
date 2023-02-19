@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Possible inputs for this ViewModel
 protocol EAGoalTaskViewModelInput {
@@ -20,6 +21,9 @@ protocol EAGoalTaskViewModelOutput {
 
     /// The text for the task
     var text: String { get }
+    
+    /// The color for the text
+    var textColor: UIColor { get }
 
     /// Whether the task is complete or not
     var complete: Bool { get }
@@ -36,7 +40,7 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
 
     /// The task that this ViewModel represents
     private let task: EAGoalTask
-
+    
     /// A service to interact with goals and other related types (Task!)
     private let goalsService: EAGoalsService
 
@@ -45,8 +49,14 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
     }
 
     let text: String
+    let textColor: UIColor
     var attributedText: NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: self.text)
+        attributedString.addAttribute(
+            NSAttributedString.Key.foregroundColor,
+            value: self.textColor,
+            range: NSRange(location: 0, length: attributedString.length)
+        )
         if self.complete {
             attributedString.addAttribute(
                 NSAttributedString.Key.strikethroughStyle,
@@ -58,8 +68,9 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
         return attributedString
     }
 
-    init(task: EAGoalTask, goalsService: EAGoalsService) {
+    init(task: EAGoalTask, textColor: UIColor, goalsService: EAGoalsService) {
         self.text = task.taskString
+        self.textColor = textColor
         self.goalsService = goalsService
         self.task = task
     }

@@ -17,11 +17,15 @@ final class EACheckbox: UIButton, Debuggable {
 
     /// Optional handler for when this checkbox was toggled
     private var checkboxWasToggled: ((Bool) -> Void)?
+    
+    //TODO: Docstring
+    private var color: UIColor = .label
 
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
-    init(size: CGFloat = EAIncrement.two.rawValue) {
+    init(size: CGFloat = EAIncrement.two.rawValue, color: UIColor = .label) {
         self.dimension = size
+        self.color = color
         super.init(frame: .zero)
         self.addTarget(self, action: #selector(self.checkboxClicked), for: .touchUpInside)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +44,7 @@ final class EACheckbox: UIButton, Debuggable {
     /// Sets the UI Properties for this view
     private func setUIProperties() {
         self.layer.cornerRadius = dimension / 4
-        self.layer.borderColor = UIColor.label.cgColor
+        self.layer.borderColor = self.color.cgColor
         self.layer.borderWidth = 1
     }
 
@@ -56,6 +60,13 @@ final class EACheckbox: UIButton, Debuggable {
     }
 
     // MARK: - Public
+    
+    //TODO: Docstring
+    func setColor(_ color: UIColor) {
+        self.color = color
+        self.setUIProperties()
+        self.setActive(active: self.isSelected)
+    }
 
     /// Sets the handler for when this checkbox is toggled
     /// - Parameter checkboxWasToggled: The handler for when this checkbox is toggled
@@ -67,7 +78,7 @@ final class EACheckbox: UIButton, Debuggable {
     /// - Parameter active: Whether the checkbox is checked or not
     public func setActive(active: Bool) {
         self.isSelected = active
-        self.backgroundColor = self.isSelected ? .green : .clear
+        self.backgroundColor = self.isSelected ? self.color : .clear
     }
 
     required init?(coder: NSCoder) {

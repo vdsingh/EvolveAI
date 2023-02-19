@@ -26,6 +26,9 @@ protocol EAGoalListItemViewModelOutput {
 
     /// The goal color
     var color: UIColor { get }
+    
+    /// The secondary (darker) goal color
+    var darkColor: UIColor { get }
 
     /// Whether the goal is loading or not
     var loading: Bool { get }
@@ -54,6 +57,10 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     var title: String
     var numDays: Int
     var color: UIColor
+    var darkColor: UIColor {
+        color.darker(by: 60) ?? .link
+    }
+    
     var loading: Bool {
         goal == nil
     }
@@ -71,7 +78,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
 
     var nextTaskViewModel: EAGoalTaskViewModel? {
         if let task = self.nextTask {
-            return DefaultEAGoalTaskViewModel(task: task, goalsService: self.goalsService)
+            return DefaultEAGoalTaskViewModel(task: task, textColor: self.darkColor, goalsService: self.goalsService)
         }
 
         return nil
@@ -105,7 +112,6 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         return goal?.dayGuides.first(where: { dayGuide in
             return dayGuide.days.contains(self.currentDayNumber)
         })
-        return nil
     }
 
     /// Common initializer

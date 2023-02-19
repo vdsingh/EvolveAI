@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 /// Possible inputs for this ViewModel
 protocol EAGoalDayGuideViewModelInput {
@@ -21,6 +22,9 @@ protocol EAGoalDayGuideViewModelOutput {
 
     /// A list of EAGoalTask representing the tasks for this day guide
     var taskViewModels: [EAGoalTaskViewModel] { get }
+
+    /// The color for the goal
+    var color: UIColor { get }
 }
 
 protocol EAGoalDayGuideViewModel: EAGoalDayGuideViewModelInput, EAGoalDayGuideViewModelOutput { }
@@ -40,12 +44,15 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
 
     var taskViewModels: [EAGoalTaskViewModel] {
         return dayGuide.tasks.compactMap({
-            DefaultEAGoalTaskViewModel(task: $0, goalsService: self.goalsService)
+            DefaultEAGoalTaskViewModel(task: $0, textColor: self.color, goalsService: self.goalsService)
         })
     }
 
-    init(dayGuide: EAGoalDayGuide, goalsService: EAGoalsService) {
+    let color: UIColor
+
+    init(dayGuide: EAGoalDayGuide, color: UIColor, goalsService: EAGoalsService) {
         self.dayGuide = dayGuide
+        self.color = color
         self.goalsService = goalsService
     }
 }

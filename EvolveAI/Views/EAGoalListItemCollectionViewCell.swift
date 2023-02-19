@@ -89,10 +89,10 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             axis: .vertical,
             spacing: .one,
             elements: [
-                .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: .white),
+                .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
                 .stack(axis: .horizontal, spacing: .one, elements: [
-                    .image(eaImage: .clock, color: .white),
-                    .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: .white)
+                    .image(eaImage: .clock, color: viewModel.darkColor),
+                    .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
                 ])
             ]
         ).createView() as? EAStackView else {
@@ -102,17 +102,17 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         // If there is a next task, add it to the element stack
         if let nextTaskViewModel = viewModel.nextTaskViewModel {
             elementStack.addElements([
-                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: .white),
+                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: viewModel.darkColor),
                 .task(viewModel: nextTaskViewModel)
             ])
         }
-        
+
         elementStack.addElements([
             .stack(
                 axis: .horizontal,
                 distribution: .fillProportionally,
                 spacing: .one,
-                elements: viewModel.tags.compactMap{ EAUIElement.tag(text: $0) }
+                elements: viewModel.tags.compactMap { EAUIElement.tag(text: $0, color: viewModel.darkColor) }
             )
         ])
 

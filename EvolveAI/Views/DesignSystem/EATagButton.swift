@@ -17,18 +17,18 @@ final class EATagButton: UIButton, EAFormElementView {
 
     /// Normal initializer
     /// - Parameter tag: The name of the tag (ex: "Fitness")
-    init(tag: String) {
+    init(tag: String, color: UIColor) {
         super.init(frame: .zero)
-        self.setUIProperties(tag: tag)
+        self.setUIProperties(tag: tag, color: color)
     }
 
     /// Sets the UI properties for this View
     /// - Parameter tag: The name for the tag
-    private func setUIProperties(tag: String) {
+    private func setUIProperties(tag: String, color: UIColor) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.setTitle(tag, for: .normal)
         self.setTitleColor(.white, for: .normal)
-        self.backgroundColor = .link
+        self.backgroundColor = color
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.sizeToFit()
 

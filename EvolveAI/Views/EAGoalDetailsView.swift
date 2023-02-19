@@ -70,8 +70,11 @@ class EAGoalDetailsView: UIView {
         self.numDaysLabel.text = viewModel.numDaysString
         self.dateCreatedLabel.text = viewModel.dateCreatedString
         self.additionalDetailsLabel.text = viewModel.additionalDetails
+        self.numDaysLabel.textColor = viewModel.darkColor
+        self.dateCreatedLabel.textColor = viewModel.darkColor
+        self.additionalDetailsLabel.textColor = viewModel.darkColor
         super.init(frame: .zero)
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = viewModel.color
         self.addSubviewsAndEstablishConstraints(dayGuideViewModels: viewModel.dayGuideViewModels)
         self.addTagViews(viewModel: viewModel)
     }
@@ -82,7 +85,7 @@ class EAGoalDetailsView: UIView {
     /// - Parameter viewModel: The EAGoalDetailsViewModel that contains the tag information
     private func addTagViews(viewModel: EAGoalDetailsViewModel) {
         for tagString in viewModel.tagStrings {
-            let tag = EATagButton(tag: tagString)
+            let tag = EATagButton(tag: tagString, color: viewModel.darkColor)
             tagsStack.addArrangedSubview(tag)
         }
     }
