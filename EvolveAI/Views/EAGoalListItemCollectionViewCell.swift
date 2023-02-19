@@ -90,7 +90,10 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             spacing: .one,
             elements: [
                 .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: .white),
-                .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: .white)
+                .stack(axis: .horizontal, spacing: .one, elements: [
+                    .image(eaImage: .clock, color: .white),
+                    .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: .white)
+                ])
             ]
         ).createView() as? EAStackView else {
             fatalError("$Error: Wrong element type")
