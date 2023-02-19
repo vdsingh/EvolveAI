@@ -82,6 +82,9 @@ class EAGoalsListViewController: UIViewController, Debuggable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
 
         if self.goalsService.maximumGoalsReached() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
