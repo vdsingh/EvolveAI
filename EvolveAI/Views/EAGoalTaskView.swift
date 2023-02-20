@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// View that displays an individual task for a goal
-class EAGoalTaskView: UIStackView, EAFormElementView {
+class EAGoalTaskView: UIStackView, EAUIElementView {
     let debug: Bool = true
 
     var requiredHeight: CGFloat {

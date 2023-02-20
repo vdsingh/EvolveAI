@@ -8,6 +8,6 @@
 import Foundation
 import UIKit
 
-final class EAEmptyView: UIView, EAFormElementView {
+final class EAEmptyView: UIView, EAUIElementViewStaticHeight {
     var requiredHeight: CGFloat = 0
 }

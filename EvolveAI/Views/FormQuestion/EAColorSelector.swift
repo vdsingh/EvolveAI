@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// A Form Element for selecting a color
-final class EAColorSelector: UIStackView, EAFormElementView {
+final class EAColorSelector: UIStackView, EAUIElementView {
 
     /// The spacing between Color Views
     private let colorSpacing: CGFloat = 6

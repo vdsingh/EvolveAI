@@ -9,15 +9,13 @@ import Foundation
 import UIKit
 
 /// Custom Date Selector
-final class EADateSelector: UIDatePicker, EAFormElementView {
+final class EADateSelector: UIDatePicker, EAUIElementViewStaticHeight {
 
     /// Callback for when a date is selected through this DatePicker
     private let dateWasSelectedCallback: (Date) -> Void
 
     /// The height required for this UI element
-    var requiredHeight: CGFloat {
-        return 50
-    }
+    var requiredHeight: CGFloat = 50
 
     /// Normal Initializer
     /// - Parameters:

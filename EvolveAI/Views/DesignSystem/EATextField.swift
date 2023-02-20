@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 /// Custom TextField for this application
-final class EATextField: UITextField {
+final class EATextField: UITextField, EAUIElementViewStaticHeight {
+
+    /// The height requried for this UIElement
+    let requiredHeight: CGFloat = EAIncrement.five.rawValue
 
     /// Callback to use when this TextField has been edited
     var textWasEditedCallback: (EATextField) -> Void

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// A Form Question to ask users to specify details of a goal they want to create.
-class EACreateGoalQuestionView: UIStackView, EAFormElementView {
+class EACreateGoalQuestionView: UIStackView, EAUIElementView {
 
     /// The required height of the View
     var requiredHeight: CGFloat = 150

@@ -9,22 +9,22 @@ import Foundation
 import UIKit
 
 /// Checkbox component
-final class EACheckbox: UIButton, Debuggable {
+final class EACheckbox: UIButton, EAUIElementViewStaticHeight, Debuggable {
     let debug = true
 
     /// Size of the checkbox (width = height)
-    private var dimension: CGFloat
+    var requiredHeight: CGFloat
 
     /// Optional handler for when this checkbox was toggled
     private var checkboxWasToggled: ((Bool) -> Void)?
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     private var color: UIColor = .label
 
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
     init(size: CGFloat = EAIncrement.two.rawValue, color: UIColor = .label) {
-        self.dimension = size
+        self.requiredHeight = size
         self.color = color
         super.init(frame: .zero)
         self.addTarget(self, action: #selector(self.checkboxClicked), for: .touchUpInside)
@@ -36,14 +36,14 @@ final class EACheckbox: UIButton, Debuggable {
     /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: dimension),
-            self.heightAnchor.constraint(equalToConstant: dimension)
+            self.widthAnchor.constraint(equalToConstant: self.requiredHeight),
+            self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
         ])
     }
 
     /// Sets the UI Properties for this view
     private func setUIProperties() {
-        self.layer.cornerRadius = dimension / 4
+        self.layer.cornerRadius = self.requiredHeight / 4
         self.layer.borderColor = self.color.cgColor
         self.layer.borderWidth = 1
     }
@@ -60,8 +60,8 @@ final class EACheckbox: UIButton, Debuggable {
     }
 
     // MARK: - Public
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     func setColor(_ color: UIColor) {
         self.color = color
         self.setUIProperties()

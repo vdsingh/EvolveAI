@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Custom Button View to represent goal tags
-final class EATagButton: UIButton, EAFormElementView {
+final class EATagButton: UIButton, EAUIElementViewStaticHeight {
 
     var requiredHeight: CGFloat {
         return EAIncrement.two.rawValue

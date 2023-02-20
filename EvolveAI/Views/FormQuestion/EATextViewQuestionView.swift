@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// View for basic long text response Questions
-class EATextViewQuestionView: UIStackView, EAFormElementView {
+class EATextViewQuestionView: UIStackView, EAUIElementViewStaticHeight {
 
     /// The required height for this view
     var requiredHeight: CGFloat = 150
