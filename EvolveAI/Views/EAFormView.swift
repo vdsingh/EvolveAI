@@ -85,8 +85,6 @@ class EAFormView: UIScrollView {
             let view = formElement.createView()
             self.questionViews.append(view)
             elementStack.addArrangedSubview(view)
-
-            view.heightAnchor.constraint(equalToConstant: view.requiredHeight).isActive = true
         }
 
         return elementStack

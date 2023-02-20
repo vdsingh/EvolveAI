@@ -25,8 +25,8 @@ class EAGoalsListView: UIView, Debuggable {
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        layout.itemSize = CGSize(width: 200, height: 250)
-//        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+//        layout.itemSize = CGSize(width: 200, height: 250)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 
 //        let commentFlowLayout = CommentFlowLayout()
 //        commentCollection.register(CommentCell.self, forCellWithReuseIdentifier: "cell")
@@ -91,18 +91,18 @@ class EAGoalsListView: UIView, Debuggable {
 
     /// Refreshes the view
     public func refreshView() {
-       printDebug("Refreshing GoalsListView")
-
+        printDebug("Refreshing GoalsListView")
+        
         collectionView.reloadData()
-
-//        for cell in collectionView.visibleCells {
-//            guard let cell = cell as? EAGoalListItemCollectionViewCell else {
-//                fatalError("$Error: wrong cell type")
-//            }
-//
-//            printDebug("Refreshing a Goal cell")
-//            cell.refresh()
-//        }
+        
+        //        for cell in collectionView.visibleCells {
+        //            guard let cell = cell as? EAGoalListItemCollectionViewCell else {
+        //                fatalError("$Error: wrong cell type")
+        //            }
+        //
+        //            printDebug("Refreshing a Goal cell")
+        //            cell.refresh()
+        //        }
         updateEmptyTableViewMessage()
     }
 

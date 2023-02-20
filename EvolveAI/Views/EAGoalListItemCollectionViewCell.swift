@@ -9,13 +9,13 @@ import UIKit
 
 /// A UICollectionViewCell to hold EAGoal information
 class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
-    let debug: Bool = true
+    let debug: Bool = false
 
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
 
     /// The StackView that contains the content for this cell
-    private var mainStack: EAFormElementView?
+    private var mainStack: EAUIElementView?
 
     /// Spinner for if the goal is loading
     private let spinner: EASpinner = {
@@ -23,6 +23,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         spinner.stopAnimating()
         return spinner
     }()
+
+    // TODO: Docstring
+    private var cellWidth: CGFloat = 5
 
     // MARK: - Private Functions
 
@@ -51,20 +54,57 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         let spacing: CGFloat = EAIncrement.two.rawValue
         let screenWidth = UIScreen.main.bounds.width
         let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
-
+        self.cellWidth = cellWidth
+        printDebug("Cell Width: \(cellWidth)")
         NSLayoutConstraint.activate([
             // ContentView Constraints
             self.contentView.widthAnchor.constraint(equalToConstant: cellWidth),
             self.contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
             // Main Stack constraints
-            mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.one.rawValue),
-            mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -EAIncrement.one.rawValue),
-            mainStack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.one.rawValue),
-            mainStack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.one.rawValue)
+            mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.two.rawValue),
+            mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -EAIncrement.two.rawValue),
+            mainStack.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: EAIncrement.two.rawValue),
+            mainStack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.two.rawValue)
         ])
+    }
+    
+    // TODO: Docstring
+    private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
+        // Adds the title label and "Number of Days" label
+        guard let elementStack = EAUIElement.stack(
+            axis: .vertical,
+            spacing: .one,
+            elements: [
+                .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
+                .stack(axis: .horizontal, spacing: .one, elements: [
+                    .image(eaImage: .clock, color: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
+                    .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
+                ])
+            ]
+        ).createView() as? EAStackView else {
+            fatalError("$Error: Wrong element type")
+        }
+
+        // If there is a next task for today, add it to the element stack
+        if let nextTaskViewModel = viewModel.nextTaskViewModel {
+            elementStack.addElements([
+                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: viewModel.darkColor),
+                .task(viewModel: nextTaskViewModel)
+            ])
+        }
+
+        // Add the tags associated with the goal to the view
+        elementStack.addElements([
+            .stack(
+                axis: .horizontal,
+                distribution: .fillProportionally,
+                spacing: .one,
+                elements: viewModel.tags.compactMap { EAUIElement.tag(text: $0, color: viewModel.darkColor) }
+            )
+        ])
+
+        return elementStack
     }
 
     // MARK: - Public Functions
@@ -72,8 +112,8 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     // TODO: Docstring
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        let targetSize = CGSize(width: self.cellWidth, height: 0)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
         return layoutAttributes
     }
 
@@ -84,40 +124,12 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(String(describing: viewModel.nextTaskViewModel))")
 
-        // Main View Code
-        guard let elementStack = EAUIElement.stack(
-            axis: .vertical,
-            spacing: .one,
-            elements: [
-                .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
-                .stack(axis: .horizontal, spacing: .one, elements: [
-                    .image(eaImage: .clock, color: viewModel.darkColor),
-                    .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
-                ])
-            ]
-        ).createView() as? EAStackView else {
-            fatalError("$Error: Wrong element type")
+        if self.debug {
+            self.backgroundColor = .yellow
         }
-
-        // If there is a next task, add it to the element stack
-        if let nextTaskViewModel = viewModel.nextTaskViewModel {
-            elementStack.addElements([
-                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: viewModel.darkColor),
-                .task(viewModel: nextTaskViewModel)
-            ])
-        }
-
-        elementStack.addElements([
-            .stack(
-                axis: .horizontal,
-                distribution: .fillProportionally,
-                spacing: .one,
-                elements: viewModel.tags.compactMap { EAUIElement.tag(text: $0, color: viewModel.darkColor) }
-            )
-        ])
 
         // Set the main stack to the created stack.
-        self.mainStack = elementStack
+        self.mainStack = constructMainStack(with: viewModel)
 
         // Spinner Code
         if viewModel.loading {
@@ -127,33 +139,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         }
 
         self.establishConstraints()
-        printDebug("contentview subview count: \(contentView.subviews.count)")
-    }
-}
-
-final class CommentFlowLayout: UICollectionViewFlowLayout {
-
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let layoutAttributesObjects = super.layoutAttributesForElements(in: rect)?.map { $0.copy() } as? [UICollectionViewLayoutAttributes]
-        layoutAttributesObjects?.forEach({ layoutAttributes in
-            if layoutAttributes.representedElementCategory == .cell {
-                if let newFrame = layoutAttributesForItem(at: layoutAttributes.indexPath)?.frame {
-                    layoutAttributes.frame = newFrame
-                }
-            }
-        })
-        return layoutAttributesObjects
-    }
-
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let collectionView = collectionView else { fatalError() }
-        guard let layoutAttributes = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes else {
-            return nil
-        }
-
-        layoutAttributes.frame.origin.x = sectionInset.left
-        layoutAttributes.frame.size.width = collectionView.safeAreaLayoutGuide.layoutFrame.width - sectionInset.left - sectionInset.right
-        return layoutAttributes
+        printDebug("ContentView subview count: \(contentView.subviews.count)")
     }
 }
 

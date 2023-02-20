@@ -32,7 +32,7 @@ protocol EAGoalDetailsViewModelOutput {
 
     /// The goal color
     var color: UIColor { get }
-    
+
     /// The darker goal color
     var darkColor: UIColor { get }
 

@@ -26,7 +26,7 @@ protocol EAGoalListItemViewModelOutput {
 
     /// The goal color
     var color: UIColor { get }
-    
+
     /// The secondary (darker) goal color
     var darkColor: UIColor { get }
 
@@ -60,7 +60,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
     var darkColor: UIColor {
         color.darker(by: 60) ?? .link
     }
-    
+
     var loading: Bool {
         goal == nil
     }

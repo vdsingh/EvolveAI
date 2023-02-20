@@ -21,7 +21,7 @@ protocol EAGoalTaskViewModelOutput {
 
     /// The text for the task
     var text: String { get }
-    
+
     /// The color for the text
     var textColor: UIColor { get }
 
@@ -40,7 +40,7 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
 
     /// The task that this ViewModel represents
     private let task: EAGoalTask
-    
+
     /// A service to interact with goals and other related types (Task!)
     private let goalsService: EAGoalsService
 

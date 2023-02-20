@@ -9,40 +9,40 @@ import Foundation
 import UIKit
 
 /// Custom StackView element
-final class EAStackView: UIStackView, EAFormElementView {
+final class EAStackView: UIStackView, EAUIElementView {
 
     /// The height required for this UI element
-    var requiredHeight: CGFloat
+//    var requiredHeight: CGFloat
 
     /// Normal initializer
     /// - Parameters:
     ///   - axis: The axis for this StackView
     ///   - subViews: The views contained within this StackView
-    init(axis: NSLayoutConstraint.Axis, subViews: [EAFormElementView]) {
-        var calculatedHeight: CGFloat = 0
-        if axis == .vertical {
-            for subView in subViews {
-                calculatedHeight += subView.requiredHeight
-            }
-        } else if axis == .horizontal {
-            for subView in subViews {
-                calculatedHeight = max(calculatedHeight, subView.requiredHeight)
-            }
-        }
+    init(axis: NSLayoutConstraint.Axis, subViews: [EAUIElementView]) {
+//        var calculatedHeight: CGFloat = 0
+//        if axis == .vertical {
+//            for subView in subViews {
+//                calculatedHeight += subView.requiredHeight
+//            }
+//        } else if axis == .horizontal {
+//            for subView in subViews {
+//                calculatedHeight = max(calculatedHeight, subView.requiredHeight)
+//            }
+//        }
 
-        self.requiredHeight = calculatedHeight
+//        self.requiredHeight = calculatedHeight
         super.init(frame: .zero)
         self.setUIProperties(axis: axis)
         self.addSubviews(subViews: subViews)
     }
 
-    private func addSubview(_ subview: EAFormElementView) {
+    private func addSubview(_ subview: EAUIElementView) {
         self.addArrangedSubview(subview)
     }
 
     /// Adds sub views to this StackView
     /// - Parameter subViews: The sub views to add to this StackView
-    private func addSubviews(subViews: [EAFormElementView]) {
+    private func addSubviews(subViews: [EAUIElementView]) {
         for subView in subViews {
             self.addArrangedSubview(subView)
         }
