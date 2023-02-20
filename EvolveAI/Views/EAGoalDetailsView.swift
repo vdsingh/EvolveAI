@@ -75,7 +75,7 @@ class EAGoalDetailsView: UIView {
         self.additionalDetailsLabel.textColor = viewModel.darkColor
         super.init(frame: .zero)
         self.backgroundColor = viewModel.color
-        self.addSubviewsAndEstablishConstraints(dayGuideViewModels: viewModel.dayGuideViewModels)
+        self.addSubviewsAndEstablishConstraints(dayGuideViewModels: viewModel.dayGuideViewModels, separatorColor: viewModel.darkColor)
         self.addTagViews(viewModel: viewModel)
     }
 
@@ -92,15 +92,15 @@ class EAGoalDetailsView: UIView {
 
     /// Adds the subviews of the View and activates the constraints
     /// - Parameter dayGuides: List of EAGoalDayGuide objects that we need to add to our View
-    private func addSubviewsAndEstablishConstraints(dayGuideViewModels: [EAGoalDayGuideViewModel]) {
+    private func addSubviewsAndEstablishConstraints(dayGuideViewModels: [EAGoalDayGuideViewModel], separatorColor: UIColor) {
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(self.guideContentView)
         self.guideContentView.addArrangedSubview(self.numDaysLabel)
         self.guideContentView.addArrangedSubview(self.dateCreatedLabel)
         self.guideContentView.addArrangedSubview(self.tagsStack)
-        self.guideContentView.addArrangedSubview(EASeparator())
+        self.guideContentView.addArrangedSubview(EASeparator(color: separatorColor))
         self.addDayGuidesToUI(dayGuideViewModels)
-        self.guideContentView.addArrangedSubview(EASeparator())
+        self.guideContentView.addArrangedSubview(EASeparator(color: separatorColor))
         self.guideContentView.addArrangedSubview(self.additionalDetailsLabel)
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),

@@ -97,7 +97,9 @@ enum EAUIElement {
     // MARK: - Other Elements
 
     /// Used to create a separator
-    case separator
+    case separator(
+        color: UIColor = .label
+    )
 
     /// Transforms the response object to a UIView and returns it
     /// - Returns: a UIView which is the response object
@@ -177,8 +179,8 @@ enum EAUIElement {
             stack.distribution = distribution
             return stack
 
-        case .separator:
-            return EASeparator()
+        case .separator(let color):
+            return EASeparator(color: color)
         }
     }
 }

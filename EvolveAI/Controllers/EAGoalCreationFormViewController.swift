@@ -200,7 +200,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                 },
                 numDaysLabel: "days."
             ),
-            .separator,
+            .separator(),
             .colorSelector(
                 colors: UIColor.eaColors,
                 colorWasSelected: { [weak self] color in
@@ -209,7 +209,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     self?.getView().endEditing(false)
                 }
             ),
-            .separator,
+            .separator(),
             .stack(axis: .vertical, spacing: .two, elements: [
                 .label(text: "I am going to start on:", textStyle: .heading1),
                 .dateSelector(style: .compact, mode: .date, dateWasSelected: { [weak self] date in
@@ -217,7 +217,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     self?.printDebug("Date was selected: \(date)")
                 })
             ]),
-            .separator,
+            .separator(),
             .textViewQuestion(
                 question: "Additional Details",
                 textViewWasEdited: { [weak self] textView in

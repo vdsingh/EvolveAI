@@ -15,10 +15,10 @@ final class EASeparator: UIView, EAUIElementViewStaticHeight {
     var requiredHeight: CGFloat = 1
 
     /// Normal Initializer
-    init() {
+    init(color: UIColor = .label) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .label
+        self.backgroundColor = color
         self.heightAnchor.constraint(equalToConstant: requiredHeight).isActive = true
     }
 
