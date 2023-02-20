@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 
 /// All custom form questions must conform to this protocol
-protocol EAFormElementView: UIView {
+protocol EAUIElementView: UIView {
 
-    /// Value specifying what height the View should be
+}
+
+protocol EAUIElementViewStaticHeight: EAUIElementView {
+    /// Value specifying what height the View should be (if it needs to be a hard value)
     var requiredHeight: CGFloat { get }
 }

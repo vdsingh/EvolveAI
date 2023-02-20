@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-//TODO: docstring
+// TODO: docstring
 enum EAImage: String {
     case clock
-    
+
     var uiImage: UIImage {
-        return UIImage(systemName: self.rawValue) ?? .add
-//        switch self {
-//        case .clock:
-//            return UIImage(systemName: )
-//        }
+        if let image = UIImage(systemName: self.rawValue) {
+            return image
+        }
+
+        return UIImage()
     }
 }
