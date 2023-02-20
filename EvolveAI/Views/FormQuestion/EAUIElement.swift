@@ -75,7 +75,8 @@ enum EAUIElement {
 
     case image(
         eaImage: EAImage,
-        color: UIColor
+        color: UIColor,
+        requiredHeight: CGFloat
     )
 
     // TODO: Tag
@@ -103,7 +104,7 @@ enum EAUIElement {
 
     /// Transforms the response object to a UIView and returns it
     /// - Returns: a UIView which is the response object
-    func createView() -> EAFormElementView {
+    func createView() -> EAUIElementView {
         switch self {
         case .textFieldQuestion(let question, let placeholder, let keyboardType, let editedCallback):
             let viewModel = EATextFieldQuestionViewModel(
@@ -163,8 +164,8 @@ enum EAUIElement {
             let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines, textWasClicked: textWasClicked)
             return label
 
-        case .image(let eaImage, let color):
-            let imageView = EAImageView(eaImage: eaImage, color: color)
+        case .image(let eaImage, let color, let requiredHeight):
+            let imageView = EAImageView(eaImage: eaImage, color: color, requiredHeight: requiredHeight)
 
             return imageView
 
