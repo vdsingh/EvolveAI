@@ -24,7 +24,7 @@ class EAGoalsListView: UIView, Debuggable {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
 //        layout.itemSize = CGSize(width: 200, height: 250)
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 
