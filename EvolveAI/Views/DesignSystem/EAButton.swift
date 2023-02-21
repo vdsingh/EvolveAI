@@ -39,6 +39,10 @@ class EAButton: UIButton, EAUIElementViewStaticHeight {
         self.setTitle(text, for: .normal)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
+        
+        NSLayoutConstraint.activate([
+            self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
+        ])
     }
 
     // MARK: - Public Functions
