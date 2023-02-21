@@ -7,20 +7,32 @@
 
 import Foundation
 import UIKit
-// TODO: docstring
+
+/// Custom ImageView class
 final class EAImageView: UIImageView, EAUIElementView {
+
+    /// The height required for this ImageView
     var requiredHeight: CGFloat
 
-    init(eaImage: EAImage, color: UIColor, requiredHeight: CGFloat) {
+    /// Normal Initializer
+    /// - Parameters:
+    ///   - eaImage: The image that is displayed by this ImageView
+    ///   - color: The tint color for this ImageView
+    ///   - requiredHeight: The height required for this ImageView
+    init(eaImage: EAImage, tintColor: UIColor, requiredHeight: CGFloat) {
         self.requiredHeight = requiredHeight
         super.init(frame: .zero)
 
-        self.setUIProperties(eaImage: eaImage, color: color)
+        self.setUIProperties(eaImage: eaImage, tintColor: tintColor)
     }
-
-    private func setUIProperties(eaImage: EAImage, color: UIColor) {
+    
+    /// Sets the UI Properties of the ImageView
+    /// - Parameters:
+    ///   - eaImage: The Image that this ImageView should display
+    ///   - tintColor: The tintColor of the image
+    private func setUIProperties(eaImage: EAImage, tintColor: UIColor) {
         self.image = eaImage.uiImage
-        self.tintColor = color
+        self.tintColor = tintColor
 
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: self.requiredHeight),

@@ -111,9 +111,11 @@ extension EAGoalsListView {
 }
 
 // MARK: - Custom Layout
-// TODO: Docstring
+
+/// Custom FlowLayout for the Goals List CollectionView
 class EAGoalsListCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override func shouldInvalidateLayout(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
+        // By invalidating layout on bounds change, we avoid overlapping cells.
         return true
     }
 }

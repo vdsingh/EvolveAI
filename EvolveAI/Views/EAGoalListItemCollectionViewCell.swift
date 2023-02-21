@@ -24,9 +24,10 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         return spinner
     }()
 
-    // TODO: Docstring
+    /// The width of the cell (calculated when the cell is configured)
     private var cellWidth: CGFloat?
 
+    /// Callback to refresh the CollectionView containing this cell
     private var refreshCollectionViewCallback: (() -> Void)?
 
     // MARK: - Private Functions
@@ -71,7 +72,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         ])
     }
 
-    // TODO: Docstring
+    /// Constructs the main StackView for this cell
+    /// - Parameter viewModel: The ViewModel that provides the information
+    /// - Returns: An EAStackView containing all of the necessary subviews
     private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
         // Adds the title label and "Number of Days" label
         guard let elementStack = EAUIElement.stack(
@@ -80,7 +83,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             elements: [
                 .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
                 .stack(axis: .horizontal, spacing: .one, elements: [
-                    .image(eaImage: .clock, color: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
+                    .image(eaImage: .clock, tintColor: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
                     .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
                 ])
             ]
@@ -111,6 +114,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         return elementStack
     }
 
+    /// Refreshes the CollectionView that this cell is in
     private func refreshCollectionView() {
         if let refreshCollectionViewCallback = refreshCollectionViewCallback {
             printDebug("Refreshing CollectionView")
@@ -119,8 +123,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     }
 
     // MARK: - Public Functions
-
-    // TODO: Docstring
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if let cellWidth = self.cellWidth {
@@ -133,7 +135,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             return layoutAttributes
         }
 
-        fatalError("$Error: cell width not initialized")
+        fatalError("$Error: cell width not initialized. Make sure you called cell.configure")
     }
 
     func configure(with viewModel: EAGoalListItemViewModel, refreshCollectionViewCallback: (() -> Void)? = nil) {

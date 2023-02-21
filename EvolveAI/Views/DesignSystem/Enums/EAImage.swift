@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 
-// TODO: docstring
+/// Images to be used in the application
 enum EAImage: String {
     case clock
 
+    /// The UIImage
     var uiImage: UIImage {
         if let image = UIImage(systemName: self.rawValue) {
             return image

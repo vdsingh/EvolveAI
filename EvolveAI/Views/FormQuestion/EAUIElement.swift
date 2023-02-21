@@ -58,7 +58,7 @@ enum EAUIElement {
         buttonPressed: (EAButton) -> Void
     )
 
-    // TODO: Docstring
+    /// Goal tasks (checkbox and label)
     case task(
         viewModel: EAGoalTaskViewModel?,
         taskCompletionChangedCallback: ((Bool) -> Void)?
@@ -75,13 +75,14 @@ enum EAUIElement {
         textWasClicked: (() -> Void)? = nil
     )
 
+    /// An image
     case image(
         eaImage: EAImage,
-        color: UIColor,
+        tintColor: UIColor,
         requiredHeight: CGFloat
     )
 
-    // TODO: Tag
+    /// A goal tag button (ex: "Nutrition")
     case tag(
         text: String,
         color: UIColor
@@ -166,8 +167,8 @@ enum EAUIElement {
             let label = EALabel(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines, textWasClicked: textWasClicked)
             return label
 
-        case .image(let eaImage, let color, let requiredHeight):
-            let imageView = EAImageView(eaImage: eaImage, color: color, requiredHeight: requiredHeight)
+        case .image(let eaImage, let tintColor, let requiredHeight):
+            let imageView = EAImageView(eaImage: eaImage, tintColor: tintColor, requiredHeight: requiredHeight)
 
             return imageView
 

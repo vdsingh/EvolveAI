@@ -12,13 +12,6 @@ import UIKit
 final class EALabel: UILabel, EAUIElementView, Debuggable {
     let debug = false
 
-    /// The height required for this Label
-//    var requiredHeight: CGFloat? {
-//        self.font.pointSize * CGFloat(self.numberOfLines) + EAIncrement.one.rawValue
-//    }
-
-//    let requiredHeight: CGFloat? = nil
-
     /// The callback function for when the label is clicked
     private var textWasClicked: (() -> Void)?
 

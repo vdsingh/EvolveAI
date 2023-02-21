@@ -50,8 +50,6 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
         self.addSubviewsAndEstablishConstraints()
     }
 
-    // TODO: Docstring
-
     /// Initializer for EAGoalTaskViews that can be configured with a ViewModel immediately
     /// - Parameter viewModel: The ViewModel used to configure the TaskView
     init(viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
@@ -83,10 +81,9 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
 
     // MARK: - Public Functions
 
-    // TODO: Docstring
-
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
+    /// - Parameter taskCompletionChangedCallback: Function called when task completion has changed
     func configure(with viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
         self.updateTaskUI(with: viewModel)
         self.checkbox.setCheckboxHandler { [weak self] complete in

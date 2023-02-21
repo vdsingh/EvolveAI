@@ -11,31 +11,20 @@ import UIKit
 /// Custom StackView element
 final class EAStackView: UIStackView, EAUIElementView {
 
-    /// The height required for this UI element
-//    var requiredHeight: CGFloat
-
     /// Normal initializer
     /// - Parameters:
     ///   - axis: The axis for this StackView
     ///   - subViews: The views contained within this StackView
     init(axis: NSLayoutConstraint.Axis, subViews: [EAUIElementView]) {
-//        var calculatedHeight: CGFloat = 0
-//        if axis == .vertical {
-//            for subView in subViews {
-//                calculatedHeight += subView.requiredHeight
-//            }
-//        } else if axis == .horizontal {
-//            for subView in subViews {
-//                calculatedHeight = max(calculatedHeight, subView.requiredHeight)
-//            }
-//        }
-
-//        self.requiredHeight = calculatedHeight
         super.init(frame: .zero)
         self.setUIProperties(axis: axis)
         self.addSubviews(subViews: subViews)
     }
 
+    // MARK: - Private Functions
+
+    /// Adds a Subview to the StackView
+    /// - Parameter subview: The EAUIElementView to add
     private func addSubview(_ subview: EAUIElementView) {
         self.addArrangedSubview(subview)
     }
@@ -56,6 +45,10 @@ final class EAStackView: UIStackView, EAUIElementView {
 
     }
 
+    // MARK: - Public Functions
+
+    /// Adds EAUIElements to the StackView
+    /// - Parameter elements: The EAUIElements to add
     func addElements(_ elements: [EAUIElement]) {
         for element in elements {
             let view = element.createView()

@@ -18,7 +18,7 @@ final class EACheckbox: UIButton, EAUIElementViewStaticHeight, Debuggable {
     /// Optional handler for when this checkbox was toggled
     private var checkboxWasToggled: ((Bool) -> Void)?
 
-    // TODO: Docstring
+    /// The border and fill color of the checkbox
     private var color: UIColor = .label
 
     /// Normal initializer
@@ -61,7 +61,8 @@ final class EACheckbox: UIButton, EAUIElementViewStaticHeight, Debuggable {
 
     // MARK: - Public
 
-    // TODO: Docstring
+    /// Sets the border and fill color of the checkbox
+    /// - Parameter color: The color to set the checkbox to
     func setColor(_ color: UIColor) {
         self.color = color
         self.setUIProperties()
