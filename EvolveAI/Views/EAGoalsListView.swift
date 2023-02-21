@@ -42,7 +42,7 @@ class EAGoalsListView: UIView, Debuggable {
         label.text = Constants.emptyCollectionViewText
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .lightGray
+        label.textColor = EAColor.background.uiColor.darker(by: 60) ?? UIColor.darkGray
         return label
     }()
 
