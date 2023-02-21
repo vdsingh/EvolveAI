@@ -36,7 +36,7 @@ protocol EAGoalTaskViewModel: EAGoalTaskViewModelInput, EAGoalTaskViewModelOutpu
 
 /// Default ViewModel which conforms to the required input/output protocols
 final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
-    let debug = true
+    let debug = false
 
     /// The task that this ViewModel represents
     private let task: EAGoalTask

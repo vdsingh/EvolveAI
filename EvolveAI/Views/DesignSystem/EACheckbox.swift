@@ -10,7 +10,7 @@ import UIKit
 
 /// Checkbox component
 final class EACheckbox: UIButton, EAUIElementViewStaticHeight, Debuggable {
-    let debug = true
+    let debug = false
 
     /// Size of the checkbox (width = height)
     var requiredHeight: CGFloat

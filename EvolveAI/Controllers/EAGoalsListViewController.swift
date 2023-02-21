@@ -8,9 +8,10 @@
 import UIKit
 import RealmSwift
 
+/// ViewController for Goals List
 class EAGoalsListViewController: UIViewController, Debuggable {
 
-    let debug = true
+    let debug = false
 
     /// The goals that we are viewing
     private lazy var viewModel: EAGoalsListViewModel = {
@@ -117,6 +118,8 @@ class EAGoalsListViewController: UIViewController, Debuggable {
         printDebug("Set delegate and datasource.")
     }
 
+    // MARK: - Private Functions
+    
     /// Function called when the user clicks the question button (max goal limit reached)
     @objc private func questionButtonPressed() {
         let dialogMessage = UIAlertController(title: "Goal Limit Reached", message: "You've reached the maximum amount of goals.", preferredStyle: .alert)
@@ -142,6 +145,8 @@ class EAGoalsListViewController: UIViewController, Debuggable {
             fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
         }
     }
+    
+    // MARK: - Public Functions
 
     func printDebug(_ message: String) {
         if Flags.debugGoalsList || self.debug {
@@ -153,6 +158,8 @@ class EAGoalsListViewController: UIViewController, Debuggable {
         return nil
     }
 }
+
+// MARK: - CollectionView Data Source
 
 extension EAGoalsListViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -177,6 +184,8 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
         fatalError("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
     }
 }
+
+// MARK: - CollectionView Delegate
 
 extension EAGoalsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

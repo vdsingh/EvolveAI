@@ -41,8 +41,8 @@ struct EAGoalsListViewModelActions {
 
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
 
-final class DefaultEAGoalsListViewModel: EAGoalsListViewModel {
-    let debug = true
+final class DefaultEAGoalsListViewModel: EAGoalsListViewModel, Debuggable {
+    let debug = false
 
     /// Service to interact with goals and other related types
     private let goalsService: EAGoalsService
@@ -110,7 +110,7 @@ extension DefaultEAGoalsListViewModel {
     }
 }
 
-extension DefaultEAGoalsListViewModel: Debuggable {
+extension DefaultEAGoalsListViewModel {
     func printDebug(_ message: String) {
         if self.debug {
             print("$Log: \(message)")
