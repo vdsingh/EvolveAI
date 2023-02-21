@@ -30,7 +30,7 @@ extension UIColor {
             alpha: 1.0
         )
     }
-    
+
     /// Initializes a UIColor using a hex string
     /// - Parameter hex: The hex String
     public convenience init?(hex: String) {

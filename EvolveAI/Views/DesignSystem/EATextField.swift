@@ -33,7 +33,7 @@ final class EATextField: UITextField, EAUIElementViewStaticHeight {
         self.layer.borderColor = borderColor.cgColor
         self.returnKeyType = UIReturnKeyType.done
         self.delegate = self
-        
+
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
         ])
@@ -55,7 +55,7 @@ final class EATextField: UITextField, EAUIElementViewStaticHeight {
     }
 
     // MARK: - Sets the padding for the TextField (adding a small space in the beginning)
-    
+
     let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5)
 
     override public func textRect(forBounds bounds: CGRect) -> CGRect {

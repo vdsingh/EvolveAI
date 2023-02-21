@@ -106,7 +106,7 @@ class EAGoalsListViewController: UIViewController, Debuggable {
     override func loadView() {
         let goalsView = EAGoalsListView()
         view = goalsView
-        
+
         let textAttributes = [NSAttributedString.Key.foregroundColor: goalsView.collectionView.backgroundColor?.darker(by: 60) ?? .systemGray]
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
@@ -119,7 +119,7 @@ class EAGoalsListViewController: UIViewController, Debuggable {
     }
 
     // MARK: - Private Functions
-    
+
     /// Function called when the user clicks the question button (max goal limit reached)
     @objc private func questionButtonPressed() {
         let dialogMessage = UIAlertController(title: "Goal Limit Reached", message: "You've reached the maximum amount of goals.", preferredStyle: .alert)
@@ -145,7 +145,7 @@ class EAGoalsListViewController: UIViewController, Debuggable {
             fatalError("$Error: Expected view to be type EAGoalsView but it wasn't")
         }
     }
-    
+
     // MARK: - Public Functions
 
     func printDebug(_ message: String) {

@@ -17,14 +17,14 @@ enum EAColor: String {
     case pastelBlue = "#bae1ff"
 
     case background = "#C9B6E4"
-    
+
     /// Returns the UIColor
     var uiColor: UIColor {
         return UIColor(hex: self.rawValue) ?? .black
     }
-    
+
     // MARK: - Static Variables
-    
+
     /// The colors that goals can be
     static var goalColors: [EAColor] {
         return [.pastelRed, .pastelOrange, .pastelYellow, .pastelGreen, .pastelBlue]

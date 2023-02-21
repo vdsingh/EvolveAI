@@ -25,7 +25,7 @@ final class EAImageView: UIImageView, EAUIElementView {
 
         self.setUIProperties(eaImage: eaImage, tintColor: tintColor)
     }
-    
+
     /// Sets the UI Properties of the ImageView
     /// - Parameters:
     ///   - eaImage: The Image that this ImageView should display
