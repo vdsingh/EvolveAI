@@ -168,10 +168,12 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
             let goalListItemViewModel = self.viewModel.items[indexPath.row]
             printDebug("Dequeueing EAGoalListItemCollectionViewCell with viewModel \(goalListItemViewModel)")
-            cell.configure(with: goalListItemViewModel)
+            cell.configure(with: goalListItemViewModel, refreshCollectionViewCallback: { [weak self] in
+                self?.getView().refreshView()
+            })
             return cell
         }
-
+        
         fatalError("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
     }
 }

@@ -26,6 +26,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     // TODO: Docstring
     private var cellWidth: CGFloat = 5
+    private var refreshCollectionViewCallback: (() -> Void)?
 
     // MARK: - Private Functions
 
@@ -90,7 +91,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         if let nextTaskViewModel = viewModel.nextTaskViewModel {
             elementStack.addElements([
                 .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: viewModel.darkColor),
-                .task(viewModel: nextTaskViewModel)
+                .task(viewModel: nextTaskViewModel, taskCompletionChangedCallback: { [weak self] _ in
+                    self?.refreshCollectionView()
+                })
             ])
         }
 
@@ -106,18 +109,33 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         return elementStack
     }
+    
+    private func refreshCollectionView() {
+        if let refreshCollectionViewCallback = refreshCollectionViewCallback {
+            printDebug("Refreshing CollectionView")
+            refreshCollectionViewCallback()
+        }
+    }
 
     // MARK: - Public Functions
 
     // TODO: Docstring
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let targetSize = CGSize(width: self.cellWidth, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
-        return layoutAttributes
+        if let cellWidth = self.cellWidth {
+            let targetSize = CGSize(width: cellWidth, height: 0)
+            layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(
+                targetSize,
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow
+            )
+            return layoutAttributes
+        }
+        
+        fatalError("$Error: cell width not initialized")
     }
 
-    func configure(with viewModel: EAGoalListItemViewModel) {
+    func configure(with viewModel: EAGoalListItemViewModel, refreshCollectionViewCallback: (() -> Void)? = nil) {
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })
         self.contentView.backgroundColor = viewModel.color
         self.contentView.layer.cornerRadius = EAIncrement.two.rawValue
@@ -128,6 +146,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             self.backgroundColor = .yellow
         }
 
+        // Set the refresh collection view callback
+        self.refreshCollectionViewCallback = refreshCollectionViewCallback
+        
         // Set the main stack to the created stack.
         self.mainStack = constructMainStack(with: viewModel)
 
