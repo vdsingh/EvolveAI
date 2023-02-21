@@ -25,7 +25,8 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     }()
 
     // TODO: Docstring
-    private var cellWidth: CGFloat = 5
+    private var cellWidth: CGFloat?
+    
     private var refreshCollectionViewCallback: (() -> Void)?
 
     // MARK: - Private Functions

@@ -21,24 +21,13 @@ class EAGoalsListView: UIView, Debuggable {
         let numItemsPerRow: CGFloat = 1
         let spacing: CGFloat = EAIncrement.two.rawValue
 
-        let layout = UICollectionViewFlowLayout()
+        let layout = EAGoalsListCollectionViewFlowLayout()
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-//        layout.itemSize = CGSize(width: 200, height: 250)
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 
-//        let commentFlowLayout = CommentFlowLayout()
-//        commentCollection.register(CommentCell.self, forCellWithReuseIdentifier: "cell")
-//        commentFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-//        commentFlowLayout.minimumInteritemSpacing = 10
-//        commentFlowLayout.minimumLineSpacing = 10
-
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        collectionView.collectionViewLayout = commentFlowLayout
-//        collectionView.contentInsetAdjustmentBehavior = .always
-
-//        let collectionView =
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(EAGoalListItemCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier)
         return collectionView
@@ -92,17 +81,7 @@ class EAGoalsListView: UIView, Debuggable {
     /// Refreshes the view
     public func refreshView() {
         printDebug("Refreshing GoalsListView")
-        
         collectionView.reloadData()
-        
-        //        for cell in collectionView.visibleCells {
-        //            guard let cell = cell as? EAGoalListItemCollectionViewCell else {
-        //                fatalError("$Error: wrong cell type")
-        //            }
-        //
-        //            printDebug("Refreshing a Goal cell")
-        //            cell.refresh()
-        //        }
         updateEmptyTableViewMessage()
     }
 
@@ -128,5 +107,13 @@ extension EAGoalsListView {
         if self.debug ||  Flags.debugGoalsList {
             print("$Log: \(message)")
         }
+    }
+}
+
+// MARK: - Custom Layout
+//TODO: Docstring
+class EAGoalsListCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func shouldInvalidateLayout(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
+        return true
     }
 }
