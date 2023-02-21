@@ -49,8 +49,8 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
 
     /// Initializer for EAGoalTaskViews that can be configured with a ViewModel immediately
     /// - Parameter viewModel: The ViewModel used to configure the TaskView
@@ -83,8 +83,8 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
 
     // MARK: - Public Functions
 
-    //TODO: Docstring
-    
+    // TODO: Docstring
+
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
     func configure(with viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {

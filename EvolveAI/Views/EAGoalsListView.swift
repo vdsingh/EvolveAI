@@ -111,7 +111,7 @@ extension EAGoalsListView {
 }
 
 // MARK: - Custom Layout
-//TODO: Docstring
+// TODO: Docstring
 class EAGoalsListCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override func shouldInvalidateLayout(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
         return true

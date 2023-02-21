@@ -173,7 +173,7 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
             })
             return cell
         }
-        
+
         fatalError("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
     }
 }

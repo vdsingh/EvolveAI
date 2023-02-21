@@ -58,7 +58,7 @@ enum EAUIElement {
         buttonPressed: (EAButton) -> Void
     )
 
-    //TODO: Docstring
+    // TODO: Docstring
     case task(
         viewModel: EAGoalTaskViewModel?,
         taskCompletionChangedCallback: ((Bool) -> Void)?

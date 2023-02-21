@@ -26,7 +26,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     // TODO: Docstring
     private var cellWidth: CGFloat?
-    
+
     private var refreshCollectionViewCallback: (() -> Void)?
 
     // MARK: - Private Functions
@@ -70,7 +70,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             mainStack.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -EAIncrement.two.rawValue)
         ])
     }
-    
+
     // TODO: Docstring
     private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
         // Adds the title label and "Number of Days" label
@@ -110,7 +110,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         return elementStack
     }
-    
+
     private func refreshCollectionView() {
         if let refreshCollectionViewCallback = refreshCollectionViewCallback {
             printDebug("Refreshing CollectionView")
@@ -132,7 +132,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             )
             return layoutAttributes
         }
-        
+
         fatalError("$Error: cell width not initialized")
     }
 
@@ -149,7 +149,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Set the refresh collection view callback
         self.refreshCollectionViewCallback = refreshCollectionViewCallback
-        
+
         // Set the main stack to the created stack.
         self.mainStack = constructMainStack(with: viewModel)
 
