@@ -38,6 +38,7 @@
 		B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */; };
 		B9584E81297F3479000368C2 /* EAGoalTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E80297F3479000368C2 /* EAGoalTaskView.swift */; };
 		B9584E83297F4253000368C2 /* EAGoalTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E82297F4253000368C2 /* EAGoalTask.swift */; };
+		B96DFABB29A497340089CB39 /* EAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96DFABA29A497340089CB39 /* EAColor.swift */; };
 		B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B40299C434700F27BC2 /* EAEmptyView.swift */; };
 		B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4829A1DD2C00F27BC2 /* EAImage.swift */; };
 		B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */; };
@@ -133,6 +134,7 @@
 		B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskViewModel.swift; sourceTree = "<group>"; };
 		B9584E80297F3479000368C2 /* EAGoalTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskView.swift; sourceTree = "<group>"; };
 		B9584E82297F4253000368C2 /* EAGoalTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTask.swift; sourceTree = "<group>"; };
+		B96DFABA29A497340089CB39 /* EAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColor.swift; sourceTree = "<group>"; };
 		B9810B40299C434700F27BC2 /* EAEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEmptyView.swift; sourceTree = "<group>"; };
 		B9810B4829A1DD2C00F27BC2 /* EAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImage.swift; sourceTree = "<group>"; };
 		B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImageView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				B96DFAB929A2D9980089CB39 /* Enums */,
 				B9810B40299C434700F27BC2 /* EAEmptyView.swift */,
 				B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */,
+				B96DFABA29A497340089CB39 /* EAColor.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
 				B90847DB2971277C00758477 /* EASpinner.swift in Sources */,
+				B96DFABB29A497340089CB39 /* EAColor.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,

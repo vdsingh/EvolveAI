@@ -13,7 +13,8 @@ class EAGoalsListView: UIView, Debuggable {
 
     /// Constants for this View
     private struct Constants {
-        static let emptyTableViewText = "You have no Goals yet. Create one using the \"+\" in the top right"
+        /// The text for when there are no goals in the CollectionView
+        static let emptyCollectionViewText = "You have no Goals yet. Create one using the \"+\" in the top right"
     }
 
     /// CollectionView used to display goals
@@ -38,7 +39,7 @@ class EAGoalsListView: UIView, Debuggable {
     private let emptyTableViewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constants.emptyTableViewText
+        label.text = Constants.emptyCollectionViewText
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .lightGray
