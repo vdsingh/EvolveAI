@@ -39,7 +39,7 @@ enum EAUIElement {
 
     /// Used to create a color selector
     case colorSelector(
-        colors: [UIColor],
+        colors: [EAColor],
         colorWasSelected: (UIColor) -> Void
     )
 

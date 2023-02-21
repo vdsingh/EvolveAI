@@ -15,7 +15,7 @@ final class EAColorSelector: UIStackView, EAUIElementView {
     private let colorSpacing: CGFloat = 6
 
     /// The color options that the user can select
-    private let colors: [UIColor]
+    private let colors: [EAColor]
 
     /// An array of the Color Views
     private var colorViews: [UIView]
@@ -49,7 +49,7 @@ final class EAColorSelector: UIStackView, EAUIElementView {
     /// - Parameters:
     ///   - colors: The color options that the user can select
     ///   - colorWasSelectedCallback: Callback function for when a color is selected
-    init(colors: [UIColor], colorWasSelectedCallback: @escaping (UIColor) -> Void) {
+    init(colors: [EAColor], colorWasSelectedCallback: @escaping (UIColor) -> Void) {
         self.colors = colors
         self.colorWasSelected = colorWasSelectedCallback
         self.colorViews = []
@@ -64,7 +64,7 @@ final class EAColorSelector: UIStackView, EAUIElementView {
 
     /// Adds the necessary Sub Views and establishes constraints
     /// - Parameter colors: The colors to add to this form element
-    private func addSubViewsAndEstablishConstraints(colors: [UIColor]) {
+    private func addSubViewsAndEstablishConstraints(colors: [EAColor]) {
         let colorStacks = createHStackViewsForColors(colors: colors)
         for stack in colorStacks {
             self.addArrangedSubview(stack)
@@ -81,14 +81,14 @@ final class EAColorSelector: UIStackView, EAUIElementView {
     /// Creates an array of Horizontal stacks, which contain Color Views
     /// - Parameter colors: The colors that the user can choose from
     /// - Returns: An array of Horizontal stacks, which contain Color Views
-    private func createHStackViewsForColors(colors: [UIColor]) -> [UIStackView] {
+    private func createHStackViewsForColors(colors: [EAColor]) -> [UIStackView] {
         var stacks = [UIStackView]()
 
         for index in 0..<colors.count {
             let color = colors[index]
             let colorView = UIView()
             colorView.translatesAutoresizingMaskIntoConstraints = false
-            colorView.backgroundColor = color
+            colorView.backgroundColor = color.uiColor
             colorView.widthAnchor.constraint(equalToConstant: self.rowHeight - (self.colorSpacing * 2)).isActive = true
             colorView.heightAnchor.constraint(equalToConstant: self.rowHeight - (self.colorSpacing * 2)).isActive = true
             colorView.layer.cornerRadius = (self.rowHeight - (self.colorSpacing * 2)) / 2

@@ -84,9 +84,6 @@ class EAGoalsListViewController: UIViewController, Debuggable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
-        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
-
         if self.goalsService.maximumGoalsReached() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "questionmark.circle"),
@@ -109,6 +106,9 @@ class EAGoalsListViewController: UIViewController, Debuggable {
     override func loadView() {
         let goalsView = EAGoalsListView()
         view = goalsView
+        
+        let textAttributes = [NSAttributedString.Key.foregroundColor: goalsView.collectionView.backgroundColor?.darker(by: 60) ?? .systemGray]
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
 
     override func viewDidLoad() {

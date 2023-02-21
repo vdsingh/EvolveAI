@@ -202,7 +202,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
             ),
             .separator(),
             .colorSelector(
-                colors: UIColor.eaColors,
+                colors: EAColor.goalColors,
                 colorWasSelected: { [weak self] color in
                     self?.color = color
                     self?.updateButton()

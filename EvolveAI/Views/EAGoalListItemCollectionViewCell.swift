@@ -139,6 +139,12 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     }
 
     func configure(with viewModel: EAGoalListItemViewModel, refreshCollectionViewCallback: (() -> Void)? = nil) {
+        self.layer.shadowColor = viewModel.darkColor.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: 5, height: 5)
+        self.layer.shadowRadius = 10
+        
+        
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })
         self.contentView.backgroundColor = viewModel.color
         self.contentView.layer.cornerRadius = EAIncrement.two.rawValue

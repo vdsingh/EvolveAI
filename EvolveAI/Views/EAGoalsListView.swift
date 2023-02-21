@@ -30,6 +30,7 @@ class EAGoalsListView: UIView, Debuggable {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(EAGoalListItemCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = EAColor.background.uiColor
         return collectionView
     }()
 

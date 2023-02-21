@@ -30,15 +30,7 @@ extension UIColor {
             alpha: 1.0
         )
     }
-
-    static var eaColors: [UIColor] = [
-        UIColor(hex: "#ff595e") ?? .black,
-        UIColor(hex: "#ffca3a") ?? .black,
-        UIColor(hex: "#d1ff87") ?? .black,
-        UIColor(hex: "#1982c4") ?? .black,
-        UIColor(hex: "#6a4c93") ?? .black
-    ]
-
+    
     /// Initializes a UIColor using a hex string
     /// - Parameter hex: The hex String
     public convenience init?(hex: String) {
