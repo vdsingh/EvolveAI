@@ -59,7 +59,7 @@ class EADayGuideView: UIStackView {
                 print("$Log: Task: \(taskViewModel.text)")
             }
 
-            let taskView = EAGoalTaskView(viewModel: taskViewModel)
+            let taskView = EAGoalTaskView(viewModel: taskViewModel, taskCompletionChangedCallback: nil)
             self.tasksStackView.addArrangedSubview(taskView)
         }
     }

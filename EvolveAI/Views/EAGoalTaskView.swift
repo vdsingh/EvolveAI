@@ -49,13 +49,15 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
     }
+    
+    //TODO: Docstring
 
     /// Initializer for EAGoalTaskViews that can be configured with a ViewModel immediately
     /// - Parameter viewModel: The ViewModel used to configure the TaskView
-    init(viewModel: EAGoalTaskViewModel) {
+    init(viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
-        self.configure(with: viewModel)
+        self.configure(with: viewModel, taskCompletionChangedCallback: taskCompletionChangedCallback)
     }
 
     // MARK: - Private Functions
@@ -81,19 +83,27 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
 
     // MARK: - Public Functions
 
+    //TODO: Docstring
+    
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
-    func configure(with viewModel: EAGoalTaskViewModel) {
+    func configure(with viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
         self.updateTaskUI(with: viewModel)
         self.checkbox.setCheckboxHandler { [weak self] complete in
             self?.printDebug("Checkbox was toggled. Complete: \(complete)")
             viewModel.toggleTaskCompletion(complete: complete)
+            if let taskCompletionChangedCallback = taskCompletionChangedCallback {
+                taskCompletionChangedCallback(complete)
+            }
             self?.updateTaskUI(with: viewModel)
         }
 
         self.taskLabel.setClickHandler { [weak self] in
             viewModel.toggleTaskCompletion(complete: !viewModel.complete)
             self?.printDebug("Task label was clicked. Complete: \(viewModel.complete)")
+            if let taskCompletionChangedCallback = taskCompletionChangedCallback {
+                taskCompletionChangedCallback(viewModel.complete)
+            }
             self?.updateTaskUI(with: viewModel)
         }
     }

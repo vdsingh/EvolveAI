@@ -58,8 +58,10 @@ enum EAUIElement {
         buttonPressed: (EAButton) -> Void
     )
 
+    //TODO: Docstring
     case task(
-        viewModel: EAGoalTaskViewModel?
+        viewModel: EAGoalTaskViewModel?,
+        taskCompletionChangedCallback: ((Bool) -> Void)?
     )
 
     // MARK: - Static Elements
@@ -152,9 +154,9 @@ enum EAUIElement {
             viewSetter(view)
             return view
 
-        case .task(let viewModel):
+        case .task(let viewModel, let taskCompletionChangedCallback):
             if let viewModel = viewModel {
-                return EAGoalTaskView(viewModel: viewModel)
+                return EAGoalTaskView(viewModel: viewModel, taskCompletionChangedCallback: taskCompletionChangedCallback)
             } else {
                 print("$Log: Task has a nil ViewModel. Returning an EmptyView")
                 return EAEmptyView()
