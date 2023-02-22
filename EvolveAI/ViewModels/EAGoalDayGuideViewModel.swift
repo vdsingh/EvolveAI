@@ -32,9 +32,11 @@ protocol EAGoalDayGuideViewModel: EAGoalDayGuideViewModelInput, EAGoalDayGuideVi
 /// ViewModel used to show information for day guides
 final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
 
-    /// The EAGoalDayGuide that this ViewModel represents
+    /// The EAGoalDayGuide that this ViewModel represents.
     private let dayGuide: EAGoalDayGuide
 
+    // TODO: Docstring
+    private let goalStartDate: Date
     /// A service to interact with goals and other related types
     private let goalsService: EAGoalsService
 
