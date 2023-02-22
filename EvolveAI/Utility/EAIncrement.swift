@@ -14,4 +14,8 @@ enum EAIncrement: CGFloat {
     case three = 36
     case four = 48
     case five = 60
+    case six = 72
+    case seven = 84
+    case eight = 96
+    case nine = 108
 }

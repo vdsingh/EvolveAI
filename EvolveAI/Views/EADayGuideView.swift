@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 /// View used to show details for a Day Guide within a specific goal
-class EADayGuideView: UIStackView {
+class EADayGuideView: UIStackView, EAUIElementView {
 
     /// Label which displays the
     let daysLabel: UILabel = {
