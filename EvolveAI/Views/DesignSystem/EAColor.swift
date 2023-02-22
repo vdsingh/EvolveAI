@@ -17,10 +17,24 @@ enum EAColor: String {
     case pastelBlue = "#bae1ff"
 
     case background = "#C9B6E4"
+    case label = "LABEL"
+
+    case success = "#02b529"
+    case failure = "#db001a"
 
     /// Returns the UIColor
     var uiColor: UIColor {
-        return UIColor(hex: self.rawValue) ?? .black
+        switch self {
+        case .label:
+            return EAColor.background.darken(by: 60)
+
+        default:
+            return UIColor(hex: self.rawValue) ?? .black
+        }
+    }
+
+    func darken(by factor: CGFloat) -> UIColor {
+        return self.uiColor.darker(by: factor) ?? .black
     }
 
     // MARK: - Static Variables
