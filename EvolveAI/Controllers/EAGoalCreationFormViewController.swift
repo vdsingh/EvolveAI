@@ -61,6 +61,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     override func loadView() {
         self.title = "New Goal"
         let view = EAFormView(formElements: self.createFormElements())
+        view.backgroundColor = EAColor.background.uiColor
         self.view = view
     }
 
@@ -125,7 +126,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
             }
 
             buttonView.setEnabled(enabled: true)
-            buttonView.backgroundColor = self.color
+            buttonView.backgroundColor = EAColor.success.uiColor
         } else {
             fatalError("$Error: buttonView is not an EAButton type.")
         }
@@ -158,6 +159,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     private func createFormElements() -> [EAUIElement] {
         return [
             .goalCreationQuestion(
+                tintColor: EAColor.label,
                 actionText: "I am going to",
                 goalPlaceholder: "learn the violin",
                 connectorText: "within",
@@ -170,10 +172,10 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     strongSelf.printDebug("Goal Text Edited to: \(textField.text ?? "nil")")
                     if let goal = textField.text, !goal.isEmpty, goal.count < GoalCreationConstants.maxGoalLength {
                         strongSelf.goal = goal
-                        textField.setBorderColor(color: .systemGreen)
+                        textField.setBorderColor(color: EAColor.success.uiColor)
                     } else {
                         strongSelf.goal = nil
-                        textField.setBorderColor(color: .systemRed)
+                        textField.setBorderColor(color: EAColor.failure.uiColor)
                     }
 
                     self?.updateButton()
@@ -190,17 +192,17 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                        let numDays = strongSelf.getNumber(text: text),
                        numDays <= Constants.maxDays {
                         strongSelf.numDays = numDays
-                        textField.setBorderColor(color: .systemGreen)
+                        textField.setBorderColor(color: EAColor.success.uiColor)
                     } else {
                         strongSelf.numDays = nil
-                        textField.setBorderColor(color: .systemRed)
+                        textField.setBorderColor(color: EAColor.failure.uiColor)
                     }
 
                     strongSelf.updateButton()
                 },
                 numDaysLabel: "days."
             ),
-            .separator(),
+            .separator(color: EAColor.label.uiColor),
             .colorSelector(
                 colors: EAColor.goalColors,
                 colorWasSelected: { [weak self] color in
@@ -209,16 +211,17 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     self?.getView().endEditing(false)
                 }
             ),
-            .separator(),
-            .stack(axis: .vertical, spacing: .two, elements: [
+            .separator(color: EAColor.label.uiColor),
+            .elementStack(elements: [
                 .label(text: "I am going to start on:", textStyle: .heading1),
                 .dateSelector(style: .compact, mode: .date, dateWasSelected: { [weak self] date in
                     self?.startDate = date
                     self?.printDebug("Date was selected: \(date)")
                 })
             ]),
-            .separator(),
+            .separator(color: EAColor.label.uiColor),
             .textViewQuestion(
+                labelColor: EAColor.label.uiColor,
                 question: "Additional Details",
                 textViewWasEdited: { [weak self] textView in
                     self?.additionalDetails = textView.text

@@ -18,6 +18,11 @@ final class EATextView: UITextView, EAUIElementView {
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
         self.layer.borderColor = borderColor.cgColor
+
+        self.backgroundColor = EAColor.background.uiColor
+        self.textColor = EAColor.label.uiColor
+
+        self.setConstraints()
     }
 
     /// Sets the border color of the TextView

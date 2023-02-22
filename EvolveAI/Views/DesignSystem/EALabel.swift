@@ -19,7 +19,12 @@ final class EALabel: UILabel, EAUIElementView, Debuggable {
     /// - Parameters:
     ///   - text: The text to display
     ///   - textStyle: The style of the text to display
-    init(text: String, textStyle: EATextStyle, textColor: UIColor, numLines: Int, textWasClicked: (() -> Void)?) {
+    init(
+        text: String = "",
+        textStyle: EATextStyle = .heading1,
+        textColor: UIColor = EAColor.label.uiColor,
+        numLines: Int = 0,
+        textWasClicked: (() -> Void)? = nil) {
         super.init(frame: .zero)
         self.setUIProperties(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
         if let textWasClicked = textWasClicked {

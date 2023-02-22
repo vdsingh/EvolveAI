@@ -101,14 +101,14 @@ class EAGoalsListViewController: UIViewController, Debuggable {
 
         self.viewModel.fetchGoals()
         self.getView().refreshView()
+
+        let textAttributes = [NSAttributedString.Key.foregroundColor: EAColor.label.uiColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
 
     override func loadView() {
         let goalsView = EAGoalsListView()
         view = goalsView
-
-        let textAttributes = [NSAttributedString.Key.foregroundColor: goalsView.collectionView.backgroundColor?.darker(by: 60) ?? .systemGray]
-        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
 
     override func viewDidLoad() {

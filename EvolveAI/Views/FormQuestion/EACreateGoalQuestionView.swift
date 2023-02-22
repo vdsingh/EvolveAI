@@ -37,7 +37,10 @@ class EACreateGoalQuestionView: UIStackView, EAUIElementView {
 
     /// TextField where user must enter their goal (ex: "learn the violin")
     private lazy var goalTextField: EATextField = {
-        let goalTextField = EATextField(textWasEditedCallback: self.goalEditedCallback, borderColor: .systemGray)
+        let goalTextField = EATextField(
+            textWasEditedCallback: self.goalEditedCallback,
+            borderColor: .systemGray
+        )
         return goalTextField
     }()
 
@@ -90,11 +93,17 @@ class EACreateGoalQuestionView: UIStackView, EAUIElementView {
         self.spacing = EAIncrement.one.rawValue
         self.distribution = .fillEqually
 
+        let placeholderColor = EAColor.label.uiColor.lighter(by: 40) ?? .label
         self.actionTextLabel.text = viewModel.actionText
-        self.goalTextField.placeholder = viewModel.goalPlaceholderText
+        self.goalTextField.setPlaceholderText(text: viewModel.goalPlaceholderText, color: placeholderColor)
         self.connectorTextLabel.text = viewModel.connectorText
-        self.numDaysTextField.placeholder = viewModel.numDaysPlaceholderText
+        self.numDaysTextField.setPlaceholderText(text: viewModel.numDaysPlaceholderText, color: placeholderColor)
         self.numDaysUnitLabel.text = viewModel.numDaysUnitLabel
+
+        let uiColor = viewModel.tintColor.uiColor
+        self.actionTextLabel.textColor = uiColor
+        self.connectorTextLabel.textColor = uiColor
+        self.numDaysUnitLabel.textColor = uiColor
     }
 
     /// Add the subviews to the view and establish constraints
