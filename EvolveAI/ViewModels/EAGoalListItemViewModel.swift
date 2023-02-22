@@ -151,6 +151,8 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
         self.goalsService = goalsService
     }
 
+    // TODO: Docstring
+
     init(
         title: String,
         numDays: Int,
@@ -173,9 +175,20 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
 }
 
 extension DefaultEAGoalListItemViewModel {
+
+    /// Handler for when a goal list item was tapped
     func listItemWasTapped() {
         if let goal = self.goal {
             self.actions?.showGoalDetails(goal)
+        }
+    }
+}
+
+extension DefaultEAGoalListItemViewModel {
+    // TODO: Docstring
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
         }
     }
 }

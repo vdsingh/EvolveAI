@@ -19,12 +19,16 @@ final class EALabel: UILabel, EAUIElementView, Debuggable {
     /// - Parameters:
     ///   - text: The text to display
     ///   - textStyle: The style of the text to display
+    ///   - textColor: The color of the text
+    ///   - numLines: The number of lines that the label is
+    ///   - textWasClicked: Callback for when the
     init(
         text: String = "",
         textStyle: EATextStyle = .heading1,
         textColor: UIColor = EAColor.label.uiColor,
         numLines: Int = 0,
-        textWasClicked: (() -> Void)? = nil) {
+        textWasClicked: (() -> Void)? = nil
+    ) {
         super.init(frame: .zero)
         self.setUIProperties(text: text, textStyle: textStyle, textColor: textColor, numLines: numLines)
         if let textWasClicked = textWasClicked {
@@ -36,6 +40,8 @@ final class EALabel: UILabel, EAUIElementView, Debuggable {
     /// - Parameters:
     ///   - text: The text to display
     ///   - textStyle: The style of the text to display
+    ///   - textColor: The color of the text
+    ///   - numLines: The number of lines of the label
     private func setUIProperties(
         text: String,
         textStyle: EATextStyle,

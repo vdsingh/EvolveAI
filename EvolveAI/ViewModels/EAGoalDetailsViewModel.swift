@@ -71,12 +71,12 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var tagStrings: [String]
     let color: UIColor
     var darkColor: UIColor {
-        return self.color.darker(by: 60) ?? .link
+        return self.color.darker() ?? .link
     }
 
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
-            DefaultEAGoalDayGuideViewModel(dayGuide: $0, color: self.darkColor, goalsService: self.goalsService)
+            DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalStartDate: self.goal.creationDate, labelColor: self.darkColor, goalsService: self.goalsService)
         })
     }
 

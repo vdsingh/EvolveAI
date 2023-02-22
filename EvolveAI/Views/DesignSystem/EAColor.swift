@@ -26,14 +26,14 @@ enum EAColor: String {
     var uiColor: UIColor {
         switch self {
         case .label:
-            return EAColor.background.darken(by: 60)
+            return EAColor.background.darken()
 
         default:
             return UIColor(hex: self.rawValue) ?? .black
         }
     }
 
-    func darken(by factor: CGFloat) -> UIColor {
+    func darken(by factor: CGFloat = 60) -> UIColor {
         return self.uiColor.darker(by: factor) ?? .black
     }
 

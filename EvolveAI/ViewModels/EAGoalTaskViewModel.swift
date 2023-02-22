@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// TODO: Docstrings this whole file
+
 /// Possible inputs for this ViewModel
 protocol EAGoalTaskViewModelInput {
 
@@ -22,8 +24,8 @@ protocol EAGoalTaskViewModelOutput {
     /// The text for the task
     var text: String { get }
 
-    /// The color for the text
-    var textColor: UIColor { get }
+    /// The color for the text and the checkbox
+    var tintColor: UIColor { get }
 
     /// Whether the task is complete or not
     var complete: Bool { get }
@@ -49,12 +51,12 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
     }
 
     let text: String
-    let textColor: UIColor
+    let tintColor: UIColor
     var attributedText: NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: self.text)
         attributedString.addAttribute(
             NSAttributedString.Key.foregroundColor,
-            value: self.textColor,
+            value: self.tintColor,
             range: NSRange(location: 0, length: attributedString.length)
         )
         if self.complete {
@@ -68,9 +70,9 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
         return attributedString
     }
 
-    init(task: EAGoalTask, textColor: UIColor, goalsService: EAGoalsService) {
+    init(task: EAGoalTask, tintColor: UIColor, goalsService: EAGoalsService) {
         self.text = task.taskString
-        self.textColor = textColor
+        self.tintColor = tintColor
         self.goalsService = goalsService
         self.task = task
     }

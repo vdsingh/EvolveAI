@@ -74,7 +74,7 @@ extension UIColor {
         return self.adjust(by: abs(percentage) )
     }
 
-    func darker(by percentage: CGFloat = 30.0) -> UIColor? {
+    func darker(by percentage: CGFloat = 60.0) -> UIColor? {
         return self.adjust(by: -1 * abs(percentage) )
     }
 

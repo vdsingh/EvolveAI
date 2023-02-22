@@ -10,7 +10,7 @@ import UIKit
 
 /// View that displays an individual task for a goal
 class EAGoalTaskView: UIStackView, EAUIElementView {
-    let debug: Bool = true
+    let debug: Bool = false
 
     var requiredHeight: CGFloat {
         self.intrinsicContentSize.height
@@ -74,9 +74,12 @@ class EAGoalTaskView: UIStackView, EAUIElementView {
     /// - Parameter viewModel: The ViewModel that supplies the information for this View
     private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
         printDebug("Updating Task UI. Task Completion: \(viewModel.complete)")
-        self.checkbox.setColor(viewModel.textColor)
+        self.checkbox.setColor(viewModel.tintColor)
         self.checkbox.setActive(active: viewModel.complete)
         self.taskLabel.attributedText = viewModel.attributedText
+        if self.debug {
+            self.backgroundColor = .orange
+        }
     }
 
     // MARK: - Public Functions

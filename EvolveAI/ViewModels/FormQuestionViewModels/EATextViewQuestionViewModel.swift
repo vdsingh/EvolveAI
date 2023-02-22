@@ -11,7 +11,7 @@ import UIKit
 /// This ViewModel supplies an EATextViewQuestionView with the necessary information
 struct EATextViewQuestionViewModel {
 
-    // TODO: Docstring
+    /// The color of the question label
     let labelColor: UIColor
 
     /// The question to ask

@@ -15,6 +15,9 @@ class EAStackView: UIStackView, EAUIElementView {
     /// - Parameters:
     ///   - axis: The axis for this StackView
     ///   - subViews: The views contained within this StackView
+    ///   - alignment: The alignment for this StackView
+    ///   - distribution: The distribution for this StackView
+    ///   - spacing: The space between elements in this StackView
     init(
         axis: NSLayoutConstraint.Axis = .vertical,
         alignment: Alignment = .fill,
@@ -31,6 +34,9 @@ class EAStackView: UIStackView, EAUIElementView {
     /// - Parameters:
     ///   - axis: The axis for this StackView
     ///   - elements: The elements to be constructed contained within this StackView
+    ///   - alignment: The alignment for this StackView
+    ///   - distribution: The distribution for this StackView
+    ///   - spacing: The space between elements in this StackView
     init(
         axis: NSLayoutConstraint.Axis = .vertical,
         alignment: Alignment = .fill,
@@ -45,11 +51,16 @@ class EAStackView: UIStackView, EAUIElementView {
 
     // MARK: - Private Functions
 
-    // TODO: Docstring update
-
     /// Sets the UI properties for this StackView
     /// - Parameter axis: The axis for this StackView
-    private func setUIProperties(axis: NSLayoutConstraint.Axis, alignment: Alignment, distribution: Distribution, spacing: EAIncrement) {
+    /// - Parameter alignment: The alignment for this StackView
+    /// - Parameter distribution: The distribution for this StackView
+    /// - Parameter spacing: The space between elements in this StackView
+    private func setUIProperties(
+        axis: NSLayoutConstraint.Axis,
+        alignment: Alignment,
+        distribution: Distribution,
+        spacing: EAIncrement) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = axis
         self.alignment = alignment
@@ -67,7 +78,8 @@ class EAStackView: UIStackView, EAUIElementView {
         }
     }
 
-    // TODO: Docstring
+    /// Adds a EAUIElement to this EAStackView
+    /// - Parameter element: The EAUIElement to add
     func addElement(_ element: EAUIElement) {
         self.addSubview(element.createView())
     }
