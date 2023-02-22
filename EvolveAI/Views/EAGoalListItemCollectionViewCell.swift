@@ -92,9 +92,10 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         }
 
         // If there is a next task for today, add it to the element stack
-        if let nextTaskViewModel = viewModel.nextTaskViewModel {
+        if let nextTaskViewModel = viewModel.nextTaskViewModel,
+           let dayNumberText = viewModel.dayNumberText {
             elementStack.addElements([
-                .label(text: "Next Task (Day \(viewModel.currentDayNumber)):", textStyle: .heading1, textColor: viewModel.darkColor),
+                .label(text: "Today's Next Task (\(dayNumberText)):", textStyle: .heading1, textColor: viewModel.darkColor),
                 .task(viewModel: nextTaskViewModel, taskCompletionChangedCallback: { [weak self] _ in
                     self?.refreshCollectionView()
                 })

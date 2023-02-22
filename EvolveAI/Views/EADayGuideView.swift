@@ -34,8 +34,8 @@ class EADayGuideView: UIStackView, EAUIElementView {
         super.init(frame: .zero)
         self.axis = .vertical
         self.spacing = EAIncrement.one.rawValue
-        self.daysLabel.text = viewModel.daysText
-        self.daysLabel.textColor = viewModel.color
+        self.daysLabel.text = viewModel.dayNumbersAndDatesText
+        self.daysLabel.textColor = viewModel.labelColor
 
         self.addSubviewsAndEstablishConstraints(taskViewModels: viewModel.taskViewModels)
     }

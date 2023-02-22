@@ -80,9 +80,20 @@ extension DefaultEAGoalsListViewModel {
 
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals() {
-        let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap {
+        let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap { goal in
+            var dayGuideViewModel: EAGoalDayGuideViewModel?
+            if let todaysDayGuide = goal.todaysDayGuide {
+                dayGuideViewModel = DefaultEAGoalDayGuideViewModel(
+                    dayGuide: todaysDayGuide,
+                    goalStartDate: goal.startDate,
+                    labelColor: goal.color.darker() ?? .black,
+                    goalsService: self.goalsService
+                )
+            }
+            printDebug("DayGuideViewModel: \(dayGuideViewModel)")
             return DefaultEAGoalListItemViewModel(
-                goal: $0,
+                goal: goal,
+                dayGuideViewModel: dayGuideViewModel,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
                 ),

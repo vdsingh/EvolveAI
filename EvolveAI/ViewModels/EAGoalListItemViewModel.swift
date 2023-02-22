@@ -33,8 +33,9 @@ protocol EAGoalListItemViewModelOutput {
     /// Whether the goal is loading or not
     var loading: Bool { get }
 
+    // TODO: docstrings
     /// The current day number for the goal
-    var currentDayNumber: Int { get }
+    var dayNumberText: String? { get }
 
     /// A ViewModel that represents the next task to complete
     var nextTaskViewModel: EAGoalTaskViewModel? { get }
@@ -53,43 +54,43 @@ struct EAGoalListItemViewModelActions {
 }
 
 /// A ViewModel for EAGoals
-final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
+final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable {
+    let debug: Bool = true
+
     var title: String
     var numDays: Int
     var color: UIColor
     var darkColor: UIColor {
-        color.darker(by: 60) ?? .link
+        color.darker() ?? .link
     }
 
     var loading: Bool {
         goal == nil
     }
 
-    // Computable (use today's date, the goal start date, subtract)
-    var currentDayNumber: Int {
-        // TODO: Fix
-//        if let goal = self.goal {
-//            return Date().distance(to: goal.startDate).significandWidth + 1
-//        }
-//
-//        return nil
-        return 1
-    }
-
-    var nextTaskViewModel: EAGoalTaskViewModel? {
-        if let task = self.nextTask {
-            return DefaultEAGoalTaskViewModel(task: task, textColor: self.darkColor, goalsService: self.goalsService)
+    // TODO: computable (use today's date, the goal start date, subtract)
+    var dayNumberText: String? {
+        if let dayGuideViewModel = self.dayGuideViewModel {
+            return dayGuideViewModel.dayNumbersText
         }
 
         return nil
     }
 
+//    var nextTaskViewModel: EAGoalTaskViewModel? {
+//        if let task = self.nextTask {
+//            return DefaultEAGoalTaskViewModel(task: task, textColor: self.darkColor, goalsService: self.goalsService)
+//        }
+//    }
+
     var tags: [String] {
-        goal?.tags ?? []
+        self.goal?.tags ?? []
     }
 
     /// Actions that this ViewModel may need to handle
     private let actions: EAGoalListItemViewModelActions?
+
+    // TODO: Docstring
 
     private let goalsService: EAGoalsService
 
@@ -102,17 +103,32 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel {
         }
     }
 
-    private var nextTask: EAGoalTask? {
-        return self.todaysDayGuide?.tasks.first(where: { task in
-            !task.complete
-        })
+    // TODO: Docstring
+
+    private var dayGuideViewModel: EAGoalDayGuideViewModel?
+
+    var nextTaskViewModel: EAGoalTaskViewModel? {
+        if let dayGuideViewModel = self.dayGuideViewModel {
+            return dayGuideViewModel.taskViewModels.first(where: { taskViewModel in
+                !taskViewModel.complete
+            })
+        } else {
+            printDebug("EAGoalListItem dayGuideViewModel is nil. This means there is not a day guide for today or the goal is still loading.")
+        }
+
+        return nil
+//        return self.todaysDayGuide?.tasks.first(where: { task in
+//            !task.complete
+//        })
     }
 
-    private var todaysDayGuide: EAGoalDayGuide? {
-        return goal?.dayGuides.first(where: { dayGuide in
-            return dayGuide.days.contains(self.currentDayNumber)
-        })
-    }
+//    private var todaysDayGuide: EAGoalDayGuide? {
+//        return goal.dayGuides.first(where: { dayGuide in
+//            return dayGuide.days.contains(self.currentDayNumber?)
+//        })
+//    }
+
+    // TODO: update docstring params
 
     /// Common initializer
     /// - Parameters:
