@@ -22,12 +22,14 @@ enum EAUIElement {
 
     /// Used to create a basic question and long repsonse question
     case textViewQuestion(
+        labelColor: UIColor,
         question: String,
         textViewWasEdited: (_ textView: UITextView) -> Void
     )
 
     /// Used to create a Goal creation question.
     case goalCreationQuestion(
+        tintColor: EAColor,
         actionText: String,
         goalPlaceholder: String,
         connectorText: String,
@@ -70,7 +72,7 @@ enum EAUIElement {
     case label(
         text: String,
         textStyle: EATextStyle = .body,
-        textColor: UIColor = .label,
+        textColor: UIColor = EAColor.label.uiColor,
         numLines: Int = 0,
         textWasClicked: (() -> Void)? = nil
     )
@@ -92,10 +94,20 @@ enum EAUIElement {
 
     /// Used to create a StackView container
     case stack(
-        axis: NSLayoutConstraint.Axis,
+        axis: NSLayoutConstraint.Axis = .vertical,
+        alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,
-        spacing: EAIncrement,
-        elements: [EAUIElement]
+        spacing: EAIncrement = .two,
+        elements: [EAUIElementView] = []
+    )
+
+    // TODO: docstring
+    case elementStack(
+        axis: NSLayoutConstraint.Axis = .vertical,
+        alignment: UIStackView.Alignment = .fill,
+        distribution: UIStackView.Distribution = .fill,
+        spacing: EAIncrement = .two,
+        elements: [EAUIElement] = []
     )
 
     // MARK: - Other Elements
@@ -119,11 +131,12 @@ enum EAUIElement {
             let view = EATextFieldQuestionView(viewModel: viewModel)
             return view
 
-        case .textViewQuestion(let question, _):
-            let viewModel = EATextViewQuestionViewModel(question: question)
+        case .textViewQuestion(let color, let question, _):
+            let viewModel = EATextViewQuestionViewModel(labelColor: color, question: question)
             let view = EATextViewQuestionView(viewModel: viewModel)
             return view
         case .goalCreationQuestion(
+            let tintColor,
             let actionText,
             let goalPlaceholder,
             let connectorText,
@@ -133,6 +146,7 @@ enum EAUIElement {
             let numDaysLabel
         ):
             let viewModel = EACreateGoalQuestionViewModel(
+                tintColor: tintColor,
                 actionText: actionText,
                 goalPlaceholderText: goalPlaceholder,
                 goalEditedCallback: goalTextWasEdited,
@@ -176,11 +190,12 @@ enum EAUIElement {
             let tag = EATagButton(tag: text, color: color)
             return tag
 
-        case .stack(let axis, let distribution, let spacing, let elements):
-            let subViews = elements.map { $0.createView() }
-            let stack = EAStackView(axis: axis, subViews: subViews)
-            stack.spacing = spacing.rawValue
-            stack.distribution = distribution
+        case .stack(let axis, let alignment, let distribution, let spacing, let views):
+            let stack = EAStackView(axis: axis, alignment: alignment, distribution: distribution, spacing: spacing, subViews: views)
+            return stack
+
+        case .elementStack(let axis, let alignment, let distribution, let spacing, let elements):
+            let stack = EAStackView(axis: axis, alignment: alignment, distribution: distribution, spacing: spacing, elements: elements)
             return stack
 
         case .separator(let color):

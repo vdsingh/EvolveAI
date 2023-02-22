@@ -71,7 +71,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var tagStrings: [String]
     let color: UIColor
     var darkColor: UIColor {
-        return color.darker(by: 60) ?? .link
+        return self.color.darker(by: 60) ?? .link
     }
 
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {

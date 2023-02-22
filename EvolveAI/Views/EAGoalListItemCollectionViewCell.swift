@@ -77,12 +77,12 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     /// - Returns: An EAStackView containing all of the necessary subviews
     private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
         // Adds the title label and "Number of Days" label
-        guard let elementStack = EAUIElement.stack(
+        guard let elementStack = EAUIElement.elementStack(
             axis: .vertical,
             spacing: .one,
             elements: [
                 .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
-                .stack(axis: .horizontal, spacing: .one, elements: [
+                .elementStack(axis: .horizontal, spacing: .one, elements: [
                     .image(eaImage: .clock, tintColor: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
                     .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
                 ])
@@ -103,7 +103,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Add the tags associated with the goal to the view
         elementStack.addElements([
-            .stack(
+            .elementStack(
                 axis: .horizontal,
                 distribution: .fillProportionally,
                 spacing: .one,
