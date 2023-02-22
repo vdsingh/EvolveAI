@@ -58,6 +58,19 @@ class EAGoal: Object {
         }
     }
 
+    // TODO: Docstrings
+    public var todaysDayGuide: EAGoalDayGuide? {
+        return self.dayGuides.first(where: { dayGuide in
+            let dayGuideDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: dayGuide.dayGuideDate)
+            let todayDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+
+            return dayGuideDateComponents.year == todayDateComponents.year &&
+            dayGuideDateComponents.month == todayDateComponents.month &&
+            dayGuideDateComponents.day == todayDateComponents.day
+        })
+    }
+
+    // TODO: Docstrings
     convenience init(
         creationDate: Date,
         startDate: Date,
@@ -95,7 +108,7 @@ class EAGoal: Object {
     ) {
         self.init(creationDate: creationDate, startDate: startDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
         self.dayGuides = parsedResponse.dayGuides
         self.tags = parsedResponse.tags
     }
@@ -112,7 +125,7 @@ class EAGoal: Object {
     ) {
         self.init(creationDate: creationDate, startDate: startDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
         self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse)
+        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
         self.dayGuides = parsedResponse.dayGuides
         self.tags = parsedResponse.tags
     }
@@ -127,7 +140,7 @@ class EAGoal: Object {
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
     /// - Returns: a list of task objects
-    private static func parseAIResponse(from aiResponse: String) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
+    private static func parseAIResponse(from aiResponse: String, startDate: Date) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
         printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
@@ -185,7 +198,8 @@ class EAGoal: Object {
                     let dayGuide = EAGoalDayGuide(
                         isMultipleDays: true,
                         days: dayList,
-                        tasks: taskList
+                        tasks: taskList,
+                        goalStartDate: startDate
                     )
                     dayGuides.append(dayGuide)
                 } else {
@@ -199,7 +213,8 @@ class EAGoal: Object {
                     let dayGuide = EAGoalDayGuide(
                         isMultipleDays: false,
                         days: dayList,
-                        tasks: taskList
+                        tasks: taskList,
+                        goalStartDate: startDate
                     )
                     dayGuides.append(dayGuide)
                 } else {
