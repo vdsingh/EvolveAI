@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 /// Custom TextView for this application (for long responses)
-final class EATextView: UITextView, EAUIElementView {
+final class EATextView: UITextView, EAUIElementViewStaticHeight {
+    var requiredHeight: CGFloat = EAIncrement.nine.rawValue
 
     /// Normal Initializer
     init(borderColor: UIColor) {
@@ -29,6 +30,11 @@ final class EATextView: UITextView, EAUIElementView {
     /// - Parameter color: The color to set the border to
     public func setBorderColor(color: UIColor) {
         self.layer.borderColor = color.cgColor
+    }
+
+    /// Sets the constraints for this view
+    private func setConstraints() {
+        self.heightAnchor.constraint(equalToConstant: self.requiredHeight).isActive = true
     }
 
     required init?(coder: NSCoder) {
