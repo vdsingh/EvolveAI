@@ -137,10 +137,12 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     ///   - color: The goal color
     init(
         goal: EAGoal,
+        dayGuideViewModel: EAGoalDayGuideViewModel?,
         actions: EAGoalListItemViewModelActions?,
         goalsService: EAGoalsService
     ) {
         self.goal = goal
+        self.dayGuideViewModel = dayGuideViewModel
         self.title = goal.goal
         self.numDays = goal.numDays
         self.color = goal.color

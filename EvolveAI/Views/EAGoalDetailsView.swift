@@ -57,7 +57,10 @@ class EAGoalDetailsView: UIView {
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(self.guideContentView)
         self.guideContentView.addElements([
-            .label(text: viewModel.numDaysString, textColor: viewModel.darkColor),
+            .elementStack(axis: .horizontal, spacing: EAIncrement.one, elements: [
+                .image(eaImage: .clock, tintColor: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
+                .label(text: viewModel.numDaysString, textColor: viewModel.darkColor)
+            ]),
             .label(text: viewModel.dateCreatedString, textColor: viewModel.darkColor),
             .elementStack(
                 axis: .horizontal,
