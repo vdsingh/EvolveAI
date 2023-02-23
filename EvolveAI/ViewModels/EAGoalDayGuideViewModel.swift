@@ -9,8 +9,6 @@ import Foundation
 import RealmSwift
 import UIKit
 
-// TODO: Docstrings whole file
-
 /// Possible inputs for this ViewModel
 protocol EAGoalDayGuideViewModelInput {
 
@@ -19,10 +17,10 @@ protocol EAGoalDayGuideViewModelInput {
 /// The properties that can be extracted from this ViewModel
 protocol EAGoalDayGuideViewModelOutput {
 
-    /// A String that will be displayed representing the day(s) for this day guide (ex: Days 3 - 5)
+    /// String describing the day numbers for the associated GoalDayGuide (ex: "Day 1" or "Days 2-5")
     var dayNumbersText: String { get }
 
-    // TODO: Docstrings
+    /// String describing both the day numbers and dates for the associated GoalDayGuide
     var dayNumbersAndDatesText: String { get }
 
     /// A list of EAGoalTask representing the tasks for this day guide
@@ -40,33 +38,23 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     /// The EAGoalDayGuide that this ViewModel represents.
     private let dayGuide: EAGoalDayGuide
 
-    // TODO: Docstring
+    /// The associated Goal's startDate
     private let goalStartDate: Date
 
     /// A service to interact with goals and other related types
     private let goalsService: EAGoalsService
-
+    
+    /// A String representing the Date for the associated GoalDayGuide
     private var currentDayString: String {
-//        if let dayGuideDate = dayGuide.dayGuideDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YY"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YY"
         return dateFormatter.string(from: dayGuide.dayGuideDate)
-//        }
-
-//        return nil
     }
 
-    // TODO: Docstring
     var dayNumbersText: String {
         return dayGuide.days.count > 1 ? "Days \(dayGuide.days[0]) - \(dayGuide.days[1]):" : "Day \(dayGuide.days[0])"
-//        if let currentDayString = self.currentDayString {
-
-//        }
-
-//        return dayNumberString
     }
 
-    // TODO: Docstring
     var dayNumbersAndDatesText: String {
         return "\(self.dayNumbersText) - (\(self.currentDayString)):"
     }
@@ -78,7 +66,13 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     }
 
     let labelColor: UIColor
-
+    
+    /// Normal initializer
+    /// - Parameters:
+    ///   - dayGuide: The associated EAGoalDayGuide
+    ///   - goalStartDate: The start date of the relevant Goal
+    ///   - labelColor: The color of the labels
+    ///   - goalsService: The goals service
     init(dayGuide: EAGoalDayGuide, goalStartDate: Date, labelColor: UIColor, goalsService: EAGoalsService) {
         self.dayGuide = dayGuide
         self.goalStartDate = goalStartDate

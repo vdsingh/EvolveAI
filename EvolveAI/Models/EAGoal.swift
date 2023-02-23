@@ -58,7 +58,7 @@ class EAGoal: Object {
         }
     }
 
-    // TODO: Docstrings
+    /// The EAGoalDayGuide for today (if there is one)
     public var todaysDayGuide: EAGoalDayGuide? {
         return self.dayGuides.first(where: { dayGuide in
             let dayGuideDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: dayGuide.dayGuideDate)
