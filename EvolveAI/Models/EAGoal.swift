@@ -70,8 +70,8 @@ class EAGoal: Object {
         })
     }
 
-    // TODO: Docstrings
-    convenience init(
+    /// Super initializer
+    private convenience init(
         creationDate: Date,
         startDate: Date,
         id: String,
@@ -93,9 +93,12 @@ class EAGoal: Object {
 
     /// Initializer for EAGoal
     /// - Parameters:
+    ///   - creationDate: The creation date of the goal
+    ///   - startDate: The start date of the goal
     ///   - goal: The goal itself (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
+    ///   - color: The color associated with the goal
     ///   - apiResponse: The OpenAI Completions Response
     convenience init(
         creationDate: Date,
@@ -113,6 +116,16 @@ class EAGoal: Object {
         self.tags = parsedResponse.tags
     }
 
+    /// Initiailzer for EAGoal
+    /// - Parameters:
+    ///   - creationDate: The creation date of the goal
+    ///   - startDate: The start date of the goal
+    ///   - id: Unique identifier for the goal
+    ///   - goal: The goal itself (ex: "learn the violin")
+    ///   - numDays: The number of days to accomplish the goal (ex: 30)
+    ///   - additionalDetails: The user specified additional details for the goal
+    ///   - color: The color associated with the goal
+    ///   - aiResponse: The AI Response
     convenience init(
         creationDate: Date,
         startDate: Date,
@@ -139,6 +152,7 @@ class EAGoal: Object {
 
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI
+    /// - Parameter startDate: the start date of the goal
     /// - Returns: a list of task objects
     private static func parseAIResponse(from aiResponse: String, startDate: Date) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
@@ -228,7 +242,7 @@ class EAGoal: Object {
 
     /// Prints messages depending on whether the required flag is enabled
     /// - Parameter message: The message to print
-    private static func printDebug(_ message: String) {
+    static func printDebug(_ message: String) {
         if Flags.printTaskMessages {
             print("$Log: \(message)")
         }

@@ -90,7 +90,7 @@ extension DefaultEAGoalsListViewModel {
                     goalsService: self.goalsService
                 )
             }
-            printDebug("DayGuideViewModel: \(dayGuideViewModel)")
+            printDebug("DayGuideViewModel: \(String(describing: dayGuideViewModel))")
             return DefaultEAGoalListItemViewModel(
                 goal: goal,
                 dayGuideViewModel: dayGuideViewModel,

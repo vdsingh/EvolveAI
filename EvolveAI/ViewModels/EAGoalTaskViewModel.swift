@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-// TODO: Docstrings this whole file
-
 /// Possible inputs for this ViewModel
 protocol EAGoalTaskViewModelInput {
 
@@ -46,12 +44,12 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
     /// A service to interact with goals and other related types (Task!)
     private let goalsService: EAGoalsService
 
+    let text: String
+    let tintColor: UIColor
     var complete: Bool {
         return task.complete
     }
 
-    let text: String
-    let tintColor: UIColor
     var attributedText: NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: self.text)
         attributedString.addAttribute(
@@ -70,6 +68,11 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
         return attributedString
     }
 
+    /// Initializer
+    /// - Parameters:
+    ///   - task: The task that this ViewModel represents
+    ///   - tintColor: The tintColor for Views
+    ///   - goalsService: Service to interact with goals and related types
     init(task: EAGoalTask, tintColor: UIColor, goalsService: EAGoalsService) {
         self.text = task.taskString
         self.tintColor = tintColor
@@ -79,6 +82,9 @@ final class DefaultEAGoalTaskViewModel: EAGoalTaskViewModel, Debuggable {
 }
 
 extension DefaultEAGoalTaskViewModel {
+
+    /// Toggles the completion of the task
+    /// - Parameter complete: Whether the task is now complete or not
     func toggleTaskCompletion(complete: Bool) {
         goalsService.toggleTaskCompletion(task: self.task, complete: complete)
         printDebug("Toggled task completion. Task completion is now \(complete)")

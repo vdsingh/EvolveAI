@@ -43,7 +43,7 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
 
     /// A service to interact with goals and other related types
     private let goalsService: EAGoalsService
-    
+
     /// A String representing the Date for the associated GoalDayGuide
     private var currentDayString: String {
         let dateFormatter = DateFormatter()
@@ -66,7 +66,7 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     }
 
     let labelColor: UIColor
-    
+
     /// Normal initializer
     /// - Parameters:
     ///   - dayGuide: The associated EAGoalDayGuide

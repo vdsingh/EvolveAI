@@ -60,7 +60,8 @@ class EAStackView: UIStackView, EAUIElementView {
         axis: NSLayoutConstraint.Axis,
         alignment: Alignment,
         distribution: Distribution,
-        spacing: EAIncrement) {
+        spacing: EAIncrement
+    ) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.axis = axis
         self.alignment = alignment

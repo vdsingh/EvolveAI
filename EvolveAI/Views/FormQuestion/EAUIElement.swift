@@ -101,7 +101,7 @@ enum EAUIElement {
         elements: [EAUIElementView] = []
     )
 
-    // TODO: docstring
+    /// Used to create a StackView container but uses EAUIElement objects
     case elementStack(
         axis: NSLayoutConstraint.Axis = .vertical,
         alignment: UIStackView.Alignment = .fill,

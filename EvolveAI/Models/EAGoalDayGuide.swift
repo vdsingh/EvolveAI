@@ -20,7 +20,7 @@ final class EAGoalDayGuide: Object {
     /// The list of tasks associated with this guide
     @Persisted var tasks: List<EAGoalTask>
 
-    // TODO: Docstrings
+    /// The start date of the goal
     @Persisted private var goalStartDate: Date
 
     var dayGuideDate: Date {
