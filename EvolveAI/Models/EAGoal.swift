@@ -33,7 +33,7 @@ class EAGoal: Object {
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
 
-    /// The Hex value for this goal's color
+    /// The Hex value for this goal's color (color should be accessed through `color` computed variable)
     @Persisted private var colorHex: String
 
     /// The daily guides associated with completing the goal (derived from parsing aiResponse)

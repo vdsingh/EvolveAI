@@ -34,7 +34,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     /// Adds subviews and establishes constraints for this view
     private func establishConstraints() {
-        // Spinner code
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.spinner)
         NSLayoutConstraint.activate([
             // Spinner Constraints
@@ -44,26 +44,26 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             self.spinner.rightAnchor.constraint(equalTo: self.contentView.rightAnchor)
         ])
 
-        // Main Stack code
-        guard let mainStack = self.mainStack else {
-            fatalError("$Error: trying to establish constraints before instantiating the main stack.")
-        }
-
-        self.contentView.addSubview(mainStack)
-        printDebug("Added main stack to content view")
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-
         let numItemsPerRow: CGFloat = 1
         let spacing: CGFloat = EAIncrement.two.rawValue
         let screenWidth = UIScreen.main.bounds.width
         let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
         self.cellWidth = cellWidth
         printDebug("Cell Width: \(cellWidth)")
+        
+        // Main Stack code
+        guard let mainStack = self.mainStack else {
+            fatalError("$Error: main stack not initialized before establishing constraints.")
+        }
+        
+        self.contentView.addSubview(mainStack)
+        printDebug("Added main stack to content view")
+        
         NSLayoutConstraint.activate([
             // ContentView Constraints
             self.contentView.widthAnchor.constraint(equalToConstant: cellWidth),
             self.contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-
+            
             // Main Stack constraints
             mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.two.rawValue),
             mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -EAIncrement.two.rawValue),
@@ -76,6 +76,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     /// - Parameter viewModel: The ViewModel that provides the information
     /// - Returns: An EAStackView containing all of the necessary subviews
     private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
+        
         // Adds the title label and "Number of Days" label
         guard let elementStack = EAUIElement.elementStack(
             axis: .vertical,
@@ -107,7 +108,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             .elementStack(
                 axis: .horizontal,
                 distribution: .fillProportionally,
-                spacing: .one,
+                spacing: .half,
                 elements: viewModel.tags.compactMap { EAUIElement.tag(text: $0, color: viewModel.darkColor) }
             )
         ])
@@ -120,6 +121,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         if let refreshCollectionViewCallback = refreshCollectionViewCallback {
             printDebug("Refreshing CollectionView")
             refreshCollectionViewCallback()
+            self.establishConstraints()
         }
     }
 
@@ -158,9 +160,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         // Set the refresh collection view callback
         self.refreshCollectionViewCallback = refreshCollectionViewCallback
 
-        // Set the main stack to the created stack.
-        self.mainStack = constructMainStack(with: viewModel)
-
         // Spinner Code
         if viewModel.loading {
             self.spinner.startAnimating()
@@ -168,7 +167,12 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             self.spinner.stopAnimating()
         }
 
+        // Set the main stack to the created stack.
+        self.mainStack = constructMainStack(with: viewModel)
+        
+        // Establish the constraints of the Cell
         self.establishConstraints()
+
         printDebug("ContentView subview count: \(contentView.subviews.count)")
     }
 }

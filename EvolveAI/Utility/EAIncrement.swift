@@ -9,6 +9,7 @@ import Foundation
 
 /// Used to control consistency with spacing, font sizes, etc.
 enum EAIncrement: CGFloat {
+    case half = 6
     case one = 12
     case two = 24
     case three = 36
