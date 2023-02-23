@@ -50,20 +50,20 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
         self.cellWidth = cellWidth
         printDebug("Cell Width: \(cellWidth)")
-        
+
         // Main Stack code
         guard let mainStack = self.mainStack else {
             fatalError("$Error: main stack not initialized before establishing constraints.")
         }
-        
+
         self.contentView.addSubview(mainStack)
         printDebug("Added main stack to content view")
-        
+
         NSLayoutConstraint.activate([
             // ContentView Constraints
             self.contentView.widthAnchor.constraint(equalToConstant: cellWidth),
             self.contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            
+
             // Main Stack constraints
             mainStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: EAIncrement.two.rawValue),
             mainStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -EAIncrement.two.rawValue),
@@ -76,7 +76,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     /// - Parameter viewModel: The ViewModel that provides the information
     /// - Returns: An EAStackView containing all of the necessary subviews
     private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
-        
+
         // Adds the title label and "Number of Days" label
         guard let elementStack = EAUIElement.elementStack(
             axis: .vertical,
@@ -169,7 +169,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Set the main stack to the created stack.
         self.mainStack = constructMainStack(with: viewModel)
-        
+
         // Establish the constraints of the Cell
         self.establishConstraints()
 
