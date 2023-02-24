@@ -83,7 +83,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             spacing: .one,
             elements: [
                 .label(text: viewModel.title, textStyle: EATextStyle.title, textColor: viewModel.darkColor),
-                .elementStack(axis: .horizontal, spacing: .one, elements: [
+                .elementStack(axis: .horizontal, spacing: .half, elements: [
                     .image(eaImage: .clock, tintColor: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
                     .label(text: "\(viewModel.numDays) days", textStyle: .heading1, textColor: viewModel.darkColor)
                 ])

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RxSwift
 
 /// Input methods for the ViewModel
 protocol EAGoalsListViewModelInput {
