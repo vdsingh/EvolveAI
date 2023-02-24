@@ -11,24 +11,34 @@ import UIKit
 /// This class is used to create Mock objects
 class Mocking {
 
-    private static let mockGoals: [String] = [
-        "learn the violin",
-        "read 3 books",
-        "lose 10 pounds",
-        "learn to cook"
+    private static let mockGoals: [String: String] = [
+        "learn the violin": "Practice Mozart for 30 minutes",
+        "read more books": "Research books or authors that you might be interested in",
+        "lose 10 pounds": "Create a Diet Plan for the next week",
+        "learn to cook": "Buy ingredients for your chosen recipe",
+        "learn to code": "Research the pillars of Object Oriented Programming",
+        "watch less television": "Remove the batteries from your remote",
+        "go to the gym": "Find an affordable gym within 15 minutes of you",
+        "eat less sugar": "Throw away any candy in your pantry",
+        "learn carpentry": "Find blueprints to construct a wooden chair",
+        "start a business": "Register your organization as an LLC"
     ]
 
     /// This function creates an array of mock goals
     /// - Parameter numGoals: The number of mock goals to generate
     /// - Returns: An array of mock goals
     public static func createMockGoals(numGoals: Int) -> [EAGoal] {
+        if numGoals > mockGoals.count {
+            fatalError("$Error: more mock goals requested than available.")
+        }
+
         var goals = [EAGoal]()
         for _ in 0..<numGoals {
             guard let randomGoal = mockGoals.randomElement() else {
                 fatalError("$Error: no mock goals")
             }
 
-            goals.append(createMockGoal(goalString: randomGoal, numDays: nil))
+            goals.append(createMockGoal(goalString: randomGoal.key, numDays: nil))
         }
 
         return goals
@@ -38,6 +48,7 @@ class Mocking {
     /// - Returns: A Mock EAGoal
     public static func createMockGoal(
         goalString: String?,
+//        taskString: String?,
         numDays: Int?,
         additionalDetails: String = ""
     ) -> EAGoal {
@@ -49,10 +60,10 @@ class Mocking {
             creationDate: Date(),
             startDate: Date(),
             id: UUID().uuidString,
-            goal: goalString ?? randomGoal,
-            numDays: numDays ?? Int.random(in: 1...Constants.maxDays),
+            goal: goalString ?? randomGoal.key,
+            numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
-            color: UIColor.random,
+            color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
             aiResponse: self.createMockGoalAIResponse()
         )
         return goal

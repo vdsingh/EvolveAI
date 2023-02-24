@@ -12,7 +12,7 @@ import UIKit
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
 
-    let debug = false
+    let debug = true
 
     private var loadingGoals = [EALoadingGoal]()
 
@@ -65,7 +65,7 @@ class EAGoalsService: Debuggable {
     /// Prints a message if the correct flags are enabled or the debug boolean is enabled
     /// - Parameter message: The message to print
     func printDebug(_ message: String) {
-        if self.debug || Flags.debugGoalCreationForm {
+        if self.debug || Flags.debugAPIClient {
             print("$Log: \(message)")
         }
     }
@@ -163,9 +163,7 @@ class EAGoalsService: Debuggable {
                         color: color,
                         apiResponse: apiResponse
                     )
-                    if Flags.debugAPIClient {
-                        print("$Log: Goal: \(goal)")
-                    }
+                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
                     DispatchQueue.main.async {
                         strongSelf.writeToRealm {
@@ -185,7 +183,11 @@ class EAGoalsService: Debuggable {
     /// - Returns: an array of EAGoal objects from the Realm database
     public func getAllPersistedGoals() -> [EAGoal] {
         var goals = [EAGoal]()
-        goals.append(contentsOf: realm.objects(EAGoal.self))
+        if Flags.useMockGoals {
+            goals = MockGoals.mockGoals
+        } else {
+            goals.append(contentsOf: realm.objects(EAGoal.self))
+        }
         return goals
     }
 

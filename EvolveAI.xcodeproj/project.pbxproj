@@ -22,6 +22,7 @@
 		B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */; };
 		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
 		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
+		B92DF58829A841A300C05029 /* MockGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58729A841A300C05029 /* MockGoals.swift */; };
 		B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3D29956FA800316017 /* EATagButton.swift */; };
 		B93E8B40299583B700316017 /* EADateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3F299583B700316017 /* EADateSelector.swift */; };
 		B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4129958C2B00316017 /* EAStackView.swift */; };
@@ -118,6 +119,7 @@
 		B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
 		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B92DF58729A841A300C05029 /* MockGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoals.swift; sourceTree = "<group>"; };
 		B93E8B3D29956FA800316017 /* EATagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATagButton.swift; sourceTree = "<group>"; };
 		B93E8B3F299583B700316017 /* EADateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADateSelector.swift; sourceTree = "<group>"; };
 		B93E8B4129958C2B00316017 /* EAStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAStackView.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				B90847E42973ADC400758477 /* Flags.swift */,
 				B90847E9297665A200758477 /* Extensions.swift */,
 				B90D144C299071840093EB0C /* Debuggable.swift */,
+				B92DF58729A841A300C05029 /* MockGoals.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */,
 				B9584E7D297DE06D000368C2 /* EAGoalDetailsViewModel.swift in Sources */,
+				B92DF58829A841A300C05029 /* MockGoals.swift in Sources */,
 				B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */,
 				B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
@@ -954,7 +958,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -986,7 +990,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
