@@ -162,7 +162,7 @@ class EAGoal: Object {
         // One line represents one EAGoalDayGuide Object
 
         for line in lines {
-            if line.first == "[" {
+            if line.trimmingCharacters(in: .whitespacesAndNewlines).first == "[" {
                 tags = line
                     .components(separatedBy: CharacterSet(charactersIn: ","))
                     .compactMap({$0.trimmingCharacters(in: CharacterSet(charactersIn: "[ ]"))})
