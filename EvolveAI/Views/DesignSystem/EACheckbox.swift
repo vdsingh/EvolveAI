@@ -9,18 +9,23 @@ import Foundation
 import UIKit
 
 /// Checkbox component
-final class EACheckbox: UIButton {
+final class EACheckbox: UIButton, EAUIElementViewStaticHeight, Debuggable {
+    let debug = false
 
     /// Size of the checkbox (width = height)
-    private var dimension: CGFloat
+    var requiredHeight: CGFloat
 
     /// Optional handler for when this checkbox was toggled
     private var checkboxWasToggled: ((Bool) -> Void)?
 
+    /// The border and fill color of the checkbox
+    private var color: UIColor = .label
+
     /// Normal initializer
     /// - Parameter size: Size of checkbox (defaults to EAIncrement.two)
-    init(size: CGFloat = EAIncrement.two.rawValue) {
-        self.dimension = size
+    init(size: CGFloat = EAIncrement.two.rawValue, color: UIColor = .label) {
+        self.requiredHeight = size
+        self.color = color
         super.init(frame: .zero)
         self.addTarget(self, action: #selector(self.checkboxClicked), for: .touchUpInside)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -31,20 +36,21 @@ final class EACheckbox: UIButton {
     /// Adds the subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
         NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: dimension),
-            self.heightAnchor.constraint(equalToConstant: dimension)
+            self.widthAnchor.constraint(equalToConstant: self.requiredHeight),
+            self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
         ])
     }
 
     /// Sets the UI Properties for this view
     private func setUIProperties() {
-        self.layer.cornerRadius = dimension / 4
-        self.layer.borderColor = UIColor.label.cgColor
+        self.layer.cornerRadius = self.requiredHeight / 4
+        self.layer.borderColor = self.color.cgColor
         self.layer.borderWidth = 1
     }
 
     /// Function called when a checkbox is clicked
     @objc private func checkboxClicked() {
+        printDebug("Checkbox was clicked")
         self.setActive(active: !self.isSelected)
         if let handler = self.checkboxWasToggled {
             handler(self.isSelected)
@@ -54,6 +60,14 @@ final class EACheckbox: UIButton {
     }
 
     // MARK: - Public
+
+    /// Sets the border and fill color of the checkbox
+    /// - Parameter color: The color to set the checkbox to
+    func setColor(_ color: UIColor) {
+        self.color = color
+        self.setUIProperties()
+        self.setActive(active: self.isSelected)
+    }
 
     /// Sets the handler for when this checkbox is toggled
     /// - Parameter checkboxWasToggled: The handler for when this checkbox is toggled
@@ -65,10 +79,18 @@ final class EACheckbox: UIButton {
     /// - Parameter active: Whether the checkbox is checked or not
     public func setActive(active: Bool) {
         self.isSelected = active
-        self.backgroundColor = self.isSelected ? .green : .clear
+        self.backgroundColor = self.isSelected ? self.color : .clear
     }
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension EACheckbox {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

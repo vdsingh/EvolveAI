@@ -9,16 +9,16 @@ import Foundation
 import UIKit
 
 /// A separator for Forms (a horizontal line)
-final class EASeparator: UIView, EAFormElementView {
+final class EASeparator: UIView, EAUIElementViewStaticHeight {
 
     /// The height for this separator
     var requiredHeight: CGFloat = 1
 
     /// Normal Initializer
-    init() {
+    init(color: UIColor = .label) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .label
+        self.backgroundColor = color
         self.heightAnchor.constraint(equalToConstant: requiredHeight).isActive = true
     }
 

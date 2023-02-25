@@ -9,13 +9,19 @@ import Foundation
 import UIKit
 
 /// View that displays an individual task for a goal
-class EAGoalTaskView: UIStackView {
+class EAGoalTaskView: UIStackView, EAUIElementView {
+    let debug: Bool = false
+
+    var requiredHeight: CGFloat {
+        self.intrinsicContentSize.height
+    }
 
     /// A label displaying the task's text
-    private let taskLabel: UILabel = {
-        let taskLabel = UILabel(frame: .zero)
-        taskLabel.translatesAutoresizingMaskIntoConstraints = false
-        taskLabel.numberOfLines = 0
+    private let taskLabel: EALabel = {
+        guard let taskLabel = EAUIElement.label(text: "", numLines: 0).createView() as? EALabel else {
+            fatalError("$Error: taskLabel isn't EALabel type")
+        }
+
         return taskLabel
     }()
 
@@ -38,11 +44,21 @@ class EAGoalTaskView: UIStackView {
         return checkboxStack
     }()
 
-    init(viewModel: EAGoalTaskViewModel) {
+    /// Initializer for EAGoalTaskViews that should be configured with a ViewModel later
+    init() {
         super.init(frame: .zero)
         self.addSubviewsAndEstablishConstraints()
-        self.configure(with: viewModel)
     }
+
+    /// Initializer for EAGoalTaskViews that can be configured with a ViewModel immediately
+    /// - Parameter viewModel: The ViewModel used to configure the TaskView
+    init(viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
+        super.init(frame: .zero)
+        self.addSubviewsAndEstablishConstraints()
+        self.configure(with: viewModel, taskCompletionChangedCallback: taskCompletionChangedCallback)
+    }
+
+    // MARK: - Private Functions
 
     /// Adds the relevant subviews and establishes constraints
     private func addSubviewsAndEstablishConstraints() {
@@ -54,24 +70,53 @@ class EAGoalTaskView: UIStackView {
         self.addArrangedSubview(taskLabel)
     }
 
+    /// Updates the UI of this View with a ViewModel
+    /// - Parameter viewModel: The ViewModel that supplies the information for this View
+    private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
+        printDebug("Updating Task UI. Task Completion: \(viewModel.complete)")
+        self.checkbox.setColor(viewModel.tintColor)
+        self.checkbox.setActive(active: viewModel.complete)
+        self.taskLabel.attributedText = viewModel.attributedText
+        if self.debug {
+            self.backgroundColor = .orange
+        }
+    }
+
+    // MARK: - Public Functions
+
     /// Configures this View with a ViewModel
     /// - Parameter viewModel: The EAGoalTaskViewModel that corresponds to this View
-    private func configure(with viewModel: EAGoalTaskViewModel) {
+    /// - Parameter taskCompletionChangedCallback: Function called when task completion has changed
+    func configure(with viewModel: EAGoalTaskViewModel, taskCompletionChangedCallback: ((Bool) -> Void)?) {
         self.updateTaskUI(with: viewModel)
         self.checkbox.setCheckboxHandler { [weak self] complete in
+            self?.printDebug("Checkbox was toggled. Complete: \(complete)")
             viewModel.toggleTaskCompletion(complete: complete)
+            if let taskCompletionChangedCallback = taskCompletionChangedCallback {
+                taskCompletionChangedCallback(complete)
+            }
+            self?.updateTaskUI(with: viewModel)
+        }
+
+        self.taskLabel.setClickHandler { [weak self] in
+            viewModel.toggleTaskCompletion(complete: !viewModel.complete)
+            self?.printDebug("Task label was clicked. Complete: \(viewModel.complete)")
+            if let taskCompletionChangedCallback = taskCompletionChangedCallback {
+                taskCompletionChangedCallback(viewModel.complete)
+            }
             self?.updateTaskUI(with: viewModel)
         }
     }
 
-    /// Updates the UI of this View with a ViewModel
-    /// - Parameter viewModel: The ViewModel that supplies the information for this View
-    private func updateTaskUI(with viewModel: EAGoalTaskViewModel) {
-        self.checkbox.setActive(active: viewModel.complete)
-        self.taskLabel.attributedText = viewModel.attributedText
-    }
-
     required init(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension EAGoalTaskView: Debuggable {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

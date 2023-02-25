@@ -8,9 +8,10 @@
 import UIKit
 import RealmSwift
 
-class EAGoalsListViewController: UIViewController {
+/// ViewController for Goals List
+class EAGoalsListViewController: UIViewController, Debuggable {
 
-    private let debug = true
+    let debug = false
 
     /// The goals that we are viewing
     private lazy var viewModel: EAGoalsListViewModel = {
@@ -100,6 +101,9 @@ class EAGoalsListViewController: UIViewController {
 
         self.viewModel.fetchGoals()
         self.getView().refreshView()
+
+        let textAttributes = [NSAttributedString.Key.foregroundColor: EAColor.label.uiColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
     }
 
     override func loadView() {
@@ -113,6 +117,8 @@ class EAGoalsListViewController: UIViewController {
         self.getView().setCollectionViewDelegate(self)
         printDebug("Set delegate and datasource.")
     }
+
+    // MARK: - Private Functions
 
     /// Function called when the user clicks the question button (max goal limit reached)
     @objc private func questionButtonPressed() {
@@ -140,9 +146,9 @@ class EAGoalsListViewController: UIViewController {
         }
     }
 
-    /// Prints a debug message if the necessary flags are true
-    /// - Parameter message: the message to print
-    private func printDebug(_ message: String) {
+    // MARK: - Public Functions
+
+    func printDebug(_ message: String) {
         if Flags.debugGoalsList || self.debug {
             print("$Log: \(message)")
         }
@@ -152,6 +158,8 @@ class EAGoalsListViewController: UIViewController {
         return nil
     }
 }
+
+// MARK: - CollectionView Data Source
 
 extension EAGoalsListViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -166,14 +174,18 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier, for: indexPath) as? EAGoalListItemCollectionViewCell {
             let goalListItemViewModel = self.viewModel.items[indexPath.row]
-            cell.configure(with: goalListItemViewModel)
+            printDebug("Dequeueing EAGoalListItemCollectionViewCell with viewModel \(goalListItemViewModel)")
+            cell.configure(with: goalListItemViewModel, refreshCollectionViewCallback: { [weak self] in
+                self?.getView().refreshView()
+            })
             return cell
         }
 
-        print("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        fatalError("$Error: EAGoalTableViewCell couldn't be dequeued correctly.")
     }
 }
+
+// MARK: - CollectionView Delegate
 
 extension EAGoalsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

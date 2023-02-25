@@ -22,6 +22,12 @@
 		B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */; };
 		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
 		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
+		B92DF58829A841A300C05029 /* MockGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58729A841A300C05029 /* MockGoals.swift */; };
+		B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3D29956FA800316017 /* EATagButton.swift */; };
+		B93E8B40299583B700316017 /* EADateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3F299583B700316017 /* EADateSelector.swift */; };
+		B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4129958C2B00316017 /* EAStackView.swift */; };
+		B93E8B4429958E4E00316017 /* EALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4329958E4E00316017 /* EALabel.swift */; };
+		B93E8B462995996400316017 /* EATextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B452995996400316017 /* EATextStyle.swift */; };
 		B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF0296D3A6300A0296E /* EAIncrement.swift */; };
 		B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */; };
 		B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */; };
@@ -33,6 +39,10 @@
 		B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */; };
 		B9584E81297F3479000368C2 /* EAGoalTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E80297F3479000368C2 /* EAGoalTaskView.swift */; };
 		B9584E83297F4253000368C2 /* EAGoalTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E82297F4253000368C2 /* EAGoalTask.swift */; };
+		B96DFABB29A497340089CB39 /* EAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96DFABA29A497340089CB39 /* EAColor.swift */; };
+		B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B40299C434700F27BC2 /* EAEmptyView.swift */; };
+		B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4829A1DD2C00F27BC2 /* EAImage.swift */; };
+		B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
 		B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */; };
@@ -49,9 +59,9 @@
 		B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056992962D4FD007B6DBD /* HTTPMethod.swift */; };
 		B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */; };
 		B9C0569F2962E045007B6DBD /* EAGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0569E2962E045007B6DBD /* EAGoal.swift */; };
-		B9C056A22967CEE5007B6DBD /* EAFormElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* EAFormElementView.swift */; };
+		B9C056A22967CEE5007B6DBD /* EAUIElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A12967CEE5007B6DBD /* EAUIElementView.swift */; };
 		B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A32967D139007B6DBD /* EAFormView.swift */; };
-		B9C056A729682069007B6DBD /* EAFormElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAFormElement.swift */; };
+		B9C056A729682069007B6DBD /* EAUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A629682069007B6DBD /* EAUIElement.swift */; };
 		B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */; };
 		B9C056AB2968F942007B6DBD /* EATextFieldQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AA2968F942007B6DBD /* EATextFieldQuestionViewModel.swift */; };
 		B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */; };
@@ -72,9 +82,6 @@
 		B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3AC297B812700AE8959 /* RealmSwift */; };
 		B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */; };
 		B9F4D3DA297C951100AE8959 /* EAGoalsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F4D3D9297C951100AE8959 /* EAGoalsListViewModel.swift */; };
-		B9F4D3DD297C972400AE8959 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3DC297C972400AE8959 /* RxCocoa */; };
-		B9F4D3DF297C972400AE8959 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3DE297C972400AE8959 /* RxRelay */; };
-		B9F4D3E1297C972400AE8959 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9F4D3E0297C972400AE8959 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +119,12 @@
 		B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
 		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B92DF58729A841A300C05029 /* MockGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoals.swift; sourceTree = "<group>"; };
+		B93E8B3D29956FA800316017 /* EATagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATagButton.swift; sourceTree = "<group>"; };
+		B93E8B3F299583B700316017 /* EADateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADateSelector.swift; sourceTree = "<group>"; };
+		B93E8B4129958C2B00316017 /* EAStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAStackView.swift; sourceTree = "<group>"; };
+		B93E8B4329958E4E00316017 /* EALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALabel.swift; sourceTree = "<group>"; };
+		B93E8B452995996400316017 /* EATextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextStyle.swift; sourceTree = "<group>"; };
 		B9486DF0296D3A6300A0296E /* EAIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAIncrement.swift; sourceTree = "<group>"; };
 		B9486DF2296D3C6000A0296E /* EATextViewQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextViewQuestionView.swift; sourceTree = "<group>"; };
@@ -123,6 +136,10 @@
 		B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskViewModel.swift; sourceTree = "<group>"; };
 		B9584E80297F3479000368C2 /* EAGoalTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskView.swift; sourceTree = "<group>"; };
 		B9584E82297F4253000368C2 /* EAGoalTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTask.swift; sourceTree = "<group>"; };
+		B96DFABA29A497340089CB39 /* EAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColor.swift; sourceTree = "<group>"; };
+		B9810B40299C434700F27BC2 /* EAEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEmptyView.swift; sourceTree = "<group>"; };
+		B9810B4829A1DD2C00F27BC2 /* EAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImage.swift; sourceTree = "<group>"; };
+		B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImageView.swift; sourceTree = "<group>"; };
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,9 +159,9 @@
 		B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAICompletionsResponse.swift; sourceTree = "<group>"; };
 		B9C0569E2962E045007B6DBD /* EAGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoal.swift; sourceTree = "<group>"; };
 		B9C056A02962EDCD007B6DBD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		B9C056A12967CEE5007B6DBD /* EAFormElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormElementView.swift; sourceTree = "<group>"; };
+		B9C056A12967CEE5007B6DBD /* EAUIElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAUIElementView.swift; sourceTree = "<group>"; };
 		B9C056A32967D139007B6DBD /* EAFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormView.swift; sourceTree = "<group>"; };
-		B9C056A629682069007B6DBD /* EAFormElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAFormElement.swift; sourceTree = "<group>"; };
+		B9C056A629682069007B6DBD /* EAUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAUIElement.swift; sourceTree = "<group>"; };
 		B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuide.swift; sourceTree = "<group>"; };
 		B9C056AA2968F942007B6DBD /* EATextFieldQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATextFieldQuestionViewModel.swift; sourceTree = "<group>"; };
 		B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalsService.swift; sourceTree = "<group>"; };
@@ -184,10 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9F4D3DD297C972400AE8959 /* RxCocoa in Frameworks */,
 				B9F4D3AD297B812700AE8959 /* RealmSwift in Frameworks */,
-				B9F4D3E1297C972400AE8959 /* RxSwift in Frameworks */,
-				B9F4D3DF297C972400AE8959 /* RxRelay in Frameworks */,
 				B9F4D3AB297B812700AE8959 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,8 +246,25 @@
 				B9486DF9296D423A00A0296E /* EAButton.swift */,
 				B9486DFB296D495000A0296E /* EASeparator.swift */,
 				B9F4D3AE297B86B600AE8959 /* EACheckbox.swift */,
+				B93E8B3D29956FA800316017 /* EATagButton.swift */,
+				B93E8B3F299583B700316017 /* EADateSelector.swift */,
+				B93E8B4129958C2B00316017 /* EAStackView.swift */,
+				B93E8B4329958E4E00316017 /* EALabel.swift */,
+				B96DFAB929A2D9980089CB39 /* Enums */,
+				B9810B40299C434700F27BC2 /* EAEmptyView.swift */,
+				B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */,
+				B96DFABA29A497340089CB39 /* EAColor.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		B96DFAB929A2D9980089CB39 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				B93E8B452995996400316017 /* EATextStyle.swift */,
+				B9810B4829A1DD2C00F27BC2 /* EAImage.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		B9C056612962C16E007B6DBD = {
@@ -400,6 +431,7 @@
 				B90847E42973ADC400758477 /* Flags.swift */,
 				B90847E9297665A200758477 /* Extensions.swift */,
 				B90D144C299071840093EB0C /* Debuggable.swift */,
+				B92DF58729A841A300C05029 /* MockGoals.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -417,8 +449,8 @@
 		B9C056D7296BE750007B6DBD /* FormQuestion */ = {
 			isa = PBXGroup;
 			children = (
-				B9C056A629682069007B6DBD /* EAFormElement.swift */,
-				B9C056A12967CEE5007B6DBD /* EAFormElementView.swift */,
+				B9C056A629682069007B6DBD /* EAUIElement.swift */,
+				B9C056A12967CEE5007B6DBD /* EAUIElementView.swift */,
 				B9C056D8296BE7B6007B6DBD /* EATextFieldQuestionView.swift */,
 				B9C056DB296CF8BE007B6DBD /* EACreateGoalQuestionView.swift */,
 				B9486DF4296D3CA500A0296E /* EATextViewQuestionView.swift */,
@@ -493,9 +525,6 @@
 			packageProductDependencies = (
 				B9F4D3AA297B812700AE8959 /* Realm */,
 				B9F4D3AC297B812700AE8959 /* RealmSwift */,
-				B9F4D3DC297C972400AE8959 /* RxCocoa */,
-				B9F4D3DE297C972400AE8959 /* RxRelay */,
-				B9F4D3E0297C972400AE8959 /* RxSwift */,
 			);
 			productName = EvolveAI;
 			productReference = B9C0566A2962C16E007B6DBD /* EvolveAI.app */;
@@ -535,7 +564,6 @@
 			mainGroup = B9C056612962C16E007B6DBD;
 			packageReferences = (
 				B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = B9C0566B2962C16E007B6DBD /* Products */;
 			projectDirPath = "";
@@ -620,11 +648,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9486DFE296D4DC000A0296E /* EAOpenAIEndpoint.swift in Sources */,
+				B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */,
 				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
 				B90847E32972CB2200758477 /* NavigationUtility.swift in Sources */,
+				B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */,
 				B90847E1297258EB00758477 /* EAGoalDayGuideViewModel.swift in Sources */,
 				B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */,
 				B9C056AB2968F942007B6DBD /* EATextFieldQuestionViewModel.swift in Sources */,
+				B93E8B462995996400316017 /* EATextStyle.swift in Sources */,
 				B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
 				B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */,
@@ -640,6 +671,7 @@
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */,
 				B9584E7D297DE06D000368C2 /* EAGoalDetailsViewModel.swift in Sources */,
+				B92DF58829A841A300C05029 /* MockGoals.swift in Sources */,
 				B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */,
 				B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
@@ -655,23 +687,29 @@
 				B9C056AE2968FAEC007B6DBD /* EAGoalsService.swift in Sources */,
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
 				B90847DB2971277C00758477 /* EASpinner.swift in Sources */,
+				B96DFABB29A497340089CB39 /* EAColor.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
-				B9C056A729682069007B6DBD /* EAFormElement.swift in Sources */,
+				B9C056A729682069007B6DBD /* EAUIElement.swift in Sources */,
+				B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */,
 				B90847E52973ADC400758477 /* Flags.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
+				B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */,
 				B9486DF1296D3A6300A0296E /* EAIncrement.swift in Sources */,
+				B93E8B40299583B700316017 /* EADateSelector.swift in Sources */,
 				B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
+				B93E8B4429958E4E00316017 /* EALabel.swift in Sources */,
 				B9C056CB296BB3CF007B6DBD /* EAGoalDetailsViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
 				B90847EA297665A200758477 /* Extensions.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
-				B9C056A22967CEE5007B6DBD /* EAFormElementView.swift in Sources */,
+				B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */,
+				B9C056A22967CEE5007B6DBD /* EAUIElementView.swift in Sources */,
 				B90D144D299071840093EB0C /* Debuggable.swift in Sources */,
 				B9486DF5296D3CA500A0296E /* EATextViewQuestionView.swift in Sources */,
 				B9C056962962CEAF007B6DBD /* EARequest.swift in Sources */,
@@ -915,11 +953,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -946,11 +985,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vikramsingh.evolve-ai";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1009,14 +1049,6 @@
 				kind = branch;
 			};
 		};
-		B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1029,21 +1061,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B9F4D3A9297B812700AE8959 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		B9F4D3DC297C972400AE8959 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		B9F4D3DE297C972400AE8959 /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		B9F4D3E0297C972400AE8959 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B9F4D3DB297C972400AE8959 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

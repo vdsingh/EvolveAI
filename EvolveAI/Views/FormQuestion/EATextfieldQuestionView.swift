@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// View for basic TextField Questions
-class EATextFieldQuestionView: UIStackView, EAFormElementView {
+class EATextFieldQuestionView: UIStackView, EAUIElementViewStaticHeight {
 
     /// The required height for this view
     var requiredHeight: CGFloat = 90

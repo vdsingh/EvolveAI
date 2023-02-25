@@ -12,39 +12,6 @@ import RealmSwift
 /// View to display an individual goal and all of its information
 class EAGoalDetailsView: UIView {
 
-    /// Label that shows the number of days for this goal
-    let numDaysLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .regular)
-        return label
-    }()
-
-    /// Label that displays the creation date of the goal
-    let dateCreatedLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    /// Display the tags associated with the goal.
-    let tagsStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.spacing = EAIncrement.one.rawValue
-        stack.distribution = .fillProportionally
-        return stack
-    }()
-
-    /// Label that shows the additional details for the goal
-    let additionalDetailsLabel: UILabel = {
-        let detailsLabel = UILabel()
-        detailsLabel.translatesAutoresizingMaskIntoConstraints = false
-        detailsLabel.numberOfLines = 0
-        return detailsLabel
-    }()
-
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
         let guideScrollView = UIScrollView()
@@ -54,57 +21,72 @@ class EAGoalDetailsView: UIView {
     }()
 
     /// StackView that contains the content for the ScrollView.
-    let guideContentView: UIStackView = {
-        let guideContentView = UIStackView()
-        guideContentView.translatesAutoresizingMaskIntoConstraints = false
-        guideContentView.axis = .vertical
-        guideContentView.alignment = .fill
-        guideContentView.distribution = .equalSpacing
-        guideContentView.spacing = EAIncrement.one.rawValue
+    let guideContentView: EAStackView = {
+        let guideContentView = EAStackView(
+            axis: .vertical,
+            alignment: .fill,
+            distribution: .equalSpacing,
+            spacing: EAIncrement.one,
+            subViews: []
+        )
+
         return guideContentView
     }()
 
     /// Initializer to instantiate this View with a ViewModel
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalDetailsViewModel) {
-        self.numDaysLabel.text = viewModel.numDaysString
-        self.dateCreatedLabel.text = viewModel.dateCreatedString
-        self.additionalDetailsLabel.text = viewModel.additionalDetails
         super.init(frame: .zero)
-        self.backgroundColor = .systemBackground
-        self.addSubviewsAndEstablishConstraints(dayGuideViewModels: viewModel.dayGuideViewModels)
-        self.addTagViews(viewModel: viewModel)
+        self.backgroundColor = viewModel.color
+        self.addSubviewsAndEstablishConstraints(
+            viewModel: viewModel,
+            dayGuideViewModels: viewModel.dayGuideViewModels,
+            separatorColor: viewModel.darkColor
+        )
     }
 
     // MARK: - Private Functions
 
-    /// Add the tags to the tagsStack
-    /// - Parameter viewModel: The EAGoalDetailsViewModel that contains the tag information
-    private func addTagViews(viewModel: EAGoalDetailsViewModel) {
-        for tagString in viewModel.tagStrings {
-            let label = UIButton()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.setTitle(tagString, for: .normal)
-            label.setTitleColor(.white, for: .normal)
-            label.sizeToFit()
-            label.backgroundColor = .link
-            label.layer.cornerRadius = EAIncrement.one.rawValue
-            tagsStack.addArrangedSubview(label)
-        }
-    }
-
     /// Adds the subviews of the View and activates the constraints
     /// - Parameter dayGuides: List of EAGoalDayGuide objects that we need to add to our View
-    private func addSubviewsAndEstablishConstraints(dayGuideViewModels: [EAGoalDayGuideViewModel]) {
+    private func addSubviewsAndEstablishConstraints(
+        viewModel: EAGoalDetailsViewModel,
+        dayGuideViewModels: [EAGoalDayGuideViewModel],
+        separatorColor: UIColor
+    ) {
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(self.guideContentView)
-        self.guideContentView.addArrangedSubview(self.numDaysLabel)
-        self.guideContentView.addArrangedSubview(self.dateCreatedLabel)
-        self.guideContentView.addArrangedSubview(self.tagsStack)
-        self.guideContentView.addArrangedSubview(EASeparator())
-        self.addDayGuidesToUI(dayGuideViewModels)
-        self.guideContentView.addArrangedSubview(EASeparator())
-        self.guideContentView.addArrangedSubview(self.additionalDetailsLabel)
+        self.guideContentView.addElements([
+            .elementStack(axis: .horizontal, spacing: EAIncrement.half, elements: [
+                .image(eaImage: .clock, tintColor: viewModel.darkColor, requiredHeight: EAIncrement.two.rawValue),
+                .label(text: viewModel.numDaysString, textColor: viewModel.darkColor)
+            ]),
+            .label(text: viewModel.dateCreatedString, textColor: viewModel.darkColor),
+            .elementStack(
+                axis: .horizontal,
+                distribution: .fillProportionally,
+                spacing: .one,
+                elements:
+                    viewModel.tagStrings.compactMap({
+                        EAUIElement.tag(text: $0, color: viewModel.darkColor)
+                    })
+            ),
+            .separator(color: separatorColor)
+        ])
+
+        self.guideContentView.addSubviews(dayGuideViewModels.compactMap({
+            EADayGuideView(with: $0)
+        }))
+
+        if !viewModel.additionalDetails.isEmpty {
+            self.guideContentView.addElements([
+                .separator(color: separatorColor),
+                .label(text: viewModel.additionalDetails, textColor: viewModel.darkColor)
+            ])
+        }
+
+        self.guideContentView.addArrangedSubview(EASeparator(color: separatorColor))
+
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             self.guideScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -117,15 +99,6 @@ class EAGoalDetailsView: UIView {
             self.guideContentView.rightAnchor.constraint(equalTo: guideScrollView.rightAnchor),
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
-    }
-
-    /// Adds EAGoalDayGuide objects to the View
-    /// - Parameter dayGuides: A list of EAGoalDayGuide objects to add to the view
-    private func addDayGuidesToUI(_ dayGuideViewModels: [EAGoalDayGuideViewModel]) {
-        for viewModel in dayGuideViewModels {
-            let guideView = EADayGuideView(with: viewModel)
-            self.guideContentView.addArrangedSubview(guideView)
-        }
     }
 
     required init?(coder: NSCoder) {

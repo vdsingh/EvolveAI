@@ -34,7 +34,7 @@ class EAFormView: UIScrollView {
 
     /// ViewModel initializer
     /// - Parameter viewModels: The EAFormQuestionViewModels to instantiate the View
-    init(formElements: [EAFormElement]) {
+    init(formElements: [EAUIElement]) {
         self.questionViews = []
         self.isFormLoading = false
         super.init(frame: .zero)
@@ -48,7 +48,7 @@ class EAFormView: UIScrollView {
 
     /// Add the subviews to the view and establish constraints
     /// - Parameter formElements: The EAFormElements which specify the subviews to add
-    private func addSubViewsAndEstablishConstraints(formElements: [EAFormElement]) {
+    private func addSubViewsAndEstablishConstraints(formElements: [EAUIElement]) {
         self.addSubview(contentView)
         let stack = constructFormElementStackView(formElements: formElements)
         stack.spacing = EAIncrement.two.rawValue
@@ -75,17 +75,16 @@ class EAFormView: UIScrollView {
     /// Constructs a UIStackView that contains all of the form element views
     /// - Parameter formElements: the EAFormElement which specify the subviews to add
     /// - Returns: a UIStackView that contains all of the Form Element views
-    private func constructFormElementStackView(formElements: [EAFormElement]) -> UIStackView {
+    private func constructFormElementStackView(formElements: [EAUIElement]) -> UIStackView {
         let elementStack = UIStackView()
         elementStack.translatesAutoresizingMaskIntoConstraints = false
         elementStack.axis = .vertical
+        elementStack.alignment = .fill
 
         for formElement in formElements {
             let view = formElement.createView()
             self.questionViews.append(view)
             elementStack.addArrangedSubview(view)
-
-            view.heightAnchor.constraint(equalToConstant: view.requiredHeight).isActive = true
         }
 
         return elementStack

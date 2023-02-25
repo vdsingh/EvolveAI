@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 /// View used to show details for a Day Guide within a specific goal
-class EADayGuideView: UIStackView {
+class EADayGuideView: UIStackView, EAUIElementView {
 
     /// Label which displays the
     let daysLabel: UILabel = {
@@ -34,7 +34,9 @@ class EADayGuideView: UIStackView {
         super.init(frame: .zero)
         self.axis = .vertical
         self.spacing = EAIncrement.one.rawValue
-        self.daysLabel.text = viewModel.daysText
+        self.daysLabel.text = viewModel.dayNumbersAndDatesText
+        self.daysLabel.textColor = viewModel.labelColor
+
         self.addSubviewsAndEstablishConstraints(taskViewModels: viewModel.taskViewModels)
     }
 
@@ -57,7 +59,7 @@ class EADayGuideView: UIStackView {
                 print("$Log: Task: \(taskViewModel.text)")
             }
 
-            let taskView = EAGoalTaskView(viewModel: taskViewModel)
+            let taskView = EAGoalTaskView(viewModel: taskViewModel, taskCompletionChangedCallback: nil)
             self.tasksStackView.addArrangedSubview(taskView)
         }
     }

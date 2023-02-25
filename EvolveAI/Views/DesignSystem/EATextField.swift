@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 /// Custom TextField for this application
-final class EATextField: UITextField {
+final class EATextField: UITextField, EAUIElementViewStaticHeight {
+
+    /// The height requried for this UIElement
+    let requiredHeight: CGFloat = EAIncrement.four.rawValue
 
     /// Callback to use when this TextField has been edited
     var textWasEditedCallback: (EATextField) -> Void
@@ -30,6 +33,10 @@ final class EATextField: UITextField {
         self.layer.borderColor = borderColor.cgColor
         self.returnKeyType = UIReturnKeyType.done
         self.delegate = self
+
+        NSLayoutConstraint.activate([
+            self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
+        ])
     }
 
     /// Action for when this TextField was edited. Uses the delegate to call textFieldWasEdited
@@ -43,11 +50,18 @@ final class EATextField: UITextField {
         self.layer.borderColor = color.cgColor
     }
 
+    func setPlaceholderText(text: String, color: UIColor) {
+        self.attributedPlaceholder = NSAttributedString(string: text, attributes: [
+            NSAttributedString.Key.foregroundColor: color
+        ])
+    }
+
     required init?(coder: NSCoder) {
         return nil
     }
 
     // MARK: - Sets the padding for the TextField (adding a small space in the beginning)
+
     let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5)
 
     override public func textRect(forBounds bounds: CGRect) -> CGRect {

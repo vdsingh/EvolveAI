@@ -8,28 +8,30 @@
 import UIKit
 
 /// View to display EAGoal objects in a UITableView
-class EAGoalsListView: UIView {
+class EAGoalsListView: UIView, Debuggable {
+    let debug: Bool = false
 
     /// Constants for this View
     private struct Constants {
-        static let emptyTableViewText = "You have no Goals yet. Create one using the \"+\" in the top right"
+        /// The text for when there are no goals in the CollectionView
+        static let emptyCollectionViewText = "You have no Goals yet. Create one using the \"+\" in the top right"
     }
 
     /// CollectionView used to display goals
     public let collectionView: UICollectionView = {
-        let numItemsPerRow: CGFloat = 2
-        let screenWidth = UIScreen.main.bounds.width
-        let layout = UICollectionViewFlowLayout()
+        let numItemsPerRow: CGFloat = 1
         let spacing: CGFloat = EAIncrement.two.rawValue
-        let cellWidth = screenWidth / numItemsPerRow - (spacing * (numItemsPerRow + 1) / numItemsPerRow)
+
+        let layout = EAGoalsListCollectionViewFlowLayout()
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(EAGoalListItemCollectionViewCell.self, forCellWithReuseIdentifier: EAGoalListItemCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = EAColor.background.uiColor
         return collectionView
     }()
 
@@ -37,10 +39,10 @@ class EAGoalsListView: UIView {
     private let emptyTableViewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constants.emptyTableViewText
+        label.text = Constants.emptyCollectionViewText
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .lightGray
+        label.textColor = EAColor.background.uiColor.darker() ?? UIColor.darkGray
         return label
     }()
 
@@ -80,10 +82,7 @@ class EAGoalsListView: UIView {
 
     /// Refreshes the view
     public func refreshView() {
-        if Flags.debugGoalsList {
-            print("$Log: refreshing view.")
-        }
-
+        printDebug("Refreshing GoalsListView")
         collectionView.reloadData()
         updateEmptyTableViewMessage()
     }
@@ -102,5 +101,23 @@ class EAGoalsListView: UIView {
 
     required init?(coder: NSCoder) {
         return nil
+    }
+}
+
+extension EAGoalsListView {
+    func printDebug(_ message: String) {
+        if self.debug ||  Flags.debugGoalsList {
+            print("$Log: \(message)")
+        }
+    }
+}
+
+// MARK: - Custom Layout
+
+/// Custom FlowLayout for the Goals List CollectionView
+class EAGoalsListCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func shouldInvalidateLayout(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
+        // By invalidating layout on bounds change, we avoid overlapping cells.
+        return true
     }
 }

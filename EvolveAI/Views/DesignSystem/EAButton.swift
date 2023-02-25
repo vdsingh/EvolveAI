@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Custom Button for this application
-class EAButton: UIButton, EAFormElementView {
+class EAButton: UIButton, EAUIElementViewStaticHeight {
 
     /// This button can be a FormElement and it must have a required height
     var requiredHeight = EAIncrement.five.rawValue
@@ -39,6 +39,10 @@ class EAButton: UIButton, EAFormElementView {
         self.setTitle(text, for: .normal)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
+
+        NSLayoutConstraint.activate([
+            self.heightAnchor.constraint(equalToConstant: self.requiredHeight)
+        ])
     }
 
     // MARK: - Public Functions

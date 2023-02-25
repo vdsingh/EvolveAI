@@ -62,8 +62,10 @@ class EAGoalsService: Debuggable {
         }
     }
 
+    /// Prints a message if the correct flags are enabled or the debug boolean is enabled
+    /// - Parameter message: The message to print
     func printDebug(_ message: String) {
-        if self.debug || Flags.debugGoalCreationForm {
+        if self.debug || Flags.debugAPIClient {
             print("$Log: \(message)")
         }
     }
@@ -111,6 +113,7 @@ class EAGoalsService: Debuggable {
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
+        startDate: Date,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
         if Flags.useMockGoals {
@@ -153,15 +156,14 @@ class EAGoalsService: Debuggable {
                 case .success(let apiResponse):
                     let goal = EAGoal(
                         creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
+                        startDate: startDate,
                         goal: goal,
                         numDays: numDays,
                         additionalDetails: additionalDetails,
                         color: color,
                         apiResponse: apiResponse
                     )
-                    if Flags.debugAPIClient {
-                        print("$Log: Goal: \(goal)")
-                    }
+                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
                     DispatchQueue.main.async {
                         strongSelf.writeToRealm {
@@ -181,7 +183,11 @@ class EAGoalsService: Debuggable {
     /// - Returns: an array of EAGoal objects from the Realm database
     public func getAllPersistedGoals() -> [EAGoal] {
         var goals = [EAGoal]()
-        goals.append(contentsOf: realm.objects(EAGoal.self))
+        if Flags.useMockGoals {
+            goals = MockGoals.mockGoals
+        } else {
+            goals.append(contentsOf: realm.objects(EAGoal.self))
+        }
         return goals
     }
 
@@ -218,7 +224,8 @@ class EAGoalsService: Debuggable {
                         goal: loadingGoal.title,
                         numDays: loadingGoal.numDays,
                         additionalDetails: loadingGoal.additionalDetails,
-                        color: loadingGoal.color
+                        color: loadingGoal.color,
+                        startDate: loadingGoal.startDate
                     ) { [weak self] result in
                         self?.loadingGoals.removeLast()
                         switch result {

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RxSwift
 
 /// Input methods for the ViewModel
 protocol EAGoalsListViewModelInput {
@@ -41,8 +40,8 @@ struct EAGoalsListViewModelActions {
 
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
 
-final class DefaultEAGoalsListViewModel: EAGoalsListViewModel {
-    let debug = true
+final class DefaultEAGoalsListViewModel: EAGoalsListViewModel, Debuggable {
+    let debug: Bool = true
 
     /// Service to interact with goals and other related types
     private let goalsService: EAGoalsService
@@ -80,12 +79,24 @@ extension DefaultEAGoalsListViewModel {
 
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals() {
-        let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap {
+        let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap { goal in
+            var dayGuideViewModel: EAGoalDayGuideViewModel?
+            if let todaysDayGuide = goal.todaysDayGuide {
+                dayGuideViewModel = DefaultEAGoalDayGuideViewModel(
+                    dayGuide: todaysDayGuide,
+                    goalStartDate: goal.startDate,
+                    labelColor: goal.color.darker() ?? .black,
+                    goalsService: self.goalsService
+                )
+            }
+            printDebug("DayGuideViewModel: \(String(describing: dayGuideViewModel))")
             return DefaultEAGoalListItemViewModel(
-                goal: $0,
+                goal: goal,
+                dayGuideViewModel: dayGuideViewModel,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
-                )
+                ),
+                goalsService: self.goalsService
             )
         }
 
@@ -96,7 +107,8 @@ extension DefaultEAGoalsListViewModel {
                 color: $0.color,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
-                )
+                ),
+                goalsService: self.goalsService
             )
         }
 
@@ -108,7 +120,7 @@ extension DefaultEAGoalsListViewModel {
     }
 }
 
-extension DefaultEAGoalsListViewModel: Debuggable {
+extension DefaultEAGoalsListViewModel {
     func printDebug(_ message: String) {
         if self.debug {
             print("$Log: \(message)")

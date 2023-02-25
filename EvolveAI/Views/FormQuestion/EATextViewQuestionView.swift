@@ -9,15 +9,17 @@ import Foundation
 import UIKit
 
 /// View for basic long text response Questions
-class EATextViewQuestionView: UIStackView, EAFormElementView {
-
-    /// The required height for this view
-    var requiredHeight: CGFloat = 150
+final class EATextViewQuestionView: EAStackView {
 
     /// Label that displays the question
-    let questionLabel: UILabel = {
-        let questionLabel = UILabel()
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
+    let questionLabel: EALabel = {
+        let questionLabel = EALabel(
+            text: "",
+            textStyle: .heading1,
+            textColor: .label,
+            numLines: 0,
+            textWasClicked: nil
+        )
         questionLabel.font = .systemFont(ofSize: EAIncrement.two.rawValue, weight: .medium)
         return questionLabel
     }()
@@ -31,9 +33,14 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
     /// ViewModel initializer
     /// - Parameter viewModel: The ViewModel used to set the data of the View
     init(viewModel: EATextViewQuestionViewModel) {
-        super.init(frame: .zero)
+        super.init(
+            axis: .vertical,
+            subViews: [
+                questionLabel,
+                textView
+            ]
+        )
         self.setUIProperties(viewModel: viewModel)
-        self.addSubviewsAndEstablishConstraints()
     }
 
     /// Sets the UI properties for this View
@@ -46,16 +53,7 @@ class EATextViewQuestionView: UIStackView, EAFormElementView {
         self.spacing = EAIncrement.one.rawValue
 
         self.questionLabel.text = viewModel.question
-    }
-
-    /// Add the subviews to the view and establish constraints
-    private func addSubviewsAndEstablishConstraints() {
-        self.addArrangedSubview(questionLabel)
-        self.addArrangedSubview(textView)
-
-        NSLayoutConstraint.activate([
-            questionLabel.heightAnchor.constraint(equalToConstant: EAIncrement.two.rawValue)
-        ])
+        self.questionLabel.textColor = viewModel.labelColor
     }
 
     required init(coder: NSCoder) {

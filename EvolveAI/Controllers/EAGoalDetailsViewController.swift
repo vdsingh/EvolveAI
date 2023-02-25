@@ -27,6 +27,9 @@ class EAGoalDetailsViewController: UIViewController {
         let goalView = EAGoalDetailsView(viewModel: viewModel)
         view = goalView
         self.title = viewModel.title
+
+        let textAttributes = [NSAttributedString.Key.foregroundColor: viewModel.darkColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
     }
 
