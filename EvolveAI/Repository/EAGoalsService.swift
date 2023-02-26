@@ -14,6 +14,7 @@ class EAGoalsService: Debuggable {
 
     let debug = true
 
+    /// Queue for goals that are loading
     private var loadingGoals = [EALoadingGoal]()
 
     /// Access to the Realm database

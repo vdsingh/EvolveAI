@@ -8,19 +8,22 @@
 import Foundation
 import UIKit
 
-// TODO: Docstrings
-
+/// Mock Goals
 final class MockGoals {
+    
+    /// A random color that a goal can be
     static var randomGoalColor: UIColor {
         EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor
     }
-
+    
+    /// Random Creation and Start Date for Goals
     static var randomCreationAndStartDate: (creationDate: Date, startDate: Date) {
         let creationDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date()) ?? Date()
         let startDate = Calendar.current.date(byAdding: .day, value: Int.random(in: 0..<8), to: creationDate) ?? Date()
         return (creationDate, startDate)
     }
-
+    
+    /// A Mock goal for learning the violin
     static let learnViolin: EAGoal = {
         let randomDates = randomCreationAndStartDate
         let goal = EAGoal(
@@ -49,6 +52,7 @@ final class MockGoals {
         return goal
     }()
 
+    /// A mock goal for learning carpentry
     static let learnCarpentry: EAGoal = {
         let randomDates = randomCreationAndStartDate
         let goal = EAGoal(
@@ -77,6 +81,7 @@ final class MockGoals {
         return goal
     }()
 
+    /// A mock goal for going to the gym
     static let goToGym: EAGoal = {
         let randomDates = randomCreationAndStartDate
         let goal = EAGoal(
@@ -107,5 +112,6 @@ final class MockGoals {
         return goal
     }()
 
+    /// An array of all mock goals
     static let mockGoals = [learnViolin, learnCarpentry, goToGym]
 }
