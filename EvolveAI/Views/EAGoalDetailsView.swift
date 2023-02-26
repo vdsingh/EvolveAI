@@ -12,6 +12,9 @@ import RealmSwift
 /// View to display an individual goal and all of its information
 class EAGoalDetailsView: UIView {
 
+    // TODO: Docstrings
+    var todaysDayGuideView: EADayGuideView?
+
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
         let guideScrollView = UIScrollView()
@@ -45,6 +48,14 @@ class EAGoalDetailsView: UIView {
         )
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let todaysDayGuideView = self.todaysDayGuideView {
+            let additionalOffset = UIScreen.main.bounds.height / 3
+            self.guideScrollView.scrollToView(view: todaysDayGuideView, animated: true, additionalOffset: additionalOffset)
+        }
+    }
+
     // MARK: - Private Functions
 
     /// Adds the subviews of the View and activates the constraints
@@ -75,7 +86,13 @@ class EAGoalDetailsView: UIView {
         ])
 
         self.guideContentView.addSubviews(dayGuideViewModels.compactMap({
-            EADayGuideView(with: $0)
+            let dayGuideView = EADayGuideView(with: $0)
+            if $0.associatedDate.occursOnSameDate(as: Date()) {
+                self.todaysDayGuideView = dayGuideView
+                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+            }
+
+            return dayGuideView
         }))
 
         if !viewModel.additionalDetails.isEmpty {
