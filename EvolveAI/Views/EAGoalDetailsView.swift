@@ -10,7 +10,9 @@ import UIKit
 import RealmSwift
 
 /// View to display an individual goal and all of its information
-class EAGoalDetailsView: UIView {
+class EAGoalDetailsView: UIView, Debuggable {
+    
+    let debug = true
 
     /// The DayGuideView that is relevant for today
     var todaysDayGuideView: EADayGuideView?
@@ -46,16 +48,6 @@ class EAGoalDetailsView: UIView {
             dayGuideViewModels: viewModel.dayGuideViewModels,
             separatorColor: viewModel.darkColor
         )
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        // Scroll to todays day guide if there is one
-        if let todaysDayGuideView = self.todaysDayGuideView {
-            let additionalOffset = UIScreen.main.bounds.height / 3
-            self.guideScrollView.scrollToView(view: todaysDayGuideView, animated: true, additionalOffset: additionalOffset)
-        }
     }
 
     // MARK: - Private Functions
@@ -119,8 +111,29 @@ class EAGoalDetailsView: UIView {
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
     }
+    
+    //TODO: Docstring
+    func scrollToTodaysDayGuideView() {
+
+        // Scroll to todays day guide if there is one
+        if let todaysDayGuideView = self.todaysDayGuideView {
+            printDebug("Scrolling to todays day guide view")
+            let additionalOffset = UIScreen.main.bounds.height / 3
+            self.guideScrollView.scrollToView(view: todaysDayGuideView, animated: true, additionalOffset: additionalOffset)
+        } else {
+            printDebug("Not scrolling to todays day guide view")
+        }
+    }
 
     required init?(coder: NSCoder) {
         return nil
+    }
+}
+
+extension EAGoalDetailsView {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

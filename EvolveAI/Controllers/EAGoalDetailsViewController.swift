@@ -32,6 +32,14 @@ class EAGoalDetailsViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let view = self.view as? EAGoalDetailsView {
+            view.scrollToTodaysDayGuideView()
+        } else {
+            print("$Error: view for EAGoalDetailsViewController is not type EAGoalDetailsView.")
+        }
+    }
 
     /// Function called when trash can icon is pressed
     @objc private func trashButtonPressed() {
