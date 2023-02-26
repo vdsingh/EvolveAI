@@ -65,7 +65,8 @@ class EADayGuideView: UIStackView, EAUIElementView {
     }
 
     // MARK: - Public Functions
-    // TODO: Docstring
+
+    /// Sets the color of the Title text
     func setTitleColor(_ color: UIColor) {
         self.daysLabel.textColor = color
     }

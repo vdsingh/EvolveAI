@@ -10,19 +10,19 @@ import UIKit
 
 /// Mock Goals
 final class MockGoals {
-    
+
     /// A random color that a goal can be
     static var randomGoalColor: UIColor {
         EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor
     }
-    
+
     /// Random Creation and Start Date for Goals
     static var randomCreationAndStartDate: (creationDate: Date, startDate: Date) {
         let creationDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date()) ?? Date()
         let startDate = Calendar.current.date(byAdding: .day, value: Int.random(in: 0..<8), to: creationDate) ?? Date()
         return (creationDate, startDate)
     }
-    
+
     /// A Mock goal for learning the violin
     static let learnViolin: EAGoal = {
         let randomDates = randomCreationAndStartDate

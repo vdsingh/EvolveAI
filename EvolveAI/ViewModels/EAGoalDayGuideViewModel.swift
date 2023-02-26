@@ -23,14 +23,14 @@ protocol EAGoalDayGuideViewModelOutput {
     /// String describing both the day numbers and dates for the associated GoalDayGuide
     var dayNumbersAndDatesText: String { get }
 
-    // TODO: Docstring
+    /// The date associated with this DayGuide
     var associatedDate: Date { get }
 
     /// A list of EAGoalTask representing the tasks for this day guide
     var taskViewModels: [EAGoalTaskViewModel] { get }
 
     /// The color for the goal
-    var labelColor: UIColor { get set }
+    var labelColor: UIColor { get }
 }
 
 protocol EAGoalDayGuideViewModel: EAGoalDayGuideViewModelInput, EAGoalDayGuideViewModelOutput { }

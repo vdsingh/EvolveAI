@@ -12,7 +12,7 @@ import RealmSwift
 /// View to display an individual goal and all of its information
 class EAGoalDetailsView: UIView {
 
-    // TODO: Docstrings
+    /// The DayGuideView that is relevant for today
     var todaysDayGuideView: EADayGuideView?
 
     /// ScrollView that allows users to scroll up and down through the View
@@ -50,6 +50,8 @@ class EAGoalDetailsView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        // Scroll to todays day guide if there is one
         if let todaysDayGuideView = self.todaysDayGuideView {
             let additionalOffset = UIScreen.main.bounds.height / 3
             self.guideScrollView.scrollToView(view: todaysDayGuideView, animated: true, additionalOffset: additionalOffset)
