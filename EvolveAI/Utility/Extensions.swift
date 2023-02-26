@@ -92,3 +92,14 @@ extension UIColor {
         }
     }
 }
+
+extension Date {
+    func occursOnSameDate(as date: Date) -> Bool {
+        let paramDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        let selfDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: self)
+
+        return paramDateComponents.year == selfDateComponents.year &&
+        paramDateComponents.month == selfDateComponents.month &&
+        paramDateComponents.day == selfDateComponents.day
+    }
+}

@@ -61,12 +61,7 @@ class EAGoal: Object {
     /// The EAGoalDayGuide for today (if there is one)
     public var todaysDayGuide: EAGoalDayGuide? {
         return self.dayGuides.first(where: { dayGuide in
-            let dayGuideDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: dayGuide.dayGuideDate)
-            let todayDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-
-            return dayGuideDateComponents.year == todayDateComponents.year &&
-            dayGuideDateComponents.month == todayDateComponents.month &&
-            dayGuideDateComponents.day == todayDateComponents.day
+            return Date().occursOnSameDate(as: dayGuide.dayGuideDate)
         })
     }
 
