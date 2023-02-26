@@ -64,6 +64,12 @@ class EADayGuideView: UIStackView, EAUIElementView {
         }
     }
 
+    // MARK: - Public Functions
+    // TODO: Docstring
+    func setTitleColor(_ color: UIColor) {
+        self.daysLabel.textColor = color
+    }
+
     required init(coder: NSCoder) {
         fatalError()
     }
