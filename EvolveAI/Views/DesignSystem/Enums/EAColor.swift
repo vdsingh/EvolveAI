@@ -17,12 +17,12 @@ enum EAColor: String {
     case pastelBlue = "#bae1ff"
 
     case background = "#0B89FC"
-    
+
     case label = "#FFFFFF"
     case secondaryLabel = "SECONDARY LABEL"
-    
+
     case accent = "#FF8600"
-    
+
     case disabled = "#B4B4B4"
 
     case success = "#00FF31"

@@ -253,7 +253,6 @@
 				B96DFAB929A2D9980089CB39 /* Enums */,
 				B9810B40299C434700F27BC2 /* EAEmptyView.swift */,
 				B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */,
-				B96DFABA29A497340089CB39 /* EAColor.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -261,6 +260,7 @@
 		B96DFAB929A2D9980089CB39 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				B96DFABA29A497340089CB39 /* EAColor.swift */,
 				B93E8B452995996400316017 /* EATextStyle.swift */,
 				B9810B4829A1DD2C00F27BC2 /* EAImage.swift */,
 			);
@@ -946,7 +946,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
+				INFOPLIST_KEY_CFBundleDisplayName = SkillAI;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -978,7 +978,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
+				INFOPLIST_KEY_CFBundleDisplayName = SkillAI;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;

@@ -79,15 +79,20 @@ class EAGoalDetailsView: UIView, Debuggable {
             .separator(color: separatorColor)
         ])
 
-        self.guideContentView.addSubviews(dayGuideViewModels.compactMap({
-            let dayGuideView = EADayGuideView(with: $0)
-            if $0.associatedDate.occursOnSameDate(as: Date()) {
-                self.todaysDayGuideView = dayGuideView
-                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
-            }
+        if let dayGuideViewStack = EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView {
+            dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
+                let dayGuideView = EADayGuideView(with: $0)
+                if $0.associatedDate.occursOnSameDate(as: Date()) {
+                    self.todaysDayGuideView = dayGuideView
+                    dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+                }
 
-            return dayGuideView
-        }))
+                return dayGuideView
+            }))
+            self.guideContentView.addSubview(dayGuideViewStack)
+        } else {
+            fatalError("$Error: Couldn't create stack as EAStackView")
+        }
 
         if !viewModel.additionalDetails.isEmpty {
             self.guideContentView.addElements([
@@ -111,7 +116,7 @@ class EAGoalDetailsView: UIView, Debuggable {
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
     }
-    
+
     /// Scrolls to the DayGuideView for today
     func scrollToTodaysDayGuideView() {
 

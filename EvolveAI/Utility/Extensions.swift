@@ -17,15 +17,15 @@ extension String {
         let components = self.components(separatedBy: charSet)
         return components.count
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     func capitalizeNonFillerWords() -> String {
         let excludedWords = [
             "the",
             "to"
         ]
         var newStr: String = ""
-        var stringArray: [String] = self.components(separatedBy: " ")
+        let stringArray: [String] = self.components(separatedBy: " ")
         for str in stringArray {
             if excludedWords.contains(str) {
                 newStr.append("\(str) ")
@@ -33,7 +33,7 @@ extension String {
                 newStr.append("\(str.capitalized) ")
             }
         }
-        
+
         // Removes the last space
         newStr.removeLast()
         return newStr
