@@ -13,12 +13,12 @@ final class EATextView: UITextView, EAUIElementViewStaticHeight {
     var requiredHeight: CGFloat = EAIncrement.nine.rawValue
 
     /// Normal Initializer
-    init(borderColor: UIColor) {
+    init(borderColor: EAColor) {
         super.init(frame: .zero, textContainer: .none)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = EAIncrement.one.rawValue
         self.layer.borderWidth = 2
-        self.layer.borderColor = borderColor.cgColor
+        self.setBorderColor(color: borderColor)
 
         self.backgroundColor = EAColor.background.uiColor
         self.textColor = EAColor.label.uiColor
@@ -28,8 +28,8 @@ final class EATextView: UITextView, EAUIElementViewStaticHeight {
 
     /// Sets the border color of the TextView
     /// - Parameter color: The color to set the border to
-    public func setBorderColor(color: UIColor) {
-        self.layer.borderColor = color.cgColor
+    public func setBorderColor(color: EAColor) {
+        self.layer.borderColor = color.uiColor.cgColor
     }
 
     /// Sets the constraints for this view

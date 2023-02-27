@@ -70,7 +70,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     /// Function that gets called when the "Create Goal Button" was pressed
     private func createGoalButtonPressed() {
         navigationController?.navigationBar.isUserInteractionEnabled = false
-        navigationController?.navigationBar.tintColor = UIColor.lightGray
+        navigationController?.navigationBar.tintColor = EAColor.disabled.uiColor
         self.updateButton()
         if var goal = self.goal, let numDays = self.numDays {
             goal = goal.capitalizeNonFillerWords()
@@ -89,7 +89,6 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                 )
                 self.navigationController?.popViewController(animated: true)
                 self.navigationController?.navigationBar.isUserInteractionEnabled = true
-                self.navigationController?.navigationBar.tintColor = .link
             }
         } else {
             fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goal)), Num Days: \(String(describing: self.numDays)).")
@@ -127,7 +126,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
             }
 
             buttonView.setEnabled(enabled: true)
-            buttonView.backgroundColor = EAColor.success.uiColor
+            buttonView.backgroundColor = EAColor.accent.uiColor
         } else {
             fatalError("$Error: buttonView is not an EAButton type.")
         }

@@ -16,8 +16,19 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="pv0-8G-Mj2">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pv0-8G-Mj2" secondAttribute="bottom" id="4tJ-s1-euw"/>
+                            <constraint firstItem="pv0-8G-Mj2" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="6Wb-6g-mip"/>
+                            <constraint firstAttribute="trailing" secondItem="pv0-8G-Mj2" secondAttribute="trailing" id="FYf-yC-Z0y"/>
+                            <constraint firstItem="pv0-8G-Mj2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zKd-On-ouM"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -26,6 +37,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="launch" width="1284" height="2778"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
