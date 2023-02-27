@@ -72,7 +72,8 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray
         self.updateButton()
-        if let goal = self.goal, let numDays = self.numDays {
+        if var goal = self.goal, let numDays = self.numDays {
+            goal = goal.capitalizeNonFillerWords()
             DispatchQueue.main.async {
                 let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, startDate: self.startDate, additionalDetails: self.additionalDetails)
                 self.goalsService.saveLoadingGoal(

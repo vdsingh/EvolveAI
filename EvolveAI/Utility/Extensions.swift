@@ -13,9 +13,30 @@ extension String {
     /// Returns the number of tokens
     /// - Parameter charSet: The CharacterSet describing how to separate tokens
     /// - Returns: The number of tokens as an Int
-    public func numTokens(separatedBy charSet: CharacterSet) -> Int {
+    func numTokens(separatedBy charSet: CharacterSet) -> Int {
         let components = self.components(separatedBy: charSet)
         return components.count
+    }
+    
+    //TODO: Docstring
+    func capitalizeNonFillerWords() -> String {
+        let excludedWords = [
+            "the",
+            "to"
+        ]
+        var newStr: String = ""
+        var stringArray: [String] = self.components(separatedBy: " ")
+        for str in stringArray {
+            if excludedWords.contains(str) {
+                newStr.append("\(str) ")
+            } else {
+                newStr.append("\(str.capitalized) ")
+            }
+        }
+        
+        // Removes the last space
+        newStr.removeLast()
+        return newStr
     }
 }
 
