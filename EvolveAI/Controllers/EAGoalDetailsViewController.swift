@@ -32,7 +32,7 @@ class EAGoalDetailsViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         if let view = self.view as? EAGoalDetailsView {
             view.scrollToTodaysDayGuideView()

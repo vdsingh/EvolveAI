@@ -11,7 +11,7 @@ import RealmSwift
 
 /// View to display an individual goal and all of its information
 class EAGoalDetailsView: UIView, Debuggable {
-    
+
     let debug = true
 
     /// The DayGuideView that is relevant for today
@@ -112,7 +112,7 @@ class EAGoalDetailsView: UIView, Debuggable {
         ])
     }
     
-    //TODO: Docstring
+    /// Scrolls to the DayGuideView for today
     func scrollToTodaysDayGuideView() {
 
         // Scroll to todays day guide if there is one
