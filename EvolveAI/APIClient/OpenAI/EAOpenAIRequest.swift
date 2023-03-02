@@ -126,7 +126,7 @@ final class EAOpenAIRequest: EARequest {
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
         switch endpoint {
-        case .completions:
+        case .completions, .chatCompletions:
             self.httpMethod = .POST
         }
     }
@@ -143,7 +143,7 @@ extension EAOpenAIRequest {
     ///   - max_tokens: The maximum number of tokens to generate in the completion.
     /// - Returns: An EAOpenAIRequest object
     public static func completionsRequest(
-        model: EAOpenAICompletionsModel = .davinci003,
+        model: EAOpenAICompletionsModel,
         prompt: String,
         temperature: Int = 1,
         maxTokens: Int
@@ -158,6 +158,27 @@ extension EAOpenAIRequest {
             temperature: temperature,
             maxTokens: maxTokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
         )
+
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
+    }
+
+    // TODO: Docstring
+    public static func chatCompletionsRequest(
+        model: EAOpenAIChatCompletionsModel,
+        maxTokens: Int
+    ) -> EAOpenAIRequest {
+        if maxTokens > model.getTokenLimit() {
+            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
+        }
+
+        let requestBody = EAOpenAIChatCompletionsRequestBody(
+            model: model,
+            messages: [
+                //TODO: messages
+                EAOpenAIChatCompletionMessage(role: .user, content: "")
+            ]
+        )
+
+        return EAOpenAIRequest(endpoint: .chatCompletions, requestBody: requestBody)
     }
 }

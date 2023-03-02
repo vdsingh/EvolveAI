@@ -12,4 +12,7 @@ enum EAOpenAIEndpoint: String, EAEndpoint {
 
     /// Text completions endpoint
     case completions
+    
+    // TODO: Docstring
+    case chatCompletions = "chat/completions"
 }

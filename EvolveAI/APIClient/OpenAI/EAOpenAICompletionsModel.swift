@@ -19,7 +19,7 @@ enum EAOpenAICompletionsModel: String, Codable {
     /// Capable of straightforward tasks, very fast, and lower cost.
     case babbage001 = "text-babbage-001"
 
-    /// Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.
+    /// Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost
     case ada001 = "text-ada-001"
 
     /// Gets the max number of tokens that a model can respond with
