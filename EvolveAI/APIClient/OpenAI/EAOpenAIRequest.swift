@@ -148,8 +148,8 @@ extension EAOpenAIRequest {
         temperature: Int = 1,
         maxTokens: Int
     ) -> EAOpenAIRequest {
-        if maxTokens > model.getTokenLimit() {
-            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
+        if maxTokens > model.tokenLimit {
+            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
         }
 
         let requestBody = EAOpenAICompletionsRequestBody(
@@ -167,14 +167,14 @@ extension EAOpenAIRequest {
         model: EAOpenAIChatCompletionsModel,
         maxTokens: Int
     ) -> EAOpenAIRequest {
-        if maxTokens > model.getTokenLimit() {
-            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
+        if maxTokens > model.tokenLimit {
+            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
         }
 
         let requestBody = EAOpenAIChatCompletionsRequestBody(
             model: model,
             messages: [
-                //TODO: messages
+                // TODO: messages
                 EAOpenAIChatCompletionMessage(role: .user, content: "")
             ]
         )
