@@ -1,5 +1,7 @@
 import Foundation
 
+// TODO: Docstrings
+
 /// The response that is received from OpenAI completions requests
 struct EAOpenAICompletionsResponse: EAAPIResponse {
     let id: String

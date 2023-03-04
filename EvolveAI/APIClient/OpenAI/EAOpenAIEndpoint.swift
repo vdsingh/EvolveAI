@@ -9,10 +9,10 @@ import Foundation
 
 /// The OpenAI endpoints that can be used in this applications
 enum EAOpenAIEndpoint: String, EAEndpoint {
-
-    /// Text completions endpoint
-    case completions
     
+    /// Text completions endpoint
+    case completions = "completions"
+
     // TODO: Docstring
     case chatCompletions = "chat/completions"
 }

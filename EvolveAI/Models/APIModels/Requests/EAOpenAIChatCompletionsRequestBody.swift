@@ -17,21 +17,21 @@ struct EAOpenAIChatCompletionsRequestBody: Encodable, EARequestBody {
     let messages: [EAOpenAIChatCompletionMessage]
 }
 
-//TODO: docstring
+// TODO: docstring
 class EAOpenAIChatCompletionMessage: Object, Encodable {
-    //TODO: docstring
+    // TODO: docstring
     let role: EAOpenAIChatCompletionMessageRole
-    
-    //TODO: docstring
+
+    // TODO: docstring
     let content: String
-    
+
     init(role: EAOpenAIChatCompletionMessageRole, content: String) {
         self.role = role
         self.content = content
     }
 }
 
-//TODO: docstring
+// TODO: docstring
 enum EAOpenAIChatCompletionMessageRole: String, Encodable {
     case system
     case user
