@@ -9,11 +9,67 @@ import Foundation
 import RealmSwift
 import UIKit
 
-/// Represents user goals
-class EAGoal: Object {
+// TODO: Organize this file
 
+class EAGoalCreationInfo: Object {
+    
     /// Date when the goal was created
     @Persisted var creationDate: Date
+    
+    // TODO: Docstring
+    @Persisted private var modelUsedRawValue: String?
+    
+    @Persisted private var endpointUsedRawValue: EAOpenAIEndpoint.RawValue?
+    
+    /// The AI's response in normal String form
+    @Persisted var aiResponse: String
+    
+    // TODO: Docstring
+    var endpointUsed: EAOpenAIEndpoint? {
+        get {
+            guard let endpointRawValue = self.endpointUsedRawValue,
+                  let endpoint = EAOpenAIEndpoint(rawValue: endpointRawValue) else {
+                print("$Error: couldn't construct EAOpenAIEndpoint from rawValue: \(endpointUsedRawValue)")
+                return nil
+            }
+            
+            return endpoint
+            
+        }
+        set { self.endpointUsedRawValue = newValue?.rawValue }
+    }
+    
+    var modelUsed: EAOpenAIModel? {
+        get {
+            guard let modelUsedRawValue = self.modelUsedRawValue else {
+                print("$Error: Model Used Raw Value is nil.")
+            }
+            
+            switch endpointUsed {
+            case .completions:
+                return EAOpenAICompletionsModel(rawValue: modelUsedRawValue) ?? nil
+            case .chatCompletions:
+                return EAOpenAIChatCompletionsModel(rawValue: modelUsedRawValue) ?? nil
+            case .none:
+                return nil
+            }
+        }
+        
+        set {
+            self.modelUsedRawValue = newValue.rawVal ?? nil
+        }
+    }
+    
+    init(creationDate: Date, modelUsedRawValue: String, endpointUsed: EAOpenAIEndpoint.RawValue, aiResponse: String) {
+        self.creationDate = creationDate
+        self.modelUsedRawValue = modelUsedRawValue
+        self.endpointUsed = endpointUsed
+        self.aiResponse = aiResponse
+    }
+}
+
+/// Represents user goals
+class EAGoal: Object {
 
     /// A list of tags associated with this goal
     @Persisted private var tagsList: List<String>
@@ -30,9 +86,6 @@ class EAGoal: Object {
     /// The user specified additional details for the goal
     @Persisted var additionalDetails: String
 
-    /// The AI's response in normal String form
-    @Persisted var aiResponse: String
-
     /// The Hex value for this goal's color (color should be accessed through `color` computed variable)
     @Persisted private var colorHex: String
 
@@ -41,6 +94,9 @@ class EAGoal: Object {
 
     /// When the user wants to start the goal
     @Persisted var startDate: Date
+
+    // TODO: Docstring
+    @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -65,6 +121,16 @@ class EAGoal: Object {
         })
     }
 
+//    public var modelUsed: EAOpenAIModel {
+//        get {
+////            EAOpenAIModel.
+//        }
+//        
+//        set {
+//        
+//        }
+//    }
+
     /// Super initializer
     private convenience init(
         creationDate: Date,
@@ -73,10 +139,13 @@ class EAGoal: Object {
         goal: String,
         numDays: Int,
         additionalDetails: String,
-        color: UIColor
+        color: UIColor,
+        modelUsed: EAOpenAIModel
     ) {
         self.init()
-        self.creationDate = creationDate
+        
+//        let creationInfo = EAGoalCreationInfo(creationDate: creationDate, modelUsedRawValue: <#T##String#>, endpointUsed: <#T##EAOpenAIEndpoint.RawValue#>, aiResponse: <#T##String#>)
+//        self.creationDate = creationDate
         self.startDate = startDate
         self.id = id
         self.tags = tags
@@ -144,6 +213,12 @@ class EAGoal: Object {
         case failedToParseDays
         case failedToParseDay
     }
+
+    func addMessage(message: EAOpenAIChatCompletionMessage) {
+        self.messageHistory.append(message)
+    }
+
+    // TODO: Move to goals service
 
     /// Creates a list of task objects from a given AI Response
     /// - Parameter aiResponse: the response from the AI

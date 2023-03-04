@@ -23,6 +23,8 @@
 		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
 		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
 		B92DF58829A841A300C05029 /* MockGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58729A841A300C05029 /* MockGoals.swift */; };
+		B92DF58A29B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */; };
+		B92DF58C29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */; };
 		B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3D29956FA800316017 /* EATagButton.swift */; };
 		B93E8B40299583B700316017 /* EADateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3F299583B700316017 /* EADateSelector.swift */; };
 		B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4129958C2B00316017 /* EAStackView.swift */; };
@@ -120,6 +122,8 @@
 		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
 		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B92DF58729A841A300C05029 /* MockGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoals.swift; sourceTree = "<group>"; };
+		B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsModel.swift; sourceTree = "<group>"; };
+		B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsRequestBody.swift; sourceTree = "<group>"; };
 		B93E8B3D29956FA800316017 /* EATagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATagButton.swift; sourceTree = "<group>"; };
 		B93E8B3F299583B700316017 /* EADateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADateSelector.swift; sourceTree = "<group>"; };
 		B93E8B4129958C2B00316017 /* EAStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAStackView.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 				B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */,
 				B9C056972962D28D007B6DBD /* EAOpenAICompletionsModel.swift */,
 				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
+				B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */,
 			);
 			path = OpenAI;
 			sourceTree = "<group>";
@@ -392,6 +397,7 @@
 			children = (
 				B9C056902962C3BE007B6DBD /* EARequestBody.swift */,
 				B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */,
+				B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -703,10 +709,12 @@
 				B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
 				B93E8B4429958E4E00316017 /* EALabel.swift in Sources */,
+				B92DF58A29B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift in Sources */,
 				B9C056CB296BB3CF007B6DBD /* EAGoalDetailsViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
 				B90847EA297665A200758477 /* Extensions.swift in Sources */,
+				B92DF58C29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
 				B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */,
 				B9C056A22967CEE5007B6DBD /* EAUIElementView.swift in Sources */,
