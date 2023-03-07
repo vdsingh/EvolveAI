@@ -110,15 +110,11 @@ class EAGoalsService: Debuggable {
     ///   - goal: The goal that user is trying to achieve (ex: "learn the violin")
     ///   - numDays: The number of days that the goal is to be achieved by (ex: 30 days)
     public func createGoal(
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor,
-        startDate: Date,
+        loadingGoal: EALoadingGoal,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
         if Flags.useMockGoals {
-            let goal = Mocking.createMockGoal(goalString: goal, numDays: numDays)
+            let goal = Mocking.createMockGoal(goalString: loadingGoal.title, numDays: loadingGoal.numDays)
             DispatchQueue.main.async {
                 self.writeToRealm {
                     self.realm.add(goal)
@@ -132,19 +128,41 @@ class EAGoalsService: Debuggable {
             completion(.failure(CreateGoalError.maxGoalsExceeded))
         }
 
-        if numDays > GoalServiceConstants.numDaysLimit {
+        if loadingGoal.numDays > GoalServiceConstants.numDaysLimit {
             completion(.failure(CreateGoalError.dayLimitExceeded))
         }
 
         let prompt = createOpenAICompletionsRequestString(
-            goal: goal,
-            numDays: numDays
+            goal: loadingGoal.title,
+            numDays: loadingGoal.numDays
         )
-        let request = EAOpenAIRequest.completionsRequest(
-            model: .davinci003,
-            prompt: prompt,
-            maxTokens: Constants.maxTokens
-        )
+
+        switch loadingGoal.modelToUse {
+        case .EAOpenAICompletionsModel(let completionsModel):
+            let request = EAOpenAIRequest.completionsRequest(
+                model: completionsModel,
+                prompt: prompt,
+                maxTokens: completionsModel.tokenLimit
+            )
+            executeGoalCreationOpenAIAPIRequest(request: request, loadingGoal: loadingGoal, completion: completion)
+        case .EAOpenAIChatCompletionsModel(let chatCompletionsModel):
+            let request = EAOpenAIRequest.chatCompletionsRequest(
+                model: chatCompletionsModel,
+                maxTokens: chatCompletionsModel.tokenLimit
+            )
+            executeGoalCreationOpenAIAPIRequest(request: request, loadingGoal: loadingGoal, completion: completion)
+
+        case .EAMockingModel:
+            // TODO: Implement
+            return
+        }
+    }
+
+    private func executeGoalCreationOpenAIAPIRequest(
+        request: EAOpenAIRequest,
+        loadingGoal: EALoadingGoal,
+        completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
+    ) {
         EARestAPIService.shared.execute(
             request,
             expecting: EAOpenAICompletionsResponse.self,
@@ -157,14 +175,17 @@ class EAGoalsService: Debuggable {
                 case .success(let apiResponse):
                     let goal = EAGoal(
                         creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
-                        startDate: startDate,
-                        goal: goal,
-                        numDays: numDays,
-                        additionalDetails: additionalDetails,
-                        color: color,
-                        apiResponse: apiResponse
+                        startDate: loadingGoal.startDate,
+                        id: UUID().uuidString,
+                        goal: loadingGoal.title,
+                        numDays: loadingGoal.numDays,
+                        additionalDetails: loadingGoal.additionalDetails,
+                        color: loadingGoal.color,
+                        apiResponse: apiResponse,
+                        modelUsed: loadingGoal.modelToUse,
+                        endpointUsed: loadingGoal.endpointToUse
                     )
-                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
+                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.creationInfo.aiResponse)")
 
                     DispatchQueue.main.async {
                         strongSelf.writeToRealm {
@@ -222,11 +243,7 @@ class EAGoalsService: Debuggable {
                 if let loadingGoal = self.loadingGoals.last {
                     self.printDebug("Loading Goal \(loadingGoal.title) was dequeued. Creating now.")
                     self.createGoal(
-                        goal: loadingGoal.title,
-                        numDays: loadingGoal.numDays,
-                        additionalDetails: loadingGoal.additionalDetails,
-                        color: loadingGoal.color,
-                        startDate: loadingGoal.startDate
+                        loadingGoal: loadingGoal
                     ) { [weak self] result in
                         self?.loadingGoals.removeLast()
                         switch result {
