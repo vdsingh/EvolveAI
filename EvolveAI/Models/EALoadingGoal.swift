@@ -26,12 +26,20 @@ final class EALoadingGoal {
     /// Additional Details associated with the goal
     var additionalDetails: String
 
+    // TODO: Docstring
+    var modelToUse: EAGoalCreationModel
+
+    // TODO: Docstring
+    var endpointToUse: EAEndpoint
+
     /// Normal initializer
-    init(title: String, numDays: Int, color: UIColor, startDate: Date, additionalDetails: String) {
+    init(title: String, numDays: Int, color: UIColor, startDate: Date, additionalDetails: String, modelToUse: EAGoalCreationModel, endpointToUse: EAEndpoint) {
         self.title = title
         self.numDays = numDays
         self.color = color
         self.startDate = startDate
         self.additionalDetails = additionalDetails
+        self.modelToUse = modelToUse
+        self.endpointToUse = endpointToUse
     }
 }
