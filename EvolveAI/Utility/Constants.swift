@@ -25,4 +25,10 @@ struct Constants {
 
     /// Color to use for default theme
     static let defaultColor = UIColor.purple
+
+    // TODO: Docstring
+    static let defaultModel = EAGoalCreationModel.EAOpenAICompletionsModel(model: .davinci003)
+
+    // TODO: Docstring
+    static let defaultEndpoint = EAEndpoint.EAOpenAIEndpoint(endpoint: .completions)
 }
