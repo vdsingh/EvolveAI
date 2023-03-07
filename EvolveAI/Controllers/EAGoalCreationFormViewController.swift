@@ -75,7 +75,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
         if var goal = self.goal, let numDays = self.numDays {
             goal = goal.capitalizeNonFillerWords()
             DispatchQueue.main.async {
-                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, startDate: self.startDate, additionalDetails: self.additionalDetails)
+                let loadingGoal = EALoadingGoal(title: goal, numDays: numDays, color: self.color, startDate: self.startDate, additionalDetails: self.additionalDetails, modelToUse: Constants.defaultModel, endpointToUse: Constants.defaultEndpoint)
                 self.goalsService.saveLoadingGoal(
                     loadingGoal,
                     goalWasAddedToQueue: {

@@ -64,7 +64,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var dateCreatedString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
-        let dateString = dateFormatter.string(from: self.goal.creationDate)
+        let dateString = dateFormatter.string(from: self.goal.creationInfo.creationDate)
         return "Created on: \(dateString)"
     }
 
@@ -76,7 +76,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     var dayGuideViewModels: [EAGoalDayGuideViewModel] {
         self.goal.dayGuides.compactMap({
-            DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalStartDate: self.goal.creationDate, labelColor: self.darkColor, goalsService: self.goalsService)
+            DefaultEAGoalDayGuideViewModel(dayGuide: $0, goalStartDate: self.goal.creationInfo.creationDate, labelColor: self.darkColor, goalsService: self.goalsService)
         })
     }
 

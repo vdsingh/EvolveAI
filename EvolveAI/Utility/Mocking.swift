@@ -64,7 +64,9 @@ class Mocking {
             numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
             color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
-            aiResponse: self.createMockGoalAIResponse()
+            aiResponse: self.createMockGoalAIResponse(),
+            modelUsed: .EAMockingModel(model: .mocked),
+            endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
         )
         return goal
     }
