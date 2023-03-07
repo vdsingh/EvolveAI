@@ -12,59 +12,23 @@ import UIKit
 // TODO: Organize this file
 
 class EAGoalCreationInfo: Object {
-    
+
     /// Date when the goal was created
     @Persisted var creationDate: Date
-    
-    // TODO: Docstring
-    @Persisted private var modelUsedRawValue: String?
-    
-    @Persisted private var endpointUsedRawValue: EAOpenAIEndpoint.RawValue?
-    
+
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
-    
+
     // TODO: Docstring
-    var endpointUsed: EAOpenAIEndpoint? {
-        get {
-            guard let endpointRawValue = self.endpointUsedRawValue,
-                  let endpoint = EAOpenAIEndpoint(rawValue: endpointRawValue) else {
-                print("$Error: couldn't construct EAOpenAIEndpoint from rawValue: \(endpointUsedRawValue)")
-                return nil
-            }
-            
-            return endpoint
-            
-        }
-        set { self.endpointUsedRawValue = newValue?.rawValue }
-    }
-    
-    var modelUsed: EAOpenAIModel? {
-        get {
-            guard let modelUsedRawValue = self.modelUsedRawValue else {
-                print("$Error: Model Used Raw Value is nil.")
-            }
-            
-            switch endpointUsed {
-            case .completions:
-                return EAOpenAICompletionsModel(rawValue: modelUsedRawValue) ?? nil
-            case .chatCompletions:
-                return EAOpenAIChatCompletionsModel(rawValue: modelUsedRawValue) ?? nil
-            case .none:
-                return nil
-            }
-        }
-        
-        set {
-            self.modelUsedRawValue = newValue.rawVal ?? nil
-        }
-    }
-    
-    init(creationDate: Date, modelUsedRawValue: String, endpointUsed: EAOpenAIEndpoint.RawValue, aiResponse: String) {
+    var endpointUsed: String
+
+    var modelUsed: String
+
+    init(creationDate: Date, modelUsed: EAGoalCreationModel, endpointUsed: EAEndpoint, aiResponse: String) {
         self.creationDate = creationDate
-        self.modelUsedRawValue = modelUsedRawValue
-        self.endpointUsed = endpointUsed
         self.aiResponse = aiResponse
+        self.endpointUsed = endpointUsed.rawVal
+        self.modelUsed = modelUsed.rawVal
     }
 }
 
@@ -97,6 +61,9 @@ class EAGoal: Object {
 
     // TODO: Docstring
     @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
+
+    // TODO: Docstring
+    @Persisted var creationInfo: EAGoalCreationInfo
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
