@@ -185,7 +185,7 @@ class EAGoalsService: Debuggable {
                         modelUsed: loadingGoal.modelToUse,
                         endpointUsed: loadingGoal.endpointToUse
                     )
-                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.creationInfo.aiResponse)")
+                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
                     DispatchQueue.main.async {
                         strongSelf.writeToRealm {
