@@ -11,26 +11,21 @@ import UIKit
 
 // TODO: Organize this file
 
-class EAGoalCreationInfo: Object {
+// class EAGoalCreationInfo: Object {
 
-    /// Date when the goal was created
-    @Persisted var creationDate: Date
-
-    /// The AI's response in normal String form
-    @Persisted var aiResponse: String
-
-    // TODO: Docstring
-    var endpointUsed: String
-
-    var modelUsed: String
-
-    init(creationDate: Date, modelUsed: EAGoalCreationModel, endpointUsed: EAEndpoint, aiResponse: String) {
-        self.creationDate = creationDate
-        self.aiResponse = aiResponse
-        self.endpointUsed = endpointUsed.rawVal
-        self.modelUsed = modelUsed.rawVal
-    }
-}
+//    convenience init(
+//        creationDate: Date,
+//        modelUsed: EAGoalCreationModel,
+//        endpointUsed: EAEndpoint,
+//        aiResponse: String
+//    ) {
+//        self.init()
+//        self.creationDate = creationDate
+//        self.modelUsed = modelUsed.rawVal
+//        self.endpointUsed = endpointUsed.rawVal
+//        self.aiResponse = aiResponse
+//    }
+// }
 
 /// Represents user goals
 class EAGoal: Object {
@@ -62,8 +57,22 @@ class EAGoal: Object {
     // TODO: Docstring
     @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
 
+//    // TODO: Docstring
+//    @Persisted var creationInfo: EAGoalCreationInfo?
+
+    // MARK: - Goal Creation Info
+
+    /// Date when the goal was created
+    @Persisted var creationDate: Date
+
+    /// The AI's response in normal String form
+    @Persisted var aiResponse: String
+
     // TODO: Docstring
-    @Persisted var creationInfo: EAGoalCreationInfo
+    @Persisted var endpointUsed: String
+
+    // TODO: Docstring
+    @Persisted var modelUsed: String
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -107,20 +116,50 @@ class EAGoal: Object {
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        modelUsed: EAOpenAIModel
+        aiResponse: String,
+        modelUsed: EAGoalCreationModel,
+        endpointUsed: EAEndpoint
     ) {
         self.init()
-        
-//        let creationInfo = EAGoalCreationInfo(creationDate: creationDate, modelUsedRawValue: <#T##String#>, endpointUsed: <#T##EAOpenAIEndpoint.RawValue#>, aiResponse: <#T##String#>)
-//        self.creationDate = creationDate
+//        let creationInfo = EAGoalCreationInfo(
+//            creationDate: creationDate,
+//            modelUsed: modelUsed,
+//            endpointUsed: endpointUsed,
+//            aiResponse: aiResponse
+//        )
+//        self.creationInfo = creationInfo
+        self.creationDate = creationDate
+        self.modelUsed = modelUsed.rawVal
+        self.endpointUsed = endpointUsed.rawVal
+        self.aiResponse = aiResponse
         self.startDate = startDate
         self.id = id
-        self.tags = tags
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.color = color
     }
+
+    /// Super initializer
+    //    private convenience init(
+    //        creationDate: Date,
+    //        startDate: Date,
+    //        id: String,
+    //        goal: String,
+    //        numDays: Int,
+    //        additionalDetails: String,
+    //        color: UIColor,
+    //        modelUsed: EAOpenAIModel
+    //    ) {
+    //        self.init()
+    //        self.startDate = startDate
+    //        self.id = id
+    //        self.tags = tags
+    //        self.goal = goal
+    //        self.numDays = numDays
+    //        self.additionalDetails = additionalDetails
+    //        self.color = color
+    //    }
 
     /// Initializer for EAGoal
     /// - Parameters:
@@ -134,15 +173,30 @@ class EAGoal: Object {
     convenience init(
         creationDate: Date,
         startDate: Date,
+        id: String,
         goal: String,
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        apiResponse: EAOpenAICompletionsResponse
+        apiResponse: EAOpenAICompletionsResponse,
+        modelUsed: EAGoalCreationModel,
+        endpointUsed: EAEndpoint
     ) {
-        self.init(creationDate: creationDate, startDate: startDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
-        self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
+        let aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+        self.init(
+            creationDate: creationDate,
+            startDate: startDate,
+            id: id,
+            goal: goal,
+            numDays: numDays,
+            additionalDetails: additionalDetails,
+            color: color,
+            aiResponse: aiResponse,
+            modelUsed: modelUsed,
+            endpointUsed: endpointUsed
+        )
+
+        let parsedResponse = EAGoalsService.parseAIResponse(from: aiResponse, startDate: startDate)
         self.dayGuides = parsedResponse.dayGuides
         self.tags = parsedResponse.tags
     }
