@@ -32,9 +32,4 @@ enum EAOpenAIChatCompletionsModel: String, Codable, EAOpenAIModel {
             return 4096
         }
     }
-    
-    var rawVal: String {
-        return self.rawValue
-    }
 }
-//}

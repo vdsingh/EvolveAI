@@ -7,12 +7,7 @@
 
 import Foundation
 
-/// Protocol that all endpoints must follow
-// protocol EAEndpoint {
-//    //TODO: Docstrings
-//    var rawVal: String { get }
-// }
-
+//TODO: Docstring
 enum EAEndpoint {
     case EAOpenAIEndpoint(endpoint: EAOpenAIEndpoint)
     case EAMockingEndpoint(endpoint: EAMockingEndpoint)
