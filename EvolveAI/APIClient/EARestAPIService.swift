@@ -8,7 +8,9 @@
 import Foundation
 
 /// Used to execute REST API requests
-final class EARestAPIService {
+final class EARestAPIService: Debuggable {
+
+    let debug = true
 
     /// The shared instance that is used to access service functionality
     public static let shared = EARestAPIService()
@@ -36,7 +38,7 @@ final class EARestAPIService {
         expecting type: T.Type,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
-        printDebug("Executing a EAService request.")
+        printDebug("Executing a EAService request: \(String(describing: request.urlRequest))")
 
         // Unwrap the urlRequest property from the EARequest object
         guard let urlRequest = request.urlRequest else {
@@ -91,11 +93,11 @@ final class EARestAPIService {
                 } catch let error {
                     if let decodingError = error as? DecodingError {
                         // There was an error decoding the data
-                        print("$Error decoding response data \(String(describing: decodingError))")
+                        self.printDebug("$Error decoding response data \(String(describing: decodingError))")
                         completion(.failure(EAServiceError.failedToDecodeData))
                     } else {
                         // There was some other error
-                        print("$Error: \(String(describing: error))")
+                        self.printDebug("$Error: \(String(describing: error))")
                         completion(.failure(error))
                     }
                 }
@@ -106,8 +108,8 @@ final class EARestAPIService {
 
     /// Reads the relevant flags and prints debug messages only if they are enabled
     /// - Parameter message: The message to print
-    private func printDebug(_ message: String) {
-        if Flags.debugAPIClient {
+    func printDebug(_ message: String) {
+        if Flags.debugAPIClient || self.debug {
             print("$Log: \(message)")
         }
     }
