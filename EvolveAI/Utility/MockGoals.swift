@@ -47,6 +47,7 @@ final class MockGoals {
                 Day 9: Experiment with improvisation&%Listen to pieces&%Perfect chosen song
                 Day 10: Put it all together
             """,
+            messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
             endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
         )
@@ -78,6 +79,7 @@ final class MockGoals {
                 Day 9: Put finishing touches &%Ensure stability of wood pieces.
                 Day 10: Add hardware or paint as needed.
             """,
+            messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
             endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
         )
@@ -111,6 +113,7 @@ final class MockGoals {
                 Day 11: 25 min running &% Resisted Training &% Yoga
                 Day 12: 15 min elliptical
             """,
+            messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
             endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
         )

@@ -9,5 +9,5 @@ import Foundation
 
 // TODO: Docstring
 protocol EAAPIResponse: Decodable {
-
+    
 }

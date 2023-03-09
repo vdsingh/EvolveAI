@@ -26,9 +26,9 @@ struct Constants {
     /// Color to use for default theme
     static let defaultColor = UIColor.purple
 
-    // TODO: Docstring
-    static let defaultModel = EAGoalCreationModel.EAOpenAICompletionsModel(model: .davinci003)
+    /// The default model to be used to generate goals
+    static let defaultModel = EAGoalCreationModel.EAOpenAIChatCompletionsModel(model: .gpt3_5Turbo)
 
-    // TODO: Docstring
-    static let defaultEndpoint = EAEndpoint.EAOpenAIEndpoint(endpoint: .completions)
+    /// The default endpoint to be used to generate goals
+    static let defaultEndpoint = EAGoalCreationEndpoint.EAOpenAIEndpoint(endpoint: .chatCompletions)
 }

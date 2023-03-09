@@ -41,7 +41,7 @@ struct EAGoalsListViewModelActions {
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
 
 final class DefaultEAGoalsListViewModel: EAGoalsListViewModel, Debuggable {
-    let debug: Bool = true
+    let debug: Bool = false
 
     /// Service to interact with goals and other related types
     private let goalsService: EAGoalsService

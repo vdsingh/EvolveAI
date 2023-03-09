@@ -19,6 +19,4 @@ class NavigationUtility {
         navigationController.viewControllers.removeLast()
         navigationController.pushViewController(viewController, animated: true)
     }
-    
-    
 }

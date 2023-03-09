@@ -48,13 +48,14 @@ class Mocking {
     /// - Returns: A Mock EAGoal
     public static func createMockGoal(
         goalString: String?,
-//        taskString: String?,
         numDays: Int?,
         additionalDetails: String = ""
     ) -> EAGoal {
         guard let randomGoal = mockGoals.randomElement() else {
             fatalError("$Error: no mock goals")
         }
+
+        let mockAIResponse = self.createMockGoalAIResponse()
 
         let goal = EAGoal(
             creationDate: Date(),
@@ -64,7 +65,8 @@ class Mocking {
             numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
             color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
-            aiResponse: self.createMockGoalAIResponse(),
+            aiResponse: mockAIResponse,
+            messages: [EAOpenAIChatCompletionMessage(role: .ai, content: mockAIResponse)],
             modelUsed: .EAMockingModel(model: .mocked),
             endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
         )

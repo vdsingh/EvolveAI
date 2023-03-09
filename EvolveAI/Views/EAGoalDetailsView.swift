@@ -12,7 +12,7 @@ import RealmSwift
 /// View to display an individual goal and all of its information
 class EAGoalDetailsView: UIView, Debuggable {
 
-    let debug = true
+    let debug = false
 
     /// The DayGuideView that is relevant for today
     var todaysDayGuideView: EADayGuideView?

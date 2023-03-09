@@ -137,6 +137,14 @@ class EAGoalsService: Debuggable {
             numDays: loadingGoal.numDays
         )
 
+        // Add the prompt to the messages
+        loadingGoal.messages.append(
+            EAOpenAIChatCompletionMessage(
+                role: .user,
+                content: prompt
+            )
+        )
+
         switch loadingGoal.modelToUse {
         case .EAOpenAICompletionsModel(let completionsModel):
             let request = EAOpenAIRequest.completionsRequest(
@@ -144,13 +152,15 @@ class EAGoalsService: Debuggable {
                 prompt: prompt,
                 maxTokens: completionsModel.tokenLimit
             )
-            executeGoalCreationOpenAIAPIRequest(request: request, loadingGoal: loadingGoal, completion: completion)
+            executeGoalCreationOpenAIAPIRequest(request: request, responseType: EAOpenAICompletionsResponse.self, loadingGoal: loadingGoal, completion: completion)
+
         case .EAOpenAIChatCompletionsModel(let chatCompletionsModel):
             let request = EAOpenAIRequest.chatCompletionsRequest(
                 model: chatCompletionsModel,
+                messages: loadingGoal.messages,
                 maxTokens: chatCompletionsModel.tokenLimit
             )
-            executeGoalCreationOpenAIAPIRequest(request: request, loadingGoal: loadingGoal, completion: completion)
+            executeGoalCreationOpenAIAPIRequest(request: request, responseType: EAOpenAIChatCompletionsResponse.self, loadingGoal: loadingGoal, completion: completion)
 
         case .EAMockingModel:
             // TODO: Implement
@@ -158,14 +168,16 @@ class EAGoalsService: Debuggable {
         }
     }
 
-    private func executeGoalCreationOpenAIAPIRequest(
+    // TODO: Docstring
+    private func executeGoalCreationOpenAIAPIRequest<T: EAGoalCreationAPIResponse>(
         request: EAOpenAIRequest,
+        responseType: T.Type,
         loadingGoal: EALoadingGoal,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
         EARestAPIService.shared.execute(
             request,
-            expecting: EAOpenAICompletionsResponse.self,
+            expecting: responseType,
             completion: { [weak self] (result) in
                 guard let strongSelf = self else {
                     return
@@ -182,9 +194,15 @@ class EAGoalsService: Debuggable {
                         additionalDetails: loadingGoal.additionalDetails,
                         color: loadingGoal.color,
                         apiResponse: apiResponse,
+                        messages: loadingGoal.messages,
                         modelUsed: loadingGoal.modelToUse,
                         endpointUsed: loadingGoal.endpointToUse
                     )
+                    
+                    
+                    // Add the AI's Response to the message history
+                    goal.addMessage(message: EAOpenAIChatCompletionMessage(role: .ai, content: goal.aiResponse))
+                    
                     strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
                     DispatchQueue.main.async {
