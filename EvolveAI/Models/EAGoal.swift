@@ -97,13 +97,12 @@ class EAGoal: Object {
         additionalDetails: String,
         color: UIColor,
         aiResponse: String,
+        messages: [EAOpenAIChatCompletionMessage],
         modelUsed: EAGoalCreationModel,
         endpointUsed: EAGoalCreationEndpoint
     ) {
         self.init()
         self.creationDate = creationDate
-        self.modelUsed = modelUsed.rawVal
-        self.endpointUsed = endpointUsed.rawVal
         self.aiResponse = aiResponse
         self.startDate = startDate
         self.id = id
@@ -111,6 +110,10 @@ class EAGoal: Object {
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.color = color
+        self.messageHistory = List<EAOpenAIChatCompletionMessage>()
+        self.messageHistory.append(objectsIn: messages)
+        self.modelUsed = modelUsed.rawVal
+        self.endpointUsed = endpointUsed.rawVal
     }
 
     /// Initializer for EAGoal
@@ -133,11 +136,18 @@ class EAGoal: Object {
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        apiResponse: EAOpenAICompletionsResponse,
+        apiResponse: EAGoalCreationAPIResponse,
+        messages: [EAOpenAIChatCompletionMessage],
         modelUsed: EAGoalCreationModel,
         endpointUsed: EAGoalCreationEndpoint
     ) {
-        let aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+        var aiResponse = "NO AI RESPONSE"
+        if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
+            aiResponse = choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+        } else if let choices = apiResponse.getChoices() as? [EAOpenAICompletionsChoice] {
+            aiResponse = choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+        }
+
         self.init(
             creationDate: creationDate,
             startDate: startDate,
@@ -147,6 +157,7 @@ class EAGoal: Object {
             additionalDetails: additionalDetails,
             color: color,
             aiResponse: aiResponse,
+            messages: messages,
             modelUsed: modelUsed,
             endpointUsed: endpointUsed
         )
