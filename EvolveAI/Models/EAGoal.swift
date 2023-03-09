@@ -9,24 +9,6 @@ import Foundation
 import RealmSwift
 import UIKit
 
-// TODO: Organize this file
-
-// class EAGoalCreationInfo: Object {
-
-//    convenience init(
-//        creationDate: Date,
-//        modelUsed: EAGoalCreationModel,
-//        endpointUsed: EAEndpoint,
-//        aiResponse: String
-//    ) {
-//        self.init()
-//        self.creationDate = creationDate
-//        self.modelUsed = modelUsed.rawVal
-//        self.endpointUsed = endpointUsed.rawVal
-//        self.aiResponse = aiResponse
-//    }
-// }
-
 /// Represents user goals
 class EAGoal: Object {
 
@@ -54,11 +36,8 @@ class EAGoal: Object {
     /// When the user wants to start the goal
     @Persisted var startDate: Date
 
-    // TODO: Docstring
+    /// The message history for this goal (if a ChatCompletions endpoint was used)
     @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
-
-//    // TODO: Docstring
-//    @Persisted var creationInfo: EAGoalCreationInfo?
 
     // MARK: - Goal Creation Info
 
@@ -68,10 +47,10 @@ class EAGoal: Object {
     /// The AI's response in normal String form
     @Persisted var aiResponse: String
 
-    // TODO: Docstring
+    /// The endpoint used to generate this goal
     @Persisted var endpointUsed: String
 
-    // TODO: Docstring
+    /// The model used to generate this goal
     @Persisted var modelUsed: String
 
     /// The UIColor for this goal (uses colorHex)
@@ -97,18 +76,19 @@ class EAGoal: Object {
         })
     }
 
-//    public var modelUsed: EAOpenAIModel {
-//        get {
-////            EAOpenAIModel.
-//        }
-//        
-//        set {
-//        
-//        }
-//    }
-
-    /// Super initializer
-    private convenience init(
+    /// Initializer for EAGoal
+    /// - Parameters:
+    ///   - creationDate: The creation date of the goal
+    ///   - startDate: The start date of the goal
+    ///   - id: The unique identifier for this goal
+    ///   - goal: The goal itself (ex: "learn the violin")
+    ///   - numDays: The number of days to accomplish the goal (ex: 30)
+    ///   - additionalDetails: The user specified additional details for the goal
+    ///   - color: The color associated with the goal
+    ///   - aiResponse: The response from the AI
+    ///   - modelUsed: The model used to generate this goal
+    ///   - endpointUsed: The endpoint used to generate this goal
+    convenience init(
         creationDate: Date,
         startDate: Date,
         id: String,
@@ -118,16 +98,9 @@ class EAGoal: Object {
         color: UIColor,
         aiResponse: String,
         modelUsed: EAGoalCreationModel,
-        endpointUsed: EAEndpoint
+        endpointUsed: EAGoalCreationEndpoint
     ) {
         self.init()
-//        let creationInfo = EAGoalCreationInfo(
-//            creationDate: creationDate,
-//            modelUsed: modelUsed,
-//            endpointUsed: endpointUsed,
-//            aiResponse: aiResponse
-//        )
-//        self.creationInfo = creationInfo
         self.creationDate = creationDate
         self.modelUsed = modelUsed.rawVal
         self.endpointUsed = endpointUsed.rawVal
@@ -140,36 +113,18 @@ class EAGoal: Object {
         self.color = color
     }
 
-    /// Super initializer
-    //    private convenience init(
-    //        creationDate: Date,
-    //        startDate: Date,
-    //        id: String,
-    //        goal: String,
-    //        numDays: Int,
-    //        additionalDetails: String,
-    //        color: UIColor,
-    //        modelUsed: EAOpenAIModel
-    //    ) {
-    //        self.init()
-    //        self.startDate = startDate
-    //        self.id = id
-    //        self.tags = tags
-    //        self.goal = goal
-    //        self.numDays = numDays
-    //        self.additionalDetails = additionalDetails
-    //        self.color = color
-    //    }
-
     /// Initializer for EAGoal
     /// - Parameters:
     ///   - creationDate: The creation date of the goal
     ///   - startDate: The start date of the goal
+    ///   - id: The unique identifier for this goal
     ///   - goal: The goal itself (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - color: The color associated with the goal
     ///   - apiResponse: The OpenAI Completions Response
+    ///   - modelUsed: The model used to generate this goal
+    ///   - endpointUsed: The endpoint used to generate this goal
     convenience init(
         creationDate: Date,
         startDate: Date,
@@ -180,7 +135,7 @@ class EAGoal: Object {
         color: UIColor,
         apiResponse: EAOpenAICompletionsResponse,
         modelUsed: EAGoalCreationModel,
-        endpointUsed: EAEndpoint
+        endpointUsed: EAGoalCreationEndpoint
     ) {
         let aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
         self.init(
@@ -201,33 +156,6 @@ class EAGoal: Object {
         self.tags = parsedResponse.tags
     }
 
-    /// Initiailzer for EAGoal
-    /// - Parameters:
-    ///   - creationDate: The creation date of the goal
-    ///   - startDate: The start date of the goal
-    ///   - id: Unique identifier for the goal
-    ///   - goal: The goal itself (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal (ex: 30)
-    ///   - additionalDetails: The user specified additional details for the goal
-    ///   - color: The color associated with the goal
-    ///   - aiResponse: The AI Response
-    convenience init(
-        creationDate: Date,
-        startDate: Date,
-        id: String,
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor,
-        aiResponse: String
-    ) {
-        self.init(creationDate: creationDate, startDate: startDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
-        self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
-        self.dayGuides = parsedResponse.dayGuides
-        self.tags = parsedResponse.tags
-    }
-
     /// Possible errors that can arise from parsing AI response to create task
     private enum CreateTaskError: Error {
         case invalidNumberOfComponents
@@ -235,6 +163,8 @@ class EAGoal: Object {
         case failedToParseDay
     }
 
+    /// Adds a message to this goal's message history
+    /// - Parameter message: The message to add to the message history
     func addMessage(message: EAOpenAIChatCompletionMessage) {
         self.messageHistory.append(message)
     }
