@@ -25,15 +25,18 @@ final class EALoadingGoal {
 
     /// Additional Details associated with the goal
     var additionalDetails: String
+    
+    //TODO: Docstring
+    var messages: [EAOpenAIChatCompletionMessage] = []
 
-    // TODO: Docstring
+    /// The model that should be used to generate the goal
     var modelToUse: EAGoalCreationModel
 
-    // TODO: Docstring
-    var endpointToUse: EAEndpoint
+    /// The endpoint that should be used to generate the goal
+    var endpointToUse: EAGoalCreationEndpoint
 
     /// Normal initializer
-    init(title: String, numDays: Int, color: UIColor, startDate: Date, additionalDetails: String, modelToUse: EAGoalCreationModel, endpointToUse: EAEndpoint) {
+    init(title: String, numDays: Int, color: UIColor, startDate: Date, additionalDetails: String, modelToUse: EAGoalCreationModel, endpointToUse: EAGoalCreationEndpoint) {
         self.title = title
         self.numDays = numDays
         self.color = color
