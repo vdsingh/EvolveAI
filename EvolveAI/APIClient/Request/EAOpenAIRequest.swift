@@ -162,21 +162,20 @@ extension EAOpenAIRequest {
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }
 
-    // TODO: Docstring
+    // TODO: Docstring and actually implement
     public static func chatCompletionsRequest(
         model: EAOpenAIChatCompletionsModel,
+        messages: [EAOpenAIChatCompletionMessage],
         maxTokens: Int
     ) -> EAOpenAIRequest {
+        print("Instantiating Chat Completions Request with model: \(model.rawValue)")
         if maxTokens > model.tokenLimit {
             print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
         }
 
         let requestBody = EAOpenAIChatCompletionsRequestBody(
             model: model,
-            messages: [
-                // TODO: messages
-                EAOpenAIChatCompletionMessage(role: .user, content: "")
-            ]
+            messages: messages
         )
 
         return EAOpenAIRequest(endpoint: .chatCompletions, requestBody: requestBody)

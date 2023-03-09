@@ -7,12 +7,6 @@
 
 import Foundation
 
-/// Mock endpoints
-enum EAMockingEndpoint: String {
-    case mocked
-
-}
-
 /// The OpenAI endpoints that can be used in this applications
 enum EAOpenAIEndpoint: String {
 
