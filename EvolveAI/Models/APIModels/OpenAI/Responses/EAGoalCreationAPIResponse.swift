@@ -6,11 +6,20 @@
 //
 
 import Foundation
-//TODO: Docstirng
+
+/// API Response models that are used for goal creation
 protocol EAGoalCreationAPIResponse: EAAPIResponse {
+    
+    /// The response ID
     var id: String  { get }
+    
+    /// The response object (ex: 'chat.completion')
     var object: String  { get }
+    
+    /// Date created
     var created: Float  { get }
     
+    /// Retrieves the choices array
+    /// - Returns: The choices array
     func getChoices() -> [EAOpenAIChoice]
 }

@@ -26,7 +26,7 @@ final class EALoadingGoal {
     /// Additional Details associated with the goal
     var additionalDetails: String
     
-    //TODO: Docstring
+    /// The messages associated with the goal if a chat completions model is used
     var messages: [EAOpenAIChatCompletionMessage] = []
 
     /// The model that should be used to generate the goal

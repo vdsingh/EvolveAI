@@ -137,11 +137,11 @@ extension EAOpenAIRequest {
 
     /// Creates a EAOpenAIRequest for the completions endpoint
     /// - Parameters:
-    ///   - model: the AI model that will receive the request
+    ///   - model: the AI model that will receive and process the request
     ///   - prompt: the string to send to the model
     ///   - temperature: The sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
     ///   - max_tokens: The maximum number of tokens to generate in the completion.
-    /// - Returns: An EAOpenAIRequest object
+    /// - Returns: An EAOpenAIRequest object for a Completions request
     public static func completionsRequest(
         model: EAOpenAICompletionsModel,
         prompt: String,
@@ -162,7 +162,12 @@ extension EAOpenAIRequest {
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
     }
 
-    // TODO: Docstring and actually implement
+    /// Creates an EAOpenAIRequest for the chat completions endpoint
+    /// - Parameters:
+    ///   - model: the AI model that will receive and process the request
+    ///   - messages: the message history so far
+    ///   - maxTokens: The maximum number of tokens to generate in the completion
+    /// - Returns: An EAOpenAIRequest object for a Chat Completions request
     public static func chatCompletionsRequest(
         model: EAOpenAIChatCompletionsModel,
         messages: [EAOpenAIChatCompletionMessage],

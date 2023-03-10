@@ -7,7 +7,5 @@
 
 import Foundation
 
-// TODO: Docstring
-protocol EAAPIResponse: Decodable {
-    
-}
+/// Protocol that all API Response models must follow
+protocol EAAPIResponse: Decodable { }
