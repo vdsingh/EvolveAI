@@ -84,7 +84,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
                     modelToUse: Constants.defaultModel,
                     endpointToUse: Constants.defaultEndpoint
                 )
-                
+
                 self.goalsService.saveLoadingGoal(
                     loadingGoal,
                     goalWasAddedToQueue: {
