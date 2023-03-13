@@ -18,7 +18,8 @@ extension String {
         return components.count
     }
 
-    // TODO: Docstring
+    /// Constructs a String where non-filler words such as "the" and "to" are capitalized
+    /// - Returns: a String where non-filler words such as "the" and "to" are capitalized
     func capitalizeNonFillerWords() -> String {
         let excludedWords = [
             "the",

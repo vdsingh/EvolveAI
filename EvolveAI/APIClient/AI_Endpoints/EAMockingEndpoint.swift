@@ -9,7 +9,7 @@ import Foundation
 
 /// Mock endpoints
 enum EAMockingEndpoint: String {
-    
-    //TODO: Docstring
-    case mocked
+
+    /// A mock endpoint that represents an AI
+    case mockAIEndpoint
 }

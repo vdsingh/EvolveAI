@@ -68,7 +68,7 @@ class Mocking {
             aiResponse: mockAIResponse,
             messages: [EAOpenAIChatCompletionMessage(role: .ai, content: mockAIResponse)],
             modelUsed: .EAMockingModel(model: .mocked),
-            endpointUsed: .EAMockingEndpoint(endpoint: .mocked)
+            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint)
         )
         return goal
     }

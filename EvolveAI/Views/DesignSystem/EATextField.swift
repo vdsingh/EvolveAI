@@ -50,7 +50,10 @@ final class EATextField: UITextField, EAUIElementViewStaticHeight {
         self.layer.borderColor = color.cgColor
     }
 
-    // TODO: Docstring
+    /// Sets the placeholder text for the textfield
+    /// - Parameters:
+    ///   - text: the placeholder text string
+    ///   - color: the color of the placeholder text
     func setPlaceholderText(text: String, color: EAColor) {
         self.attributedPlaceholder = NSAttributedString(string: text, attributes: [
             NSAttributedString.Key.foregroundColor: color.uiColor

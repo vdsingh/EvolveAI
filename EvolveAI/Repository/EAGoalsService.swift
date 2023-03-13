@@ -168,7 +168,12 @@ class EAGoalsService: Debuggable {
         }
     }
 
-    // TODO: Docstring
+    /// Executes an OpenAI API Request to create a goal
+    /// - Parameters:
+    ///   - request: The EAOpenAIRequest to send
+    ///   - responseType: The response type we expect to receive back
+    ///   - loadingGoal: The loading goal (information gathered so far)
+    ///   - completion: Callback for after the API has responded
     private func executeGoalCreationOpenAIAPIRequest<T: EAGoalCreationAPIResponse>(
         request: EAOpenAIRequest,
         responseType: T.Type,
