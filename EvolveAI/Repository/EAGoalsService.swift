@@ -31,6 +31,14 @@ class EAGoalsService: Debuggable {
         static let characterLimit = 10
         static let numDaysLimit = 30
     }
+    
+    //TODO: Docstrings for cases
+    /// Possible errors that can arise from parsing AI response to create task
+    private enum CreateTaskError: Error {
+        case invalidNumberOfComponents
+        case failedToParseDays
+        case failedToParseDay
+    }
 
     /// Possible errors to be returned by the create goal function
     enum CreateGoalError: Error {
@@ -109,7 +117,7 @@ class EAGoalsService: Debuggable {
     /// - Parameters:
     ///   - goal: The goal that user is trying to achieve (ex: "learn the violin")
     ///   - numDays: The number of days that the goal is to be achieved by (ex: 30 days)
-    public func createGoal(
+    private func createGoal(
         loadingGoal: EALoadingGoal,
         completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
     ) {
@@ -201,13 +209,13 @@ class EAGoalsService: Debuggable {
                         apiResponse: apiResponse,
                         messages: loadingGoal.messages,
                         modelUsed: loadingGoal.modelToUse,
-                        endpointUsed: loadingGoal.endpointToUse
+                        endpointUsed: loadingGoal.endpointToUse,
+                        goalsService: strongSelf
                     )
-                    
-                    
+
                     // Add the AI's Response to the message history
                     goal.addMessage(message: EAOpenAIChatCompletionMessage(role: .ai, content: goal.aiResponse))
-                    
+
                     strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
                     DispatchQueue.main.async {
@@ -228,7 +236,7 @@ class EAGoalsService: Debuggable {
     /// - Parameter aiResponse: the response from the AI
     /// - Parameter startDate: the start date of the goal
     /// - Returns: a list of task objects
-    static func parseAIResponse(from aiResponse: String, startDate: Date) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
+    func parseAIResponse(from aiResponse: String, startDate: Date) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
         let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
 //        printDebug("Lines: \(lines)")
         let dayGuides = List<EAGoalDayGuide>()
@@ -254,7 +262,7 @@ class EAGoalsService: Debuggable {
                 String(line[..<colonIndex]),
                 String(line[colonIndex...]).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
             ]
-//            printDebug("Components are \(components)")
+            printDebug("Components are \(components)")
 
             // Separate the tasks into
             let taskStrings = components[1]
@@ -262,7 +270,7 @@ class EAGoalsService: Debuggable {
                 .components(separatedBy: Constants.taskSeparatorCharacter)
                 .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
                 .filter({!$0.isEmpty})
-//            printDebug("Tasks are \(taskStrings)")
+            printDebug("Tasks are \(taskStrings)")
 
             let taskList = List<EAGoalTask>()
             for string in taskStrings {
@@ -282,7 +290,7 @@ class EAGoalsService: Debuggable {
                 if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
                     let dayList = List<Int>()
                     dayList.append(objectsIn: [firstDay, lastDay])
-//                    printDebug("Multiple Days are \(dayList)")
+                    printDebug("Multiple Days are \(dayList)")
                     let dayGuide = EAGoalDayGuide(
                         isMultipleDays: true,
                         days: dayList,
@@ -291,7 +299,7 @@ class EAGoalsService: Debuggable {
                     )
                     dayGuides.append(dayGuide)
                 } else {
-//                    print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
+                    print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
                 }
             } else {
                 if let day = Int(dayRangeString) {
@@ -306,7 +314,7 @@ class EAGoalsService: Debuggable {
                     )
                     dayGuides.append(dayGuide)
                 } else {
-//                    print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
+                    print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
                 }
             }
         }

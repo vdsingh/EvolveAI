@@ -75,6 +75,8 @@ class EAGoal: Object {
             return Date().occursOnSameDate(as: dayGuide.dayGuideDate)
         })
     }
+    
+    private var goalsService: EAGoalsService?
 
     /// Initializer for EAGoal
     /// - Parameters:
@@ -99,7 +101,8 @@ class EAGoal: Object {
         aiResponse: String,
         messages: [EAOpenAIChatCompletionMessage],
         modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint
+        endpointUsed: EAGoalCreationEndpoint,
+        goalsService: EAGoalsService
     ) {
         self.init()
         self.creationDate = creationDate
@@ -114,6 +117,7 @@ class EAGoal: Object {
         self.messageHistory.append(objectsIn: messages)
         self.modelUsed = modelUsed.rawVal
         self.endpointUsed = endpointUsed.rawVal
+        self.goalsService = goalsService
     }
 
     /// Initializer for EAGoal
@@ -139,7 +143,8 @@ class EAGoal: Object {
         apiResponse: EAGoalCreationAPIResponse,
         messages: [EAOpenAIChatCompletionMessage],
         modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint
+        endpointUsed: EAGoalCreationEndpoint,
+        goalsService: EAGoalsService
     ) {
         var aiResponse = "NO AI RESPONSE"
         if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
@@ -159,19 +164,13 @@ class EAGoal: Object {
             aiResponse: aiResponse,
             messages: messages,
             modelUsed: modelUsed,
-            endpointUsed: endpointUsed
+            endpointUsed: endpointUsed,
+            goalsService: goalsService
         )
 
-        let parsedResponse = EAGoalsService.parseAIResponse(from: aiResponse, startDate: startDate)
+        let parsedResponse = goalsService.parseAIResponse(from: aiResponse, startDate: startDate)
         self.dayGuides = parsedResponse.dayGuides
         self.tags = parsedResponse.tags
-    }
-
-    /// Possible errors that can arise from parsing AI response to create task
-    private enum CreateTaskError: Error {
-        case invalidNumberOfComponents
-        case failedToParseDays
-        case failedToParseDay
     }
 
     /// Adds a message to this goal's message history
