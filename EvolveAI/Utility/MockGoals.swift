@@ -49,7 +49,8 @@ final class MockGoals {
             """,
             messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
-            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint)
+            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
+            goalsService: EAGoalsService()
         )
 
         return goal
@@ -81,7 +82,8 @@ final class MockGoals {
             """,
             messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
-            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint)
+            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
+            goalsService: EAGoalsService()
         )
 
         return goal
@@ -115,7 +117,8 @@ final class MockGoals {
             """,
             messages: [],
             modelUsed: .EAMockingModel(model: .mocked),
-            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint)
+            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
+            goalsService: EAGoalsService()
         )
 
         return goal
