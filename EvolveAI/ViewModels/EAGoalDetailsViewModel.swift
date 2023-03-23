@@ -41,6 +41,13 @@ protocol EAGoalDetailsViewModelOutput {
 
     /// The additional details associated with the goal
     var additionalDetails: String { get }
+    
+    // MARK: - Developer Mode Variables
+    
+    //TODO: Docstring
+    var modelUsedText: String { get }
+    
+    var aiResponse: String { get }
 }
 
 protocol EAGoalDetailsViewModel: EAGoalDetailsViewModelInput, EAGoalDetailsViewModelOutput { }
@@ -81,6 +88,10 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     }
 
     let additionalDetails: String
+        
+    let modelUsedText: String
+    
+    let aiResponse: String
 
     /// Goal initializer
     /// - Parameter goal: The goal that this ViewModel represents
@@ -89,6 +100,8 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         self.title = goal.goal
         self.color = goal.color
         self.additionalDetails = goal.additionalDetails
+        self.modelUsedText = goal.modelUsed
+        self.aiResponse = goal.aiResponse
         self.goal = goal
         self.goalsService = goalsService
         self.tagStrings = goal.tags.map({$0})

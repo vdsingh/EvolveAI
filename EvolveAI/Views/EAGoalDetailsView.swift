@@ -78,6 +78,15 @@ class EAGoalDetailsView: UIView, Debuggable {
             ),
             .separator(color: separatorColor)
         ])
+        
+        if Flags.developerMode {
+            self.guideContentView.addElements([
+                .label(text: "Developer Information", textStyle: .heading1, textColor: viewModel.darkColor),
+                .label(text: "Model Used: \(viewModel.modelUsedText)", textColor: viewModel.darkColor),
+                .label(text: "AI Response: \n\"\(viewModel.aiResponse)\"", textColor: viewModel.darkColor),
+                .separator(color: separatorColor)
+            ])
+        }
 
         if let dayGuideViewStack = EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView {
             dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
