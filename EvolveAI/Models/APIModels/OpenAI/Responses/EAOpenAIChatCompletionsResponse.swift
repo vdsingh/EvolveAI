@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: Docstring
 /// Response from the OpenAI Chat Completions Endpoint
 struct EAOpenAIChatCompletionsResponse: EAGoalCreationAPIResponse {
 

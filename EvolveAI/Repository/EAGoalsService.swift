@@ -31,8 +31,8 @@ class EAGoalsService: Debuggable {
         static let characterLimit = 10
         static let numDaysLimit = 30
     }
-    
-    //TODO: Docstrings for cases
+
+    // TODO: Docstrings for cases
     /// Possible errors that can arise from parsing AI response to create task
     private enum CreateTaskError: Error {
         case invalidNumberOfComponents

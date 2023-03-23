@@ -75,7 +75,7 @@ class EAGoal: Object {
             return Date().occursOnSameDate(as: dayGuide.dayGuideDate)
         })
     }
-    
+
     private var goalsService: EAGoalsService?
 
     /// Initializer for EAGoal
