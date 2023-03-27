@@ -18,6 +18,7 @@ protocol EAGoalDetailsViewModelInput {
 
 /// Properties that can be extracted from this ViewModel
 protocol EAGoalDetailsViewModelOutput {
+
     /// The title of the goal
     var title: String { get }
 
@@ -41,12 +42,13 @@ protocol EAGoalDetailsViewModelOutput {
 
     /// The additional details associated with the goal
     var additionalDetails: String { get }
-    
+
     // MARK: - Developer Mode Variables
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     var modelUsedText: String { get }
-    
+
+    // TODO: Docstring
     var aiResponse: String { get }
 }
 
@@ -88,9 +90,9 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     }
 
     let additionalDetails: String
-        
+
     let modelUsedText: String
-    
+
     let aiResponse: String
 
     /// Goal initializer

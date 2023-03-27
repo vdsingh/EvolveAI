@@ -49,6 +49,7 @@
 		B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */; };
 		B9584E81297F3479000368C2 /* EAGoalTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E80297F3479000368C2 /* EAGoalTaskView.swift */; };
 		B9584E83297F4253000368C2 /* EAGoalTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E82297F4253000368C2 /* EAGoalTask.swift */; };
+		B959650129D1DEEF004F6A57 /* EAAIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B959650029D1DEEF004F6A57 /* EAAIParser.swift */; };
 		B96DFABB29A497340089CB39 /* EAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96DFABA29A497340089CB39 /* EAColor.swift */; };
 		B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B40299C434700F27BC2 /* EAEmptyView.swift */; };
 		B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4829A1DD2C00F27BC2 /* EAImage.swift */; };
@@ -156,6 +157,7 @@
 		B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskViewModel.swift; sourceTree = "<group>"; };
 		B9584E80297F3479000368C2 /* EAGoalTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskView.swift; sourceTree = "<group>"; };
 		B9584E82297F4253000368C2 /* EAGoalTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTask.swift; sourceTree = "<group>"; };
+		B959650029D1DEEF004F6A57 /* EAAIParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAAIParser.swift; sourceTree = "<group>"; };
 		B96DFABA29A497340089CB39 /* EAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColor.swift; sourceTree = "<group>"; };
 		B9810B40299C434700F27BC2 /* EAEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEmptyView.swift; sourceTree = "<group>"; };
 		B9810B4829A1DD2C00F27BC2 /* EAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImage.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */,
+				B959650029D1DEEF004F6A57 /* EAAIParser.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				B903ED4629BA63F5008E323D /* EAMockingGoalCreationModel.swift in Sources */,
 				B93E8B462995996400316017 /* EATextStyle.swift in Sources */,
 				B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */,
+				B959650129D1DEEF004F6A57 /* EAAIParser.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
 				B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */,
 				B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */,

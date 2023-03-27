@@ -27,7 +27,7 @@ class Flags {
 
     /// Prints messages associated with the goal creation form
     static let debugGoalCreationForm = false
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     static let developerMode = true
 }

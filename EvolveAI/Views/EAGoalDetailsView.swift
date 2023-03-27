@@ -78,7 +78,7 @@ class EAGoalDetailsView: UIView, Debuggable {
             ),
             .separator(color: separatorColor)
         ])
-        
+
         if Flags.developerMode {
             self.guideContentView.addElements([
                 .label(text: "Developer Information", textStyle: .heading1, textColor: viewModel.darkColor),
