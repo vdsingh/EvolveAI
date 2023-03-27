@@ -29,6 +29,9 @@ final class EALoadingGoal {
     /// The messages associated with the goal if a chat completions model is used
     var messages: [EAOpenAIChatCompletionMessage] = []
 
+    // TODO: Docstring
+    var pendingMessages: [EAOpenAIChatCompletionMessage] = []
+
     /// The model that should be used to generate the goal
     var modelToUse: EAGoalCreationModel
 
@@ -44,5 +47,25 @@ final class EALoadingGoal {
         self.additionalDetails = additionalDetails
         self.modelToUse = modelToUse
         self.endpointToUse = endpointToUse
+    }
+
+    // TODO: Docstring
+    func addChatCompletionMessage(message: EAOpenAIChatCompletionMessage) {
+        self.messages.append(message)
+    }
+
+    // TODO: Docstring
+    func addChatCompletionMessages(messages: [EAOpenAIChatCompletionMessage]) {
+        self.messages.append(contentsOf: messages)
+    }
+
+    // TODO: Docstring
+    func addPendingChatCompletionMessage(message: EAOpenAIChatCompletionMessage) {
+        self.messages.append(message)
+    }
+
+    // TODO: Docstring
+    func addPendingChatCompletionMessages(messages: [EAOpenAIChatCompletionMessage]) {
+        self.messages.append(contentsOf: messages)
     }
 }
