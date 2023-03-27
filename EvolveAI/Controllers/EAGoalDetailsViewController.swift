@@ -31,9 +31,11 @@ class EAGoalDetailsViewController: UIViewController {
         let textAttributes = [NSAttributedString.Key.foregroundColor: viewModel.darkColor]
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
+        navigationItem.rightBarButtonItem?.tintColor = EAColor.failure.uiColor
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.tintColor = viewModel.darkColor
         if let view = self.view as? EAGoalDetailsView {
             view.scrollToTodaysDayGuideView()
         } else {
