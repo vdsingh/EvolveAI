@@ -34,7 +34,7 @@ class EAGoalsService: Debuggable {
 
     // TODO: Docstrings for cases
     /// Possible errors that can arise from parsing AI response to create task
-    private enum CreateTaskError: Error {
+    enum CreateTaskError: Error {
         case invalidNumberOfComponents
         case failedToParseDays
         case failedToParseDay
@@ -86,13 +86,30 @@ class EAGoalsService: Debuggable {
     /// - Returns: A string to send to the OpenAI Completions endpoint
     private func createOpenAICompletionsRequestString(goal: String, numDays: Int) -> String {
         let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"] [New Line for next day]"
-        var prompt = "I have the goal: \(goal). Firstly, give me between 3 and 5 tags that can be used to categorize this goal in the format: \"[tag1,tag2,tag3] *New Line\"."
+        var prompt = "I have the goal: \(goal). Firstly, give me 3 that can be used to categorize this goal in the format: \"[tag1,tag2,tag3] *New Line\"."
         prompt += "I want to complete it in exactly \(numDays) days. Next, give me a guide for every day in the form \(guideFormat)."
         prompt += " It is important to provide a guide for every day within \(numDays) that follows the guide format!"
 
         prompt += " Also, make sure that your entire response, which includes \"Day\", the day number, and the colon, is within a limit of"
         prompt += " \(Constants.maxTokens - goal.numTokens(separatedBy: CharacterSet(charactersIn: " "))) characters."
         return prompt
+    }
+
+    // TODO: Docstring
+    private func createOpenAIChatCompletionsRequestStrings(goal: String, numDays: Int) -> [EAOpenAIChatCompletionMessage] {
+        var requestStrings = [EAOpenAIChatCompletionMessage]()
+        let message = EAOpenAIChatCompletionMessage(
+            role: .user,
+            content: "I have the goal: \(goal). Give me 3 tags that can be used to categorize this goal. For example, for the goal \"I want to lose weight\" you would return: \"Nutrition, Diet, Fitness\""
+        )
+        requestStrings.append(message)
+        let guideFormat = "Day <Day Number>: <paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"> <New Line for next day>"
+        let nextMessage = EAOpenAIChatCompletionMessage(
+            role: .user,
+            content: "I want to complete it in exactly \(numDays) days. Give me a guide for each day in the format: \(guideFormat)."
+        )
+        requestStrings.append(nextMessage)
+        return requestStrings
     }
 
     /// Helper function to communicate with realm. Abstracts error handling.
@@ -139,25 +156,24 @@ class EAGoalsService: Debuggable {
         if loadingGoal.numDays > GoalServiceConstants.numDaysLimit {
             completion(.failure(CreateGoalError.dayLimitExceeded))
         }
-
-        let prompt = createOpenAICompletionsRequestString(
-            goal: loadingGoal.title,
-            numDays: loadingGoal.numDays
-        )
-
-        // Add the prompt to the messages
-        loadingGoal.messages.append(
-            EAOpenAIChatCompletionMessage(
-                role: .user,
-                content: prompt
-            )
-        )
-
+//        let prompt = createOpenAICompletionsRequestString(
+//            goal: loadingGoal.title,
+//            numDays: loadingGoal.numDays
+//        )
+//
+//        // Add the prompt to the messages
+//        loadingGoal.messages.append(
+//            EAOpenAIChatCompletionMessage(
+//                role: .user,
+//                content: prompt
+//            )
+//        )
+        self.addPendingMessagesToLoadingGoal(loadingGoal: loadingGoal)
         switch loadingGoal.modelToUse {
         case .EAOpenAICompletionsModel(let completionsModel):
             let request = EAOpenAIRequest.completionsRequest(
                 model: completionsModel,
-                prompt: prompt,
+                prompt: loadingGoal.messages.last?.content ?? self.createOpenAICompletionsRequestString(goal: loadingGoal.title, numDays: loadingGoal.numDays),
                 maxTokens: completionsModel.tokenLimit
             )
             executeGoalCreationOpenAIAPIRequest(request: request, responseType: EAOpenAICompletionsResponse.self, loadingGoal: loadingGoal, completion: completion)
@@ -173,6 +189,26 @@ class EAGoalsService: Debuggable {
         case .EAMockingModel:
             // TODO: Implement
             return
+        }
+    }
+
+    private func addPendingMessagesToLoadingGoal(loadingGoal: EALoadingGoal) {
+        switch loadingGoal.modelToUse {
+        case .EAOpenAIChatCompletionsModel:
+            loadingGoal.addPendingChatCompletionMessages(
+                messages: self.createOpenAIChatCompletionsRequestStrings(goal: loadingGoal.title, numDays: loadingGoal.numDays)
+            )
+
+        case .EAOpenAICompletionsModel:
+            let message = EAOpenAIChatCompletionMessage(
+                role: .user,
+                content: self.createOpenAICompletionsRequestString(goal: loadingGoal.title, numDays: loadingGoal.numDays)
+            )
+            loadingGoal.addPendingChatCompletionMessage(message: message)
+
+        case .EAMockingModel:
+            // TODO: implement
+            break
         }
     }
 
