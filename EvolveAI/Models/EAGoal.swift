@@ -175,21 +175,13 @@ class EAGoal: Object {
 
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
-    func addMessage(message: EAOpenAIChatCompletionMessage) {
+    func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
         self.messageHistory.append(message)
-    }
-
-    /// Prints messages depending on whether the required flag is enabled
-    /// - Parameter message: The message to print
-    static func printDebug(_ message: String) {
-        if Flags.printTaskMessages {
-            print("$Log: \(message)")
-        }
     }
 
     /// Gets a simplified String description of this goal
     /// - Returns: A String describing this goal
-    public func getSimplifiedDescription() -> String {
+    func getSimplifiedDescription() -> String {
         return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
     }
 

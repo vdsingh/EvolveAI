@@ -5,6 +5,16 @@
 //  Created by Vikram Singh on 1/6/23.
 //
 
+class EALoadingMessage {
+    let message: EAOpenAIChatCompletionMessage
+    let goal: EAGoal
+    
+    init(message: EAOpenAIChatCompletionMessage, goal: EAGoal) {
+        self.message = message
+        self.goal = goal
+    }
+}
+
 import Foundation
 import RealmSwift
 import UIKit
@@ -16,6 +26,9 @@ class EAGoalsService: Debuggable {
 
     /// Queue for goals that are loading
     private var loadingGoals = [EALoadingGoal]()
+    
+    //TODO: Docstring
+    private var loadingMessages = [EALoadingMessage]()
 
     /// Access to the Realm database
     var realm: Realm {
@@ -156,6 +169,7 @@ class EAGoalsService: Debuggable {
         if loadingGoal.numDays > GoalServiceConstants.numDaysLimit {
             completion(.failure(CreateGoalError.dayLimitExceeded))
         }
+        
 //        let prompt = createOpenAICompletionsRequestString(
 //            goal: loadingGoal.title,
 //            numDays: loadingGoal.numDays
@@ -168,6 +182,7 @@ class EAGoalsService: Debuggable {
 //                content: prompt
 //            )
 //        )
+        
         self.addPendingMessagesToLoadingGoal(loadingGoal: loadingGoal)
         switch loadingGoal.modelToUse {
         case .EAOpenAICompletionsModel(let completionsModel):
@@ -250,7 +265,7 @@ class EAGoalsService: Debuggable {
                     )
 
                     // Add the AI's Response to the message history
-                    goal.addMessage(message: EAOpenAIChatCompletionMessage(role: .ai, content: goal.aiResponse))
+                    goal.addMessageToHistory(message: EAOpenAIChatCompletionMessage(role: .ai, content: goal.aiResponse))
 
                     strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
 
@@ -266,6 +281,10 @@ class EAGoalsService: Debuggable {
                 }
             }
         )
+    }
+    
+    private func executeMessageOpenAIAPIRequest() {
+        
     }
 
     /// Gets all of the persisted EAGoal objects from the Realm database
@@ -322,6 +341,36 @@ class EAGoalsService: Debuggable {
                             print("$Error creating loading goal: \(error)")
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    /// Dequeues loading messages and creates them
+    /// - Parameter completion: Callback for when the loading messages have all been created
+    private func processLoadingMessages(completion: @escaping (EAGoal) -> Void) {
+        if self.loadingMessages.isEmpty {
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0..<self.loadingMessages.count {
+                if let loadingMessage = self.loadingMessages.last {
+                    self.printDebug("Loading Message \(loadingMessage.message) was dequeued. Creating now.")
+                    //TODO: Loading messages
+//                    self.createGoal(
+//                        loadingGoal: loadingGoal
+//                    ) { [weak self] result in
+//                        self?.loadingGoals.removeLast()
+//                        switch result {
+//                        case .success(let goal):
+//                            self?.printDebug("Goal was successfully created: \(goal.goal)")
+//                            completion(goal)
+//
+//                        case .failure(let error):
+//                            print("$Error creating loading goal: \(error)")
+//                        }
+//                    }
                 }
             }
         }
