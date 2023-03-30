@@ -8,7 +8,7 @@
 class EALoadingMessage {
     let message: EAOpenAIChatCompletionMessage
     let goal: EAGoal
-    
+
     init(message: EAOpenAIChatCompletionMessage, goal: EAGoal) {
         self.message = message
         self.goal = goal
@@ -26,8 +26,8 @@ class EAGoalsService: Debuggable {
 
     /// Queue for goals that are loading
     private var loadingGoals = [EALoadingGoal]()
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     private var loadingMessages = [EALoadingMessage]()
 
     /// Access to the Realm database
@@ -169,7 +169,7 @@ class EAGoalsService: Debuggable {
         if loadingGoal.numDays > GoalServiceConstants.numDaysLimit {
             completion(.failure(CreateGoalError.dayLimitExceeded))
         }
-        
+
 //        let prompt = createOpenAICompletionsRequestString(
 //            goal: loadingGoal.title,
 //            numDays: loadingGoal.numDays
@@ -182,7 +182,7 @@ class EAGoalsService: Debuggable {
 //                content: prompt
 //            )
 //        )
-        
+
         self.addPendingMessagesToLoadingGoal(loadingGoal: loadingGoal)
         switch loadingGoal.modelToUse {
         case .EAOpenAICompletionsModel(let completionsModel):
@@ -282,9 +282,9 @@ class EAGoalsService: Debuggable {
             }
         )
     }
-    
+
     private func executeMessageOpenAIAPIRequest() {
-        
+
     }
 
     /// Gets all of the persisted EAGoal objects from the Realm database
@@ -345,7 +345,7 @@ class EAGoalsService: Debuggable {
             }
         }
     }
-    
+
     /// Dequeues loading messages and creates them
     /// - Parameter completion: Callback for when the loading messages have all been created
     private func processLoadingMessages(completion: @escaping (EAGoal) -> Void) {
@@ -357,7 +357,7 @@ class EAGoalsService: Debuggable {
             for _ in 0..<self.loadingMessages.count {
                 if let loadingMessage = self.loadingMessages.last {
                     self.printDebug("Loading Message \(loadingMessage.message) was dequeued. Creating now.")
-                    //TODO: Loading messages
+                    // TODO: Loading messages
 //                    self.createGoal(
 //                        loadingGoal: loadingGoal
 //                    ) { [weak self] result in
