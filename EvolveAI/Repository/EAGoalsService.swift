@@ -8,7 +8,6 @@
 class EALoadingMessage {
     let message: EAOpenAIChatCompletionMessage
     let goal: EAGoal
-
     init(message: EAOpenAIChatCompletionMessage, goal: EAGoal) {
         self.message = message
         self.goal = goal
@@ -21,7 +20,7 @@ import UIKit
 
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
-
+    
     let debug = true
 
     /// Queue for goals that are loading
@@ -113,7 +112,7 @@ class EAGoalsService: Debuggable {
         var requestStrings = [EAOpenAIChatCompletionMessage]()
         let message = EAOpenAIChatCompletionMessage(
             role: .user,
-            content: "I have the goal: \(goal). Give me 3 tags that can be used to categorize this goal. For example, for the goal \"I want to lose weight\" you would return: \"Nutrition, Diet, Fitness\""
+            content: "I have the goal: \(goal). Give me 3 tags that can be used to categorize this goal."
         )
         requestStrings.append(message)
         let guideFormat = "Day <Day Number>: <paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"> <New Line for next day>"
@@ -182,7 +181,8 @@ class EAGoalsService: Debuggable {
 //                content: prompt
 //            )
 //        )
-
+        
+        // Create the messages to send to the AI and add them to the loading goal.
         self.addPendingMessagesToLoadingGoal(loadingGoal: loadingGoal)
         switch loadingGoal.modelToUse {
         case .EAOpenAICompletionsModel(let completionsModel):
