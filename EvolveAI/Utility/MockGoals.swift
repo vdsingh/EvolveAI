@@ -22,6 +22,7 @@ final class MockGoals {
         let startDate = Calendar.current.date(byAdding: .day, value: Int.random(in: 0..<8), to: creationDate) ?? Date()
         return (creationDate, startDate)
     }
+    
 
     /// A Mock goal for learning the violin
     static let learnViolin: EAGoal = {
@@ -29,7 +30,6 @@ final class MockGoals {
         let goal = EAGoal(
             creationDate: randomDates.creationDate,
             startDate: randomDates.startDate,
-            id: UUID().uuidString,
             goal: "Learn the Violin",
             numDays: 10,
             additionalDetails: "",
@@ -47,8 +47,6 @@ final class MockGoals {
 //                Day 9: Experiment with improvisation&%Listen to pieces&%Perfect chosen song
 //                Day 10: Put it all together
 //            """,
-            languageModel: .EAMockingModel(model: .mocked),
-            openAIEndpoint: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
             goalsService: EAGoalsService()
         )
 
@@ -61,7 +59,6 @@ final class MockGoals {
         let goal = EAGoal(
             creationDate: randomDates.creationDate,
             startDate: randomDates.startDate,
-            id: UUID().uuidString,
             goal: "Learn Carpentry",
             numDays: 10,
             additionalDetails: "",
@@ -79,8 +76,6 @@ final class MockGoals {
 //                Day 9: Put finishing touches &%Ensure stability of wood pieces.
 //                Day 10: Add hardware or paint as needed.
 //            """,
-            languageModel: .EAMockingModel(model: .mocked),
-            openAIEndpoint: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
             goalsService: EAGoalsService()
         )
 
@@ -93,7 +88,6 @@ final class MockGoals {
         let goal = EAGoal(
             creationDate: randomDates.creationDate,
             startDate: randomDates.startDate,
-            id: UUID().uuidString,
             goal: "Go to the Gym",
             numDays: 12,
             additionalDetails: "",
@@ -113,8 +107,6 @@ final class MockGoals {
 //                Day 11: 25 min running &% Resisted Training &% Yoga
 //                Day 12: 15 min elliptical
 //            """,
-            languageModel: .EAMockingModel(model: .mocked),
-            openAIEndpoint: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
             goalsService: EAGoalsService()
         )
 

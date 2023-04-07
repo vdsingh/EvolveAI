@@ -56,17 +56,14 @@ class Mocking {
         }
 
         let mockAIResponse = self.createMockGoalAIResponse()
-
+        
         let goal = EAGoal(
             creationDate: Date(),
             startDate: Date(),
-            id: UUID().uuidString,
             goal: goalString ?? randomGoal.key,
             numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
             color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
-            languageModel: .EAMockingModel(model: .mocked),
-            openAIEndpoint: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
             goalsService: EAGoalsService()
         )
         
