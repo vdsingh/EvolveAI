@@ -37,21 +37,24 @@ class EAGoal: Object {
     @Persisted var startDate: Date
 
     /// The message history for this goal (if a ChatCompletions endpoint was used)
-    @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
+    @Persisted var messages: List<EAOpenAIChatCompletionMessage>
 
     // MARK: - Goal Creation Info
 
     /// Date when the goal was created
     @Persisted var creationDate: Date
+    
+    /// Date when we received the AI Response
+    @Persisted var aiResponseDate: Date?
 
     /// The AI's response in normal String form
-    @Persisted var aiResponse: String
+    @Persisted var aiResponse: String?
 
     /// The endpoint used to generate this goal
-    @Persisted var endpointUsed: String
+    @Persisted var openAIEndpoint: String?
 
     /// The model used to generate this goal
-    @Persisted var modelUsed: String
+    @Persisted var languageModel: String?
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -77,6 +80,8 @@ class EAGoal: Object {
     }
 
     private var goalsService: EAGoalsService?
+    
+    //TODO: Fix docstrings (values changed)
 
     /// Initializer for EAGoal
     /// - Parameters:
@@ -93,90 +98,45 @@ class EAGoal: Object {
     convenience init(
         creationDate: Date,
         startDate: Date,
-        id: String,
         goal: String,
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        aiResponse: String,
-        messages: [EAOpenAIChatCompletionMessage],
-        modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint,
         goalsService: EAGoalsService
     ) {
         self.init()
         self.creationDate = creationDate
-        self.aiResponse = aiResponse
         self.startDate = startDate
-        self.id = id
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.color = color
-        self.messageHistory = List<EAOpenAIChatCompletionMessage>()
-        self.messageHistory.append(objectsIn: messages)
-        self.modelUsed = modelUsed.rawVal
-        self.endpointUsed = endpointUsed.rawVal
+        self.messages = List<EAOpenAIChatCompletionMessage>()
         self.goalsService = goalsService
+        
+        self.id = UUID().uuidString
     }
-
-    /// Initializer for EAGoal
-    /// - Parameters:
-    ///   - creationDate: The creation date of the goal
-    ///   - startDate: The start date of the goal
-    ///   - id: The unique identifier for this goal
-    ///   - goal: The goal itself (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal (ex: 30)
-    ///   - additionalDetails: The user specified additional details for the goal
-    ///   - color: The color associated with the goal
-    ///   - apiResponse: The OpenAI Completions Response
-    ///   - modelUsed: The model used to generate this goal
-    ///   - endpointUsed: The endpoint used to generate this goal
-    convenience init(
-        creationDate: Date,
-        startDate: Date,
-        id: String,
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor,
-        apiResponse: EAGoalCreationAPIResponse,
-        messages: [EAOpenAIChatCompletionMessage],
-        modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint,
-        goalsService: EAGoalsService
+    
+    //TODO: Docstrings, parsing
+    func setAIResponse(
+        _ aiResponse: String,
+        languageModel: EAGoalCreationModel,
+        openAIEndpoint: EAGoalCreationEndpoint
     ) {
-        var aiResponse = "NO AI RESPONSE"
-        if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
-            aiResponse = choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        } else if let choices = apiResponse.getChoices() as? [EAOpenAICompletionsChoice] {
-            aiResponse = choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        }
-
-        self.init(
-            creationDate: creationDate,
-            startDate: startDate,
-            id: id,
-            goal: goal,
-            numDays: numDays,
-            additionalDetails: additionalDetails,
-            color: color,
-            aiResponse: aiResponse,
-            messages: messages,
-            modelUsed: modelUsed,
-            endpointUsed: endpointUsed,
-            goalsService: goalsService
-        )
-
-        let parsedResponse = goalsService.parseAIResponse(from: aiResponse, startDate: startDate)
-        self.dayGuides = parsedResponse.dayGuides
-        self.tags = parsedResponse.tags
+//        if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
+//            aiResponse = choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+//        } else if let choices = apiResponse.getChoices() as? [EAOpenAICompletionsChoice] {
+//            aiResponse = choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+//        }
+        self.aiResponse = aiResponse
+        self.languageModel = languageModel.rawVal
+        self.openAIEndpoint = openAIEndpoint.rawVal
     }
 
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
     func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
-        self.messageHistory.append(message)
+        self.messages.append(message)
     }
 
     /// Gets a simplified String description of this goal
