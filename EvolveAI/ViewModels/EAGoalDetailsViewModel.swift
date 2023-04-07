@@ -102,7 +102,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         self.title = goal.goal
         self.color = goal.color
         self.additionalDetails = goal.additionalDetails
-        self.modelUsedText = goal.languageModel
+        self.modelUsedText = goal.languageModel ?? EAGoalCreationModel.unknown.rawVal
         self.aiResponse = goal.aiResponse
         self.goal = goal
         self.goalsService = goalsService
