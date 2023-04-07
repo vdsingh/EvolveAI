@@ -5,12 +5,28 @@
 //  Created by Vikram Singh on 1/6/23.
 //
 
+//TODO: Move
+/// What the content of the message regards
+enum EALoadingMessageTag {
+    case fetchTags
+    case fetchDayGuides
+}
+
+//TODO: Move, docstrings
 class EALoadingMessage {
-    let message: EAOpenAIChatCompletionMessage
+    let messages: [EAOpenAIChatCompletionMessage]
+    let messageTag: EALoadingMessageTag
     let goal: EAGoal
-    init(message: EAOpenAIChatCompletionMessage, goal: EAGoal) {
-        self.message = message
+    
+    let modelToUse: EAGoalCreationModel
+    let endpointToUse: EAGoalCreationEndpoint
+    
+    init(messages: [EAOpenAIChatCompletionMessage], messageTag: EALoadingMessageTag, goal: EAGoal, modelToUse: EAGoalCreationModel, endpointToUse: EAGoalCreationEndpoint) {
+        self.messages = messages
+        self.messageTag = messageTag
         self.goal = goal
+        self.modelToUse = modelToUse
+        self.endpointToUse = endpointToUse
     }
 }
 
@@ -32,6 +48,12 @@ class EAGoalsService: Debuggable {
         }
     }
 
+    /// Queue for goals that are loading
+//    private var loadingGoals = [EALoadingGoal]()
+
+    // TODO: Docstring
+    private var loadingMessages = [EALoadingMessage]()
+    
     /// Constants that are used in the goals service
     private struct GoalServiceConstants {
         static let characterLimit = 10
@@ -147,8 +169,8 @@ class EAGoalsService: Debuggable {
         DispatchQueue.global(qos: .userInitiated).async {
             for _ in 0..<self.loadingMessages.count {
                 if let loadingMessage = self.loadingMessages.last {
-                    self.printDebug("Loading Message \(loadingMessage.message) was dequeued. Creating now.")
-                    // TODO: Loading messages
+                    self.printDebug("Loading Message for goal \(loadingMessage.goal) was dequeued. Creating now.")
+                    
 //                    self.createGoal(
 //                        loadingGoal: loadingGoal
 //                    ) { [weak self] result in
