@@ -22,13 +22,7 @@ import UIKit
 class EAGoalsService: Debuggable {
     
     let debug = true
-
-    /// Queue for goals that are loading
-    private var loadingGoals = [EALoadingGoal]()
-
-    // TODO: Docstring
-    private var loadingMessages = [EALoadingMessage]()
-
+    
     /// Access to the Realm database
     var realm: Realm {
         do {
@@ -124,168 +118,12 @@ class EAGoalsService: Debuggable {
         return requestStrings
     }
 
-    /// Helper function to communicate with realm. Abstracts error handling.
-    /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
-    private func writeToRealm(_ action: () -> Void) {
-        do {
-            try self.realm.write {
-                action()
-            }
-        } catch let error {
-            print("$Error: \(String(describing: error))")
-        }
-    }
-
     /// Determines whether the user has the max number of allowed goals
     /// - Returns: A Bool representing whether the user has the max number of allowed goals
     public func maximumGoalsReached() -> Bool {
         return getAllPersistedGoals().count >= Constants.maxGoalsAllowed
     }
 
-    /// Creates a goal and persists it to the Realm Database
-    /// - Parameters:
-    ///   - goal: The goal that user is trying to achieve (ex: "learn the violin")
-    ///   - numDays: The number of days that the goal is to be achieved by (ex: 30 days)
-    private func createGoal(
-        loadingGoal: EALoadingGoal,
-        completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
-    ) {
-        if Flags.useMockGoals {
-            let goal = Mocking.createMockGoal(goalString: loadingGoal.title, numDays: loadingGoal.numDays)
-            DispatchQueue.main.async {
-                self.writeToRealm {
-                    self.realm.add(goal)
-                }
-                completion(.success(goal))
-            }
-            return
-        }
-
-        if getAllPersistedGoals().count > Constants.maxGoalsAllowed {
-            completion(.failure(CreateGoalError.maxGoalsExceeded))
-        }
-
-        if loadingGoal.numDays > GoalServiceConstants.numDaysLimit {
-            completion(.failure(CreateGoalError.dayLimitExceeded))
-        }
-
-//        let prompt = createOpenAICompletionsRequestString(
-//            goal: loadingGoal.title,
-//            numDays: loadingGoal.numDays
-//        )
-//
-//        // Add the prompt to the messages
-//        loadingGoal.messages.append(
-//            EAOpenAIChatCompletionMessage(
-//                role: .user,
-//                content: prompt
-//            )
-//        )
-        
-        // Create the messages to send to the AI and add them to the loading goal.
-        self.addPendingMessagesToLoadingGoal(loadingGoal: loadingGoal)
-        switch loadingGoal.modelToUse {
-        case .EAOpenAICompletionsModel(let completionsModel):
-            let request = EAOpenAIRequest.completionsRequest(
-                model: completionsModel,
-                prompt: loadingGoal.messages.last?.content ?? self.createOpenAICompletionsRequestString(goal: loadingGoal.title, numDays: loadingGoal.numDays),
-                maxTokens: completionsModel.tokenLimit
-            )
-            executeGoalCreationOpenAIAPIRequest(request: request, responseType: EAOpenAICompletionsResponse.self, loadingGoal: loadingGoal, completion: completion)
-
-        case .EAOpenAIChatCompletionsModel(let chatCompletionsModel):
-            let request = EAOpenAIRequest.chatCompletionsRequest(
-                model: chatCompletionsModel,
-                messages: loadingGoal.messages,
-                maxTokens: chatCompletionsModel.tokenLimit
-            )
-            executeGoalCreationOpenAIAPIRequest(request: request, responseType: EAOpenAIChatCompletionsResponse.self, loadingGoal: loadingGoal, completion: completion)
-
-        case .EAMockingModel:
-            // TODO: Implement
-            return
-        }
-    }
-
-    private func addPendingMessagesToLoadingGoal(loadingGoal: EALoadingGoal) {
-        switch loadingGoal.modelToUse {
-        case .EAOpenAIChatCompletionsModel:
-            loadingGoal.addPendingChatCompletionMessages(
-                messages: self.createOpenAIChatCompletionsRequestStrings(goal: loadingGoal.title, numDays: loadingGoal.numDays)
-            )
-
-        case .EAOpenAICompletionsModel:
-            let message = EAOpenAIChatCompletionMessage(
-                role: .user,
-                content: self.createOpenAICompletionsRequestString(goal: loadingGoal.title, numDays: loadingGoal.numDays)
-            )
-            loadingGoal.addPendingChatCompletionMessage(message: message)
-
-        case .EAMockingModel:
-            // TODO: implement
-            break
-        }
-    }
-
-    /// Executes an OpenAI API Request to create a goal
-    /// - Parameters:
-    ///   - request: The EAOpenAIRequest to send
-    ///   - responseType: The response type we expect to receive back
-    ///   - loadingGoal: The loading goal (information gathered so far)
-    ///   - completion: Callback for after the API has responded
-    private func executeGoalCreationOpenAIAPIRequest<T: EAGoalCreationAPIResponse>(
-        request: EAOpenAIRequest,
-        responseType: T.Type,
-        loadingGoal: EALoadingGoal,
-        completion: @escaping (Result<EAGoal, CreateGoalError>) -> Void
-    ) {
-        EARestAPIService.shared.execute(
-            request,
-            expecting: responseType,
-            completion: { [weak self] (result) in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                switch result {
-                case .success(let apiResponse):
-                    let goal = EAGoal(
-                        creationDate: Date(timeIntervalSince1970: TimeInterval(apiResponse.created)),
-                        startDate: loadingGoal.startDate,
-                        id: UUID().uuidString,
-                        goal: loadingGoal.title,
-                        numDays: loadingGoal.numDays,
-                        additionalDetails: loadingGoal.additionalDetails,
-                        color: loadingGoal.color,
-                        apiResponse: apiResponse,
-                        messages: loadingGoal.messages,
-                        modelUsed: loadingGoal.modelToUse,
-                        endpointUsed: loadingGoal.endpointToUse,
-                        goalsService: strongSelf
-                    )
-
-                    // Add the AI's Response to the message history
-                    goal.addMessageToHistory(message: EAOpenAIChatCompletionMessage(role: .ai, content: goal.aiResponse))
-
-                    strongSelf.printDebug("Goal: \(goal). Goal AI Response: \(goal.aiResponse)")
-
-                    DispatchQueue.main.async {
-                        strongSelf.writeToRealm {
-                            strongSelf.realm.add(goal)
-                        }
-                        completion(.success(goal))
-                    }
-
-                case .failure(let error):
-                    completion(.failure(CreateGoalError.unknownError(error)))
-                }
-            }
-        )
-    }
-
-    private func executeMessageOpenAIAPIRequest() {
-
-    }
 
     /// Gets all of the persisted EAGoal objects from the Realm database
     /// - Returns: an array of EAGoal objects from the Realm database
@@ -299,55 +137,8 @@ class EAGoalsService: Debuggable {
         return goals
     }
 
-    /// Retrieves all of the currently loading goals
-    /// - Returns: An array of EALoadingGoals
-    public func getAllLoadingGoals() -> [EALoadingGoal] {
-        return self.loadingGoals
-    }
-
-    /// Saves a loading goal
-    /// - Parameters:
-    ///   - loadingGoal: The EALoadingGoal to be saved
-    ///   - goalWasAddedToQueue: Callback for when the goal was added to the queue
-    ///   - goalWasLoaded: Callback for when the goal was loaded
-    public func saveLoadingGoal(_ loadingGoal: EALoadingGoal, goalWasAddedToQueue: @escaping () -> Void, goalWasLoaded: @escaping (EAGoal) -> Void) {
-        self.loadingGoals.append(loadingGoal)
-        self.printDebug("Loading Goal \(loadingGoal.title) was added to the queue. Queue: \(self.loadingGoals).")
-        goalWasAddedToQueue()
-        self.createLoadingGoals(completion: goalWasLoaded)
-    }
-
     /// Dequeues loading goals and creates them
     /// - Parameter completion: Callback for when the loading goals have all been created
-    private func createLoadingGoals(completion: @escaping (EAGoal) -> Void) {
-        if self.loadingGoals.isEmpty {
-            return
-        }
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            for _ in 0..<self.loadingGoals.count {
-                if let loadingGoal = self.loadingGoals.last {
-                    self.printDebug("Loading Goal \(loadingGoal.title) was dequeued. Creating now.")
-                    self.createGoal(
-                        loadingGoal: loadingGoal
-                    ) { [weak self] result in
-                        self?.loadingGoals.removeLast()
-                        switch result {
-                        case .success(let goal):
-                            self?.printDebug("Goal was successfully created: \(goal.goal)")
-                            completion(goal)
-
-                        case .failure(let error):
-                            print("$Error creating loading goal: \(error)")
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /// Dequeues loading messages and creates them
-    /// - Parameter completion: Callback for when the loading messages have all been created
     private func processLoadingMessages(completion: @escaping (EAGoal) -> Void) {
         if self.loadingMessages.isEmpty {
             return
