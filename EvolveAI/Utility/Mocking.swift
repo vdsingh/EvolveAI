@@ -65,12 +65,12 @@ class Mocking {
             numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
             color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
-            aiResponse: mockAIResponse,
-            messages: [EAOpenAIChatCompletionMessage(role: .ai, content: mockAIResponse)],
-            modelUsed: .EAMockingModel(model: .mocked),
-            endpointUsed: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
+            languageModel: .EAMockingModel(model: .mocked),
+            openAIEndpoint: .EAMockingEndpoint(endpoint: .mockAIEndpoint),
             goalsService: EAGoalsService()
         )
+        
+        goal.addMessageToHistory(message: EAOpenAIChatCompletionMessage(role: .ai, content: mockAIResponse))
         return goal
     }
 
