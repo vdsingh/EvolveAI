@@ -49,7 +49,7 @@ protocol EAGoalDetailsViewModelOutput {
     var modelUsedText: String { get }
 
     // TODO: Docstring
-    var aiResponse: String { get }
+    var aiResponse: String? { get }
 }
 
 protocol EAGoalDetailsViewModel: EAGoalDetailsViewModelInput, EAGoalDetailsViewModelOutput { }
@@ -93,7 +93,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     let modelUsedText: String
 
-    let aiResponse: String
+    let aiResponse: String?
 
     /// Goal initializer
     /// - Parameter goal: The goal that this ViewModel represents
@@ -102,7 +102,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         self.title = goal.goal
         self.color = goal.color
         self.additionalDetails = goal.additionalDetails
-        self.modelUsedText = goal.modelUsed
+        self.modelUsedText = goal.languageModel
         self.aiResponse = goal.aiResponse
         self.goal = goal
         self.goalsService = goalsService

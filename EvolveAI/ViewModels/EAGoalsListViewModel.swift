@@ -99,22 +99,26 @@ extension DefaultEAGoalsListViewModel {
                 goalsService: self.goalsService
             )
         }
+        
+        //TODO: Remove/refactor
 
-        let loadingListItemViewModels = self.goalsService.getAllLoadingGoals().compactMap {
-            return DefaultEAGoalListItemViewModel(
-                title: $0.title,
-                numDays: $0.numDays,
-                color: $0.color,
-                actions: EAGoalListItemViewModelActions(
-                    showGoalDetails: self.actions.showGoalDetails
-                ),
-                goalsService: self.goalsService
-            )
-        }
+//        let loadingListItemViewModels = self.goalsService.getAllLoadingGoals().compactMap {
+//            return DefaultEAGoalListItemViewModel(
+//                title: $0.title,
+//                numDays: $0.numDays,
+//                color: $0.color,
+//                actions: EAGoalListItemViewModelActions(
+//                    showGoalDetails: self.actions.showGoalDetails
+//                ),
+//                goalsService: self.goalsService
+//            )
+//        }
 
         self.items = []
         self.items.append(contentsOf: goalListItemViewModels)
-        self.items.append(contentsOf: loadingListItemViewModels)
+        
+        //TODO: Remove/refactor
+//        self.items.append(contentsOf: loadingListItemViewModels)
 
         printDebug("Fetched Goals: \(self.items.compactMap({ $0.title }))")
     }
