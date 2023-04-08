@@ -136,7 +136,23 @@ class EAGoal: Object {
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
     func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
-        self.messages.append(message)
+        print("$Log: adding message \(message.content)")
+        guard let goalsService = self.goalsService else {
+            print("$Error: goalsService is nil ")
+            return
+        }
+        
+        goalsService.writeToRealm {
+            self.messages.append(message)
+        }
+    }
+
+    func constructMessageHistoryString() -> String {
+        var messageHistoryString = ""
+        for message in self.messages {
+            messageHistoryString += message.role + ": " + message.content + "\n"
+        }
+        return messageHistoryString
     }
 
     /// Gets a simplified String description of this goal
