@@ -5,40 +5,15 @@
 //  Created by Vikram Singh on 1/6/23.
 //
 
-//TODO: Move
-/// What the content of the message regards
-enum EALoadingMessageTag {
-    case fetchTags
-    case fetchDayGuides
-}
-
-//TODO: Move, docstrings
-class EALoadingMessage {
-    let messages: [EAOpenAIChatCompletionMessage]
-    let messageTag: EALoadingMessageTag
-    let goal: EAGoal
-    
-    let modelToUse: EAGoalCreationModel
-    let endpointToUse: EAGoalCreationEndpoint
-    
-    init(messages: [EAOpenAIChatCompletionMessage], messageTag: EALoadingMessageTag, goal: EAGoal, modelToUse: EAGoalCreationModel, endpointToUse: EAGoalCreationEndpoint) {
-        self.messages = messages
-        self.messageTag = messageTag
-        self.goal = goal
-        self.modelToUse = modelToUse
-        self.endpointToUse = endpointToUse
-    }
-}
-
 import Foundation
 import RealmSwift
 import UIKit
 
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
-    
+
     let debug = true
-    
+
     /// Access to the Realm database
     var realm: Realm {
         do {
