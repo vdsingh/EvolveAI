@@ -29,7 +29,18 @@ class EAGoalsListViewController: UIViewController, Debuggable {
                         goal: goal,
                         goalsService: self.goalsService
                     )
-                    self.navigator?.navigate(to: .viewGoal(goalViewModel: goalDetailsViewModel))
+                    self.navigator?.navigate(
+                        to: .viewGoal(
+                            goalViewModel: goalDetailsViewModel,
+                            goalWasDeleted: {
+                                DispatchQueue.main.async {
+                                    self.printDebug("Goal will be deleted from list. Refreshing goals data and view to retrieve the loading goals.")
+                                    self.viewModel.fetchGoals()
+                                    self.getView().refreshView()
+                                }
+                            }
+                        )
+                    )
                 },
 
                 // We may need to show a Goal Creation Form
