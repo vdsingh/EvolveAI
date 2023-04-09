@@ -56,7 +56,7 @@ enum EAUIElement {
     case button(
         buttonText: String,
         enabledOnStart: Bool,
-        viewSetter: (EAButton) -> Void,
+        viewSetter: ((EAButton) -> Void)? = nil,
         buttonPressed: (EAButton) -> Void
     )
 
@@ -166,7 +166,9 @@ enum EAUIElement {
 
         case .button(let buttonText, let enabledOnStart, let viewSetter, let buttonPressed):
             let view = EAButton(text: buttonText, enabledOnStart: enabledOnStart, buttonPressedCallback: buttonPressed)
-            viewSetter(view)
+            if let viewSetter = viewSetter {
+                viewSetter(view)
+            }
             return view
 
         case .task(let viewModel, let taskCompletionChangedCallback):
