@@ -37,10 +37,16 @@ class EAGoalDetailsView: UIView, Debuggable {
 
         return guideContentView
     }()
+    
+    lazy var spinner: EASpinner = {
+        let spinner = EASpinner(color: self.viewModel.darkColor, backgroundColor: .clear)
+        return spinner
+    }()
 
     /// Initializer to instantiate this View with a ViewModel
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         self.backgroundColor = viewModel.color
         self.addSubviewsAndEstablishConstraints(
@@ -48,6 +54,15 @@ class EAGoalDetailsView: UIView, Debuggable {
             dayGuideViewModels: viewModel.dayGuideViewModels,
             separatorColor: viewModel.darkColor
         )
+    }
+    
+    func setLoading(_ isLoading: Bool) {
+        printDebug("Set the loading status of EAGoalDetailsView to \(isLoading)")
+        if isLoading {
+            self.spinner.startAnimating()
+        } else {
+            self.spinner.stopAnimating()
+        }
     }
 
     // MARK: - Private Functions
@@ -89,7 +104,6 @@ class EAGoalDetailsView: UIView, Debuggable {
                     for dayGuideViewModel in dayGuideViewModels {
                         print("\t: \(dayGuideViewModel.description)")
                     }
-//                    printDebug(viewModel.dayGuideViewModels.)
                 }),
                 .separator(color: separatorColor)
             ])
@@ -117,7 +131,9 @@ class EAGoalDetailsView: UIView, Debuggable {
             ])
         }
 
-        self.guideContentView.addArrangedSubview(EASeparator(color: separatorColor))
+//        self.spinner.spinner.color = viewModel.darkColor
+        self.guideContentView.addSubview(self.spinner)
+        self.guideContentView.addElement(.separator(color: separatorColor))
 
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),

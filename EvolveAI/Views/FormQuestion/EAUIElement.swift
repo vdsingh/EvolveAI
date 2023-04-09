@@ -89,6 +89,12 @@ enum EAUIElement {
         text: String,
         color: UIColor
     )
+    
+    case spinner(
+        subText: String? = nil,
+        backgroundColor: UIColor = .systemBackground,
+        viewWasCreated: ((EASpinner) -> Void)? = nil
+    )
 
     // MARK: - Containers
 
@@ -191,6 +197,13 @@ enum EAUIElement {
         case .tag(let text, let color):
             let tag = EATagButton(tag: text, color: color)
             return tag
+            
+        case .spinner(let subText, let backgroundColor, let viewWasCreated):
+            let spinner = EASpinner(subText: subText, backgroundColor: backgroundColor)
+            if let viewWasCreated = viewWasCreated {
+                viewWasCreated(spinner)
+            }
+            return spinner
 
         case .stack(let axis, let alignment, let distribution, let spacing, let views):
             let stack = EAStackView(axis: axis, alignment: alignment, distribution: distribution, spacing: spacing, subViews: views)

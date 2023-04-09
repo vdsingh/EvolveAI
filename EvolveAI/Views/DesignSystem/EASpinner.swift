@@ -18,7 +18,6 @@ final class EASpinner: UIStackView, EAUIElementViewStaticHeight {
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = .systemBackground
         spinner.hidesWhenStopped = true
         return spinner
     }()
@@ -36,18 +35,18 @@ final class EASpinner: UIStackView, EAUIElementViewStaticHeight {
 
     /// Normal Initializer
     /// - Parameter subText: Sub Text String (if any) to display under the spinner
-    init(subText: String? = nil, backgroundColor: UIColor = .label) {
+    init(subText: String? = nil, color: UIColor = .label, backgroundColor: UIColor = .secondarySystemBackground) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviewsAndEstablishConstraints()
-        self.setUIProperties(subText: subText, backgroundColor: backgroundColor)
+        self.setUIProperties(subText: subText, color: color, backgroundColor: backgroundColor)
     }
 
     // MARK: - Private Functions
 
     /// Set the UI properties for this View
     /// - Parameter subText: the SubText (if any) for this spinner
-    private func setUIProperties(subText: String?, backgroundColor: UIColor) {
+    private func setUIProperties(subText: String?, color: UIColor, backgroundColor: UIColor) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = EAIncrement.two.rawValue
@@ -56,6 +55,8 @@ final class EASpinner: UIStackView, EAUIElementViewStaticHeight {
         self.distribution = .fillEqually
         self.alignment = .center
         self.spacing = 0
+        
+        self.spinner.color = color
 
         if let subText = subText {
             self.subTextLabel.text = subText
