@@ -18,8 +18,20 @@ protocol EALanguageModelGoalPromptEncoder {
 
 protocol EALanguageModelGoalPromptDecoder {
     func decodeTagResponseString(_ tagsString: String) ->  [String]
-    func decodeDayGuidesResponseString(aiResponse: String) -> [EAGoalDayGuide]
+    func decodeDayGuidesResponseString(aiResponse: String, goalStartDate: Date) -> [EAGoalDayGuide]
 //    func createOpenAIChatCompletionsRequestStrings(goal: String, numDays: Int) -> [EAOpenAIChatCompletionMessage]
+}
+
+extension EAGoalsService: EALanguageModelGoalPromptCoder {
+    //TODO: Docstring
+    struct EALanguageModelGoalPromptCoderConstants {
+        
+        /// How we separate the AI response into individual tasks
+        static let taskSeparatorCharacter = "&%"
+        
+        //TODO: Docstring
+        static let daySeparatorCharacter = "@@"
+    }
 }
 
 //TODO: Docstring
@@ -36,9 +48,9 @@ extension EAGoalsService: EALanguageModelGoalPromptEncoder {
     ///   - numDays: The number of days to accomplish the goal in (ex: 30)
     /// - Returns: A string to send to the OpenAI Completions endpoint
     func encodeDayGuidesRequestString(goal: String, dayRange: ClosedRange<Int>) -> String {
-        let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"] [New Line for next day]"
+        let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(EALanguageModelGoalPromptCoderConstants.taskSeparatorCharacter)\"] [New Line for next day]"
         var prompt = ""
-        prompt += "I have the goal: \(goal). Next, give me a guide for days \(dayRange.lowerBound) to \(dayRange.upperBound) in the form \(guideFormat)."
+        prompt += "I have the goal: \(goal). Give me a guide for days \(dayRange.lowerBound) to \(dayRange.upperBound). The guide for each day should be formatted like this: \(guideFormat), I want the guide for each day to be separated by \"@@\""
         prompt += " Be sure that your response is within a limit of 1000 characters."
 //        prompt += " \(Constants.maxTokens - goal.numTokens(separatedBy: CharacterSet(charactersIn: " "))) characters."
         return prompt
@@ -87,8 +99,30 @@ extension EAGoalsService: EALanguageModelGoalPromptDecoder {
     }
     
     //TODO: Docstring
-    func decodeDayGuidesResponseString(aiResponse: String) -> [EAGoalDayGuide] {
-        //TODO: Implement
-        return []
+    func decodeDayGuidesResponseString(aiResponse: String, goalStartDate: Date) -> [EAGoalDayGuide] {
+        printDebug("Attempting to decode Day Guides Response String.")
+        var dayGuides = [EAGoalDayGuide]()
+        let dayComponents: [String] = aiResponse.components(separatedBy: EALanguageModelGoalPromptCoderConstants.daySeparatorCharacter)
+        printDebug("Day components count: \(dayComponents.count)")
+        for dayComponent in dayComponents {
+            let trimmedDayComponent = dayComponent.trimmingCharacters(in: .whitespacesAndNewlines)
+            let dayNumberAndTasks = trimmedDayComponent.components(separatedBy: ":")
+            
+            var dayNumber = 1
+            if let dayNumberComponent = dayNumberAndTasks.first?.components(separatedBy: " ").last,
+               let dayNumberUnwrapped = Int(dayNumberComponent) {
+                dayNumber = dayNumberUnwrapped
+            }
+            
+            let tasks = dayNumberAndTasks.last?.components(separatedBy: EALanguageModelGoalPromptCoderConstants.taskSeparatorCharacter)
+            if tasks == nil {
+                print("$Error: tasks is nil when decoding day guides response: \(aiResponse)")
+            }
+            
+            //TODO: Fix hardcoded goalStartDate
+            let goalDayGuide = EAGoalDayGuide(isMultipleDays: false, days: [dayNumber], tasks: tasks ?? [], goalStartDate: goalStartDate)
+            dayGuides.append(goalDayGuide)
+        }
+        return dayGuides
     }
 }
