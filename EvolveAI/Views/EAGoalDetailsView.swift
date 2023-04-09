@@ -83,7 +83,14 @@ class EAGoalDetailsView: UIView, Debuggable {
             self.guideContentView.addElements([
                 .label(text: "Developer Information", textStyle: .heading1, textColor: viewModel.darkColor),
                 .label(text: "Model Used: \(viewModel.modelUsedText)", textColor: viewModel.darkColor),
-                .label(text: "AI Response: \n\"\(viewModel.aiResponse)\"", textColor: viewModel.darkColor),
+                .label(text: "Message History: \n\"\(viewModel.messageHistoryString ?? "")\"", textColor: viewModel.darkColor),
+                .button(buttonText: "Print Day Guides to Console", enabledOnStart: true, buttonPressed: { _ in
+                    print("Printing Day Guides to Console. Count: \(dayGuideViewModels.count)")
+                    for dayGuideViewModel in dayGuideViewModels {
+                        print("\t: \(dayGuideViewModel.description)")
+                    }
+//                    printDebug(viewModel.dayGuideViewModels.)
+                }),
                 .separator(color: separatorColor)
             ])
         }
