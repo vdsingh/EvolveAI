@@ -47,6 +47,10 @@ struct EAOpenAIChatCompletionsChoice: Decodable, EAOpenAIChoice {
     /// The index from which to start
     let index: Int
 
+    func getLastText() -> String {
+        return message.content
+    }
+
     enum CodingKeys: String, CodingKey {
         case message
         case index
