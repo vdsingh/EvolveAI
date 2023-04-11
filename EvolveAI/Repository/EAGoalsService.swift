@@ -12,7 +12,7 @@ import UIKit
 /// API for goals data (CRUD)
 class EAGoalsService: Debuggable {
 
-    let debug = false
+    let debug = true
 
     /// Access to the Realm database
     var realm: Realm {
@@ -25,6 +25,9 @@ class EAGoalsService: Debuggable {
 
     // TODO: Docstring
     private var loadingMessages = [EALoadingMessage]()
+    
+    // [EAGoal ID: Number of Loading Day Guides]
+    var loadingGoalMap: RequiredObservable<[String: Int]> = RequiredObservable([String: Int](), label: "Loading Goal Map")
 
     /// Constants that are used in the goals service
     private struct GoalServiceConstants {
@@ -88,8 +91,6 @@ class EAGoalsService: Debuggable {
             return
 
         case .EAOpenAICompletionsModel(let completionsModel):
-//            let message = self.createOpenAICompletionsRequestString(goal: loadingMessage.goal.goal, numDays: loadingMessage.goal.numDays)
-//            let message = EALanguageModelPromptBuilder.shared.createOpenAICompletionsRequestString(goal: loadingMessage.goal.goal, numDays: loadingMessage.goal.numDays)
             let dayGuidesRequestMessage = self.encodeDayGuidesRequestString(goal: loadingMessage.goal.goal, dayRange: dayRange)
             printDebug("Will attempt to execute Goal Day Guides request with the message: \(dayGuidesRequestMessage)")
             let userMessage = EAOpenAIChatCompletionMessage(role: .user, content: dayGuidesRequestMessage)
@@ -97,23 +98,29 @@ class EAGoalsService: Debuggable {
             
             // Tell the goal that there are day guides currently loading
             let numDayGuidesRequested = dayRange.count
-            loadingMessage.goal.numLoadingDayGuides += dayRange.count
+            
+            self.loadingGoalMap.value[loadingMessage.goal.id, default: 0] += dayRange.count
+//            loadingMessage.goal.numLoadingDayGuides += dayRange.count
             EAOpenAILanguageModelService.shared.executeCompletionsRequest(
                 model: completionsModel,
                 prompt: dayGuidesRequestMessage,
                 completion: { [weak self] result in
-                    DispatchQueue.main.async {
+//                    DispatchQueue.main.async {
                         switch result {
                         case .success(let aiResponse):
+                            self?.printDebug("Successfully retrieved AI Response: \(aiResponse)")
+                            
                             // Record the message history
                             let aiMessage = EAOpenAIChatCompletionMessage(role: .ai, content: aiResponse)
                             loadingMessage.goal.addMessageToHistory(message: aiMessage)
-                            self?.printDebug("Successfully retrieved AI Response: \(aiResponse)")
                             
                             // Decode the AI Response to Day Guides
                             if let dayGuides = self?.decodeDayGuidesResponseString(aiResponse: aiResponse, goalStartDate: loadingMessage.goal.startDate) {
+                                self?.printDebug("Decoded Day Guides Response.")
                                 loadingMessage.goal.appendDayGuides(dayGuides)
-                                loadingMessage.goal.numLoadingDayGuides -= dayGuides.count
+                                self?.loadingGoalMap.value[loadingMessage.goal.id, default: 0] -= dayRange.count
+
+//                                loadingMessage.goal.numLoadingDayGuides -= dayGuides.count
                                 if numDayGuidesRequested != dayGuides.count {
                                     print("$Error: the number of day guides requested does not equal the number received.")
                                 }
@@ -121,15 +128,13 @@ class EAGoalsService: Debuggable {
                                 print("$Error: unable to unwrap dayGuides.")
                             }
                             
-                            self?.printDebug("Decoded Day Guides Response.")
-                            
                             completion(.success(loadingMessage.goal))
                             
                         case .failure(let error):
                             completion(.failure(error))
                             print("$Error: \(error)")
                         }
-                    }
+//                    }
                 }
             )
 
@@ -148,7 +153,7 @@ class EAGoalsService: Debuggable {
     /// - Parameter message: The message to print
     func printDebug(_ message: String) {
         if self.debug || Flags.debugAPIClient {
-            print("$Log: \(message)")
+            print("$Log (EAGoalsService): \(message)")
         }
     }
 
@@ -185,7 +190,7 @@ class EAGoalsService: Debuggable {
             return
         }
 
-        DispatchQueue.global(qos: .userInitiated).async {
+//        DispatchQueue.global(qos: .userInitiated).async {
             for _ in 0..<self.loadingMessages.count {
                 if let loadingMessage = self.loadingMessages.last {
                     self.printDebug("Loading Message for goal \(loadingMessage.goal) was dequeued. Creating now.")
@@ -202,7 +207,7 @@ class EAGoalsService: Debuggable {
                         )
                     }
                 }
-            }
+//            } O
         }
     }
     
@@ -218,7 +223,7 @@ class EAGoalsService: Debuggable {
             self.realm.add(goal)
         }
     }
-
+    
     /// Updates a provided goal
     /// - Parameters:
     ///   - updateBlock: A function in which all desired updates are made to the goal
@@ -227,30 +232,34 @@ class EAGoalsService: Debuggable {
             updateBlock()
         }
     }
-
+    
     /// Deletes a provided goal
     /// - Parameter goal: The goal to be deleted
     public func deletePersistedGoal(goal: EAGoal) {
         let goalTitle = goal.goal
         self.printDebug("Attempting to delete goal \(goalTitle)")
+        
+        // If the goal was loading, remove the key from the dictionary.
+        if self.loadingGoalMap.value.keys.contains(goal.id) {
+            loadingGoalMap.value.removeValue(forKey: goal.id)
+        }
+        
         self.writeToRealm {
             self.realm.delete(goal)
             self.printDebug("deleted goal \(goalTitle)")
         }
     }
-
+    
     /// Helper function to communicate with realm. Abstracts error handling.
     /// - Parameter action: The action that we want to accomplish (ex: realm.add(...))
     func writeToRealm(_ action: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            do {
-                self.printDebug("Write action from thread \(Thread.current)")
-                try self.realm.write {
-                    action()
-                }
-            } catch let error {
-                print("$Error: \(String(describing: error))")
+        do {
+            self.printDebug("Write action from thread \(Thread.current)")
+            try self.realm.write {
+                action()
             }
+        } catch let error {
+            print("$Error: \(String(describing: error))")
         }
     }
 
