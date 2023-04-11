@@ -9,14 +9,21 @@ import Foundation
 import UIKit
 
 /// ViewController for screen for viewing a single goal's information
-class EAGoalDetailsViewController: UIViewController {
+class EAGoalDetailsViewController: UIViewController, Debuggable {
+    
+    let debug = false
 
     /// ViewModel for the Goal Details
     let viewModel: EAGoalDetailsViewModel
 
+    // TODO: Docstring
+    let goalWasDeleted: () -> Void
+
+    // TODO: Docstring fix
     /// Normal Initializer
     /// - Parameter goal: The goal that we are focused on
-    init(viewModel: EAGoalDetailsViewModel) {
+    init(goalWasDeleted: @escaping () -> Void, viewModel: EAGoalDetailsViewModel) {
+        self.goalWasDeleted = goalWasDeleted
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         printDebug("ViewModel: \(viewModel)")
@@ -32,6 +39,8 @@ class EAGoalDetailsViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = EAColor.failure.uiColor
+        
+        self.bindViewModel()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +49,27 @@ class EAGoalDetailsViewController: UIViewController {
             view.scrollToTodaysDayGuideView()
         } else {
             print("$Error: view for EAGoalDetailsViewController is not type EAGoalDetailsView.")
+        }
+    }
+    
+    //TODO: Docstring
+    func bindViewModel() {
+        printDebug("binding day guides are loading to spinner.")
+        self.viewModel.dayGuidesAreLoading.bind { [weak self] isLoading in
+//            DispatchQueue.main.async {
+//                self?.getView()?.setLoading(isLoading)
+                self?.getView()?.refreshView(isLoading: isLoading)
+//                self?.getView()?.refreshView()
+//            }
+        }
+    }
+    
+    private func getView() -> EAGoalDetailsView? {
+        if let view = self.view as? EAGoalDetailsView {
+            return view
+        } else {
+            print("$Error: tried to get view as EAGoalDetailsView, but it was something else.")
+            return nil
         }
     }
 
@@ -71,13 +101,14 @@ class EAGoalDetailsViewController: UIViewController {
     /// Function called when delete is pressed
     private func deleteButtonPressed() {
         self.viewModel.didPressDelete()
+        self.goalWasDeleted()
         self.navigationController?.popToRootViewController(animated: true)
     }
 
     /// Prints messages when the necessary flags are true
     /// - Parameter message: The message to print
-    private func printDebug(_ message: String) {
-        if Flags.debugIndividualGoal {
+    func printDebug(_ message: String) {
+        if Flags.debugIndividualGoal || self.debug{
             print("$Log: \(message)")
         }
     }
