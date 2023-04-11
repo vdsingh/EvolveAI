@@ -43,18 +43,31 @@ class EAGoal: Object {
 
     /// Date when the goal was created
     @Persisted var creationDate: Date
-    
+
     /// Date when we received the AI Response
     @Persisted var aiResponseDate: Date?
 
     /// The AI's response in normal String form
-    @Persisted var aiResponse: String?
+//    @Persisted var aiResponse: String?
 
     /// The endpoint used to generate this goal
     @Persisted var openAIEndpoint: String?
 
     /// The model used to generate this goal
     @Persisted var languageModel: String?
+    
+//    var numLoadingDayGuides = 0 {
+//        didSet {
+//            if numLoadingDayGuides < 0 {
+//                print("$Error (EAGoal): the number of loading day guides is negative: \(numLoadingDayGuides)")
+//            }
+//            self.dayGuidesAreLoading.value = numLoadingDayGuides > 0
+//            print("$Log (EAGoal): number of loading day guides changed to \(numLoadingDayGuides). Day Guides are Loading: \(String(describing: self.dayGuidesAreLoading.value))")
+//        }
+//    }
+//    
+    /// The number of day guides that are currently loading
+//    lazy var dayGuidesAreLoading: Observable<Bool> = Observable(self.numLoadingDayGuides > 0, label: "EAGoal \(self.goal) Day Guides: Loading")
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -80,8 +93,8 @@ class EAGoal: Object {
     }
 
     private var goalsService: EAGoalsService?
-    
-    //TODO: Fix docstrings (values changed)
+
+    // TODO: Fix docstrings (values changed)
 
     /// Initializer for EAGoal
     /// - Parameters:
@@ -113,26 +126,19 @@ class EAGoal: Object {
         self.color = color
         self.messages = List<EAOpenAIChatCompletionMessage>()
         self.goalsService = goalsService
-        
+
         self.id = UUID().uuidString
     }
     
-    //TODO: Docstrings, parsing
-    func setAIResponse(
-        _ aiResponse: String,
-        languageModel: EAGoalCreationModel,
-        openAIEndpoint: EAGoalCreationEndpoint
-    ) {
-//        if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
-//            aiResponse = choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-//        } else if let choices = apiResponse.getChoices() as? [EAOpenAICompletionsChoice] {
-//            aiResponse = choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-//        }
-        self.aiResponse = aiResponse
-        self.languageModel = languageModel.rawVal
-        self.openAIEndpoint = openAIEndpoint.rawVal
+    //TODO: Docstring
+    func appendDayGuides(_ dayGuides: [EAGoalDayGuide]) {
+        guard let goalsService = self.goalsService else {
+            print("$Error: tried to append day guides to goal but goalsService was nil")
+            return
+        }
+        goalsService.appendDayGuides(goal: self, dayGuides: dayGuides)
     }
-
+    
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
     func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
@@ -158,7 +164,7 @@ class EAGoal: Object {
     /// Gets a simplified String description of this goal
     /// - Returns: A String describing this goal
     func getSimplifiedDescription() -> String {
-        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
+        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). Message History=\(self.messages) }"
     }
 
     override static func primaryKey() -> String? {
