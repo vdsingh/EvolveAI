@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 /// Input methods for the ViewModel
 protocol EAGoalsListViewModelInput {
 
@@ -41,7 +43,7 @@ struct EAGoalsListViewModelActions {
 protocol EAGoalsListViewModel: EAGoalsListViewModelInput, EAGoalsListViewModelOutput { }
 
 final class DefaultEAGoalsListViewModel: EAGoalsListViewModel, Debuggable {
-    let debug: Bool = false
+    let debug = true
 
     /// Service to interact with goals and other related types
     private let goalsService: EAGoalsService
@@ -79,28 +81,29 @@ extension DefaultEAGoalsListViewModel {
 
     /// Fetches the EAGoal objects and updates the items array
     func fetchGoals() {
+        printDebug("Attempting to fetch goals.")
         let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap { goal in
-            var dayGuideViewModel: EAGoalDayGuideViewModel?
-            if let todaysDayGuide = goal.todaysDayGuide {
-                dayGuideViewModel = DefaultEAGoalDayGuideViewModel(
-                    dayGuide: todaysDayGuide,
-                    goalStartDate: goal.startDate,
-                    labelColor: goal.color.darker() ?? .black,
-                    goalsService: self.goalsService
-                )
-            }
-            printDebug("DayGuideViewModel: \(String(describing: dayGuideViewModel))")
+//            var dayGuideViewModel: EAGoalDayGuideViewModel?
+//            if let todaysDayGuide = goal.todaysDayGuide {
+//                dayGuideViewModel = DefaultEAGoalDayGuideViewModel(
+//                    dayGuide: todaysDayGuide,
+//                    goalStartDate: goal.startDate,
+//                    labelColor: goal.color.darker() ?? .black,
+//                    goalsService: self.goalsService
+//                )
+//            }
+//            printDebug("DayGuideViewModel: \(String(describing: dayGuideViewModel))")
             return DefaultEAGoalListItemViewModel(
                 goal: goal,
-                dayGuideViewModel: dayGuideViewModel,
+//                dayGuideViewModel: dayGuideViewModel,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
                 ),
                 goalsService: self.goalsService
             )
         }
-        
-        //TODO: Remove/refactor
+
+        // TODO: Remove/refactor
 
 //        let loadingListItemViewModels = self.goalsService.getAllLoadingGoals().compactMap {
 //            return DefaultEAGoalListItemViewModel(
@@ -116,8 +119,8 @@ extension DefaultEAGoalsListViewModel {
 
         self.items = []
         self.items.append(contentsOf: goalListItemViewModels)
-        
-        //TODO: Remove/refactor
+
+        // TODO: Remove/refactor
 //        self.items.append(contentsOf: loadingListItemViewModels)
 
         printDebug("Fetched Goals: \(self.items.compactMap({ $0.title }))")

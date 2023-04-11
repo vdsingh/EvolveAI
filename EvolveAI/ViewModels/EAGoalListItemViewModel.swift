@@ -41,6 +41,10 @@ protocol EAGoalListItemViewModelOutput {
 
     /// The tags for the goal
     var tags: [String] { get }
+    
+    //TODO: Docstring
+    var dayGuidesAreLoading: RequiredObservable<Bool> { get }
+
 }
 
 protocol EAGoalListItemViewModel: EAGoalListItemViewModelInput, EAGoalListItemViewModelOutput { }
@@ -54,17 +58,26 @@ struct EAGoalListItemViewModelActions {
 
 /// A ViewModel for EAGoals
 final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable {
-    let debug: Bool = true
+    let debug = true
 
-    var title: String
-    var numDays: Int
-    var color: UIColor
+    var title: String {
+        return self.goal.goal
+    }
+    
+    var numDays: Int {
+        return self.goal.numDays
+    }
+    
+    var color: UIColor {
+        return self.goal.color
+    }
+    
     var darkColor: UIColor {
-        color.darker() ?? .link
+        return self.color.darker() ?? .link
     }
 
     var loading: Bool {
-        goal == nil
+        return goal == nil
     }
 
     var dayNumberText: String? {
@@ -88,7 +101,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     }
 
     var tags: [String] {
-        self.goal?.tags ?? []
+        return self.goal.tags
     }
 
     /// Actions that this ViewModel may need to handle
@@ -98,16 +111,42 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     private let goalsService: EAGoalsService
 
     /// The goal that this ViewModel represents
-    private var goal: EAGoal? {
-        didSet {
-            if let goal = self.goal {
-                self.setGoalValues(goal: goal)
-            }
+    private var goal: EAGoal
+    
+    private var dayGuideViewModel: EAGoalDayGuideViewModel? {
+        if let todaysDayGuide = self.goal.todaysDayGuide {
+            return DefaultEAGoalDayGuideViewModel(
+                dayGuide: todaysDayGuide,
+                goalStartDate: self.goal.startDate,
+                labelColor: self.goal.color.darker() ?? .black,
+                goalsService: self.goalsService
+            )
         }
+        
+        return nil
     }
+    
+//    DefaultEAGoalDayGuideViewModel(
+//        dayGuide: todaysDayGuide,
+//        goalStartDate: goal.startDate,
+//        labelColor: goal.color.darker() ?? .black,
+//        goalsService: self.goalsService
+//    )
+//    {
+//        didSet {
+//            if let goal = self.goal {
+//                self.setGoalValues(goal: goal)
+//            }
+//        }
+//    }
 
     /// ViewModel for the relevant DayGuide
-    private var dayGuideViewModel: EAGoalDayGuideViewModel?
+//    private var dayGuideViewModel: EAGoalDayGuideViewModel?
+    
+    //TODO: docstring
+//    var dayGuidesAreLoading: RequiredObservable<Bool> { get }
+    var dayGuidesAreLoading: RequiredObservable<Bool>
+
 
     /// Initializer for a fully loaded goal
     /// - Parameters:
@@ -117,18 +156,33 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     ///   - goalsService: Service to interact with goals and related types
     init(
         goal: EAGoal,
-        dayGuideViewModel: EAGoalDayGuideViewModel?,
+//        dayGuideViewModel: EAGoalDayGuideViewModel?,
         actions: EAGoalListItemViewModelActions?,
         goalsService: EAGoalsService
     ) {
         self.goal = goal
-        self.dayGuideViewModel = dayGuideViewModel
-        self.title = goal.goal
-        self.numDays = goal.numDays
-        self.color = goal.color
+//        self.dayGuideViewModel = dayGuideViewModel
+//        self.title = goal.goal
+//        self.numDays = goal.numDays
+//        self.color = goal.color
 
         self.actions = actions
         self.goalsService = goalsService
+
+        
+        self.dayGuidesAreLoading = RequiredObservable(false, label: "Goal List Items ViewModel: Loading")
+        goalsService.loadingGoalMap.bind({ [weak self] map in
+            if goal.isInvalidated {
+                return
+            }
+            
+            if !map.keys.contains(goal.id) {
+                self?.dayGuidesAreLoading.value = false
+                return
+            }
+            
+            self?.dayGuidesAreLoading.value = map[goal.id] ?? 0 > 0
+        })
     }
 
     /// initializer for when Goal is still loading
@@ -138,43 +192,45 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     ///   - color: The goal color
     ///   - actions: The actions that this ViewModel can perform
     ///   - goalsService: Service to interact with goals and related types
-    init(
-        title: String,
-        numDays: Int,
-        color: UIColor,
-        actions: EAGoalListItemViewModelActions?,
-        goalsService: EAGoalsService
-    ) {
-        self.title = title
-        self.numDays = numDays
-        self.color = color
-        self.actions = actions
-        self.goalsService = goalsService
-    }
+//    init(
+//        title: String,
+//        numDays: Int,
+//        color: UIColor,
+//        actions: EAGoalListItemViewModelActions?,
+//        goalsService: EAGoalsService
+//    ) {
+//        self.title = title
+//        self.numDays = numDays
+//        self.color = color
+//        self.actions = actions
+//        self.goalsService = goalsService
+//
+//
+//    }
 
     /// Sets properties related to a goal
     /// - Parameter goal: The goal
-    private func setGoalValues(goal: EAGoal) {
-        self.title = goal.goal
-        self.numDays = goal.numDays
-        self.color = goal.color
-    }
+//    private func setGoalValues(goal: EAGoal) {
+//        self.title = goal.goal
+//        self.numDays = goal.numDays
+//        self.color = goal.color
+//    }
 }
 
 extension DefaultEAGoalListItemViewModel {
 
     /// Handler for when a goal list item was tapped
     func listItemWasTapped() {
-        if let goal = self.goal {
+//        if let goal = self.goal {
             self.actions?.showGoalDetails(goal)
-        }
+//        }
     }
 }
 
 extension DefaultEAGoalListItemViewModel {
     func printDebug(_ message: String) {
         if self.debug {
-            print("$Log: \(message)")
+            print("$Log (DefaultEAGoalListItemViewModel): \(message)")
         }
     }
 }
