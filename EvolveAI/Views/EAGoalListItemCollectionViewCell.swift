@@ -7,6 +7,8 @@
 
 import UIKit
 
+//TODO: Clean up remove spinner
+
 /// A UICollectionViewCell to hold EAGoal information
 class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     let debug = true
@@ -15,34 +17,37 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     static let reuseIdentifier = "EAGoalCollectionViewCell"
 
     /// The StackView that contains the content for this cell
-    private var mainStack: EAUIElementView?
+//    private var mainStack: EAUIElementView?
 
     /// Spinner for if the goal is loading
-    private let spinner: EASpinner = {
-        let spinner = EASpinner(backgroundColor: .systemGray)
-        spinner.stopAnimating()
-        return spinner
-    }()
+//    private let spinner: EASpinner = {
+//        let spinner = EASpinner(backgroundColor: .systemGray)
+//        spinner.stopAnimating()
+//        return spinner
+//    }()
 
     /// The width of the cell (calculated when the cell is configured)
     private var cellWidth: CGFloat?
 
     /// Callback to refresh the CollectionView containing this cell
     private var refreshCollectionViewCallback: (() -> Void)?
+    
+    //TODO: Docstring
+    private var viewModel: EAGoalListItemViewModel?
 
     // MARK: - Private Functions
 
     /// Adds subviews and establishes constraints for this view
-    private func establishConstraints() {
+    private func establishConstraints(mainStack: EAUIElementView) {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(self.spinner)
-        NSLayoutConstraint.activate([
-            // Spinner Constraints
-            self.spinner.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.spinner.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            self.spinner.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
-            self.spinner.rightAnchor.constraint(equalTo: self.contentView.rightAnchor)
-        ])
+//        self.contentView.addSubview(self.spinner)
+//        NSLayoutConstraint.activate([
+//            // Spinner Constraints
+//            self.spinner.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+//            self.spinner.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+//            self.spinner.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
+//            self.spinner.rightAnchor.constraint(equalTo: self.contentView.rightAnchor)
+//        ])
 
         let numItemsPerRow: CGFloat = 1
         let spacing: CGFloat = EAIncrement.two.rawValue
@@ -52,11 +57,11 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         printDebug("Cell Width: \(cellWidth)")
 
         // Main Stack code
-        guard let mainStack = self.mainStack else {
-            fatalError("$Error: main stack not initialized before establishing constraints.")
-        }
+//        guard let mainStack = self.mainStack else {
+//            fatalError("$Error: main stack not initialized before establishing constraints.")
+//        }
 
-        self.contentView.addSubview(mainStack)
+//        self.contentView.addSubview(mainStack)
         printDebug("Added main stack to content view")
 
         NSLayoutConstraint.activate([
@@ -75,7 +80,11 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     /// Constructs the main StackView for this cell
     /// - Parameter viewModel: The ViewModel that provides the information
     /// - Returns: An EAStackView containing all of the necessary subviews
-    private func constructMainStack(with viewModel: EAGoalListItemViewModel) -> EAStackView {
+    private func constructMainStack() -> EAStackView {
+        guard let viewModel = self.viewModel else {
+            print("$Error (EAGoalListItemCollectionViewCell): Tried to construct main stack but viewModel was nil.")
+            return EAStackView(elements: [])
+        }
 
         // Adds the title label and "Number of Days" label
         guard let elementStack = EAUIElement.elementStack(
@@ -121,11 +130,36 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
         if let refreshCollectionViewCallback = refreshCollectionViewCallback {
             printDebug("Refreshing CollectionView")
             refreshCollectionViewCallback()
-            self.establishConstraints()
+            self.establishConstraints(mainStack: constructMainStack())
         }
     }
+    
+
 
     // MARK: - Public Functions
+    
+    // TODO: Docstring
+    func refreshView() {
+        guard let viewModel = self.viewModel else {
+            print("$Error (EAGoalListItemCollectionViewCell): Tried to refresh view but viewModel was nil.")
+            return
+        }
+        
+        printDebug("Refreshing Collection View Cell for \(String(describing: self.viewModel?.title))")
+        self.contentView.removeAllSubviews()
+        
+        self.contentView.backgroundColor = viewModel.color
+        self.contentView.layer.cornerRadius = EAIncrement.two.rawValue
+        
+        self.layer.shadowColor = viewModel.darkColor.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: 5, height: 5)
+        self.layer.shadowRadius = 10
+        
+        let mainStack = self.constructMainStack()
+        self.contentView.addSubview(mainStack)
+        self.establishConstraints(mainStack: mainStack)
+    }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if let cellWidth = self.cellWidth {
@@ -142,14 +176,13 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
     }
 
     func configure(with viewModel: EAGoalListItemViewModel, refreshCollectionViewCallback: (() -> Void)? = nil) {
-        self.layer.shadowColor = viewModel.darkColor.cgColor
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowOffset = CGSize(width: 5, height: 5)
-        self.layer.shadowRadius = 10
+        self.viewModel = viewModel
+        
 
-        self.contentView.subviews.forEach({ $0.removeFromSuperview() })
-        self.contentView.backgroundColor = viewModel.color
-        self.contentView.layer.cornerRadius = EAIncrement.two.rawValue
+
+//        self.contentView.subviews.forEach({ $0.removeFromSuperview() })
+//        self.contentView.removeAllSubviews()
+        
 
         printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(String(describing: viewModel.nextTaskViewModel))")
 
@@ -159,28 +192,33 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Set the refresh collection view callback
         self.refreshCollectionViewCallback = refreshCollectionViewCallback
+        
+        self.refreshView()
 
         // Spinner Code
-        if viewModel.loading {
-            self.spinner.startAnimating()
-        } else {
-            self.spinner.stopAnimating()
-        }
+//        if viewModel.loading {
+//            self.spinner.startAnimating()
+//        } else {
+//            self.spinner.stopAnimating()
+//        }
 
         // Set the main stack to the created stack.
-        self.mainStack = constructMainStack(with: viewModel)
+//        let mainStack = constructMainStack()
+//        self.mainStack = mainStack
+//        self.contentView.addSubview(mainStack)
+
 
         // Establish the constraints of the Cell
-        self.establishConstraints()
+//        self.establishConstraints(mainStack: mainStack)
 
-        printDebug("ContentView subview count: \(contentView.subviews.count)")
+//        printDebug("ContentView subview count: \(contentView.subviews.count)")
     }
 }
 
 extension EAGoalListItemCollectionViewCell {
     func printDebug(_ message: String) {
         if self.debug {
-            print("$Log: \(message)")
+            print("$Log (EAGoalListItemCollectionViewCell): \(message)")
         }
     }
 }

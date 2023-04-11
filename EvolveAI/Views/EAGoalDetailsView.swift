@@ -13,9 +13,19 @@ import RealmSwift
 class EAGoalDetailsView: UIView, Debuggable {
 
     let debug = false
+    
+    //TODO: Docstring
+    let viewModel: EAGoalDetailsViewModel
 
     /// The DayGuideView that is relevant for today
     var todaysDayGuideView: EADayGuideView?
+    
+    //TODO: Docstring
+    var dayGuideViewIsLoading: Bool = false {
+        didSet {
+            self.guideContentView
+        }
+    }
 
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
@@ -38,6 +48,26 @@ class EAGoalDetailsView: UIView, Debuggable {
         return guideContentView
     }()
     
+//    if let dayGuideViewStack = EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView {
+//        self.dayGuideViewStack = dayGuideViewStack
+//        dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
+//            let dayGuideView = EADayGuideView(with: $0)
+//            if $0.associatedDate.occursOnSameDate(as: Date()) {
+//                self.todaysDayGuideView = dayGuideView
+//                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+//            }
+//
+//            return dayGuideView
+//        }))
+        
+    //TODO: Docstring
+    var dayGuideViewStack: EAStackView = {
+//        let stack = EAUIElement.stack()EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView
+        let stack = EAStackView(axis: .vertical, spacing: .two, subViews: [])
+        return stack
+    }()
+    
+    //TODO: Docstring
     lazy var spinner: EASpinner = {
         let spinner = EASpinner(color: self.viewModel.darkColor, backgroundColor: .clear)
         return spinner
@@ -74,6 +104,9 @@ class EAGoalDetailsView: UIView, Debuggable {
         dayGuideViewModels: [EAGoalDayGuideViewModel],
         separatorColor: UIColor
     ) {
+//        self.subviews.forEach({ $0.removeFromSuperview() })
+//        self.guideScrollView.subviews.forEach({ $0.removeFromSuperview() })
+        
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(self.guideContentView)
         self.guideContentView.addElements([
@@ -108,21 +141,11 @@ class EAGoalDetailsView: UIView, Debuggable {
                 .separator(color: separatorColor)
             ])
         }
-
-        if let dayGuideViewStack = EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView {
-            dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
-                let dayGuideView = EADayGuideView(with: $0)
-                if $0.associatedDate.occursOnSameDate(as: Date()) {
-                    self.todaysDayGuideView = dayGuideView
-                    dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
-                }
-
-                return dayGuideView
-            }))
-            self.guideContentView.addSubview(dayGuideViewStack)
-        } else {
-            fatalError("$Error: Couldn't create stack as EAStackView")
-        }
+        // Add the day guides to the day guides stack
+        self.populateDayGuideStackView(dayGuideViewModels: viewModel.dayGuideViewModels)
+        
+        // Add the day guides stack to the content view
+        self.guideContentView.addSubview(self.dayGuideViewStack)
 
         if !viewModel.additionalDetails.isEmpty {
             self.guideContentView.addElements([
@@ -148,6 +171,19 @@ class EAGoalDetailsView: UIView, Debuggable {
             self.guideContentView.widthAnchor.constraint(equalTo: guideScrollView.widthAnchor)
         ])
     }
+    
+    private func populateDayGuideStackView(dayGuideViewModels: [EAGoalDayGuideViewModel]) {
+        self.dayGuideViewStack.removeAllSubviews()
+        self.dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
+            let dayGuideView = EADayGuideView(with: $0)
+            if $0.associatedDate.occursOnSameDate(as: Date()) {
+                self.todaysDayGuideView = dayGuideView
+                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+            }
+            
+            return dayGuideView
+        }))
+    }
 
     /// Scrolls to the DayGuideView for today
     func scrollToTodaysDayGuideView() {
@@ -160,6 +196,13 @@ class EAGoalDetailsView: UIView, Debuggable {
         } else {
             printDebug("Not scrolling to todays day guide view")
         }
+    }
+    
+    //TODO: Docstring
+    func refreshView(isLoading: Bool) {
+        self.setLoading(isLoading)
+        self.populateDayGuideStackView(dayGuideViewModels: self.viewModel.dayGuideViewModels)
+        self.scrollToTodaysDayGuideView()
     }
 
     required init?(coder: NSCoder) {
