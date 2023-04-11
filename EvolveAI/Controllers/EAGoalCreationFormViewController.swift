@@ -20,7 +20,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     }
 
     /// A String describing the goal (ex: "learn the violin"). nil if empty
-    private var goal: String?
+    private var goalString: String?
 
     /// An Int describing the number of days for the goal (ex: 10). nil if empty
     private var numDays: Int?
@@ -72,35 +72,50 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = EAColor.disabled.uiColor
         self.updateButton()
-        if var goal = self.goal, let numDays = self.numDays {
-            goal = goal.capitalizeNonFillerWords()
-            DispatchQueue.main.async {
-                let loadingGoal = EALoadingGoal(
-                    title: goal,
-                    numDays: numDays,
-                    color: self.color,
+        let modelToUse = Constants.defaultModel
+        let endpointToUse = Constants.defaultEndpoint
+        if var goalString = self.goalString, let numDays = self.numDays {
+            goalString = goalString.capitalizeNonFillerWords()
+            //TODO: Remove
+//            DispatchQueue.main.async {
+                let goal = EAGoal(
+                    creationDate: Date(),
                     startDate: self.startDate,
+                    goal: goalString,
+                    numDays: numDays,
                     additionalDetails: self.additionalDetails,
-                    modelToUse: Constants.defaultModel,
-                    endpointToUse: Constants.defaultEndpoint
+                    color: self.color,
+                    goalsService: self.goalsService
                 )
 
-                self.goalsService.saveLoadingGoal(
-                    loadingGoal,
-                    goalWasAddedToQueue: {
-                        self.printDebug("Calling goal was added to queue.")
-                        self.goalWillBeCreated()
-                    },
-                    goalWasLoaded: { goal in
-                        self.printDebug("Goal was loaded: \(goal.goal)")
-                        self.goalWasCreated()
-                    }
+                self.goalsService.saveGoal(goal)
+
+                let loadingMessage = EALoadingMessage(
+                    messageHistory: [],
+                    messageTag: .fetchDayGuides,
+                    goal: goal,
+                    modelToUse: modelToUse,
+                    endpointToUse: endpointToUse
                 )
+
+                self.goalsService.addLoadingMessage(loadingMessage: loadingMessage) { [weak self] result in
+                    switch result {
+                    case .success(let goal):
+                        self?.printDebug("Goal day guides retrieved: \(goal.dayGuides)")
+                        self?.goalWasCreated()
+
+                    case .failure(let error):
+                        // TODO: Handle Failure
+                        print("$Error: \(String(describing: error))")
+                        return
+                    }
+                }
+
                 self.navigationController?.popViewController(animated: true)
                 self.navigationController?.navigationBar.isUserInteractionEnabled = true
-            }
+//            }
         } else {
-            fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goal)), Num Days: \(String(describing: self.numDays)).")
+            fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goalString)), Num Days: \(String(describing: self.numDays)).")
         }
     }
 
@@ -125,7 +140,7 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
     /// Updates the status of the button based on whether the required fields are filled in correctly.
     private func updateButton() {
         if let buttonView = self.createGoalButton {
-            guard let goal = self.goal,
+            guard let goal = self.goalString,
                   self.numDays != nil,
                   !self.getView().isLoading(),
                   !goal.isEmpty
@@ -180,10 +195,10 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
 
                     strongSelf.printDebug("Goal Text Edited to: \(textField.text ?? "nil")")
                     if let goal = textField.text, !goal.isEmpty, goal.count < GoalCreationConstants.maxGoalLength {
-                        strongSelf.goal = goal
+                        strongSelf.goalString = goal
                         textField.setBorderColor(color: EAColor.success.uiColor)
                     } else {
-                        strongSelf.goal = nil
+                        strongSelf.goalString = nil
                         textField.setBorderColor(color: EAColor.failure.uiColor)
                     }
 
