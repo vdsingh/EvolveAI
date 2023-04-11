@@ -9,7 +9,7 @@ import UIKit
 
 /// View to display EAGoal objects in a UITableView
 class EAGoalsListView: UIView, Debuggable {
-    let debug: Bool = false
+    let debug = false
 
     /// Constants for this View
     private struct Constants {

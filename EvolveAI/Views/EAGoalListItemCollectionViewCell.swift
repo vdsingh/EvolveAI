@@ -9,7 +9,7 @@ import UIKit
 
 /// A UICollectionViewCell to hold EAGoal information
 class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
-    let debug: Bool = false
+    let debug = true
 
     /// Reuse identifier for the cell
     static let reuseIdentifier = "EAGoalCollectionViewCell"
