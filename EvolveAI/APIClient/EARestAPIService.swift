@@ -39,71 +39,79 @@ final class EARestAPIService: Debuggable {
         completion: @escaping (Result<T, Error>) -> Void
     ) {
         printDebug("Executing a EAService request: \(String(describing: request.urlRequest))")
-
+        
         // Unwrap the urlRequest property from the EARequest object
         guard let urlRequest = request.urlRequest else {
             completion(.failure(EAServiceError.failedToUnwrapURLRequest))
             print("$Error: url request is nil.")
             return
         }
-
+        
         let task = URLSession.shared.dataTask(
             with: urlRequest,
             completionHandler: { [weak self] data, response, error in
-                guard let self = self else {
-                    fatalError("$Error: EAService self is nil.")
-                }
-
-                // There was an error fetching the data.
-                if let error = error {
-                    print("$Error: \(String(describing: error))")
-                    completion(.failure(error))
-                }
-
-                // The data came back nil
-                guard let data = data else {
-                    print("$Error: data is nil.")
-                    completion(.failure(EAServiceError.failedToUnwrapData))
-                    return
-                }
-
-                // There was an invalid response code.
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    print("$Error: couldn't read response as HTTPURLResponse.")
-                    completion(.failure(EAServiceError.failedToUnwrapResponse))
-                    return
-                }
-
-                if !(200...299).contains(httpResponse.statusCode) {
-                    if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
-                        print("Data: \(JSONString)")
+                
+                // Put everything on the main thread because we are done with waiting for API response. Helps avoid realm access issues.
+                DispatchQueue.main.async {
+                    
+                    guard let self = self else {
+                        fatalError("$Error: EAService self is nil.")
                     }
-
-                    print("$Error: invalid response code: \(httpResponse.statusCode).")
-                    completion(.failure(EAServiceError.invalidResponseCode))
-                    return
-                }
-
-                // Try to decode the data
-                do {
-                    let decoder = JSONDecoder()
-                    let responseObject = try decoder.decode(type, from: data)
-                    self.printDebug("successfully decoded data to type \(type). Response Object: \(responseObject)")
-                    completion(.success(responseObject))
-                } catch let error {
-                    if let decodingError = error as? DecodingError {
-                        // There was an error decoding the data
-                        self.printDebug("$Error decoding response data \(String(describing: decodingError))")
-                        completion(.failure(EAServiceError.failedToDecodeData))
-                    } else {
-                        // There was some other error
-                        self.printDebug("$Error: \(String(describing: error))")
+                    
+                    // There was an error fetching the data.
+                    if let error = error {
+                        print("$Error: \(String(describing: error))")
                         completion(.failure(error))
+                    }
+                    
+                    // The data came back nil
+                    guard let data = data else {
+                        print("$Error: data is nil.")
+                        completion(.failure(EAServiceError.failedToUnwrapData))
+                        return
+                    }
+                    
+                    // There was an invalid response code.
+                    guard let httpResponse = response as? HTTPURLResponse else {
+                        print("$Error: couldn't read response as HTTPURLResponse.")
+                        completion(.failure(EAServiceError.failedToUnwrapResponse))
+                        return
+                    }
+                    
+                    if !(200...299).contains(httpResponse.statusCode) {
+                        if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
+                            print("Data: \(JSONString)")
+                        }
+                        
+                        print("$Error: invalid response code: \(httpResponse.statusCode).")
+                        completion(.failure(EAServiceError.invalidResponseCode))
+                        return
+                    }
+                    
+                    // Try to decode the data
+                    do {
+                        let decoder = JSONDecoder()
+                        let responseObject = try decoder.decode(type, from: data)
+                        self.printDebug("successfully decoded data to type \(type). Response Object: \(responseObject)")
+                        completion(.success(responseObject))
+                    } catch let error {
+                        if let decodingError = error as? DecodingError {
+                            // There was an error decoding the data
+                            self.printDebug("$Error decoding response data \(String(describing: decodingError))")
+                            completion(.failure(EAServiceError.failedToDecodeData))
+                        } else {
+                            // There was some other error
+                            self.printDebug("$Error: \(String(describing: error))")
+                            completion(.failure(error))
+                        }
                     }
                 }
             }
         )
-        task.resume()
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            task.resume()
+        }
     }
 
     /// Reads the relevant flags and prints debug messages only if they are enabled

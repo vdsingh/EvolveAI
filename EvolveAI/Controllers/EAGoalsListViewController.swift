@@ -33,11 +33,11 @@ class EAGoalsListViewController: UIViewController, Debuggable {
                         to: .viewGoal(
                             goalViewModel: goalDetailsViewModel,
                             goalWasDeleted: {
-                                DispatchQueue.main.async {
+//                                DispatchQueue.main.async {
                                     self.printDebug("Goal will be deleted from list. Refreshing goals data and view to retrieve the loading goals.")
                                     self.viewModel.fetchGoals()
                                     self.getView().refreshView()
-                                }
+//                                }
                             }
                         )
                     )
@@ -49,18 +49,18 @@ class EAGoalsListViewController: UIViewController, Debuggable {
                     self?.navigator?.navigate(
                         to: .createGoal(
                             goalWillBeCreated: {
-                                DispatchQueue.main.async {
+//                                DispatchQueue.main.async {
                                     self?.printDebug("Goal will be created from form. Refreshing goals data and view to retrieve the loading goals.")
                                     self?.viewModel.fetchGoals()
                                     self?.getView().refreshView()
-                                }
+//                                }
                             },
                             goalWasCreated: { [weak self] in
-                                DispatchQueue.main.async {
+//                                DispatchQueue.main.async {
                                     self?.printDebug("Goal was created from form. Refreshing goals data and view.")
                                     self?.viewModel.fetchGoals()
                                     self?.getView().refreshView()
-                                }
+//                                }
                             }
                         )
                     )
@@ -189,6 +189,14 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
             cell.configure(with: goalListItemViewModel, refreshCollectionViewCallback: { [weak self] in
                 self?.getView().refreshView()
             })
+            
+            // Once the "loading" status of the goal changes, the cell will refresh.
+            for item in self.viewModel.items {
+                item.dayGuidesAreLoading.bind({ _ in
+                    cell.refreshView()
+                })
+            }
+            
             return cell
         }
 
