@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 /// Input methods for the ViewModel
 protocol EAGoalsListViewModelInput {
 
@@ -83,19 +81,8 @@ extension DefaultEAGoalsListViewModel {
     func fetchGoals() {
         printDebug("Attempting to fetch goals.")
         let goalListItemViewModels = self.goalsService.getAllPersistedGoals().compactMap { goal in
-//            var dayGuideViewModel: EAGoalDayGuideViewModel?
-//            if let todaysDayGuide = goal.todaysDayGuide {
-//                dayGuideViewModel = DefaultEAGoalDayGuideViewModel(
-//                    dayGuide: todaysDayGuide,
-//                    goalStartDate: goal.startDate,
-//                    labelColor: goal.color.darker() ?? .black,
-//                    goalsService: self.goalsService
-//                )
-//            }
-//            printDebug("DayGuideViewModel: \(String(describing: dayGuideViewModel))")
             return DefaultEAGoalListItemViewModel(
                 goal: goal,
-//                dayGuideViewModel: dayGuideViewModel,
                 actions: EAGoalListItemViewModelActions(
                     showGoalDetails: self.actions.showGoalDetails
                 ),
@@ -103,26 +90,8 @@ extension DefaultEAGoalsListViewModel {
             )
         }
 
-        // TODO: Remove/refactor
-
-//        let loadingListItemViewModels = self.goalsService.getAllLoadingGoals().compactMap {
-//            return DefaultEAGoalListItemViewModel(
-//                title: $0.title,
-//                numDays: $0.numDays,
-//                color: $0.color,
-//                actions: EAGoalListItemViewModelActions(
-//                    showGoalDetails: self.actions.showGoalDetails
-//                ),
-//                goalsService: self.goalsService
-//            )
-//        }
-
         self.items = []
         self.items.append(contentsOf: goalListItemViewModels)
-
-        // TODO: Remove/refactor
-//        self.items.append(contentsOf: loadingListItemViewModels)
-
         printDebug("Fetched Goals: \(self.items.compactMap({ $0.title }))")
     }
 }

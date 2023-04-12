@@ -98,14 +98,11 @@ class EAGoalsService: Debuggable {
             
             // Tell the goal that there are day guides currently loading
             let numDayGuidesRequested = dayRange.count
-            
             self.loadingGoalMap.value[loadingMessage.goal.id, default: 0] += dayRange.count
-//            loadingMessage.goal.numLoadingDayGuides += dayRange.count
             EAOpenAILanguageModelService.shared.executeCompletionsRequest(
                 model: completionsModel,
                 prompt: dayGuidesRequestMessage,
                 completion: { [weak self] result in
-//                    DispatchQueue.main.async {
                         switch result {
                         case .success(let aiResponse):
                             self?.printDebug("Successfully retrieved AI Response: \(aiResponse)")
@@ -119,8 +116,6 @@ class EAGoalsService: Debuggable {
                                 self?.printDebug("Decoded Day Guides Response.")
                                 loadingMessage.goal.appendDayGuides(dayGuides)
                                 self?.loadingGoalMap.value[loadingMessage.goal.id, default: 0] -= dayRange.count
-
-//                                loadingMessage.goal.numLoadingDayGuides -= dayGuides.count
                                 if numDayGuidesRequested != dayGuides.count {
                                     print("$Error: the number of day guides requested does not equal the number received.")
                                 }
@@ -131,10 +126,9 @@ class EAGoalsService: Debuggable {
                             completion(.success(loadingMessage.goal))
                             
                         case .failure(let error):
-                            completion(.failure(error))
                             print("$Error: \(error)")
+                            completion(.failure(error))
                         }
-//                    }
                 }
             )
 
@@ -189,28 +183,27 @@ class EAGoalsService: Debuggable {
         if self.loadingMessages.isEmpty {
             return
         }
-
-//        DispatchQueue.global(qos: .userInitiated).async {
-            for _ in 0..<self.loadingMessages.count {
-                if let loadingMessage = self.loadingMessages.last {
-                    self.printDebug("Loading Message for goal \(loadingMessage.goal) was dequeued. Creating now.")
-                    switch loadingMessage.messageTag {
-                    case .fetchTags:
-                        // TODO: Implement
-                        return
-
-                    case .fetchDayGuides:
-                        self.executeGoalDayGuidesRequest(
-                            loadingMessage: loadingMessage,
-                            dayRange: 0...10,
-                            completion: completion
-                        )
-                    }
+        
+        for _ in 0..<self.loadingMessages.count {
+            if let loadingMessage = self.loadingMessages.last {
+                self.printDebug("Loading Message for goal \(loadingMessage.goal) was dequeued. Creating now.")
+                switch loadingMessage.messageTag {
+                case .fetchTags:
+                    // TODO: Implement
+                    return
+                    
+                case .fetchDayGuides:
+                    self.executeGoalDayGuidesRequest(
+                        loadingMessage: loadingMessage,
+                        dayRange: 0...10,
+                        completion: completion
+                    )
                 }
-//            } O
+            }
         }
     }
     
+    //TODO: Docstring
     public func appendDayGuides(goal: EAGoal, dayGuides: [EAGoalDayGuide]) {
         self.writeToRealm {
             goal.dayGuides.append(objectsIn: dayGuides)

@@ -77,66 +77,64 @@ class EAGoalCreationFormViewController: UIViewController, Debuggable {
         if var goalString = self.goalString, let numDays = self.numDays {
             goalString = goalString.capitalizeNonFillerWords()
             //TODO: Remove
-//            DispatchQueue.main.async {
-                let goal = EAGoal(
-                    creationDate: Date(),
-                    startDate: self.startDate,
-                    goal: goalString,
-                    numDays: numDays,
-                    additionalDetails: self.additionalDetails,
-                    color: self.color,
-                    goalsService: self.goalsService
-                )
-
-                self.goalsService.saveGoal(goal)
-
-                let loadingMessage = EALoadingMessage(
-                    messageHistory: [],
-                    messageTag: .fetchDayGuides,
-                    goal: goal,
-                    modelToUse: modelToUse,
-                    endpointToUse: endpointToUse
-                )
-
-                self.goalsService.addLoadingMessage(loadingMessage: loadingMessage) { [weak self] result in
-                    switch result {
-                    case .success(let goal):
-                        self?.printDebug("Goal day guides retrieved: \(goal.dayGuides)")
-                        self?.goalWasCreated()
-
-                    case .failure(let error):
-                        // TODO: Handle Failure
-                        print("$Error: \(String(describing: error))")
-                        return
-                    }
+            let goal = EAGoal(
+                creationDate: Date(),
+                startDate: self.startDate,
+                goal: goalString,
+                numDays: numDays,
+                additionalDetails: self.additionalDetails,
+                color: self.color,
+                goalsService: self.goalsService
+            )
+            
+            self.goalsService.saveGoal(goal)
+            
+            let loadingMessage = EALoadingMessage(
+                messageHistory: [],
+                messageTag: .fetchDayGuides,
+                goal: goal,
+                modelToUse: modelToUse,
+                endpointToUse: endpointToUse
+            )
+            
+            self.goalsService.addLoadingMessage(loadingMessage: loadingMessage) { [weak self] result in
+                switch result {
+                case .success(let goal):
+                    self?.printDebug("Goal day guides retrieved: \(goal.dayGuides)")
+                    self?.goalWasCreated()
+                    
+                case .failure(let error):
+                    // TODO: Handle Failure
+                    print("$Error: \(String(describing: error))")
+                    return
                 }
-
-                self.navigationController?.popViewController(animated: true)
-                self.navigationController?.navigationBar.isUserInteractionEnabled = true
-//            }
+            }
+            
+            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
         } else {
             fatalError("$Error: user was able to trigger createGoal with nil fields: Goal: \(String(describing: self.goalString)), Num Days: \(String(describing: self.numDays)).")
         }
     }
-
+    
     /// Handles any failures that occur with goal creation
     /// - Parameter error: The error that occurred when attempting to create the goal
     private func handleGoalCreationFailure(_ error: EAGoalsService.CreateGoalError) {
         switch error {
         case .maxGoalsExceeded:
             print("$Error: max goals exceeded: \(error.codeDescription())")
-
+            
         case .dayLimitExceeded:
             print("$Error: day limit exceeded: \(error.codeDescription())")
-
+            
         case .realmWasNil:
             print("$Error: realm was nil: \(error.codeDescription())")
-
+            
         case .unknownError(let unknownError):
             print("$Error: unknown error: \(String(describing: unknownError))")
         }
     }
-
+    
     /// Updates the status of the button based on whether the required fields are filled in correctly.
     private func updateButton() {
         if let buttonView = self.createGoalButton {

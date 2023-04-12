@@ -13,16 +13,15 @@ protocol EALanguageModelGoalPromptCoder: EALanguageModelGoalPromptEncoder & EALa
 protocol EALanguageModelGoalPromptEncoder {
     func encodeTagRequestString(goalString: String) ->  String
     func encodeDayGuidesRequestString(goal: String, dayRange: ClosedRange<Int>) -> String
-//    func createOpenAIChatCompletionsRequestStrings(goal: String, numDays: Int) -> [EAOpenAIChatCompletionMessage]
 }
 
 protocol EALanguageModelGoalPromptDecoder {
     func decodeTagResponseString(_ tagsString: String) ->  [String]
     func decodeDayGuidesResponseString(aiResponse: String, goalStartDate: Date) -> [EAGoalDayGuide]
-//    func createOpenAIChatCompletionsRequestStrings(goal: String, numDays: Int) -> [EAOpenAIChatCompletionMessage]
 }
 
 extension EAGoalsService: EALanguageModelGoalPromptCoder {
+    
     //TODO: Docstring
     struct EALanguageModelGoalPromptCoderConstants {
         
@@ -45,7 +44,7 @@ extension EAGoalsService: EALanguageModelGoalPromptEncoder {
     /// Creates a string to send to the OpenAI Completions endpoint
     /// - Parameters:
     ///   - goal: A description of the goal to accomplish (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal in (ex: 30)
+    ///   - dayRange: The days that we are requesting day guides for
     /// - Returns: A string to send to the OpenAI Completions endpoint
     func encodeDayGuidesRequestString(goal: String, dayRange: ClosedRange<Int>) -> String {
         let guideFormat = "Day [Day Number]: [paragraph of tasks separated by \"\(EALanguageModelGoalPromptCoderConstants.taskSeparatorCharacter)\"] [New Line for next day]"
@@ -55,23 +54,6 @@ extension EAGoalsService: EALanguageModelGoalPromptEncoder {
 //        prompt += " \(Constants.maxTokens - goal.numTokens(separatedBy: CharacterSet(charactersIn: " "))) characters."
         return prompt
     }
-
-    // TODO: Docstring
-//    func createOpenAIChatCompletionsRequestStrings(goal: String, numDays: Int) -> [EAOpenAIChatCompletionMessage] {
-//        var requestStrings = [EAOpenAIChatCompletionMessage]()
-//        let message = EAOpenAIChatCompletionMessage(
-//            role: .user,
-//            content: "I have the goal: \(goal). Give me 3 tags that can be used to categorize this goal."
-//        )
-//        requestStrings.append(message)
-//        let guideFormat = "Day <Day Number>: <paragraph of tasks separated by \"\(Constants.taskSeparatorCharacter)\"> <New Line for next day>"
-//        let nextMessage = EAOpenAIChatCompletionMessage(
-//            role: .user,
-//            content: "I want to complete it in exactly \(numDays) days. Give me a guide for each day in the format: \(guideFormat)."
-//        )
-//        requestStrings.append(nextMessage)
-//        return requestStrings
-//    }
 }
 
 extension EAGoalsService: EALanguageModelGoalPromptDecoder {
