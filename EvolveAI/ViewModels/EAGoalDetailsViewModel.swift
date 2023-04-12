@@ -49,7 +49,10 @@ protocol EAGoalDetailsViewModelOutput {
     var modelUsedText: String { get }
 
     // TODO: Docstring
-    var aiResponse: String? { get }
+    var messageHistoryString: String? { get }
+    
+    //TODO: docstring
+    var dayGuidesAreLoading: RequiredObservable<Bool> { get }
 }
 
 protocol EAGoalDetailsViewModel: EAGoalDetailsViewModelInput, EAGoalDetailsViewModelOutput { }
@@ -65,9 +68,13 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
 
     // MARK: - Output
 
-    let title: String
+    var title: String {
+        return self.goal.goal
+    }
+    
     var numDaysString: String {
-        return "within \(goal.numDays) Days:"
+        // If only 1 day use "day". If more, use "days".
+        return "within " + (self.goal.numDays == 1 ? "\(self.goal.numDays) Day" : "\(self.goal.numDays) Days") + ":"
     }
 
     var dateCreatedString: String {
@@ -77,8 +84,14 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         return "Created on: \(dateString)"
     }
 
-    var tagStrings: [String]
-    let color: UIColor
+    var tagStrings: [String] {
+        return self.goal.tags.map({$0})
+    }
+    
+    var color: UIColor {
+        return self.goal.color
+    }
+    
     var darkColor: UIColor {
         return self.color.darker() ?? .link
     }
@@ -89,24 +102,39 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
         })
     }
 
-    let additionalDetails: String
+    var additionalDetails: String {
+        return self.goal.additionalDetails
+    }
 
-    let modelUsedText: String
+    var modelUsedText: String {
+        return self.goal.languageModel ?? EAGoalCreationModel.unknown.rawVal
+    }
 
-    let aiResponse: String?
+    var messageHistoryString: String? {
+        return self.goal.constructMessageHistoryString()
+    }
+    
+    var dayGuidesAreLoading: RequiredObservable<Bool>
 
     /// Goal initializer
     /// - Parameter goal: The goal that this ViewModel represents
     /// - Parameter goalsService: Goals Service to interact with EAGoals and other related types
     init(goal: EAGoal, goalsService: EAGoalsService) {
-        self.title = goal.goal
-        self.color = goal.color
-        self.additionalDetails = goal.additionalDetails
-        self.modelUsedText = goal.languageModel ?? EAGoalCreationModel.unknown.rawVal
-        self.aiResponse = goal.aiResponse
         self.goal = goal
         self.goalsService = goalsService
-        self.tagStrings = goal.tags.map({$0})
+        self.dayGuidesAreLoading = RequiredObservable(false, label: "Goal Details ViewModel: Loading")
+        self.goalsService.loadingGoalMap.bind({ [weak self] map in
+            if goal.isInvalidated {
+                return
+            }
+            
+            if !map.keys.contains(goal.id) {
+                self?.dayGuidesAreLoading.value = false
+                return
+            }
+            
+            self?.dayGuidesAreLoading.value = map[goal.id] ?? 0 > 0
+        })
     }
 }
 
