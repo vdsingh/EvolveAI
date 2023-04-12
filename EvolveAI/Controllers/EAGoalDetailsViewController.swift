@@ -56,14 +56,11 @@ class EAGoalDetailsViewController: UIViewController, Debuggable {
     func bindViewModel() {
         printDebug("binding day guides are loading to spinner.")
         self.viewModel.dayGuidesAreLoading.bind { [weak self] isLoading in
-//            DispatchQueue.main.async {
-//                self?.getView()?.setLoading(isLoading)
-                self?.getView()?.refreshView(isLoading: isLoading)
-//                self?.getView()?.refreshView()
-//            }
+            self?.getView()?.refreshView(isLoading: isLoading)
         }
     }
     
+    //TODO: Docstring
     private func getView() -> EAGoalDetailsView? {
         if let view = self.view as? EAGoalDetailsView {
             return view
@@ -108,7 +105,7 @@ class EAGoalDetailsViewController: UIViewController, Debuggable {
     /// Prints messages when the necessary flags are true
     /// - Parameter message: The message to print
     func printDebug(_ message: String) {
-        if Flags.debugIndividualGoal || self.debug{
+        if Flags.debugIndividualGoal || self.debug {
             print("$Log: \(message)")
         }
     }
