@@ -38,7 +38,7 @@ protocol EAGoalListItemViewModelOutput {
 
     /// The tags for the goal
     var tags: [String] { get }
-    
+
     // TODO: Docstring
     var dayGuidesAreLoading: RequiredObservable<Bool> { get }
 
@@ -96,7 +96,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
     var tags: [String] {
         return self.goal.tags
     }
-    
+
     private var dayGuideViewModel: EAGoalDayGuideViewModel? {
         if let todaysDayGuide = self.goal.todaysDayGuide {
             return DefaultEAGoalDayGuideViewModel(
@@ -106,7 +106,7 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
                 goalsService: self.goalsService
             )
         }
-        
+
         return nil
     }
 
@@ -118,10 +118,9 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
 
     /// The goal that this ViewModel represents
     private var goal: EAGoal
-    
-    //TODO: docstring
-    var dayGuidesAreLoading: RequiredObservable<Bool>
 
+    // TODO: docstring
+    var dayGuidesAreLoading: RequiredObservable<Bool>
 
     /// Initializer for a fully loaded goal
     /// - Parameters:
@@ -136,18 +135,18 @@ final class DefaultEAGoalListItemViewModel: EAGoalListItemViewModel, Debuggable 
         self.goal = goal
         self.actions = actions
         self.goalsService = goalsService
-        
+
         self.dayGuidesAreLoading = RequiredObservable(false, label: "Goal List Items ViewModel: Loading")
         goalsService.loadingGoalMap.bind({ [weak self] map in
             if goal.isInvalidated {
                 return
             }
-            
+
             if !map.keys.contains(goal.id) {
                 self?.dayGuidesAreLoading.value = false
                 return
             }
-            
+
             self?.dayGuidesAreLoading.value = map[goal.id] ?? 0 > 0
         })
     }

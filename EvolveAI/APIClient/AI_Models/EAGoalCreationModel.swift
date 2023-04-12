@@ -25,7 +25,7 @@ enum EAGoalCreationModel {
 
     /// Mock Model
     case EAMockingModel(model: EAMockingGoalCreationModel)
-    
+
     case unknown
 
     /// The Raw Value for the model
@@ -39,7 +39,7 @@ enum EAGoalCreationModel {
 
         case .EAMockingModel(let model):
             return model.rawValue
-            
+
         case .unknown:
             return "unknown"
         }

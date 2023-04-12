@@ -10,7 +10,7 @@ import UIKit
 
 /// Custom Button for this application
 class EAButton: UIButton, EAUIElementViewStaticHeight, Debuggable {
-    
+
     let debug = false
 
     /// This button can be a FormElement and it must have a required height
@@ -56,7 +56,7 @@ class EAButton: UIButton, EAUIElementViewStaticHeight, Debuggable {
         self.isEnabled = enabled
         self.backgroundColor = enabled ? .orange : .systemGray
     }
-    
+
     func printDebug(_ message: String) {
         if self.debug {
             print("$Log: \(message)")

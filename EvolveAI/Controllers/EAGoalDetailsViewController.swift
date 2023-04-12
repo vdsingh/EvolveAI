@@ -10,7 +10,7 @@ import UIKit
 
 /// ViewController for screen for viewing a single goal's information
 class EAGoalDetailsViewController: UIViewController, Debuggable {
-    
+
     let debug = false
 
     /// ViewModel for the Goal Details
@@ -39,7 +39,7 @@ class EAGoalDetailsViewController: UIViewController, Debuggable {
         navigationController?.navigationBar.largeTitleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.trashButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = EAColor.failure.uiColor
-        
+
         self.bindViewModel()
     }
 
@@ -51,16 +51,16 @@ class EAGoalDetailsViewController: UIViewController, Debuggable {
             print("$Error: view for EAGoalDetailsViewController is not type EAGoalDetailsView.")
         }
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     func bindViewModel() {
         printDebug("binding day guides are loading to spinner.")
         self.viewModel.dayGuidesAreLoading.bind { [weak self] isLoading in
             self?.getView()?.refreshView(isLoading: isLoading)
         }
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     private func getView() -> EAGoalDetailsView? {
         if let view = self.view as? EAGoalDetailsView {
             return view

@@ -29,5 +29,5 @@ class Flags {
     static let debugGoalCreationForm = false
 
     // TODO: Docstring
-    static let developerMode = true
+    static let developerMode = false
 }

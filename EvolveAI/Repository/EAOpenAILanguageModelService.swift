@@ -9,20 +9,20 @@ import Foundation
 import RealmSwift
 
 class EAOpenAILanguageModelService: Debuggable {
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     let debug = false
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     enum EAOpenAILanguageModelServiceError: Error {
         case responseHadNoChoices
         case nilRequest
     }
 
-    //TODO: Docstring
+    // TODO: Docstring
     static let shared = EAOpenAILanguageModelService()
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     var realm: Realm {
         do {
             return try Realm()
@@ -69,8 +69,8 @@ class EAOpenAILanguageModelService: Debuggable {
             }
         )
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     func printDebug(_ message: String) {
         if self.debug {
             print("$Log: \(message)")

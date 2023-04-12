@@ -22,7 +22,6 @@ final class MockGoals {
         let startDate = Calendar.current.date(byAdding: .day, value: Int.random(in: 0..<8), to: creationDate) ?? Date()
         return (creationDate, startDate)
     }
-    
 
     /// A Mock goal for learning the violin
     static let learnViolin: EAGoal = {

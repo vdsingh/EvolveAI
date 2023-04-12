@@ -147,7 +147,7 @@ extension EAOpenAIRequest {
         prompt: String,
         temperature: Int = 1,
         maxTokens: Int
-    ) -> EAOpenAIRequest {
+    ) -> EAOpenAIRequest? {
         if maxTokens > model.tokenLimit {
             print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
         }

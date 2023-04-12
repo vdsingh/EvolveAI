@@ -55,7 +55,7 @@ final class EASpinner: UIStackView, EAUIElementViewStaticHeight {
         self.distribution = .fillEqually
         self.alignment = .center
         self.spacing = 0
-        
+
         self.spinner.color = color
 
         if let subText = subText {

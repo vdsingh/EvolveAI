@@ -189,14 +189,14 @@ extension EAGoalsListViewController: UICollectionViewDataSource {
             cell.configure(with: goalListItemViewModel, refreshCollectionViewCallback: { [weak self] in
                 self?.getView().refreshView()
             })
-            
+
             // Once the "loading" status of the goal changes, the cell will refresh.
             for item in self.viewModel.items {
                 item.dayGuidesAreLoading.bind({ _ in
                     cell.refreshView()
                 })
             }
-            
+
             return cell
         }
 

@@ -10,7 +10,7 @@ import Foundation
 /// Used to execute REST API requests
 final class EARestAPIService: Debuggable {
 
-    let debug = true
+    let debug = false
 
     /// The shared instance that is used to access service functionality
     public static let shared = EARestAPIService()
@@ -39,55 +39,55 @@ final class EARestAPIService: Debuggable {
         completion: @escaping (Result<T, Error>) -> Void
     ) {
         printDebug("Executing a EAService request: \(String(describing: request.urlRequest))")
-        
+
         // Unwrap the urlRequest property from the EARequest object
         guard let urlRequest = request.urlRequest else {
             completion(.failure(EAServiceError.failedToUnwrapURLRequest))
             print("$Error: url request is nil.")
             return
         }
-        
+
         let task = URLSession.shared.dataTask(
             with: urlRequest,
             completionHandler: { [weak self] data, response, error in
-                
+
                 // Put everything on the main thread because we are done with waiting for API response. Helps avoid realm access issues.
                 DispatchQueue.main.async {
-                    
+
                     guard let self = self else {
                         fatalError("$Error: EAService self is nil.")
                     }
-                    
+
                     // There was an error fetching the data.
                     if let error = error {
                         print("$Error: \(String(describing: error))")
                         completion(.failure(error))
                     }
-                    
+
                     // The data came back nil
                     guard let data = data else {
                         print("$Error: data is nil.")
                         completion(.failure(EAServiceError.failedToUnwrapData))
                         return
                     }
-                    
+
                     // There was an invalid response code.
                     guard let httpResponse = response as? HTTPURLResponse else {
                         print("$Error: couldn't read response as HTTPURLResponse.")
                         completion(.failure(EAServiceError.failedToUnwrapResponse))
                         return
                     }
-                    
+
                     if !(200...299).contains(httpResponse.statusCode) {
                         if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
                             print("Data: \(JSONString)")
                         }
-                        
+
                         print("$Error: invalid response code: \(httpResponse.statusCode).")
                         completion(.failure(EAServiceError.invalidResponseCode))
                         return
                     }
-                    
+
                     // Try to decode the data
                     do {
                         let decoder = JSONDecoder()
@@ -108,7 +108,7 @@ final class EARestAPIService: Debuggable {
                 }
             }
         )
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             task.resume()
         }

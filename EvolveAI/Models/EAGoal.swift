@@ -55,7 +55,7 @@ class EAGoal: Object {
 
     /// The model used to generate this goal
     @Persisted var languageModel: String?
-    
+
 //    var numLoadingDayGuides = 0 {
 //        didSet {
 //            if numLoadingDayGuides < 0 {
@@ -129,8 +129,8 @@ class EAGoal: Object {
 
         self.id = UUID().uuidString
     }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     func appendDayGuides(_ dayGuides: [EAGoalDayGuide]) {
         guard let goalsService = self.goalsService else {
             print("$Error: tried to append day guides to goal but goalsService was nil")
@@ -138,7 +138,7 @@ class EAGoal: Object {
         }
         goalsService.appendDayGuides(goal: self, dayGuides: dayGuides)
     }
-    
+
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
     func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
@@ -147,7 +147,7 @@ class EAGoal: Object {
             print("$Error: goalsService is nil ")
             return
         }
-        
+
         goalsService.writeToRealm {
             self.messages.append(message)
         }

@@ -31,8 +31,8 @@ protocol EAGoalDayGuideViewModelOutput {
 
     /// The color for the goal
     var labelColor: UIColor { get }
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     var description: String { get }
 }
 
@@ -74,9 +74,9 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
             DefaultEAGoalTaskViewModel(task: $0, tintColor: self.labelColor, goalsService: self.goalsService)
         })
     }
-    
+
     let labelColor: UIColor
-    
+
     var description: String {
         return "\(dayGuide)"
     }

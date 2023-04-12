@@ -155,7 +155,7 @@ extension UIScrollView {
 }
 
 extension UIView {
-    //TODO: Docstrings
+    // TODO: Docstrings
     func removeAllSubviews() {
         self.subviews.forEach({ $0.removeFromSuperview() })
     }

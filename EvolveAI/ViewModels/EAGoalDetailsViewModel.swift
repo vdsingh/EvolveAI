@@ -50,8 +50,8 @@ protocol EAGoalDetailsViewModelOutput {
 
     // TODO: Docstring
     var messageHistoryString: String? { get }
-    
-    //TODO: docstring
+
+    // TODO: docstring
     var dayGuidesAreLoading: RequiredObservable<Bool> { get }
 }
 
@@ -71,7 +71,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var title: String {
         return self.goal.goal
     }
-    
+
     var numDaysString: String {
         // If only 1 day use "day". If more, use "days".
         return "within " + (self.goal.numDays == 1 ? "\(self.goal.numDays) Day" : "\(self.goal.numDays) Days") + ":"
@@ -87,11 +87,11 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var tagStrings: [String] {
         return self.goal.tags.map({$0})
     }
-    
+
     var color: UIColor {
         return self.goal.color
     }
-    
+
     var darkColor: UIColor {
         return self.color.darker() ?? .link
     }
@@ -113,7 +113,7 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
     var messageHistoryString: String? {
         return self.goal.constructMessageHistoryString()
     }
-    
+
     var dayGuidesAreLoading: RequiredObservable<Bool>
 
     /// Goal initializer
@@ -127,12 +127,12 @@ final class DefaultEAGoalDetailsViewModel: EAGoalDetailsViewModel {
             if goal.isInvalidated {
                 return
             }
-            
+
             if !map.keys.contains(goal.id) {
                 self?.dayGuidesAreLoading.value = false
                 return
             }
-            
+
             self?.dayGuidesAreLoading.value = map[goal.id] ?? 0 > 0
         })
     }

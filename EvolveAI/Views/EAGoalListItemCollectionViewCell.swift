@@ -7,7 +7,7 @@
 
 import UIKit
 
-//TODO: Clean up remove spinner
+// TODO: Clean up remove spinner
 
 /// A UICollectionViewCell to hold EAGoal information
 class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
@@ -31,8 +31,8 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     /// Callback to refresh the CollectionView containing this cell
     private var refreshCollectionViewCallback: (() -> Void)?
-    
-    //TODO: Docstring
+
+    // TODO: Docstring
     private var viewModel: EAGoalListItemViewModel?
 
     // MARK: - Private Functions
@@ -133,29 +133,27 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
             self.establishConstraints(mainStack: constructMainStack())
         }
     }
-    
-
 
     // MARK: - Public Functions
-    
+
     // TODO: Docstring
     func refreshView() {
         guard let viewModel = self.viewModel else {
             print("$Error (EAGoalListItemCollectionViewCell): Tried to refresh view but viewModel was nil.")
             return
         }
-        
+
         printDebug("Refreshing Collection View Cell for \(String(describing: self.viewModel?.title))")
         self.contentView.removeAllSubviews()
-        
+
         self.contentView.backgroundColor = viewModel.color
         self.contentView.layer.cornerRadius = EAIncrement.two.rawValue
-        
+
         self.layer.shadowColor = viewModel.darkColor.cgColor
         self.layer.shadowOpacity = 0.5
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         self.layer.shadowRadius = 10
-        
+
         let mainStack = self.constructMainStack()
         self.contentView.addSubview(mainStack)
         self.establishConstraints(mainStack: mainStack)
@@ -177,12 +175,9 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
     func configure(with viewModel: EAGoalListItemViewModel, refreshCollectionViewCallback: (() -> Void)? = nil) {
         self.viewModel = viewModel
-        
-
 
 //        self.contentView.subviews.forEach({ $0.removeFromSuperview() })
 //        self.contentView.removeAllSubviews()
-        
 
         printDebug("configuring ListItem with viewModel \(viewModel). Task ViewModel: \(String(describing: viewModel.nextTaskViewModel))")
 
@@ -192,7 +187,7 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 
         // Set the refresh collection view callback
         self.refreshCollectionViewCallback = refreshCollectionViewCallback
-        
+
         self.refreshView()
 
         // Spinner Code
@@ -206,7 +201,6 @@ class EAGoalListItemCollectionViewCell: UICollectionViewCell, Debuggable {
 //        let mainStack = constructMainStack()
 //        self.mainStack = mainStack
 //        self.contentView.addSubview(mainStack)
-
 
         // Establish the constraints of the Cell
 //        self.establishConstraints(mainStack: mainStack)
