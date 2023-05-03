@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 /// Custom Button for this application
-class EAButton: UIButton, EAUIElementViewStaticHeight {
+class EAButton: UIButton, EAUIElementViewStaticHeight, Debuggable {
+
+    let debug = false
 
     /// This button can be a FormElement and it must have a required height
     var requiredHeight = EAIncrement.five.rawValue
@@ -28,6 +30,7 @@ class EAButton: UIButton, EAUIElementViewStaticHeight {
     }
 
     @objc private func pressed() {
+        printDebug("Button was pressed.")
         self.buttonPressedCallback(self)
     }
 
@@ -52,6 +55,12 @@ class EAButton: UIButton, EAUIElementViewStaticHeight {
     public func setEnabled(enabled: Bool) {
         self.isEnabled = enabled
         self.backgroundColor = enabled ? .orange : .systemGray
+    }
+
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 
     required init?(coder: NSCoder) {

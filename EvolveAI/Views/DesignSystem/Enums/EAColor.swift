@@ -16,17 +16,26 @@ enum EAColor: String {
     case pastelGreen = "#baffc9"
     case pastelBlue = "#bae1ff"
 
-    case background = "#C9B6E4"
-    case label = "LABEL"
+    case background = "#0B89FC"
 
-    case success = "#02b529"
+    case label = "#FFFFFF"
+    case secondaryLabel = "SECONDARY LABEL"
+
+    case accent = "#FF8600"
+
+    case disabled = "#B4B4B4"
+
+    case success = "#00FF31"
     case failure = "#db001a"
+    case action = "#ffffff"
 
     /// Returns the UIColor
     var uiColor: UIColor {
+//        return UIColor(hex: self.rawValue) ?? .black
+
         switch self {
-        case .label:
-            return EAColor.background.darken()
+        case .secondaryLabel:
+            return EAColor.label.darken(by: 10)
 
         default:
             return UIColor(hex: self.rawValue) ?? .black

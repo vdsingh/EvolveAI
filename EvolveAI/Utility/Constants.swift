@@ -17,12 +17,15 @@ struct Constants {
     /// The maximum number of goals a user can have
     static let maxGoalsAllowed = 5
 
-    /// How we separate the AI response into individual tasks
-    static let taskSeparatorCharacter = "&%"
-
     /// The maximum number of days the goal can be
     static let maxDays = 30
 
     /// Color to use for default theme
     static let defaultColor = UIColor.purple
+
+    /// The default model to be used to generate goals
+    static let defaultModel = EAGoalCreationModel.EAOpenAICompletionsModel(model: .davinci003)
+
+    /// The default endpoint to be used to generate goals
+    static let defaultEndpoint = EAGoalCreationEndpoint.EAOpenAIEndpoint(endpoint: .completions)
 }

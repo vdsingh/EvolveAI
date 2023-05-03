@@ -54,7 +54,7 @@ final class EALabel: UILabel, EAUIElementView, Debuggable {
         self.textColor = textColor
         self.numberOfLines = numLines
 
-        if debug {
+        if self.debug {
             self.backgroundColor = .gray
         }
     }

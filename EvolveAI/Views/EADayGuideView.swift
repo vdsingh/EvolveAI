@@ -33,7 +33,7 @@ class EADayGuideView: UIStackView, EAUIElementView {
     init(with viewModel: EAGoalDayGuideViewModel) {
         super.init(frame: .zero)
         self.axis = .vertical
-        self.spacing = EAIncrement.one.rawValue
+        self.spacing = EAIncrement.half.rawValue
         self.daysLabel.text = viewModel.dayNumbersAndDatesText
         self.daysLabel.textColor = viewModel.labelColor
 
@@ -62,6 +62,13 @@ class EADayGuideView: UIStackView, EAUIElementView {
             let taskView = EAGoalTaskView(viewModel: taskViewModel, taskCompletionChangedCallback: nil)
             self.tasksStackView.addArrangedSubview(taskView)
         }
+    }
+
+    // MARK: - Public Functions
+
+    /// Sets the color of the Title text
+    func setTitleColor(_ color: UIColor) {
+        self.daysLabel.textColor = color
     }
 
     required init(coder: NSCoder) {

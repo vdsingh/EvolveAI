@@ -125,8 +125,8 @@ final class EAColorSelector: UIStackView, EAUIElementView {
             colorView.layer.borderWidth = 0
         }
 
-        view.layer.borderWidth = 2
-        view.layer.borderColor = EAColor.label.uiColor.cgColor
+        view.layer.borderWidth = 3
+        view.layer.borderColor = EAColor.success.uiColor.cgColor
         self.colorWasSelected(backgroundColor)
     }
 

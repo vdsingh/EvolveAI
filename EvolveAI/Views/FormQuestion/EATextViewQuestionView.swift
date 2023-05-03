@@ -26,7 +26,7 @@ final class EATextViewQuestionView: EAStackView {
 
     /// TextView where user enters response
     let textView: EATextView = {
-        let textView = EATextView(borderColor: .systemGray)
+        let textView = EATextView(borderColor: .secondaryLabel)
         return textView
     }()
 

@@ -13,9 +13,31 @@ extension String {
     /// Returns the number of tokens
     /// - Parameter charSet: The CharacterSet describing how to separate tokens
     /// - Returns: The number of tokens as an Int
-    public func numTokens(separatedBy charSet: CharacterSet) -> Int {
+    func numTokens(separatedBy charSet: CharacterSet) -> Int {
         let components = self.components(separatedBy: charSet)
         return components.count
+    }
+
+    /// Constructs a String where non-filler words such as "the" and "to" are capitalized
+    /// - Returns: a String where non-filler words such as "the" and "to" are capitalized
+    func capitalizeNonFillerWords() -> String {
+        let excludedWords = [
+            "the",
+            "to"
+        ]
+        var newStr: String = ""
+        let stringArray: [String] = self.components(separatedBy: " ")
+        for str in stringArray {
+            if excludedWords.contains(str) {
+                newStr.append("\(str) ")
+            } else {
+                newStr.append("\(str.capitalized) ")
+            }
+        }
+
+        // Removes the last space
+        newStr.removeLast()
+        return newStr
     }
 }
 
@@ -90,5 +112,51 @@ extension UIColor {
         } else {
             return nil
         }
+    }
+}
+
+extension Date {
+    func occursOnSameDate(as date: Date) -> Bool {
+        let paramDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        let selfDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: self)
+
+        return paramDateComponents.year == selfDateComponents.year &&
+        paramDateComponents.month == selfDateComponents.month &&
+        paramDateComponents.day == selfDateComponents.day
+    }
+}
+
+extension UIScrollView {
+
+    // Scroll to a specific view so that it's top is at the top our scrollview
+    func scrollToView(view: UIView, animated: Bool, additionalOffset: CGFloat) {
+        if let origin = view.superview {
+            // Get the Y position of your child view
+            let childStartPoint = origin.convert(view.frame.origin, to: self)
+            // Scroll to a rectangle starting at the Y of your subview, with a height of the scrollview
+            self.scrollRectToVisible(CGRect(x: 0, y: childStartPoint.y, width: 1, height: self.frame.height - additionalOffset), animated: animated)
+        }
+    }
+
+    // Bonus: Scroll to top
+    func scrollToTop(animated: Bool) {
+        let topOffset = CGPoint(x: 0, y: -contentInset.top)
+        setContentOffset(topOffset, animated: animated)
+    }
+
+    // Bonus: Scroll to bottom
+    func scrollToBottom() {
+        print("SCROLLING TO BOTTOM: contentSize height: \(contentSize.height). Bounds height: \(bounds.size.height). ContentInset bottom: \(contentInset.bottom)")
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height + contentInset.bottom)
+        if bottomOffset.y > 0 {
+            setContentOffset(bottomOffset, animated: true)
+        }
+    }
+}
+
+extension UIView {
+    // TODO: Docstrings
+    func removeAllSubviews() {
+        self.subviews.forEach({ $0.removeFromSuperview() })
     }
 }

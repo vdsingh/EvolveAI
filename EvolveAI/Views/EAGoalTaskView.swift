@@ -10,7 +10,7 @@ import UIKit
 
 /// View that displays an individual task for a goal
 class EAGoalTaskView: UIStackView, EAUIElementView {
-    let debug: Bool = false
+    let debug = false
 
     var requiredHeight: CGFloat {
         self.intrinsicContentSize.height

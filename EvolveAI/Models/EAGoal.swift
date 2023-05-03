@@ -12,9 +12,6 @@ import UIKit
 /// Represents user goals
 class EAGoal: Object {
 
-    /// Date when the goal was created
-    @Persisted var creationDate: Date
-
     /// A list of tags associated with this goal
     @Persisted private var tagsList: List<String>
 
@@ -30,9 +27,6 @@ class EAGoal: Object {
     /// The user specified additional details for the goal
     @Persisted var additionalDetails: String
 
-    /// The AI's response in normal String form
-    @Persisted var aiResponse: String
-
     /// The Hex value for this goal's color (color should be accessed through `color` computed variable)
     @Persisted private var colorHex: String
 
@@ -41,6 +35,39 @@ class EAGoal: Object {
 
     /// When the user wants to start the goal
     @Persisted var startDate: Date
+
+    /// The message history for this goal (if a ChatCompletions endpoint was used)
+    @Persisted var messages: List<EAOpenAIChatCompletionMessage>
+
+    // MARK: - Goal Creation Info
+
+    /// Date when the goal was created
+    @Persisted var creationDate: Date
+
+    /// Date when we received the AI Response
+    @Persisted var aiResponseDate: Date?
+
+    /// The AI's response in normal String form
+//    @Persisted var aiResponse: String?
+
+    /// The endpoint used to generate this goal
+    @Persisted var openAIEndpoint: String?
+
+    /// The model used to generate this goal
+    @Persisted var languageModel: String?
+
+//    var numLoadingDayGuides = 0 {
+//        didSet {
+//            if numLoadingDayGuides < 0 {
+//                print("$Error (EAGoal): the number of loading day guides is negative: \(numLoadingDayGuides)")
+//            }
+//            self.dayGuidesAreLoading.value = numLoadingDayGuides > 0
+//            print("$Log (EAGoal): number of loading day guides changed to \(numLoadingDayGuides). Day Guides are Loading: \(String(describing: self.dayGuidesAreLoading.value))")
+//        }
+//    }
+//    
+    /// The number of day guides that are currently loading
+//    lazy var dayGuidesAreLoading: Observable<Bool> = Observable(self.numLoadingDayGuides > 0, label: "EAGoal \(self.goal) Day Guides: Loading")
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -61,45 +88,26 @@ class EAGoal: Object {
     /// The EAGoalDayGuide for today (if there is one)
     public var todaysDayGuide: EAGoalDayGuide? {
         return self.dayGuides.first(where: { dayGuide in
-            let dayGuideDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: dayGuide.dayGuideDate)
-            let todayDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-
-            return dayGuideDateComponents.year == todayDateComponents.year &&
-            dayGuideDateComponents.month == todayDateComponents.month &&
-            dayGuideDateComponents.day == todayDateComponents.day
+            return Date().occursOnSameDate(as: dayGuide.dayGuideDate)
         })
     }
 
-    /// Super initializer
-    private convenience init(
-        creationDate: Date,
-        startDate: Date,
-        id: String,
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor
-    ) {
-        self.init()
-        self.creationDate = creationDate
-        self.startDate = startDate
-        self.id = id
-        self.tags = tags
-        self.goal = goal
-        self.numDays = numDays
-        self.additionalDetails = additionalDetails
-        self.color = color
-    }
+    private var goalsService: EAGoalsService?
+
+    // TODO: Fix docstrings (values changed)
 
     /// Initializer for EAGoal
     /// - Parameters:
     ///   - creationDate: The creation date of the goal
     ///   - startDate: The start date of the goal
+    ///   - id: The unique identifier for this goal
     ///   - goal: The goal itself (ex: "learn the violin")
     ///   - numDays: The number of days to accomplish the goal (ex: 30)
     ///   - additionalDetails: The user specified additional details for the goal
     ///   - color: The color associated with the goal
-    ///   - apiResponse: The OpenAI Completions Response
+    ///   - aiResponse: The response from the AI
+    ///   - modelUsed: The model used to generate this goal
+    ///   - endpointUsed: The endpoint used to generate this goal
     convenience init(
         creationDate: Date,
         startDate: Date,
@@ -107,151 +115,56 @@ class EAGoal: Object {
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        apiResponse: EAOpenAICompletionsResponse
+        goalsService: EAGoalsService
     ) {
-        self.init(creationDate: creationDate, startDate: startDate, id: apiResponse.id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
-        self.aiResponse = apiResponse.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
-        self.dayGuides = parsedResponse.dayGuides
-        self.tags = parsedResponse.tags
+        self.init()
+        self.creationDate = creationDate
+        self.startDate = startDate
+        self.goal = goal
+        self.numDays = numDays
+        self.additionalDetails = additionalDetails
+        self.color = color
+        self.messages = List<EAOpenAIChatCompletionMessage>()
+        self.goalsService = goalsService
+
+        self.id = UUID().uuidString
     }
 
-    /// Initiailzer for EAGoal
-    /// - Parameters:
-    ///   - creationDate: The creation date of the goal
-    ///   - startDate: The start date of the goal
-    ///   - id: Unique identifier for the goal
-    ///   - goal: The goal itself (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal (ex: 30)
-    ///   - additionalDetails: The user specified additional details for the goal
-    ///   - color: The color associated with the goal
-    ///   - aiResponse: The AI Response
-    convenience init(
-        creationDate: Date,
-        startDate: Date,
-        id: String,
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor,
-        aiResponse: String
-    ) {
-        self.init(creationDate: creationDate, startDate: startDate, id: id, goal: goal, numDays: numDays, additionalDetails: additionalDetails, color: color)
-        self.aiResponse = aiResponse.trimmingCharacters(in: .whitespacesAndNewlines)
-        let parsedResponse = EAGoal.parseAIResponse(from: aiResponse, startDate: startDate)
-        self.dayGuides = parsedResponse.dayGuides
-        self.tags = parsedResponse.tags
+    // TODO: Docstring
+    func appendDayGuides(_ dayGuides: [EAGoalDayGuide]) {
+        guard let goalsService = self.goalsService else {
+            print("$Error: tried to append day guides to goal but goalsService was nil")
+            return
+        }
+        goalsService.appendDayGuides(goal: self, dayGuides: dayGuides)
     }
 
-    /// Possible errors that can arise from parsing AI response to create task
-    private enum CreateTaskError: Error {
-        case invalidNumberOfComponents
-        case failedToParseDays
-        case failedToParseDay
-    }
-
-    /// Creates a list of task objects from a given AI Response
-    /// - Parameter aiResponse: the response from the AI
-    /// - Parameter startDate: the start date of the goal
-    /// - Returns: a list of task objects
-    private static func parseAIResponse(from aiResponse: String, startDate: Date) -> (dayGuides: List<EAGoalDayGuide>, tags: [String]) {
-        let lines = aiResponse.split(separator: "\n").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty})
-        printDebug("Lines: \(lines)")
-        let dayGuides = List<EAGoalDayGuide>()
-        var tags: [String] = []
-        // One line represents one EAGoalDayGuide Object
-
-        for line in lines {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).first == "[" {
-                tags = line
-                    .components(separatedBy: CharacterSet(charactersIn: ","))
-                    .compactMap({$0.trimmingCharacters(in: CharacterSet(charactersIn: "[ ]"))})
-                printDebug("Tags: \(tags)")
-                continue
-            }
-
-            // Separate the line by ":" which separates the Day Number info from the other info
-            guard let colonIndex = line.firstIndex(of: ":") else {
-                print("$Error: no colon found when constructing EAGoalDayGuide. Line: \(line)")
-                continue
-            }
-
-            let components = [
-                String(line[..<colonIndex]),
-                String(line[colonIndex...]).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
-            ]
-            printDebug("Components are \(components)")
-
-            // Separate the tasks into
-            let taskStrings = components[1]
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .components(separatedBy: Constants.taskSeparatorCharacter)
-                .map({ return $0.trimmingCharacters(in: CharacterSet(charactersIn: " \n.")) })
-                .filter({!$0.isEmpty})
-            printDebug("Tasks are \(taskStrings)")
-
-            let taskList = List<EAGoalTask>()
-            for string in taskStrings {
-                let task = EAGoalTask(taskString: string, complete: false)
-                taskList.append(task)
-            }
-
-            // Trim whitespaces and then "Day " to just get the number(s)
-            let dayRangeString = components[0]
-                .trimmingCharacters(in: .whitespaces)
-                .trimmingCharacters(in: CharacterSet(charactersIn: "Day "))
-            // If the string contains a dash, it is a range (Ex: 1-3 vs 1)
-            if dayRangeString.contains("-") {
-                // Split on the "-" to get the days
-                let days = dayRangeString.split(separator: "-")
-                // Parse the day numbers to integers
-                if let firstDay = Int(days[0]), let lastDay = Int(days[1]) {
-                    let dayList = List<Int>()
-                    dayList.append(objectsIn: [firstDay, lastDay])
-                    printDebug("Multiple Days are \(dayList)")
-                    let dayGuide = EAGoalDayGuide(
-                        isMultipleDays: true,
-                        days: dayList,
-                        tasks: taskList,
-                        goalStartDate: startDate
-                    )
-                    dayGuides.append(dayGuide)
-                } else {
-                    print("$Error: \(String(describing: CreateTaskError.failedToParseDays))")
-                }
-            } else {
-                if let day = Int(dayRangeString) {
-                    let dayList = List<Int>()
-                    dayList.append(objectsIn: [day])
-                    printDebug("Day is \(dayList)")
-                    let dayGuide = EAGoalDayGuide(
-                        isMultipleDays: false,
-                        days: dayList,
-                        tasks: taskList,
-                        goalStartDate: startDate
-                    )
-                    dayGuides.append(dayGuide)
-                } else {
-                    print("$Error: \(String(describing: CreateTaskError.failedToParseDay))")
-                }
-            }
+    /// Adds a message to this goal's message history
+    /// - Parameter message: The message to add to the message history
+    func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
+        print("$Log: adding message \(message.content)")
+        guard let goalsService = self.goalsService else {
+            print("$Error: goalsService is nil ")
+            return
         }
 
-        return (dayGuides, tags)
+        goalsService.writeToRealm {
+            self.messages.append(message)
+        }
     }
 
-    /// Prints messages depending on whether the required flag is enabled
-    /// - Parameter message: The message to print
-    static func printDebug(_ message: String) {
-        if Flags.printTaskMessages {
-            print("$Log: \(message)")
+    func constructMessageHistoryString() -> String {
+        var messageHistoryString = ""
+        for message in self.messages {
+            messageHistoryString += message.role + ": " + message.content + "\n"
         }
+        return messageHistoryString
     }
 
     /// Gets a simplified String description of this goal
     /// - Returns: A String describing this goal
-    public func getSimplifiedDescription() -> String {
-        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
+    func getSimplifiedDescription() -> String {
+        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). Message History=\(self.messages) }"
     }
 
     override static func primaryKey() -> String? {

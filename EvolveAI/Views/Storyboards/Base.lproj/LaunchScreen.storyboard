@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,27 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="Logo-Purple" translatesAutoresizingMaskIntoConstraints="NO" id="Mjv-5m-Vre">
-                                <rect key="frame" x="-315.66666666666669" y="326" width="1024.3333333333333" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="97T-eb-3ri"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="pv0-8G-Mj2">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EvolveAI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iUG-NS-rtu">
-                                <rect key="frame" x="130.66666666666669" y="495.99999999999994" width="131.66666666666669" height="38.333333333333314"/>
-                                <color key="tintColor" red="0.5176470876" green="0.32941177490000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="32"/>
-                                <color key="textColor" red="0.5176470876" green="0.32941177490000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Mjv-5m-Vre" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="0t3-Ke-rRa"/>
-                            <constraint firstItem="iUG-NS-rtu" firstAttribute="top" secondItem="Mjv-5m-Vre" secondAttribute="bottom" constant="-30" id="I92-IY-kPr"/>
-                            <constraint firstItem="iUG-NS-rtu" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jmT-yk-QRa"/>
-                            <constraint firstItem="Mjv-5m-Vre" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="xAM-sp-PPi"/>
+                            <constraint firstAttribute="bottom" secondItem="pv0-8G-Mj2" secondAttribute="bottom" id="4tJ-s1-euw"/>
+                            <constraint firstItem="pv0-8G-Mj2" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="6Wb-6g-mip"/>
+                            <constraint firstAttribute="trailing" secondItem="pv0-8G-Mj2" secondAttribute="trailing" id="FYf-yC-Z0y"/>
+                            <constraint firstItem="pv0-8G-Mj2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zKd-On-ouM"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,7 +37,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo-Purple" width="1024" height="1024"/>
+        <image name="launch" width="1284" height="2778"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

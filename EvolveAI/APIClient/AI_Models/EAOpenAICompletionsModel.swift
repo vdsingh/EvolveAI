@@ -8,7 +8,7 @@
 import Foundation
 
 /// The possible models to be used for the OpenAI completions endpoint
-enum EAOpenAICompletionsModel: String, Codable {
+enum EAOpenAICompletionsModel: String, Codable, EAGoalCreationModelProtocol {
 
     /// The davinci 003 model is the most sophisticated model
     case davinci003 = "text-davinci-003"
@@ -19,12 +19,11 @@ enum EAOpenAICompletionsModel: String, Codable {
     /// Capable of straightforward tasks, very fast, and lower cost.
     case babbage001 = "text-babbage-001"
 
-    /// Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.
+    /// Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost
     case ada001 = "text-ada-001"
 
     /// Gets the max number of tokens that a model can respond with
-    /// - Returns: The number of tokens than a model can respond with
-    public func getTokenLimit() -> Int {
+    var tokenLimit: Int {
         switch self {
         case .davinci003:
             return 4000

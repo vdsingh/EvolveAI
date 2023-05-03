@@ -10,7 +10,22 @@ import UIKit
 import RealmSwift
 
 /// View to display an individual goal and all of its information
-class EAGoalDetailsView: UIView {
+class EAGoalDetailsView: UIView, Debuggable {
+
+    let debug = false
+
+    // TODO: Docstring
+    let viewModel: EAGoalDetailsViewModel
+
+    /// The DayGuideView that is relevant for today
+    var todaysDayGuideView: EADayGuideView?
+
+    // TODO: Docstring
+    var dayGuideViewIsLoading: Bool = false {
+        didSet {
+            self.guideContentView
+        }
+    }
 
     /// ScrollView that allows users to scroll up and down through the View
     let guideScrollView: UIScrollView = {
@@ -33,9 +48,35 @@ class EAGoalDetailsView: UIView {
         return guideContentView
     }()
 
+//    if let dayGuideViewStack = EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView {
+//        self.dayGuideViewStack = dayGuideViewStack
+//        dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
+//            let dayGuideView = EADayGuideView(with: $0)
+//            if $0.associatedDate.occursOnSameDate(as: Date()) {
+//                self.todaysDayGuideView = dayGuideView
+//                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+//            }
+//
+//            return dayGuideView
+//        }))
+
+    // TODO: Docstring
+    var dayGuideViewStack: EAStackView = {
+//        let stack = EAUIElement.stack()EAUIElement.stack(axis: .vertical, spacing: .two).createView() as? EAStackView
+        let stack = EAStackView(axis: .vertical, spacing: .two, subViews: [])
+        return stack
+    }()
+
+    // TODO: Docstring
+    lazy var spinner: EASpinner = {
+        let spinner = EASpinner(color: self.viewModel.darkColor, backgroundColor: .clear)
+        return spinner
+    }()
+
     /// Initializer to instantiate this View with a ViewModel
     /// - Parameter viewModel: The ViewModel to use for the View's data
     init(viewModel: EAGoalDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         self.backgroundColor = viewModel.color
         self.addSubviewsAndEstablishConstraints(
@@ -43,6 +84,15 @@ class EAGoalDetailsView: UIView {
             dayGuideViewModels: viewModel.dayGuideViewModels,
             separatorColor: viewModel.darkColor
         )
+    }
+
+    func setLoading(_ isLoading: Bool) {
+        printDebug("Set the loading status of EAGoalDetailsView to \(isLoading)")
+        if isLoading {
+            self.spinner.startAnimating()
+        } else {
+            self.spinner.stopAnimating()
+        }
     }
 
     // MARK: - Private Functions
@@ -54,6 +104,9 @@ class EAGoalDetailsView: UIView {
         dayGuideViewModels: [EAGoalDayGuideViewModel],
         separatorColor: UIColor
     ) {
+//        self.subviews.forEach({ $0.removeFromSuperview() })
+//        self.guideScrollView.subviews.forEach({ $0.removeFromSuperview() })
+
         self.addSubview(guideScrollView)
         self.guideScrollView.addSubview(self.guideContentView)
         self.guideContentView.addElements([
@@ -74,9 +127,25 @@ class EAGoalDetailsView: UIView {
             .separator(color: separatorColor)
         ])
 
-        self.guideContentView.addSubviews(dayGuideViewModels.compactMap({
-            EADayGuideView(with: $0)
-        }))
+        if Flags.developerMode {
+            self.guideContentView.addElements([
+                .label(text: "Developer Information", textStyle: .heading1, textColor: viewModel.darkColor),
+                .label(text: "Model Used: \(viewModel.modelUsedText)", textColor: viewModel.darkColor),
+                .label(text: "Message History: \n\"\(viewModel.messageHistoryString ?? "")\"", textColor: viewModel.darkColor),
+                .button(buttonText: "Print Day Guides to Console", enabledOnStart: true, buttonPressed: { _ in
+                    print("Printing Day Guides to Console. Count: \(dayGuideViewModels.count)")
+                    for dayGuideViewModel in dayGuideViewModels {
+                        print("\t: \(dayGuideViewModel.description)")
+                    }
+                }),
+                .separator(color: separatorColor)
+            ])
+        }
+        // Add the day guides to the day guides stack
+        self.populateDayGuideStackView(dayGuideViewModels: viewModel.dayGuideViewModels)
+
+        // Add the day guides stack to the content view
+        self.guideContentView.addSubview(self.dayGuideViewStack)
 
         if !viewModel.additionalDetails.isEmpty {
             self.guideContentView.addElements([
@@ -85,7 +154,9 @@ class EAGoalDetailsView: UIView {
             ])
         }
 
-        self.guideContentView.addArrangedSubview(EASeparator(color: separatorColor))
+//        self.spinner.spinner.color = viewModel.darkColor
+        self.guideContentView.addSubview(self.spinner)
+        self.guideContentView.addElement(.separator(color: separatorColor))
 
         NSLayoutConstraint.activate([
             self.guideScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -101,7 +172,48 @@ class EAGoalDetailsView: UIView {
         ])
     }
 
+    private func populateDayGuideStackView(dayGuideViewModels: [EAGoalDayGuideViewModel]) {
+        self.dayGuideViewStack.removeAllSubviews()
+        self.dayGuideViewStack.addSubviews(dayGuideViewModels.compactMap({
+            let dayGuideView = EADayGuideView(with: $0)
+            if $0.associatedDate.occursOnSameDate(as: Date()) {
+                self.todaysDayGuideView = dayGuideView
+                dayGuideView.setTitleColor(EAColor.success.darken(by: 20))
+            }
+
+            return dayGuideView
+        }))
+    }
+
+    /// Scrolls to the DayGuideView for today
+    func scrollToTodaysDayGuideView() {
+
+        // Scroll to todays day guide if there is one
+        if let todaysDayGuideView = self.todaysDayGuideView {
+            printDebug("Scrolling to todays day guide view")
+            let additionalOffset = UIScreen.main.bounds.height / 3
+            self.guideScrollView.scrollToView(view: todaysDayGuideView, animated: true, additionalOffset: additionalOffset)
+        } else {
+            printDebug("Not scrolling to todays day guide view")
+        }
+    }
+
+    // TODO: Docstring
+    func refreshView(isLoading: Bool) {
+        self.setLoading(isLoading)
+        self.populateDayGuideStackView(dayGuideViewModels: self.viewModel.dayGuideViewModels)
+        self.scrollToTodaysDayGuideView()
+    }
+
     required init?(coder: NSCoder) {
         return nil
+    }
+}
+
+extension EAGoalDetailsView {
+    func printDebug(_ message: String) {
+        if self.debug {
+            print("$Log: \(message)")
+        }
     }
 }

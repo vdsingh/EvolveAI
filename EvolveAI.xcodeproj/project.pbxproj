@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B903ED4429BA63CB008E323D /* EAMockingEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903ED4329BA63CB008E323D /* EAMockingEndpoint.swift */; };
+		B903ED4629BA63F5008E323D /* EAMockingGoalCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903ED4529BA63F5008E323D /* EAMockingGoalCreationModel.swift */; };
+		B903ED4829BA6413008E323D /* EAGoalCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B903ED4729BA6413008E323D /* EAGoalCreationModel.swift */; };
 		B90847DB2971277C00758477 /* EASpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DA2971277C00758477 /* EASpinner.swift */; };
 		B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847DE2972586A00758477 /* EADayGuideView.swift */; };
 		B90847E1297258EB00758477 /* EAGoalDayGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E0297258EB00758477 /* EAGoalDayGuideViewModel.swift */; };
@@ -15,14 +18,20 @@
 		B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */; };
 		B90847EA297665A200758477 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E9297665A200758477 /* Extensions.swift */; };
 		B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847EB2979012D00758477 /* EAColorSelector.swift */; };
-		B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144A29905AF80093EB0C /* EALoadingGoal.swift */; };
 		B90D144D299071840093EB0C /* Debuggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144C299071840093EB0C /* Debuggable.swift */; };
 		B91EE2E1297B207B003FF560 /* EvolveAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2E0297B207B003FF560 /* EvolveAITests.swift */; };
 		B91EE2EE297B2127003FF560 /* EvolveAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */; };
 		B91EE2F0297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */; };
 		B91EE2F7297B21EB003FF560 /* EAGoalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */; };
 		B91EE2FA297B2AD9003FF560 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */; };
+		B927302729BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B927302629BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift */; };
+		B927302929BA7A3900FA0E2D /* EAOpenAIResponseUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B927302829BA7A3900FA0E2D /* EAOpenAIResponseUsage.swift */; };
+		B927302B29BA7B3B00FA0E2D /* EAOpenAIChatCompletionsMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B927302A29BA7B3B00FA0E2D /* EAOpenAIChatCompletionsMessage.swift */; };
+		B927302D29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = B927302C29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift */; };
+		B927303029BA81FF00FA0E2D /* EAGoalCreationAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B927302F29BA81FF00FA0E2D /* EAGoalCreationAPIResponse.swift */; };
 		B92DF58829A841A300C05029 /* MockGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58729A841A300C05029 /* MockGoals.swift */; };
+		B92DF58A29B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */; };
+		B92DF58C29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */; };
 		B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3D29956FA800316017 /* EATagButton.swift */; };
 		B93E8B40299583B700316017 /* EADateSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B3F299583B700316017 /* EADateSelector.swift */; };
 		B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93E8B4129958C2B00316017 /* EAStackView.swift */; };
@@ -39,10 +48,15 @@
 		B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */; };
 		B9584E81297F3479000368C2 /* EAGoalTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E80297F3479000368C2 /* EAGoalTaskView.swift */; };
 		B9584E83297F4253000368C2 /* EAGoalTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E82297F4253000368C2 /* EAGoalTask.swift */; };
+		B9645FC629DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */; };
+		B9645FC829E11A13001DDF3A /* EALoadingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */; };
+		B9645FCA29E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */; };
+		B9645FCC29E29220001DDF3A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FCB29E29220001DDF3A /* Observable.swift */; };
 		B96DFABB29A497340089CB39 /* EAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96DFABA29A497340089CB39 /* EAColor.swift */; };
 		B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B40299C434700F27BC2 /* EAEmptyView.swift */; };
 		B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4829A1DD2C00F27BC2 /* EAImage.swift */; };
 		B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */; };
+		B9A98C0A29E632BB00D866A9 /* RequiredObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
 		B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */; };
@@ -51,7 +65,7 @@
 		B9C056892962C1DD007B6DBD /* EARestAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056882962C1DD007B6DBD /* EARestAPIService.swift */; };
 		B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */; };
 		B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */; };
-		B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */; };
+		B9C0568F2962C33A007B6DBD /* EAGoalCreationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0568E2962C33A007B6DBD /* EAGoalCreationEndpoint.swift */; };
 		B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056902962C3BE007B6DBD /* EARequestBody.swift */; };
 		B9C056932962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */; };
 		B9C056962962CEAF007B6DBD /* EARequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056952962CEAF007B6DBD /* EARequest.swift */; };
@@ -102,6 +116,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B903ED4329BA63CB008E323D /* EAMockingEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAMockingEndpoint.swift; sourceTree = "<group>"; };
+		B903ED4529BA63F5008E323D /* EAMockingGoalCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAMockingGoalCreationModel.swift; sourceTree = "<group>"; };
+		B903ED4729BA6413008E323D /* EAGoalCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCreationModel.swift; sourceTree = "<group>"; };
 		B90847DA2971277C00758477 /* EASpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EASpinner.swift; sourceTree = "<group>"; };
 		B90847DE2972586A00758477 /* EADayGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADayGuideView.swift; sourceTree = "<group>"; };
 		B90847E0297258EB00758477 /* EAGoalDayGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalDayGuideViewModel.swift; sourceTree = "<group>"; };
@@ -110,7 +127,6 @@
 		B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalListItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		B90847E9297665A200758477 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B90847EB2979012D00758477 /* EAColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColorSelector.swift; sourceTree = "<group>"; };
-		B90D144A29905AF80093EB0C /* EALoadingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALoadingGoal.swift; sourceTree = "<group>"; };
 		B90D144C299071840093EB0C /* Debuggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debuggable.swift; sourceTree = "<group>"; };
 		B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91EE2E0297B207B003FF560 /* EvolveAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAITests.swift; sourceTree = "<group>"; };
@@ -119,7 +135,14 @@
 		B91EE2EF297B2127003FF560 /* EvolveAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B91EE2F6297B21EB003FF560 /* EAGoalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTest.swift; sourceTree = "<group>"; };
 		B91EE2F9297B2AD9003FF560 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B927302629BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsResponse.swift; sourceTree = "<group>"; };
+		B927302829BA7A3900FA0E2D /* EAOpenAIResponseUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIResponseUsage.swift; sourceTree = "<group>"; };
+		B927302A29BA7B3B00FA0E2D /* EAOpenAIChatCompletionsMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsMessage.swift; sourceTree = "<group>"; };
+		B927302C29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionMessageRole.swift; sourceTree = "<group>"; };
+		B927302F29BA81FF00FA0E2D /* EAGoalCreationAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCreationAPIResponse.swift; sourceTree = "<group>"; };
 		B92DF58729A841A300C05029 /* MockGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGoals.swift; sourceTree = "<group>"; };
+		B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsModel.swift; sourceTree = "<group>"; };
+		B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIChatCompletionsRequestBody.swift; sourceTree = "<group>"; };
 		B93E8B3D29956FA800316017 /* EATagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EATagButton.swift; sourceTree = "<group>"; };
 		B93E8B3F299583B700316017 /* EADateSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EADateSelector.swift; sourceTree = "<group>"; };
 		B93E8B4129958C2B00316017 /* EAStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAStackView.swift; sourceTree = "<group>"; };
@@ -136,10 +159,15 @@
 		B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskViewModel.swift; sourceTree = "<group>"; };
 		B9584E80297F3479000368C2 /* EAGoalTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskView.swift; sourceTree = "<group>"; };
 		B9584E82297F4253000368C2 /* EAGoalTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTask.swift; sourceTree = "<group>"; };
+		B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAILanguageModelService.swift; sourceTree = "<group>"; };
+		B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALoadingMessage.swift; sourceTree = "<group>"; };
+		B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALanguageModelGoalPromptCoder.swift; sourceTree = "<group>"; };
+		B9645FCB29E29220001DDF3A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B96DFABA29A497340089CB39 /* EAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColor.swift; sourceTree = "<group>"; };
 		B9810B40299C434700F27BC2 /* EAEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEmptyView.swift; sourceTree = "<group>"; };
 		B9810B4829A1DD2C00F27BC2 /* EAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImage.swift; sourceTree = "<group>"; };
 		B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImageView.swift; sourceTree = "<group>"; };
+		B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredObservable.swift; sourceTree = "<group>"; };
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,7 +178,7 @@
 		B9C056882962C1DD007B6DBD /* EARestAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EARestAPIService.swift; sourceTree = "<group>"; };
 		B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAIRequest.swift; sourceTree = "<group>"; };
 		B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAAPIResponse.swift; sourceTree = "<group>"; };
-		B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEndpoint.swift; sourceTree = "<group>"; };
+		B9C0568E2962C33A007B6DBD /* EAGoalCreationEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalCreationEndpoint.swift; sourceTree = "<group>"; };
 		B9C056902962C3BE007B6DBD /* EARequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EARequestBody.swift; sourceTree = "<group>"; };
 		B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAICompletionsRequestBody.swift; sourceTree = "<group>"; };
 		B9C056952962CEAF007B6DBD /* EARequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EARequest.swift; sourceTree = "<group>"; };
@@ -209,12 +237,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B903ED3E29BA6375008E323D /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056952962CEAF007B6DBD /* EARequest.swift */,
+				B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		B903ED4129BA639B008E323D /* AI_Models */ = {
+			isa = PBXGroup;
+			children = (
+				B9C056972962D28D007B6DBD /* EAOpenAICompletionsModel.swift */,
+				B92DF58929B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift */,
+				B903ED4529BA63F5008E323D /* EAMockingGoalCreationModel.swift */,
+				B903ED4729BA6413008E323D /* EAGoalCreationModel.swift */,
+			);
+			path = AI_Models;
+			sourceTree = "<group>";
+		};
+		B903ED4229BA63B3008E323D /* AI_Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				B9C0568E2962C33A007B6DBD /* EAGoalCreationEndpoint.swift */,
+				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
+				B903ED4329BA63CB008E323D /* EAMockingEndpoint.swift */,
+			);
+			path = AI_Endpoints;
+			sourceTree = "<group>";
+		};
 		B90847E829765EA600758477 /* OpenAI */ = {
 			isa = PBXGroup;
 			children = (
-				B9C0568A2962C24A007B6DBD /* EAOpenAIRequest.swift */,
-				B9C056972962D28D007B6DBD /* EAOpenAICompletionsModel.swift */,
-				B9486DFD296D4DC000A0296E /* EAOpenAIEndpoint.swift */,
 			);
 			path = OpenAI;
 			sourceTree = "<group>";
@@ -237,6 +292,17 @@
 			path = EvolveAIUITests;
 			sourceTree = "<group>";
 		};
+		B927302E29BA7B8D00FA0E2D /* OpenAI */ = {
+			isa = PBXGroup;
+			children = (
+				B9C0569B2962DD96007B6DBD /* Responses */,
+				B9C056942962CE81007B6DBD /* Requests */,
+				B927302A29BA7B3B00FA0E2D /* EAOpenAIChatCompletionsMessage.swift */,
+				B927302C29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift */,
+			);
+			path = OpenAI;
+			sourceTree = "<group>";
+		};
 		B9486DF6296D3FAA00A0296E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,7 +319,6 @@
 				B96DFAB929A2D9980089CB39 /* Enums */,
 				B9810B40299C434700F27BC2 /* EAEmptyView.swift */,
 				B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */,
-				B96DFABA29A497340089CB39 /* EAColor.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -261,6 +326,7 @@
 		B96DFAB929A2D9980089CB39 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				B96DFABA29A497340089CB39 /* EAColor.swift */,
 				B93E8B452995996400316017 /* EATextStyle.swift */,
 				B9810B4829A1DD2C00F27BC2 /* EAImage.swift */,
 			);
@@ -362,7 +428,7 @@
 				B9C0569E2962E045007B6DBD /* EAGoal.swift */,
 				B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */,
 				B9584E82297F4253000368C2 /* EAGoalTask.swift */,
-				B90D144A29905AF80093EB0C /* EALoadingGoal.swift */,
+				B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -378,10 +444,11 @@
 		B9C056872962C1B7007B6DBD /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
+				B903ED4229BA63B3008E323D /* AI_Endpoints */,
+				B903ED4129BA639B008E323D /* AI_Models */,
+				B903ED3E29BA6375008E323D /* Request */,
 				B9C056882962C1DD007B6DBD /* EARestAPIService.swift */,
 				B90847E829765EA600758477 /* OpenAI */,
-				B9C0568E2962C33A007B6DBD /* EAEndpoint.swift */,
-				B9C056952962CEAF007B6DBD /* EARequest.swift */,
 				B9C056992962D4FD007B6DBD /* HTTPMethod.swift */,
 			);
 			path = APIClient;
@@ -392,6 +459,7 @@
 			children = (
 				B9C056902962C3BE007B6DBD /* EARequestBody.swift */,
 				B9C056922962CE64007B6DBD /* EAOpenAICompletionsRequestBody.swift */,
+				B92DF58B29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -401,6 +469,9 @@
 			children = (
 				B9C0568C2962C2DB007B6DBD /* EAAPIResponse.swift */,
 				B9C0569C2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift */,
+				B927302629BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift */,
+				B927302829BA7A3900FA0E2D /* EAOpenAIResponseUsage.swift */,
+				B927302F29BA81FF00FA0E2D /* EAGoalCreationAPIResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -408,7 +479,9 @@
 		B9C056AC2968F9B8007B6DBD /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */,
 				B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */,
+				B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -416,8 +489,7 @@
 		B9C056B229690E10007B6DBD /* APIModels */ = {
 			isa = PBXGroup;
 			children = (
-				B9C0569B2962DD96007B6DBD /* Responses */,
-				B9C056942962CE81007B6DBD /* Requests */,
+				B927302E29BA7B8D00FA0E2D /* OpenAI */,
 			);
 			path = APIModels;
 			sourceTree = "<group>";
@@ -432,6 +504,8 @@
 				B90847E9297665A200758477 /* Extensions.swift */,
 				B90D144C299071840093EB0C /* Debuggable.swift */,
 				B92DF58729A841A300C05029 /* MockGoals.swift */,
+				B9645FCB29E29220001DDF3A /* Observable.swift */,
+				B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -649,18 +723,21 @@
 			files = (
 				B9486DFE296D4DC000A0296E /* EAOpenAIEndpoint.swift in Sources */,
 				B93E8B3E29956FA800316017 /* EATagButton.swift in Sources */,
-				B9C0568F2962C33A007B6DBD /* EAEndpoint.swift in Sources */,
+				B9C0568F2962C33A007B6DBD /* EAGoalCreationEndpoint.swift in Sources */,
 				B90847E32972CB2200758477 /* NavigationUtility.swift in Sources */,
 				B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */,
 				B90847E1297258EB00758477 /* EAGoalDayGuideViewModel.swift in Sources */,
 				B9486DF3296D3C6000A0296E /* EATextViewQuestionViewModel.swift in Sources */,
 				B9C056AB2968F942007B6DBD /* EATextFieldQuestionViewModel.swift in Sources */,
+				B903ED4629BA63F5008E323D /* EAMockingGoalCreationModel.swift in Sources */,
 				B93E8B462995996400316017 /* EATextStyle.swift in Sources */,
 				B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */,
+				B9645FCA29E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
 				B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */,
 				B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */,
 				B9C056D6296BE635007B6DBD /* Constants.swift in Sources */,
+				B903ED4429BA63CB008E323D /* EAMockingEndpoint.swift in Sources */,
 				B9C056E2296D312F007B6DBD /* EATextField.swift in Sources */,
 				B9C056892962C1DD007B6DBD /* EARestAPIService.swift in Sources */,
 				B9C056912962C3BE007B6DBD /* EARequestBody.swift in Sources */,
@@ -670,12 +747,15 @@
 				B9C056DE296CF938007B6DBD /* EACreateGoalQuestionViewModel.swift in Sources */,
 				B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */,
 				B9C056D9296BE7B6007B6DBD /* EATextFieldQuestionView.swift in Sources */,
+				B927303029BA81FF00FA0E2D /* EAGoalCreationAPIResponse.swift in Sources */,
 				B9584E7D297DE06D000368C2 /* EAGoalDetailsViewModel.swift in Sources */,
 				B92DF58829A841A300C05029 /* MockGoals.swift in Sources */,
 				B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */,
-				B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */,
+				B903ED4829BA6413008E323D /* EAGoalCreationModel.swift in Sources */,
+				B927302729BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
 				B9F4D3DA297C951100AE8959 /* EAGoalsListViewModel.swift in Sources */,
+				B927302929BA7A3900FA0E2D /* EAOpenAIResponseUsage.swift in Sources */,
 				B9C056D4296BCCA1007B6DBD /* EAGoalCreationFormViewController.swift in Sources */,
 				B9C056BE296A8B43007B6DBD /* EAGoalListItemViewModel.swift in Sources */,
 				B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */,
@@ -688,13 +768,17 @@
 				B9C056982962D28D007B6DBD /* EAOpenAICompletionsModel.swift in Sources */,
 				B90847DB2971277C00758477 /* EASpinner.swift in Sources */,
 				B96DFABB29A497340089CB39 /* EAColor.swift in Sources */,
+				B927302D29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
+				B9645FCC29E29220001DDF3A /* Observable.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
+				B9645FC629DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
 				B9C056A729682069007B6DBD /* EAUIElement.swift in Sources */,
 				B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */,
 				B90847E52973ADC400758477 /* Flags.swift in Sources */,
+				B9A98C0A29E632BB00D866A9 /* RequiredObservable.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */,
@@ -703,11 +787,15 @@
 				B9F4D3AF297B86B600AE8959 /* EACheckbox.swift in Sources */,
 				B9C056A929682203007B6DBD /* EAGoalDayGuide.swift in Sources */,
 				B93E8B4429958E4E00316017 /* EALabel.swift in Sources */,
+				B927302B29BA7B3B00FA0E2D /* EAOpenAIChatCompletionsMessage.swift in Sources */,
+				B92DF58A29B11F9600C05029 /* EAOpenAIChatCompletionsModel.swift in Sources */,
 				B9C056CB296BB3CF007B6DBD /* EAGoalDetailsViewController.swift in Sources */,
 				B9C056D2296BCC0A007B6DBD /* GoalsListNavigator.swift in Sources */,
 				B9C0569D2962DF7C007B6DBD /* EAOpenAICompletionsResponse.swift in Sources */,
 				B90847EA297665A200758477 /* Extensions.swift in Sources */,
+				B92DF58C29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
+				B9645FC829E11A13001DDF3A /* EALoadingMessage.swift in Sources */,
 				B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */,
 				B9C056A22967CEE5007B6DBD /* EAUIElementView.swift in Sources */,
 				B90D144D299071840093EB0C /* Debuggable.swift in Sources */,

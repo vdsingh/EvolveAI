@@ -23,11 +23,17 @@ protocol EAGoalDayGuideViewModelOutput {
     /// String describing both the day numbers and dates for the associated GoalDayGuide
     var dayNumbersAndDatesText: String { get }
 
+    /// The date associated with this DayGuide
+    var associatedDate: Date { get }
+
     /// A list of EAGoalTask representing the tasks for this day guide
     var taskViewModels: [EAGoalTaskViewModel] { get }
 
     /// The color for the goal
     var labelColor: UIColor { get }
+
+    // TODO: Docstring
+    var description: String { get }
 }
 
 protocol EAGoalDayGuideViewModel: EAGoalDayGuideViewModelInput, EAGoalDayGuideViewModelOutput { }
@@ -52,11 +58,15 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     }
 
     var dayNumbersText: String {
-        return dayGuide.days.count > 1 ? "Days \(dayGuide.days[0]) - \(dayGuide.days[1]):" : "Day \(dayGuide.days[0])"
+         dayGuide.days.count > 1 ? "Days \(dayGuide.days[0]) - \(dayGuide.days[1]):" : "Day \(dayGuide.days[0])"
     }
 
     var dayNumbersAndDatesText: String {
         return "\(self.dayNumbersText) - (\(self.currentDayString)):"
+    }
+
+    var associatedDate: Date {
+        self.dayGuide.dayGuideDate
     }
 
     var taskViewModels: [EAGoalTaskViewModel] {
@@ -66,6 +76,10 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     }
 
     let labelColor: UIColor
+
+    var description: String {
+        return "\(dayGuide)"
+    }
 
     /// Normal initializer
     /// - Parameters:

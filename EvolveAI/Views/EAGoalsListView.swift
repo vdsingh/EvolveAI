@@ -9,7 +9,7 @@ import UIKit
 
 /// View to display EAGoal objects in a UITableView
 class EAGoalsListView: UIView, Debuggable {
-    let debug: Bool = false
+    let debug = false
 
     /// Constants for this View
     private struct Constants {
@@ -42,7 +42,7 @@ class EAGoalsListView: UIView, Debuggable {
         label.text = Constants.emptyCollectionViewText
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = EAColor.background.uiColor.darker() ?? UIColor.darkGray
+        label.textColor = EAColor.secondaryLabel.uiColor
         return label
     }()
 

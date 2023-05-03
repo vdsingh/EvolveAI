@@ -48,7 +48,6 @@ class Mocking {
     /// - Returns: A Mock EAGoal
     public static func createMockGoal(
         goalString: String?,
-//        taskString: String?,
         numDays: Int?,
         additionalDetails: String = ""
     ) -> EAGoal {
@@ -56,18 +55,23 @@ class Mocking {
             fatalError("$Error: no mock goals")
         }
 
+        let mockAIResponse = self.createMockGoalAIResponse()
+
         let goal = EAGoal(
             creationDate: Date(),
             startDate: Date(),
-            id: UUID().uuidString,
             goal: goalString ?? randomGoal.key,
             numDays: numDays ?? Int.random(in: 5...Constants.maxDays),
             additionalDetails: additionalDetails,
             color: EAColor.goalColors.randomElement()?.uiColor ?? EAColor.pastelOrange.uiColor,
-            aiResponse: self.createMockGoalAIResponse()
+            goalsService: EAGoalsService()
         )
+
+        goal.addMessageToHistory(message: EAOpenAIChatCompletionMessage(role: .ai, content: mockAIResponse))
         return goal
     }
+
+    // TODO: Fix
 
     /// Creates a mock goal AI Response (Lorem Ipsum text)
     /// - Returns: A String representing an AI Response
@@ -78,7 +82,7 @@ class Mocking {
             aiResponse += "Day \(i): "
             let numTasks = Int.random(in: 1...maxNumTasks)
             for _ in 0..<numTasks {
-                aiResponse += "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor\(Constants.taskSeparatorCharacter)."
+                aiResponse += "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
             }
             aiResponse += "\n"
         }

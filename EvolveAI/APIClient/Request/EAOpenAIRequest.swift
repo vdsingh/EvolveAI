@@ -126,7 +126,7 @@ final class EAOpenAIRequest: EARequest {
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
         switch endpoint {
-        case .completions:
+        case .completions, .chatCompletions:
             self.httpMethod = .POST
         }
     }
@@ -137,19 +137,19 @@ extension EAOpenAIRequest {
 
     /// Creates a EAOpenAIRequest for the completions endpoint
     /// - Parameters:
-    ///   - model: the AI model that will receive the request
+    ///   - model: the AI model that will receive and process the request
     ///   - prompt: the string to send to the model
     ///   - temperature: The sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
     ///   - max_tokens: The maximum number of tokens to generate in the completion.
-    /// - Returns: An EAOpenAIRequest object
+    /// - Returns: An EAOpenAIRequest object for a Completions request
     public static func completionsRequest(
-        model: EAOpenAICompletionsModel = .davinci003,
+        model: EAOpenAICompletionsModel,
         prompt: String,
         temperature: Int = 1,
         maxTokens: Int
-    ) -> EAOpenAIRequest {
-        if maxTokens > model.getTokenLimit() {
-            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.getTokenLimit())).")
+    ) -> EAOpenAIRequest? {
+        if maxTokens > model.tokenLimit {
+            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
         }
 
         let requestBody = EAOpenAICompletionsRequestBody(
@@ -158,6 +158,31 @@ extension EAOpenAIRequest {
             temperature: temperature,
             maxTokens: maxTokens - prompt.numTokens(separatedBy: CharacterSet(charactersIn: " "))
         )
+
         return EAOpenAIRequest(endpoint: .completions, requestBody: requestBody)
+    }
+
+    /// Creates an EAOpenAIRequest for the chat completions endpoint
+    /// - Parameters:
+    ///   - model: the AI model that will receive and process the request
+    ///   - messages: the message history so far
+    ///   - maxTokens: The maximum number of tokens to generate in the completion
+    /// - Returns: An EAOpenAIRequest object for a Chat Completions request
+    public static func chatCompletionsRequest(
+        model: EAOpenAIChatCompletionsModel,
+        messages: [EAOpenAIChatCompletionMessage],
+        maxTokens: Int
+    ) -> EAOpenAIRequest {
+        print("Instantiating Chat Completions Request with model: \(model.rawValue)")
+        if maxTokens > model.tokenLimit {
+            print("$Error: The maximum number of tokens is greater than what is allowed (\(model.tokenLimit).")
+        }
+
+        let requestBody = EAOpenAIChatCompletionsRequestBody(
+            model: model,
+            messages: messages
+        )
+
+        return EAOpenAIRequest(endpoint: .chatCompletions, requestBody: requestBody)
     }
 }

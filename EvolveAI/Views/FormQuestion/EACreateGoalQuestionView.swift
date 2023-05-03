@@ -93,11 +93,10 @@ class EACreateGoalQuestionView: UIStackView, EAUIElementView {
         self.spacing = EAIncrement.one.rawValue
         self.distribution = .fillEqually
 
-        let placeholderColor = EAColor.label.uiColor.lighter(by: 40) ?? .label
         self.actionTextLabel.text = viewModel.actionText
-        self.goalTextField.setPlaceholderText(text: viewModel.goalPlaceholderText, color: placeholderColor)
+        self.goalTextField.setPlaceholderText(text: viewModel.goalPlaceholderText, color: .secondaryLabel)
         self.connectorTextLabel.text = viewModel.connectorText
-        self.numDaysTextField.setPlaceholderText(text: viewModel.numDaysPlaceholderText, color: placeholderColor)
+        self.numDaysTextField.setPlaceholderText(text: viewModel.numDaysPlaceholderText, color: .secondaryLabel)
         self.numDaysUnitLabel.text = viewModel.numDaysUnitLabel
 
         let uiColor = viewModel.tintColor.uiColor
