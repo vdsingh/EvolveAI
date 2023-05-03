@@ -18,7 +18,6 @@
 		B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */; };
 		B90847EA297665A200758477 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847E9297665A200758477 /* Extensions.swift */; };
 		B90847EC2979012D00758477 /* EAColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90847EB2979012D00758477 /* EAColorSelector.swift */; };
-		B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144A29905AF80093EB0C /* EALoadingGoal.swift */; };
 		B90D144D299071840093EB0C /* Debuggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D144C299071840093EB0C /* Debuggable.swift */; };
 		B91EE2E1297B207B003FF560 /* EvolveAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2E0297B207B003FF560 /* EvolveAITests.swift */; };
 		B91EE2EE297B2127003FF560 /* EvolveAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91EE2ED297B2127003FF560 /* EvolveAIUITests.swift */; };
@@ -49,11 +48,15 @@
 		B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */; };
 		B9584E81297F3479000368C2 /* EAGoalTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E80297F3479000368C2 /* EAGoalTaskView.swift */; };
 		B9584E83297F4253000368C2 /* EAGoalTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9584E82297F4253000368C2 /* EAGoalTask.swift */; };
-		B959650129D1DEEF004F6A57 /* EAAIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B959650029D1DEEF004F6A57 /* EAAIParser.swift */; };
+		B9645FC629DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */; };
+		B9645FC829E11A13001DDF3A /* EALoadingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */; };
+		B9645FCA29E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */; };
+		B9645FCC29E29220001DDF3A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9645FCB29E29220001DDF3A /* Observable.swift */; };
 		B96DFABB29A497340089CB39 /* EAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96DFABA29A497340089CB39 /* EAColor.swift */; };
 		B9810B41299C434700F27BC2 /* EAEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B40299C434700F27BC2 /* EAEmptyView.swift */; };
 		B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4829A1DD2C00F27BC2 /* EAImage.swift */; };
 		B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */; };
+		B9A98C0A29E632BB00D866A9 /* RequiredObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */; };
 		B9C0566E2962C16E007B6DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566D2962C16E007B6DBD /* AppDelegate.swift */; };
 		B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */; };
 		B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C056712962C16E007B6DBD /* EAGoalsListViewController.swift */; };
@@ -124,7 +127,6 @@
 		B90847E62973C99D00758477 /* EAGoalListItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalListItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		B90847E9297665A200758477 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B90847EB2979012D00758477 /* EAColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColorSelector.swift; sourceTree = "<group>"; };
-		B90D144A29905AF80093EB0C /* EALoadingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALoadingGoal.swift; sourceTree = "<group>"; };
 		B90D144C299071840093EB0C /* Debuggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debuggable.swift; sourceTree = "<group>"; };
 		B91EE2DE297B207B003FF560 /* EvolveAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvolveAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B91EE2E0297B207B003FF560 /* EvolveAITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveAITests.swift; sourceTree = "<group>"; };
@@ -157,11 +159,15 @@
 		B9584E7E297E3A97000368C2 /* EAGoalTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskViewModel.swift; sourceTree = "<group>"; };
 		B9584E80297F3479000368C2 /* EAGoalTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTaskView.swift; sourceTree = "<group>"; };
 		B9584E82297F4253000368C2 /* EAGoalTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAGoalTask.swift; sourceTree = "<group>"; };
-		B959650029D1DEEF004F6A57 /* EAAIParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAAIParser.swift; sourceTree = "<group>"; };
+		B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAOpenAILanguageModelService.swift; sourceTree = "<group>"; };
+		B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALoadingMessage.swift; sourceTree = "<group>"; };
+		B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EALanguageModelGoalPromptCoder.swift; sourceTree = "<group>"; };
+		B9645FCB29E29220001DDF3A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B96DFABA29A497340089CB39 /* EAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAColor.swift; sourceTree = "<group>"; };
 		B9810B40299C434700F27BC2 /* EAEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAEmptyView.swift; sourceTree = "<group>"; };
 		B9810B4829A1DD2C00F27BC2 /* EAImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImage.swift; sourceTree = "<group>"; };
 		B9810B4A29A1DE2E00F27BC2 /* EAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EAImageView.swift; sourceTree = "<group>"; };
+		B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredObservable.swift; sourceTree = "<group>"; };
 		B9C0566A2962C16E007B6DBD /* EvolveAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvolveAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C0566D2962C16E007B6DBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9C0566F2962C16E007B6DBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -422,7 +428,7 @@
 				B9C0569E2962E045007B6DBD /* EAGoal.swift */,
 				B9C056A829682203007B6DBD /* EAGoalDayGuide.swift */,
 				B9584E82297F4253000368C2 /* EAGoalTask.swift */,
-				B90D144A29905AF80093EB0C /* EALoadingGoal.swift */,
+				B9645FC729E11A13001DDF3A /* EALoadingMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -473,8 +479,9 @@
 		B9C056AC2968F9B8007B6DBD /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B9645FC929E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift */,
 				B9C056AD2968FAEC007B6DBD /* EAGoalsService.swift */,
-				B959650029D1DEEF004F6A57 /* EAAIParser.swift */,
+				B9645FC529DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -497,6 +504,8 @@
 				B90847E9297665A200758477 /* Extensions.swift */,
 				B90D144C299071840093EB0C /* Debuggable.swift */,
 				B92DF58729A841A300C05029 /* MockGoals.swift */,
+				B9645FCB29E29220001DDF3A /* Observable.swift */,
+				B9A98C0929E632BB00D866A9 /* RequiredObservable.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -723,7 +732,7 @@
 				B903ED4629BA63F5008E323D /* EAMockingGoalCreationModel.swift in Sources */,
 				B93E8B462995996400316017 /* EATextStyle.swift in Sources */,
 				B90847DF2972586A00758477 /* EADayGuideView.swift in Sources */,
-				B959650129D1DEEF004F6A57 /* EAAIParser.swift in Sources */,
+				B9645FCA29E11B00001DDF3A /* EALanguageModelGoalPromptCoder.swift in Sources */,
 				B9C056D0296BCBE9007B6DBD /* Navigator.swift in Sources */,
 				B90847E72973C99D00758477 /* EAGoalListItemCollectionViewCell.swift in Sources */,
 				B9C056722962C16E007B6DBD /* EAGoalsListViewController.swift in Sources */,
@@ -742,7 +751,6 @@
 				B9584E7D297DE06D000368C2 /* EAGoalDetailsViewModel.swift in Sources */,
 				B92DF58829A841A300C05029 /* MockGoals.swift in Sources */,
 				B9584E7F297E3A97000368C2 /* EAGoalTaskViewModel.swift in Sources */,
-				B90D144B29905AF80093EB0C /* EALoadingGoal.swift in Sources */,
 				B903ED4829BA6413008E323D /* EAGoalCreationModel.swift in Sources */,
 				B927302729BA799E00FA0E2D /* EAOpenAIChatCompletionsResponse.swift in Sources */,
 				B9486DF8296D3FC700A0296E /* EATextView.swift in Sources */,
@@ -762,12 +770,15 @@
 				B96DFABB29A497340089CB39 /* EAColor.swift in Sources */,
 				B927302D29BA7B5A00FA0E2D /* EAOpenAIChatCompletionMessageRole.swift in Sources */,
 				B9C056A42967D139007B6DBD /* EAFormView.swift in Sources */,
+				B9645FCC29E29220001DDF3A /* Observable.swift in Sources */,
 				B9C056702962C16E007B6DBD /* SceneDelegate.swift in Sources */,
+				B9645FC629DCDAA2001DDF3A /* EAOpenAILanguageModelService.swift in Sources */,
 				B9C0569A2962D4FD007B6DBD /* HTTPMethod.swift in Sources */,
 				B9C056C3296A90AC007B6DBD /* Mocking.swift in Sources */,
 				B9C056A729682069007B6DBD /* EAUIElement.swift in Sources */,
 				B93E8B4229958C2B00316017 /* EAStackView.swift in Sources */,
 				B90847E52973ADC400758477 /* Flags.swift in Sources */,
+				B9A98C0A29E632BB00D866A9 /* RequiredObservable.swift in Sources */,
 				B9C0568D2962C2DB007B6DBD /* EAAPIResponse.swift in Sources */,
 				B9C0568B2962C24A007B6DBD /* EAOpenAIRequest.swift in Sources */,
 				B9810B4B29A1DE2E00F27BC2 /* EAImageView.swift in Sources */,
@@ -784,6 +795,7 @@
 				B90847EA297665A200758477 /* Extensions.swift in Sources */,
 				B92DF58C29B1200800C05029 /* EAOpenAIChatCompletionsRequestBody.swift in Sources */,
 				B9486DFC296D495000A0296E /* EASeparator.swift in Sources */,
+				B9645FC829E11A13001DDF3A /* EALoadingMessage.swift in Sources */,
 				B9810B4929A1DD2C00F27BC2 /* EAImage.swift in Sources */,
 				B9C056A22967CEE5007B6DBD /* EAUIElementView.swift in Sources */,
 				B90D144D299071840093EB0C /* Debuggable.swift in Sources */,
@@ -1022,7 +1034,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SkillAI;
+				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -1054,7 +1066,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvolveAI/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SkillAI;
+				INFOPLIST_KEY_CFBundleDisplayName = EvolveAI;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;

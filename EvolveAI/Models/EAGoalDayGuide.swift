@@ -23,6 +23,7 @@ final class EAGoalDayGuide: Object {
     /// The start date of the goal
     @Persisted private var goalStartDate: Date
 
+    // TODO: Docstring
     var dayGuideDate: Date {
         let dayNumber = self.days[0]
         var dateComponent = DateComponents()
@@ -39,11 +40,14 @@ final class EAGoalDayGuide: Object {
     ///   - isMultipleDays: Whether the guide covers the span of multiple days (ex: 1st to 3rd) instead of single day (ex: 1st)
     ///   - days: The range of days the guide covers
     ///   - tasks: The list of tasks associated with this guide
-    convenience init(isMultipleDays: Bool, days: List<Int>, tasks: List<EAGoalTask>, goalStartDate: Date) {
+    convenience init(isMultipleDays: Bool, days: [Int], tasks: [String], goalStartDate: Date) {
         self.init()
+        let eaGoalTasks = tasks.map { EAGoalTask(taskString: $0, complete: false) }
         self.isMultipleDays = isMultipleDays
-        self.days = days
-        self.tasks = tasks
+        self.days = List<Int>()
+        self.tasks = List<EAGoalTask>()
+        self.days.append(objectsIn: days)
+        self.tasks.append(objectsIn: eaGoalTasks)
         self.goalStartDate = goalStartDate
     }
 }

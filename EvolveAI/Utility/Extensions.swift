@@ -152,5 +152,11 @@ extension UIScrollView {
             setContentOffset(bottomOffset, animated: true)
         }
     }
+}
 
+extension UIView {
+    // TODO: Docstrings
+    func removeAllSubviews() {
+        self.subviews.forEach({ $0.removeFromSuperview() })
+    }
 }

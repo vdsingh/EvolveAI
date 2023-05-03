@@ -37,21 +37,37 @@ class EAGoal: Object {
     @Persisted var startDate: Date
 
     /// The message history for this goal (if a ChatCompletions endpoint was used)
-    @Persisted var messageHistory: List<EAOpenAIChatCompletionMessage>
+    @Persisted var messages: List<EAOpenAIChatCompletionMessage>
 
     // MARK: - Goal Creation Info
 
     /// Date when the goal was created
     @Persisted var creationDate: Date
 
+    /// Date when we received the AI Response
+    @Persisted var aiResponseDate: Date?
+
     /// The AI's response in normal String form
-    @Persisted var aiResponse: String
+//    @Persisted var aiResponse: String?
 
     /// The endpoint used to generate this goal
-    @Persisted var endpointUsed: String
+    @Persisted var openAIEndpoint: String?
 
     /// The model used to generate this goal
-    @Persisted var modelUsed: String
+    @Persisted var languageModel: String?
+
+//    var numLoadingDayGuides = 0 {
+//        didSet {
+//            if numLoadingDayGuides < 0 {
+//                print("$Error (EAGoal): the number of loading day guides is negative: \(numLoadingDayGuides)")
+//            }
+//            self.dayGuidesAreLoading.value = numLoadingDayGuides > 0
+//            print("$Log (EAGoal): number of loading day guides changed to \(numLoadingDayGuides). Day Guides are Loading: \(String(describing: self.dayGuidesAreLoading.value))")
+//        }
+//    }
+//    
+    /// The number of day guides that are currently loading
+//    lazy var dayGuidesAreLoading: Observable<Bool> = Observable(self.numLoadingDayGuides > 0, label: "EAGoal \(self.goal) Day Guides: Loading")
 
     /// The UIColor for this goal (uses colorHex)
     public var color: UIColor {
@@ -78,6 +94,8 @@ class EAGoal: Object {
 
     private var goalsService: EAGoalsService?
 
+    // TODO: Fix docstrings (values changed)
+
     /// Initializer for EAGoal
     /// - Parameters:
     ///   - creationDate: The creation date of the goal
@@ -93,96 +111,60 @@ class EAGoal: Object {
     convenience init(
         creationDate: Date,
         startDate: Date,
-        id: String,
         goal: String,
         numDays: Int,
         additionalDetails: String,
         color: UIColor,
-        aiResponse: String,
-        messages: [EAOpenAIChatCompletionMessage],
-        modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint,
         goalsService: EAGoalsService
     ) {
         self.init()
         self.creationDate = creationDate
-        self.aiResponse = aiResponse
         self.startDate = startDate
-        self.id = id
         self.goal = goal
         self.numDays = numDays
         self.additionalDetails = additionalDetails
         self.color = color
-        self.messageHistory = List<EAOpenAIChatCompletionMessage>()
-        self.messageHistory.append(objectsIn: messages)
-        self.modelUsed = modelUsed.rawVal
-        self.endpointUsed = endpointUsed.rawVal
+        self.messages = List<EAOpenAIChatCompletionMessage>()
         self.goalsService = goalsService
+
+        self.id = UUID().uuidString
     }
 
-    /// Initializer for EAGoal
-    /// - Parameters:
-    ///   - creationDate: The creation date of the goal
-    ///   - startDate: The start date of the goal
-    ///   - id: The unique identifier for this goal
-    ///   - goal: The goal itself (ex: "learn the violin")
-    ///   - numDays: The number of days to accomplish the goal (ex: 30)
-    ///   - additionalDetails: The user specified additional details for the goal
-    ///   - color: The color associated with the goal
-    ///   - apiResponse: The OpenAI Completions Response
-    ///   - modelUsed: The model used to generate this goal
-    ///   - endpointUsed: The endpoint used to generate this goal
-    convenience init(
-        creationDate: Date,
-        startDate: Date,
-        id: String,
-        goal: String,
-        numDays: Int,
-        additionalDetails: String,
-        color: UIColor,
-        apiResponse: EAGoalCreationAPIResponse,
-        messages: [EAOpenAIChatCompletionMessage],
-        modelUsed: EAGoalCreationModel,
-        endpointUsed: EAGoalCreationEndpoint,
-        goalsService: EAGoalsService
-    ) {
-        var aiResponse = "NO AI RESPONSE"
-        if let choices = apiResponse.getChoices() as? [EAOpenAIChatCompletionsChoice] {
-            aiResponse = choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
-        } else if let choices = apiResponse.getChoices() as? [EAOpenAICompletionsChoice] {
-            aiResponse = choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NO AI RESPONSE"
+    // TODO: Docstring
+    func appendDayGuides(_ dayGuides: [EAGoalDayGuide]) {
+        guard let goalsService = self.goalsService else {
+            print("$Error: tried to append day guides to goal but goalsService was nil")
+            return
         }
-
-        self.init(
-            creationDate: creationDate,
-            startDate: startDate,
-            id: id,
-            goal: goal,
-            numDays: numDays,
-            additionalDetails: additionalDetails,
-            color: color,
-            aiResponse: aiResponse,
-            messages: messages,
-            modelUsed: modelUsed,
-            endpointUsed: endpointUsed,
-            goalsService: goalsService
-        )
-
-        let parsedResponse = goalsService.parseAIResponse(from: aiResponse, startDate: startDate)
-        self.dayGuides = parsedResponse.dayGuides
-        self.tags = parsedResponse.tags
+        goalsService.appendDayGuides(goal: self, dayGuides: dayGuides)
     }
 
     /// Adds a message to this goal's message history
     /// - Parameter message: The message to add to the message history
     func addMessageToHistory(message: EAOpenAIChatCompletionMessage) {
-        self.messageHistory.append(message)
+        print("$Log: adding message \(message.content)")
+        guard let goalsService = self.goalsService else {
+            print("$Error: goalsService is nil ")
+            return
+        }
+
+        goalsService.writeToRealm {
+            self.messages.append(message)
+        }
+    }
+
+    func constructMessageHistoryString() -> String {
+        var messageHistoryString = ""
+        for message in self.messages {
+            messageHistoryString += message.role + ": " + message.content + "\n"
+        }
+        return messageHistoryString
     }
 
     /// Gets a simplified String description of this goal
     /// - Returns: A String describing this goal
     func getSimplifiedDescription() -> String {
-        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). AI Response=\(self.aiResponse) }"
+        return "EAGoal {goal=\(self.goal). numDays=\(self.numDays). additional details=\(self.additionalDetails). Message History=\(self.messages) }"
     }
 
     override static func primaryKey() -> String? {

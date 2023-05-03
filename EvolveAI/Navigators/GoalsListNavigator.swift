@@ -13,7 +13,7 @@ class GoalsListNavigator: Navigator {
 
     /// Represents the destinations that can be reached from this navigator
     enum Destination {
-        case viewGoal(goalViewModel: EAGoalDetailsViewModel)
+        case viewGoal(goalViewModel: EAGoalDetailsViewModel, goalWasDeleted: () -> Void)
         case createGoal(goalWillBeCreated: () -> Void, goalWasCreated: () -> Void)
     }
 
@@ -47,8 +47,11 @@ class GoalsListNavigator: Navigator {
     /// - Returns: A UIViewController as the destination
     private func makeViewController(for destination: Destination) -> UIViewController {
         switch destination {
-        case .viewGoal(let goalViewModel):
-            return EAGoalDetailsViewController(viewModel: goalViewModel)
+        case .viewGoal(let goalViewModel, let goalWasDeleted):
+            return EAGoalDetailsViewController(
+                goalWasDeleted: goalWasDeleted,
+                viewModel: goalViewModel
+            )
 
         case .createGoal(let goalWillBeCreated, let goalWasCreated):
             return EAGoalCreationFormViewController(

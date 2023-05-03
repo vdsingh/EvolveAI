@@ -40,6 +40,11 @@ struct EAOpenAICompletionsChoice: Decodable, EAOpenAIChoice {
     /// The reason why the response was terminated
     let finishReason: String
 
+    // TODO: Docstring
+    func getLastText() -> String {
+        return text
+    }
+
     enum CodingKeys: String, CodingKey {
         case text
         case index
@@ -48,6 +53,7 @@ struct EAOpenAICompletionsChoice: Decodable, EAOpenAIChoice {
     }
 }
 
+// TODO: Move to separate file
 protocol EAOpenAIChoice {
-
+    func getLastText() -> String
 }

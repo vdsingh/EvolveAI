@@ -17,9 +17,6 @@ struct Constants {
     /// The maximum number of goals a user can have
     static let maxGoalsAllowed = 5
 
-    /// How we separate the AI response into individual tasks
-    static let taskSeparatorCharacter = "&%"
-
     /// The maximum number of days the goal can be
     static let maxDays = 30
 
@@ -27,8 +24,8 @@ struct Constants {
     static let defaultColor = UIColor.purple
 
     /// The default model to be used to generate goals
-    static let defaultModel = EAGoalCreationModel.EAOpenAIChatCompletionsModel(model: .gpt3_5Turbo)
+    static let defaultModel = EAGoalCreationModel.EAOpenAICompletionsModel(model: .davinci003)
 
     /// The default endpoint to be used to generate goals
-    static let defaultEndpoint = EAGoalCreationEndpoint.EAOpenAIEndpoint(endpoint: .chatCompletions)
+    static let defaultEndpoint = EAGoalCreationEndpoint.EAOpenAIEndpoint(endpoint: .completions)
 }

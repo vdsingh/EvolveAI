@@ -31,6 +31,9 @@ protocol EAGoalDayGuideViewModelOutput {
 
     /// The color for the goal
     var labelColor: UIColor { get }
+
+    // TODO: Docstring
+    var description: String { get }
 }
 
 protocol EAGoalDayGuideViewModel: EAGoalDayGuideViewModelInput, EAGoalDayGuideViewModelOutput { }
@@ -73,6 +76,10 @@ final class DefaultEAGoalDayGuideViewModel: EAGoalDayGuideViewModel {
     }
 
     let labelColor: UIColor
+
+    var description: String {
+        return "\(dayGuide)"
+    }
 
     /// Normal initializer
     /// - Parameters:
